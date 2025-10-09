@@ -1,0 +1,868 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Report Card - Header</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @media print {
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      .no-print {
+        display: none !important;
+      }
+      select {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        background-image: none !important;
+      }
+      select::-ms-expand {
+        display: none;
+      }
+    }
+    
+    /* Hide dropdown arrows for print */
+    @media print {
+      select {
+        background-image: none !important;
+        padding-right: 0.5rem !important;
+      }
+    }
+    
+    /* Ensure select elements look clean in print */
+    select.no-arrows {
+      background-image: none;
+      padding-right: 0.5rem;
+    }
+    
+    /* For web view - show arrows */
+    @media screen {
+      select {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+        background-position: right 0.5rem center;
+        background-repeat: no-repeat;
+        background-size: 1.5em 1.5em;
+        padding-right: 2.5rem;
+      }
+    }
+  </style>
+</head>
+<body class="bg-white flex justify-center p-6 print:p-0">
+
+  <!-- A4 container -->
+<div class="w-full max-w-[794px] border border-gray-300 shadow-md p-5 mt-0">
+
+    <!-- Header block -->
+    <div class="flex items-center justify-center mb-2 gap-4 mt-6">
+      <img src="{% static 'img/EMILIA LOGO.png' %}" alt="School Logo" class="h-32 w-28 object-contain mt-3">
+      <div class="flex flex-col items-center">
+        <h1 class="text-2xl md:text-3xl font-bold text-center">
+          <span class="border-b-2 border-gray-700 inline-block w-[32rem]">
+            EMILIA – FOREMOST HIGH SCHOOL
+          </span>
+        </h1>
+        <div class="mt-2 border-b-2 border-gray-700 w-[32rem]">
+          <input type="text" placeholder="Type report title here..." class="w-full bg-transparent text-center text-base font-extrabold text-black focus:outline-none">
+        </div>
+      </div>
+    </div>
+
+    <!-- REPORT FOR – TERM OF – SCHOOL YEAR -->
+    <div class="mt-8 text-sm flex justify-start gap-4 pl-0 flex-wrap font-medium tracking-wide items-end">
+      <div class="flex items-center relative">
+        <label class="font-semibold mr-1">REPORT FOR</label>
+        <div class="relative leading-none">
+          <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none">......................................</span>
+          <input type="text" class="bg-transparent w-40 text-center text-sm font-extrabold text-black relative z-10 focus:outline-none pb-0.5 leading-[0.75rem]" />
+        </div>
+      </div>
+      <div class="flex items-center relative">
+        <label class="font-semibold mr-1">TERM OF</label>
+        <div class="relative leading-none">
+          <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none">..........................................................</span>
+          <input type="text" class="bg-transparent w-48 text-center text-sm font-extrabold text-black relative z-10 focus:outline-none pb-0.5 leading-[0.75rem]" />
+        </div>
+      </div>
+      <div class="flex items-center relative ml-[62px]">
+        <label class="font-semibold">SCHOOL YEAR</label>
+        <input type="text" class="bg-transparent w-0 h-0 opacity-0 pointer-events-none" />
+      </div>
+    </div>
+
+    <!-- NAME – SEX -->
+    <div class="mt-6 text-sm flex justify-start gap-0 pl-0 flex-wrap font-medium tracking-wide items-end">
+      <div class="flex items-center relative">
+        <label class="font-semibold mr-1 whitespace-nowrap">NAME (SURNAME FIRST)</label>
+        <div class="relative leading-none">
+          <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none">..........................................................................</span>
+          <input type="text" class="bg-transparent w-[22rem] text-left pl-3 text-sm font-extrabold text-black relative z-10 focus:outline-none pb-0.5 leading-[0.75rem]" />
+        </div>
+      </div>
+      <div class="flex items-center relative ml-[-8px]">
+        <label class="font-semibold mr-1">SEX</label>
+        <div class="relative leading-none">
+          <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none">..................................</span>
+          <input type="text" class="bg-transparent w-28 text-center text-sm font-extrabold text-black relative z-10 focus:outline-none pb-0.5 leading-[0.75rem]" />
+        </div>
+      </div>
+    </div>
+
+    <!-- CLASS – NUMBER OF TIMES SCHOOL OPEN -->
+    <div class="mt-6 text-sm flex justify-start pl-0 flex-nowrap font-medium tracking-wide items-end">
+      <div class="flex items-center relative">
+        <label class="font-semibold mr-1">CLASS</label>
+        <div class="relative leading-none">
+          <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none">.................................</span>
+          <input type="text" class="bg-transparent w-44 text-left pl-10 text-sm font-extrabold text-black relative z-10 focus:outline-none pb-0.5 leading-[0.75rem]" />
+        </div>
+      </div>
+      <div class="flex items-center relative ml-[-20px]">
+        <label class="font-semibold mr-1 whitespace-nowrap">NUMBER OF TIMES SCHOOL OPEN</label>
+        <div class="relative leading-none">
+          <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none">........................................................</span>
+          <input type="text" class="bg-transparent w-[18rem] text-center text-sm font-extrabold text-black relative z-10 focus:outline-none pb-0.5 leading-[0.75rem]" />
+        </div>
+      </div>
+    </div>
+
+    <!-- PRESENT – ABSENT -->
+    <div class="mt-6 text-sm flex justify-start pl-0 flex-nowrap font-medium tracking-wide items-end">
+      <div class="flex items-center relative">
+        <label class="font-semibold mr-1 whitespace-nowrap">NUMBER OF TIMES PRESENT</label>
+        <div class="relative leading-none">
+          <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none">.........................................</span>
+          <input type="text" class="bg-transparent w-52 text-center text-sm font-extrabold text-black relative z-10 focus:outline-none pb-0.5 leading-[0.75rem]" />
+        </div>
+      </div>
+      <div class="flex items-center relative ml-[-20px]">
+        <label class="font-semibold mr-1 whitespace-nowrap">TIMES ABSENT</label>
+        <div class="relative leading-none">
+          <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none">.............................................</span>
+          <input type="text" class="bg-transparent w-48 text-center text-sm font-extrabold text-black relative z-10 focus:outline-none pb-0.5 leading-[0.75rem]" />
+        </div>
+      </div>
+    </div>
+
+    <!-- REOPEN – PERCENTAGE – RESULT -->
+    <div class="mt-6 text-sm flex justify-start pl-0 flex-nowrap font-medium tracking-wide items-end">
+      <div class="flex items-center relative">
+        <label class="font-semibold mr-1 whitespace-nowrap">SCHOOL RE-OPEN ON</label>
+        <div class="relative leading-none w-64">
+          <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none">............................................</span>
+          <input type="text" class="bg-transparent w-full text-left pl-2 text-sm font-extrabold text-black relative z-10 focus:outline-none pb-0.5 leading-[0.7rem]" />
+        </div>
+      </div>
+      <div class="flex items-center relative ml-[-49px]">
+        <label class="font-semibold mr-1 whitespace-nowrap">PERCENTAGE</label>
+        <div class="relative leading-none">
+          <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none">.....................</span>
+          <input type="text" class="bg-transparent w-28 text-left pl-3 text-sm font-extrabold text-black relative z-10 focus:outline-none pb-0.5 leading-[0.75rem]" />
+        </div>
+      </div>
+      <div class="flex items-center relative ml-[-12px]">
+        <label class="font-semibold mr-1 whitespace-nowrap">RESULT</label>
+        <div class="relative leading-none">
+          <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none">...................</span>
+          <input type="text" class="bg-transparent w-24 text-left pl-7 text-sm font-extrabold text-black relative z-10 focus:outline-none pb-0.5 leading-[0.75rem]" />
+        </div>
+      </div>
+    </div>
+
+    <!-- RESULT TABLE -->
+    <div class="mt-10">
+      <table class="w-full border-2 border-gray-800 text-sm text-center">
+        <thead class="bg-gray-200">
+          <tr>
+            <th class="border border-gray-800 px-3 py-2 font-bold w-[30%]">SUBJECT</th>
+            <th class="border border-gray-800 px-1 py-2 font-bold w-[9%]">TEST 1</th>
+            <th class="border border-gray-800 px-1 py-2 font-bold w-[9%]">TEST 2</th>
+            <th class="border border-gray-800 px-1 py-2 font-bold w-[9%]">EXAM</th>
+            <th class="border border-gray-800 px-1 py-2 font-bold w-[9%]">TOTAL</th>
+            <th class="border border-gray-800 px-1 py-2 font-bold w-[9%]">CLASS-AVE</th>
+            <th class="border border-gray-800 px-1 py-2 font-bold w-[9%]">GRADE</th>
+            <th class="border border-gray-800 px-1 py-2 font-bold w-[16%]">REMARKS</th>
+          </tr>
+        </thead>
+        <tbody id="table-body" class="bg-white">
+          <!-- Rows will be added here dynamically -->
+        </tbody>
+        <tfoot>
+          <tr class="font-bold bg-gray-100">
+            <td colspan="4" class="border border-gray-800 px-2 py-2 text-right pr-4">TOTAL</td>
+            <td class="border border-gray-800 px-1 py-2">
+              <input type="number" id="total-sum" class="w-full text-xs px-1 text-center bg-transparent focus:outline-none font-bold" readonly />
+            </td>
+            <td colspan="3" class="border border-gray-800 px-1 py-2"></td>
+          </tr>
+        </tfoot>
+      </table>
+      <button onclick="addRow()" class="mt-4 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition-colors no-print">
+        ➕ Add Row
+      </button>
+    </div>
+    
+    <!-- TOTAL MARKS OBTAINED – TOTAL MARKS OBTAINABLE -->
+    <div class="mt-6 text-sm flex justify-start flex-nowrap font-medium tracking-wide items-end">
+      <!-- TOTAL MARKS OBTAINED -->
+      <div class="flex items-center relative">
+        <label class="font-semibold mr-1 whitespace-nowrap">TOTAL MARKS OBTAINED</label>
+        <div class="relative leading-none">
+          <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none">
+            ..................................
+          </span>
+          <input type="text"
+            class="bg-transparent w-52 text-left pl-9 text-sm font-extrabold relative z-10 focus:outline-none pb-0.5 leading-[0.75rem]" />
+        </div>
+      </div>
+
+      <!-- TOTAL MARKS OBTAINABLE (moved even closer) -->
+      <div class="flex items-center relative ml-[-48px]">
+        <label class="font-semibold mr-1 whitespace-nowrap">TOTAL MARKS OBTAINABLE</label>
+        <div class="relative leading-none">
+          <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none">
+            .......................................
+          </span>
+          <input type="text"
+            class="bg-transparent w-52 text-left pl-9 text-sm font-extrabold relative z-10 focus:outline-none pb-0.5 leading-[0.75rem]" />
+        </div>
+      </div>
+    </div>
+
+    <!-- CLASS TEACHER'S REMARKS -->
+    <div class="mt-6 text-sm flex justify-start font-medium tracking-wide items-end">
+      <label class="font-semibold mr-2 whitespace-nowrap">CLASS TEACHER'S REMARKS</label>
+      <div class="relative leading-none flex-grow">
+        <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none">
+          ...............................................................................................................
+        </span>
+        <input type="text"
+          class="bg-transparent w-full text-left pl-4 text-sm font-extrabold text-black relative z-10 focus:outline-none pb-0.5 leading-[0.75rem]" />
+      </div>
+    </div>
+
+    <!-- SIGN (aligned to the left) -->
+    <div class="mt-8 text-sm flex flex-col items-center w-40 ml-4">
+      <div class="relative w-full">
+        <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none">
+          ...........................................
+        </span>
+        <input type="text"
+          class="bg-transparent w-full text-center text-sm font-medium relative z-10 focus:outline-none pb-0.5 leading-[0.75rem]" />
+      </div>
+      <span class="mt-1 font-semibold">SIGN</span>
+    </div>
+
+    <!-- PRINCIPAL'S REMARKS -->
+    <div class="mt-6 text-sm flex justify-start font-medium tracking-wide items-end">
+      <label class="font-semibold mr-2 whitespace-nowrap">PRINCIPAL'S REMARKS</label>
+      <div class="relative leading-none w-full max-w-[35rem]">
+        <span class="absolute inset-x-0 bottom-0 text-gray-400 tracking-wider pointer-events-none">
+          ................................................................................................................
+        </span>
+        <input type="text"
+          class="bg-transparent w-full text-left pl-4 text-sm font-extrabold text-black relative z-10 focus:outline-none pb-0.5 leading-[0.75rem]" />
+      </div>
+    </div>
+
+    <!-- SIGN (aligned to the left) -->
+    <div class="mt-8 text-sm flex flex-col items-center w-40 ml-4">
+      <div class="relative w-full">
+        <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none">
+          ...........................................
+        </span>
+        <input type="text"
+          class="bg-transparent w-full text-center text-sm font-medium relative z-10 focus:outline-none pb-0.5 leading-[0.75rem]" />
+      </div>
+      <span class="mt-1 font-semibold">SIGN</span>
+    </div>
+
+    <!-- Row containing: Editable Text (left) + Terminal Fees Box (right and raised higher) -->
+<div class="mt-10 flex justify-between items-start w-full max-w-[794px] gap-4">
+  <!-- Editable Notice Text -->
+  <div class="flex-1 text-xs font-semibold tracking-wide">
+    <input type="text"
+      value="SCHOOL FEES SHOULD BE PAID ON OR BEFORE RESUMPTION. THANKS"
+      class="bg-transparent w-full text-left text-xs font-extrabold text-black focus:outline-none" />
+  </div>
+
+  <!-- Terminal Fees Box (lifted higher) -->
+  <div class="border border-black px-4 py-2 text-sm font-semibold w-56 shrink-0 mt-[-62px]">
+    <p class="mb-1">TERMINAL FEES</p>
+
+    <div class="flex justify-between items-center mb-1 whitespace-nowrap">
+      <label class="text-sm font-semibold">TUITION FEES:</label>
+      <div class="relative">
+        <span class="absolute left-2 top-1/2 transform -translate-y-1/2 text-sm font-medium">₦</span>
+        <input 
+          type="text" 
+          placeholder="35,000"
+          class="bg-transparent text-sm font-medium w-24 text-right pl-6 pr-2 focus:outline-none" 
+        />
+      </div>
+    </div>
+
+    <p class="font-bold text-sm">1008189775 UBA</p>
+  </div>
+</div>
+
+    <!-- ✅ Enhanced Export Button -->
+    <div class="flex justify-center mt-10 no-print">
+      <button 
+        onclick="openExportModal()" 
+        aria-label="Export report"
+        class="relative group flex items-center space-x-2 bg-gradient-to-r from-blue-600 to-blue-500 text-white px-6 py-3 rounded-lg font-medium hover:from-blue-700 hover:to-blue-600 transition-all duration-300 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
+      >
+        <span class="relative">
+          <span class="absolute -inset-1 bg-blue-400 rounded-lg blur opacity-0 group-hover:opacity-75 transition-opacity duration-300"></span>
+          <span class="relative flex items-center">
+            <svg class="w-5 h-5 mr-2 transition-transform duration-300 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+            </svg>
+            Export Report
+          </span>
+        </span>
+      </button>
+    </div>
+
+  </div>
+
+  <!-- ✅ WORLD-CLASS EXPORT MODAL -->
+  <div id="exportModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4 transition-all duration-300 no-print">
+    <div 
+      id="modalContent"
+      class="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl w-full max-w-md transform transition-all duration-500 ease-out scale-95 opacity-0 border border-gray-200 dark:border-gray-700"
+      onclick="event.stopPropagation()"
+    >
+      <!-- Modal Header -->
+      <div class="px-6 py-5 border-b border-gray-100 dark:border-gray-700">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-3">
+            <div class="p-2 bg-blue-50 dark:bg-blue-900/30 rounded-lg">
+              <svg class="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+              </svg>
+            </div>
+            <div>
+              <h2 class="text-xl font-bold text-gray-900 dark:text-white">Export Report</h2>
+              <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Choose your preferred format</p>
+            </div>
+          </div>
+          <button 
+            onclick="closeExportModal()" 
+            aria-label="Close modal"
+            class="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+          >
+            <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Export Options -->
+      <div class="p-6 space-y-4">
+        <!-- PDF Option -->
+        <button 
+          onclick="downloadPDF()" 
+          class="w-full group relative overflow-hidden bg-gradient-to-r from-red-50 to-red-50 dark:from-red-900/20 dark:to-red-900/10 border border-red-200 dark:border-red-800 rounded-xl p-4 hover:from-red-100 hover:to-red-50 dark:hover:from-red-900/30 dark:hover:to-red-900/20 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
+        >
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+              <div class="p-2 bg-red-500 rounded-lg group-hover:scale-110 transition-transform duration-300">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                </svg>
+              </div>
+              <div class="text-left">
+                <h3 class="font-semibold text-gray-900 dark:text-white">Save as PDF</h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400">High quality document</p>
+              </div>
+            </div>
+            <svg class="w-5 h-5 text-gray-400 group-hover:text-red-500 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+            </svg>
+          </div>
+        </button>
+
+        <!-- Print Option -->
+        <button 
+          onclick="printReport()" 
+          class="w-full group relative overflow-hidden bg-gradient-to-r from-blue-50 to-blue-50 dark:from-blue-900/20 dark:to-blue-900/10 border border-blue-200 dark:border-blue-800 rounded-xl p-4 hover:from-blue-100 hover:to-blue-50 dark:hover:from-blue-900/30 dark:hover:to-blue-900/20 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+        >
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+              <div class="p-2 bg-blue-500 rounded-lg group-hover:scale-110 transition-transform duration-300">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path>
+                </svg>
+              </div>
+              <div class="text-left">
+                <h3 class="font-semibold text-gray-900 dark:text-white">Print Document</h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400">Physical copy</p>
+              </div>
+            </div>
+            <svg class="w-5 h-5 text-gray-400 group-hover:text-blue-500 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+            </svg>
+          </div>
+        </button>
+
+        <!-- Share Option -->
+        <button 
+          onclick="shareReport()" 
+          class="w-full group relative overflow-hidden bg-gradient-to-r from-green-50 to-green-50 dark:from-green-900/20 dark:to-green-900/10 border border-green-200 dark:border-green-800 rounded-xl p-4 hover:from-green-100 hover:to-green-50 dark:hover:from-green-900/30 dark:hover:to-green-900/20 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
+        >
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+              <div class="p-2 bg-green-500 rounded-lg group-hover:scale-110 transition-transform duration-300">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path>
+                </svg>
+              </div>
+              <div class="text-left">
+                <h3 class="font-semibold text-gray-900 dark:text-white">Share Report</h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400">Send to others</p>
+              </div>
+            </div>
+            <svg class="w-5 h-5 text-gray-400 group-hover:text-green-500 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+            </svg>
+          </div>
+        </button>
+      </div>
+
+      <!-- Footer Actions -->
+      <div class="px-6 py-4 border-t border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50 rounded-b-2xl">
+        <div class="flex space-x-3">
+          <button 
+            onclick="closeExportModal()" 
+            class="flex-1 px-4 py-2.5 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 font-medium"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- ✅ Perfect Top-Centered Toast -->
+<div id="toast" class="fixed top-6 left-1/2 transform -translate-x-1/2 hidden z-[9999] no-print">
+  <div class="bg-gray-900 text-white px-6 py-4 rounded-xl shadow-2xl flex items-center space-x-3 toast-animate max-w-md border border-gray-700 backdrop-blur-sm">
+    <div id="toast-icon"></div>
+    <div id="toast-message" class="text-sm font-medium"></div>
+  </div>
+</div>
+
+  <!-- ✅ External Libraries -->
+  <script src="https://cdn.jsdelivr.net/gh/evidenceprime/html-docx-js/dist/html-docx.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+  <!-- ✅ Enhanced Styles -->
+  <style>
+    /* Modal Animation */
+    .modal-active {
+      opacity: 1;
+      transform: scale(1);
+    }
+    
+    /* Toast Animation - Perfect Center */
+    .toast-animate {
+      animation: toastSlide 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    
+    @keyframes toastSlide {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Smooth backdrop blur */
+    .backdrop-blur-sm {
+      backdrop-filter: blur(8px);
+    }
+
+    /* Dark mode support */
+    @media (prefers-color-scheme: dark) {
+      .modal-content {
+        background-color: #1f2937;
+      }
+      #toast > div {
+        background-color: #374151;
+        border: 1px solid #4b5563;
+      }
+    }
+  </style>
+
+  <!-- ✅ Table Script -->
+  <script>
+    function addRow() {
+      const tableBody = document.getElementById("table-body");
+
+      const row = document.createElement("tr");
+
+      row.innerHTML = `
+        <td class="border border-gray-800 px-3 py-2 relative">
+          <input type="text" class="w-full text-xs px-1 bg-transparent text-left focus:outline-none border-0 pr-6 font-bold" placeholder="Enter subject name" />
+          <button onclick="this.closest('tr').remove(); calculateGrandTotal()" class="absolute right-1 top-1/2 transform -translate-y-1/2 text-red-500 hover:text-red-700 transition-colors no-print" title="Delete row">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+            </svg>
+          </button>
+        </td>
+        <td class="border border-gray-800 px-1 py-2">
+          <input type="number" class="w-full text-xs px-1 bg-transparent text-center focus:outline-none border-0 test1 font-bold" oninput="updateTotal(this)" max="20" />
+        </td>
+        <td class="border border-gray-800 px-1 py-2">
+          <input type="number" class="w-full text-xs px-1 bg-transparent text-center focus:outline-none border-0 test2 font-bold" oninput="updateTotal(this)" max="20" />
+        </td>
+        <td class="border border-gray-800 px-1 py-2">
+          <input type="number" class="w-full text-xs px-1 bg-transparent text-center focus:outline-none border-0 exam font-bold" oninput="updateTotal(this)" max="60" />
+        </td>
+        <td class="border border-gray-800 px-1 py-2">
+          <input type="number" class="w-full text-xs px-1 bg-transparent text-center focus:outline-none border-0 total font-bold" readonly />
+        </td>
+        <td class="border border-gray-800 px-1 py-2">
+          <input type="number" class="w-full text-xs px-1 bg-transparent text-center focus:outline-none border-0 font-bold" />
+        </td>
+        <td class="border border-gray-800 px-1 py-2">
+          <select class="w-full text-xs px-1 bg-transparent text-center focus:outline-none border-0 no-arrows font-bold">
+            <option value="">--</option>
+            <option>A</option><option>B</option><option>C</option>
+            <option>D</option><option>E</option><option>F</option>
+          </select>
+        </td>
+        <td class="border border-gray-800 px-2 py-2">
+          <select class="w-full text-xs px-1 bg-transparent text-center focus:outline-none border-0 no-arrows font-bold">
+            <option value="">--</option>
+            <option>Excellent</option>
+            <option>Very Good</option>
+            <option>Good</option>
+            <option>Fair</option>
+            <option>Poor</option>
+            <option>Fail</option>
+          </select>
+        </td>
+      `;
+
+      tableBody.appendChild(row);
+    }
+
+    function updateTotal(input) {
+      const row = input.closest("tr");
+      const test1 = parseFloat(row.querySelector(".test1")?.value || 0);
+      const test2 = parseFloat(row.querySelector(".test2")?.value || 0);
+      const exam = parseFloat(row.querySelector(".exam")?.value || 0);
+      const total = test1 + test2 + exam;
+      row.querySelector(".total").value = total;
+      calculateGrandTotal();
+    }
+
+    function calculateGrandTotal() {
+      const totals = document.querySelectorAll(".total");
+      let sum = 0;
+      totals.forEach(input => {
+        const val = parseFloat(input.value || 0);
+        sum += val;
+      });
+      document.getElementById("total-sum").value = sum;
+    }
+  </script>
+    
+<!-- ✅ Enhanced Modal & Export Script -->
+<script>
+  /* ---------------------------
+     World-Class Modal Functions
+     --------------------------- */
+  function openExportModal() {
+    const modal = document.getElementById("exportModal");
+    const modalContent = document.getElementById("modalContent");
+    
+    modal.classList.remove("hidden");
+    document.body.style.overflow = 'hidden';
+    
+    setTimeout(() => {
+      modal.style.opacity = "1";
+      modalContent.classList.add("modal-active");
+    }, 10);
+  }
+
+  function closeExportModal() {
+    const modal = document.getElementById("exportModal");
+    const modalContent = document.getElementById("modalContent");
+    
+    modalContent.classList.remove("modal-active");
+    modal.style.opacity = "0";
+    
+    setTimeout(() => {
+      modal.classList.add("hidden");
+      document.body.style.overflow = 'auto';
+    }, 300);
+  }
+
+  // Close modal when clicking backdrop
+  document.getElementById("exportModal").addEventListener("click", closeExportModal);
+
+  /* ---------------------------
+     Enhanced Toast System
+     --------------------------- */
+  function showToast(message, type = 'success') {
+    const toast = document.getElementById("toast");
+    const toastIcon = document.getElementById("toast-icon");
+    const toastMessage = document.getElementById("toast-message");
+
+    let icon = '';
+    switch(type) {
+      case 'success':
+        icon = `<svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>`;
+        break;
+      case 'error':
+        icon = `<svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>`;
+        break;
+      case 'info':
+        icon = `<svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`;
+        break;
+      case 'loading':
+        icon = `<svg class="w-5 h-5 text-yellow-400 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>`;
+        break;
+    }
+
+    toastIcon.innerHTML = icon;
+    toastMessage.textContent = message;
+    toast.classList.remove("hidden");
+    
+    if (type !== 'loading') {
+      setTimeout(() => {
+        toast.classList.add("hidden");
+      }, 4000);
+    }
+  }
+
+  /* ---------------------------
+     Print Function
+  --------------------------- */
+  function printReport() {
+    closeExportModal();
+    showToast("Preparing for print...", "loading");
+
+    setTimeout(() => {
+      window.print();
+      showToast("Print dialog opened!", "success");
+    }, 700);
+  }
+
+  /* ---------------------------
+     PDF Export Function
+  --------------------------- */
+  async function downloadPDF() {
+    closeExportModal();
+    showToast("Generating PDF document...", "loading");
+
+    try {
+      const clone = prepareExportClone();
+      if (!clone) { showToast("Nothing to export", "error"); return; }
+
+      const wrapper = document.createElement('div');
+      wrapper.style.position = 'fixed';
+      wrapper.style.left = '-9999px';
+      wrapper.style.top = '0';
+      wrapper.style.zIndex = '-9999';
+      wrapper.appendChild(clone);
+      document.body.appendChild(wrapper);
+
+      const canvas = await html2canvas(clone, {
+        scale: 2,
+        logging: false,
+        useCORS: true,
+        allowTaint: true
+      });
+
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF("p", "pt", "a4");
+      const imgData = canvas.toDataURL("image/png");
+      const imgProps = doc.getImageProperties(imgData);
+      const pdfPageWidth = doc.internal.pageSize.getWidth();
+      const pdfPageHeight = doc.internal.pageSize.getHeight();
+      const imgRatio = imgProps.width / imgProps.height;
+
+      let renderWidth = pdfPageWidth;
+      let renderHeight = renderWidth / imgRatio;
+
+      if (renderHeight > pdfPageHeight) {
+        renderHeight = pdfPageHeight;
+        renderWidth = renderHeight * imgRatio;
+      }
+
+      doc.addImage(imgData, "PNG", (pdfPageWidth - renderWidth) / 2, 0, renderWidth, renderHeight);
+      const fileName = generateFileName() + ".pdf";
+      doc.save(fileName);
+
+      document.body.removeChild(wrapper);
+      showToast("PDF downloaded successfully!", "success");
+    } catch (error) {
+      console.error("PDF generation error:", error);
+      showToast("Failed to generate PDF", "error");
+    }
+  }
+
+  /* ---------------------------
+     Utility Functions
+  --------------------------- */
+  function generateFileName() {
+    const nameInput = Array.from(document.querySelectorAll("input"))
+      .find(el => (el.placeholder && /surname|name/i.test(el.placeholder)) || /name/i.test(el.previousElementSibling?.textContent || ''));
+    const name = (nameInput?.value || "report").toString().trim().replace(/\s+/g, '_') || "report";
+    const date = new Date().toISOString().split('T')[0];
+    return `${name}_${date}`;
+  }
+
+  function prepareExportClone() {
+    if (typeof calculateGrandTotal === 'function') {
+      try { calculateGrandTotal(); } catch(e) { /* ignore */ }
+    }
+
+    const original = document.querySelector(".max-w-[794px]");
+    if (!original) return null;
+    const clone = original.cloneNode(true);
+
+    const originalFields = original.querySelectorAll('input, textarea, select');
+    const cloneFields = clone.querySelectorAll('input, textarea, select');
+
+    for (let i = 0; i < cloneFields.length; i++) {
+      const orig = originalFields[i];
+      const cln = cloneFields[i];
+
+      if (!orig || !cln) continue;
+
+      let value = "";
+      if (orig.tagName === "SELECT") {
+        const opt = orig.options[orig.selectedIndex];
+        value = opt ? opt.text : "";
+      } else {
+        value = orig.value || orig.placeholder || "";
+      }
+
+      const span = document.createElement("span");
+      span.textContent = value;
+
+      try {
+        const cs = window.getComputedStyle(orig);
+        span.style.fontFamily = cs.fontFamily;
+        span.style.fontSize = cs.fontSize;
+        span.style.fontWeight = cs.fontWeight;
+        span.style.color = cs.color;
+        span.style.textAlign = cs.textAlign;
+        span.style.display = cs.display === 'block' ? 'block' : 'inline-block';
+        span.style.width = cln.style.width || cs.width;
+        span.style.padding = cs.padding;
+        span.style.margin = cs.margin;
+      } catch (e) {}
+
+      cln.replaceWith(span);
+    }
+
+    clone.querySelectorAll('.no-print, button, [onclick*="this.closest(\'tr\')"], .group').forEach(el => el.remove());
+    clone.querySelectorAll('#exportModal, #toast').forEach(el => el.remove());
+    clone.querySelectorAll('[tabindex]').forEach(e => e.removeAttribute('tabindex'));
+    clone.querySelectorAll('[role]').forEach(e => e.removeAttribute('role'));
+
+    return clone;
+  }
+
+  /* ---------------------------
+     WhatsApp Share
+  --------------------------- */
+  async function shareToWhatsApp() {
+    closeExportModal();
+    showToast("Preparing to share...", "loading");
+
+    try {
+      const clone = prepareExportClone();
+      if (!clone) { showToast("Nothing to share", "error"); return; }
+
+      const wrapper = document.createElement('div');
+      wrapper.style.position = 'fixed';
+      wrapper.style.left = '-9999px';
+      wrapper.style.top = '0';
+      wrapper.style.zIndex = '-9999';
+      wrapper.appendChild(clone);
+      document.body.appendChild(wrapper);
+
+      const canvas = await html2canvas(clone, {
+        scale: 2,
+        logging: false,
+        useCORS: true,
+        allowTaint: true
+      });
+
+      canvas.toBlob(async (blob) => {
+        try {
+          if (navigator.share && navigator.canShare) {
+            const file = new File([blob], `${generateFileName()}.png`, { type: 'image/png' });
+            
+            if (navigator.canShare({ files: [file] })) {
+              await navigator.share({
+                files: [file],
+                title: 'Student Report Card',
+                text: 'Check out this student report card!'
+              });
+              showToast("Shared successfully!", "success");
+            } else {
+              fallbackWhatsAppShare(canvas);
+            }
+          } else {
+            fallbackWhatsAppShare(canvas);
+          }
+        } catch (error) {
+          console.error("Share error:", error);
+          fallbackWhatsAppShare(canvas);
+        }
+
+        document.body.removeChild(wrapper);
+      }, 'image/png');
+    } catch (error) {
+      console.error("WhatsApp share error:", error);
+      showToast("Failed to share", "error");
+    }
+  }
+
+  function fallbackWhatsAppShare(canvas) {
+    const imageDataUrl = canvas.toDataURL("image/png");
+    
+    const fileName = generateFileName() + ".png";
+    const downloadLink = document.createElement("a");
+    downloadLink.href = imageDataUrl;
+    downloadLink.download = fileName;
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+
+    const message = "Check out this student report card!";
+    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
+    
+    showToast("Image downloaded. Opening WhatsApp...", "info");
+  }
+
+  /* ---------------------------
+     Keyboard Navigation
+     --------------------------- */
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeExportModal();
+  });
+</script>
+
+
+</body>
+</html>
