@@ -104,24 +104,23 @@
         margin-top: 0.5rem !important; /* REDUCE TOP MARGIN TO PUSH UP */
       }
 
-      /* FIX TEXT - INCREASE SIZE AND PROPER ALIGNMENT */
-      .flex-1.text-xs.font-semibold.tracking-wide {
-        order: 1 !important;
-        margin-left: 0px !important;
-        margin-right: auto !important;
-        margin-top: 10px !important; /* REDUCE TOP MARGIN */
-        text-align: left !important;
-        flex: 1 !important;
-        max-width: none !important;
-        padding-right: 10px !important;
-        word-wrap: break-word !important;
-        overflow-wrap: break-word !important;
-        width: auto !important;
-        font-size: 13px !important; /* INCREASE TEXT SIZE */
-        font-weight: bold !important;
-        line-height: 1.2 !important;
-      }
-
+/* FIX TEXT - INCREASE SIZE AND SHIFT MORE LEFT */
+.flex-1.text-xs.font-semibold.tracking-wide {
+  order: 1 !important;
+  margin-left: -50px !important; /* SHIFT MORE TO LEFT */
+  margin-right: auto !important;
+  margin-top: 10px !important;
+  text-align: left !important;
+  flex: 1 !important;
+  max-width: none !important;
+  padding-right: 10px !important;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+  width: auto !important;
+  font-size: 13px !important;
+  font-weight: bold !important;
+  line-height: 1.2 !important;
+}
       /* FIX BOX - PROPER STYLING AND POSITION */
       .border.border-black.px-4.py-2.text-sm.font-semibold.w-56 {
         order: 2 !important;
