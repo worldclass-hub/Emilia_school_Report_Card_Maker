@@ -1,1 +1,1 @@
-web: gunicorn emilia_report.wsgi
+web: gunicorn emilia_report.wsgi:application

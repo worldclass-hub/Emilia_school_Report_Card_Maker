@@ -115,11 +115,11 @@
       }
       
       /* Make the container use proper spacing */
-      .mt-10.flex.justify-between.items-start.w-full.max-w-\[794px\].gap-8 {
+      .mt-10.flex.justify-between.items-start.w-full.max-w-\[794px\].gap-4 {
         display: flex !important; /* BRING BACK */
         justify-content: space-between !important;
         align-items: flex-start !important;
-        gap: 80px !important; /* BIG GAP for print */
+        gap: 50px !important; /* BIG GAP */
       }
       
       /* Compress table further but readable */
@@ -437,16 +437,16 @@
     </div>
 
     <!-- Row containing: Editable Text (left) + Terminal Fees Box (right and raised higher) -->
-<div class="mt-10 flex justify-between items-start w-full max-w-[794px] gap-8">
+<div class="mt-10 flex justify-between items-start w-full max-w-[794px] gap-4">
   <!-- Editable Notice Text -->
-  <div class="flex-1 text-xs font-semibold tracking-wide mr-4">
+  <div class="flex-1 text-xs font-semibold tracking-wide">
     <input type="text"
       value="SCHOOL FEES SHOULD BE PAID ON OR BEFORE RESUMPTION. THANKS"
       class="bg-transparent w-full text-left text-xs font-extrabold text-black focus:outline-none" />
   </div>
 
   <!-- Terminal Fees Box (lifted higher) -->
-  <div class="border border-black px-4 py-2 text-sm font-semibold w-56 shrink-0 mt-[-62px] ml-4">
+  <div class="border border-black px-4 py-2 text-sm font-semibold w-56 shrink-0 mt-[-62px]">
     <p class="mb-1">TERMINAL FEES</p>
 
     <div class="flex justify-between items-center mb-1 whitespace-nowrap">
