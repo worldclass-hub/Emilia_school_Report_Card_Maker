@@ -38,7 +38,15 @@ SECRET_KEY = 'django-insecure-wy%($%_9zfh!4)oki6md(eg*-%h%ho**giot_x@&biio&sfpyq
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+
+ALLOWED_HOSTS = ["*"]
+
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://emilia-school-report-card-maker.onrender.com',
+    # 'https://9eb1-197-211-59-86.ngrok-free.app',
+    'http://127.0.0.1:8000',
+]
 
 
 # Application definition
