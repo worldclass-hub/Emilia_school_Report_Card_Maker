@@ -7,11 +7,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Report Card - Header</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <style>
+<style>
     @media print {
       body {
         margin: 0;
         padding: 0;
+        zoom: 0.95;
       }
       .no-print {
         display: none !important;
@@ -24,6 +25,148 @@
       }
       select::-ms-expand {
         display: none;
+      }
+      
+      /* Compress everything for printing */
+      .max-w-\[794px\] {
+        max-width: 794px !important;
+        margin: 0 auto !important;
+        padding: 17px !important;
+        transform: scale(0.99);
+        transform-origin: top center;
+      }
+      
+      /* Reduce spacing between sections - but not too much */
+      .mb-2, .mt-6, .mt-8, .mt-10 {
+        margin-top: 0.85rem !important;
+        margin-bottom: 0.85rem !important;
+      }
+      
+      /* Compress table - but readable */
+      table {
+        font-size: 10.4px !important;
+      }
+      
+      /* Reduce header size but still visible */
+      .text-2xl, .text-3xl {
+        font-size: 1.48rem !important;
+      }
+      
+      /* Compress input fields spacing */
+      .mt-6 {
+        margin-top: 0.6rem !important;
+      }
+      
+      /* Ensure everything fits in one page */
+      html, body {
+        height: auto !important;
+        overflow: hidden !important;
+      }
+      
+      .max-w-\[794px\] {
+        page-break-inside: avoid;
+        break-inside: avoid;
+      }
+
+      /* Additional compression for print */
+      /* Reduce all font sizes but not too small */
+      * {
+        font-size: 98.5% !important;
+      }
+      
+      /* Compress the main container */
+      .max-w-\[794px\] {
+        padding: 10px !important;
+        margin-top: -2px !important;
+      }
+      
+      /* Reduce logo size back */
+      .h-32 {
+        height: 110px !important;
+      }
+      .w-28 {
+        width: 96px !important;
+      }
+      
+      /* Push image to the right AND carry am go up */
+      .flex.items-center.justify-center {
+        justify-content: flex-start !important;
+        padding-left: 20px !important;
+        margin-top: -15px !important;
+      }
+      
+      /* BRING THEM BACK - Text to LEFT */
+      .flex-1.text-xs.font-semibold.tracking-wide {
+        order: 1 !important;
+        margin-left: 0px !important;
+        margin-right: auto !important;
+        text-align: left !important;
+        flex: 1 !important;
+        max-width: 350px !important;
+        padding-right: 20px !important;
+      }
+      
+      /* BRING THEM BACK - Box to RIGHT */
+      .border.border-black.px-4.py-2.text-sm.font-semibold.w-56 {
+        order: 2 !important;
+        margin-left: auto !important;
+        margin-right: 0px !important;
+        flex-shrink: 0 !important;
+      }
+      
+      /* Make the container use proper spacing */
+      .mt-10.flex.justify-between.items-start.w-full.max-w-\[794px\].gap-8 {
+        display: flex !important; /* BRING BACK */
+        justify-content: space-between !important;
+        align-items: flex-start !important;
+        gap: 80px !important; /* BIG GAP for print */
+      }
+      
+      /* Compress table further but readable */
+      .text-\[11px\] {
+        font-size: 9.4px !important;
+      }
+      
+      /* Reduce spacing in table */
+      .py-1 {
+        padding-top: 0.2rem !important;
+        padding-bottom: 0.2rem !important;
+      }
+      
+      /* Compress terminal fees box */
+      .mt-\[-62px\] {
+        margin-top: -40px !important;
+      }
+      
+      .w-56 {
+        width: 208px !important;
+      }
+
+      /* Ensure single page */
+      @page {
+        margin: 0.34cm;
+        size: A4;
+      }
+      
+      /* Force single page */
+      body, html {
+        width: 210mm;
+        height: 297mm;
+        overflow: hidden !important;
+      }
+      
+      /* Hide everything except the report */
+      body > *:not(.max-w-\[794px\]) {
+        display: none !important;
+      }
+      
+      .max-w-\[794px\] {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 10mm !important;
+        box-shadow: none !important;
+        border: none !important;
       }
     }
     
@@ -51,7 +194,18 @@
         padding-right: 2.5rem;
       }
     }
-  </style>
+
+    /* Special print optimization */
+    body.printing {
+      zoom: 0.97;
+    }
+
+    body.printing .max-w-\[794px\] {
+      transform: scale(0.97);
+      transform-origin: top center;
+      margin: 0 auto;
+    }
+</style>
 </head>
 <body class="bg-white flex justify-center p-6 print:p-0">
 
@@ -174,19 +328,19 @@
       </div>
     </div>
 
-    <!-- RESULT TABLE -->
-    <div class="mt-10">
-      <table class="w-full border-2 border-gray-800 text-sm text-center">
+       <!-- RESULT TABLE -->
+    <div class="mt-8">
+      <table class="w-full border-2 border-gray-800 text-[11px] text-center">
         <thead class="bg-gray-200">
           <tr>
-            <th class="border border-gray-800 px-3 py-2 font-bold w-[30%]">SUBJECT</th>
-            <th class="border border-gray-800 px-1 py-2 font-bold w-[9%]">TEST 1</th>
-            <th class="border border-gray-800 px-1 py-2 font-bold w-[9%]">TEST 2</th>
-            <th class="border border-gray-800 px-1 py-2 font-bold w-[9%]">EXAM</th>
-            <th class="border border-gray-800 px-1 py-2 font-bold w-[9%]">TOTAL</th>
-            <th class="border border-gray-800 px-1 py-2 font-bold w-[9%]">CLASS-AVE</th>
-            <th class="border border-gray-800 px-1 py-2 font-bold w-[9%]">GRADE</th>
-            <th class="border border-gray-800 px-1 py-2 font-bold w-[16%]">REMARKS</th>
+            <th class="border border-gray-800 px-2 py-1 font-bold w-[30%]">SUBJECT</th>
+            <th class="border border-gray-800 px-0 py-1 font-bold w-[9%]">TEST 1</th>
+            <th class="border border-gray-800 px-0 py-1 font-bold w-[9%]">TEST 2</th>
+            <th class="border border-gray-800 px-0 py-1 font-bold w-[9%]">EXAM</th>
+            <th class="border border-gray-800 px-0 py-1 font-bold w-[9%]">TOTAL</th>
+            <th class="border border-gray-800 px-0 py-1 font-bold w-[9%]">CLASS-AVE</th>
+            <th class="border border-gray-800 px-0 py-1 font-bold w-[9%]">GRADE</th>
+            <th class="border border-gray-800 px-1 py-1 font-bold w-[16%]">REMARKS</th>
           </tr>
         </thead>
         <tbody id="table-body" class="bg-white">
@@ -194,15 +348,15 @@
         </tbody>
         <tfoot>
           <tr class="font-bold bg-gray-100">
-            <td colspan="4" class="border border-gray-800 px-2 py-2 text-right pr-4">TOTAL</td>
-            <td class="border border-gray-800 px-1 py-2">
-              <input type="number" id="total-sum" class="w-full text-xs px-1 text-center bg-transparent focus:outline-none font-bold" readonly />
+            <td colspan="4" class="border border-gray-800 px-2 py-1 text-right pr-3">TOTAL</td>
+            <td class="border border-gray-800 px-0 py-1">
+              <input type="number" id="total-sum" class="w-full text-[10px] px-0 text-center bg-transparent focus:outline-none font-bold" readonly />
             </td>
-            <td colspan="3" class="border border-gray-800 px-1 py-2"></td>
+            <td colspan="3" class="border border-gray-800 px-0 py-1"></td>
           </tr>
         </tfoot>
       </table>
-      <button onclick="addRow()" class="mt-4 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition-colors no-print">
+      <button onclick="addRow()" class="mt-3 bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700 transition-colors no-print text-xs">
         ➕ Add Row
       </button>
     </div>
@@ -283,16 +437,16 @@
     </div>
 
     <!-- Row containing: Editable Text (left) + Terminal Fees Box (right and raised higher) -->
-<div class="mt-10 flex justify-between items-start w-full max-w-[794px] gap-4">
+<div class="mt-10 flex justify-between items-start w-full max-w-[794px] gap-8">
   <!-- Editable Notice Text -->
-  <div class="flex-1 text-xs font-semibold tracking-wide">
+  <div class="flex-1 text-xs font-semibold tracking-wide mr-4">
     <input type="text"
       value="SCHOOL FEES SHOULD BE PAID ON OR BEFORE RESUMPTION. THANKS"
       class="bg-transparent w-full text-left text-xs font-extrabold text-black focus:outline-none" />
   </div>
 
   <!-- Terminal Fees Box (lifted higher) -->
-  <div class="border border-black px-4 py-2 text-sm font-semibold w-56 shrink-0 mt-[-62px]">
+  <div class="border border-black px-4 py-2 text-sm font-semibold w-56 shrink-0 mt-[-62px] ml-4">
     <p class="mb-1">TERMINAL FEES</p>
 
     <div class="flex justify-between items-center mb-1 whitespace-nowrap">
@@ -513,38 +667,38 @@
       const row = document.createElement("tr");
 
       row.innerHTML = `
-        <td class="border border-gray-800 px-3 py-2 relative">
-          <input type="text" class="w-full text-xs px-1 bg-transparent text-left focus:outline-none border-0 pr-6 font-bold" placeholder="Enter subject name" />
+        <td class="border border-gray-800 px-2 py-1 relative">
+          <input type="text" class="w-full text-[10px] px-1 bg-transparent text-left focus:outline-none border-0 pr-5 font-bold" placeholder="Enter subject name" />
           <button onclick="this.closest('tr').remove(); calculateGrandTotal()" class="absolute right-1 top-1/2 transform -translate-y-1/2 text-red-500 hover:text-red-700 transition-colors no-print" title="Delete row">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
             </svg>
           </button>
         </td>
-        <td class="border border-gray-800 px-1 py-2">
-          <input type="number" class="w-full text-xs px-1 bg-transparent text-center focus:outline-none border-0 test1 font-bold" oninput="updateTotal(this)" max="20" />
+        <td class="border border-gray-800 px-0 py-1">
+          <input type="number" class="w-full text-[10px] px-0 bg-transparent text-center focus:outline-none border-0 test1 font-bold" oninput="updateTotal(this)" max="20" />
         </td>
-        <td class="border border-gray-800 px-1 py-2">
-          <input type="number" class="w-full text-xs px-1 bg-transparent text-center focus:outline-none border-0 test2 font-bold" oninput="updateTotal(this)" max="20" />
+        <td class="border border-gray-800 px-0 py-1">
+          <input type="number" class="w-full text-[10px] px-0 bg-transparent text-center focus:outline-none border-0 test2 font-bold" oninput="updateTotal(this)" max="20" />
         </td>
-        <td class="border border-gray-800 px-1 py-2">
-          <input type="number" class="w-full text-xs px-1 bg-transparent text-center focus:outline-none border-0 exam font-bold" oninput="updateTotal(this)" max="60" />
+        <td class="border border-gray-800 px-0 py-1">
+          <input type="number" class="w-full text-[10px] px-0 bg-transparent text-center focus:outline-none border-0 exam font-bold" oninput="updateTotal(this)" max="60" />
         </td>
-        <td class="border border-gray-800 px-1 py-2">
-          <input type="number" class="w-full text-xs px-1 bg-transparent text-center focus:outline-none border-0 total font-bold" readonly />
+        <td class="border border-gray-800 px-0 py-1">
+          <input type="number" class="w-full text-[10px] px-0 bg-transparent text-center focus:outline-none border-0 total font-bold" readonly />
         </td>
-        <td class="border border-gray-800 px-1 py-2">
-          <input type="number" class="w-full text-xs px-1 bg-transparent text-center focus:outline-none border-0 font-bold" />
+        <td class="border border-gray-800 px-0 py-1">
+          <input type="number" class="w-full text-[10px] px-0 bg-transparent text-center focus:outline-none border-0 font-bold" />
         </td>
-        <td class="border border-gray-800 px-1 py-2">
-          <select class="w-full text-xs px-1 bg-transparent text-center focus:outline-none border-0 no-arrows font-bold">
+        <td class="border border-gray-800 px-0 py-1">
+          <select class="w-full text-[10px] px-0 bg-transparent text-center focus:outline-none border-0 no-arrows font-bold">
             <option value="">--</option>
             <option>A</option><option>B</option><option>C</option>
             <option>D</option><option>E</option><option>F</option>
           </select>
         </td>
-        <td class="border border-gray-800 px-2 py-2">
-          <select class="w-full text-xs px-1 bg-transparent text-center focus:outline-none border-0 no-arrows font-bold">
+        <td class="border border-gray-800 px-1 py-1">
+          <select class="w-full text-[10px] px-0 bg-transparent text-center focus:outline-none border-0 no-arrows font-bold">
             <option value="">--</option>
             <option>Excellent</option>
             <option>Very Good</option>
@@ -578,6 +732,13 @@
       });
       document.getElementById("total-sum").value = sum;
     }
+
+    // Auto-add 19 rows for SS1 class
+    document.addEventListener('DOMContentLoaded', function() {
+      for (let i = 0; i < 19; i++) {
+        addRow();
+      }
+    });
   </script>
     
 <!-- ✅ Enhanced Modal & Export Script -->
@@ -656,10 +817,24 @@
     closeExportModal();
     showToast("Preparing for print...", "loading");
 
+    // Force calculate totals before printing
+    if (typeof calculateGrandTotal === 'function') {
+      calculateGrandTotal();
+    }
+
     setTimeout(() => {
+      // Add a class to body for print optimization
+      document.body.classList.add('printing');
+      
+      // Print the document
       window.print();
-      showToast("Print dialog opened!", "success");
-    }, 700);
+      
+      // Remove the class after printing
+      setTimeout(() => {
+        document.body.classList.remove('printing');
+        showToast("Print completed!", "success");
+      }, 1000);
+    }, 1000);
   }
 
   /* ---------------------------
@@ -783,7 +958,7 @@
   /* ---------------------------
      WhatsApp Share
   --------------------------- */
-  async function shareToWhatsApp() {
+  async function shareReport() {
     closeExportModal();
     showToast("Preparing to share...", "loading");
 
