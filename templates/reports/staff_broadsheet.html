@@ -1,0 +1,86 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Broadsheet - Emilia Foremost</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="py-6 px-4 sm:px-8 bg-white/80 backdrop-blur-sm shadow-sm">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="w-12 h-12 bg-gradient-to-r from-primary to-accent rounded-xl flex items-center justify-center">
+                    <i class="fas fa-chart-bar text-white text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold text-secondary">Staff Broadsheet</h1>
+                    <p class="text-sm text-gray-600">View and manage class performance data</p>
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-3">
+                <a href="{% url 'general_exam_page' %}" class="text-gray-700 hover:text-primary font-medium flex items-center">
+                    <i class="fas fa-arrow-left mr-2"></i> Back to Portal
+                </a>
+                <a href="{% url 'staff_logout' %}" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition flex items-center">
+                    <i class="fas fa-sign-out-alt mr-2"></i> Sign Out
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Content -->
+    <main class="flex-1 px-6 py-10 max-w-7xl mx-auto w-full">
+        <h2 class="text-3xl font-semibold text-gray-800 mb-8 text-center">Class Broadsheet</h2>
+
+        <!-- Broadsheet Table -->
+        <div class="bg-white rounded-2xl shadow-lg overflow-x-auto">
+            <table class="min-w-full border border-gray-200">
+                <thead class="bg-blue-600 text-white">
+                    <tr>
+                        <th class="py-3 px-4 text-left">#</th>
+                        <th class="py-3 px-4 text-left">Student Name</th>
+                        <th class="py-3 px-4 text-left">Class</th>
+                        <th class="py-3 px-4 text-left">Subject</th>
+                        <th class="py-3 px-4 text-left">Score</th>
+                        <th class="py-3 px-4 text-left">Grade</th>
+                        <th class="py-3 px-4 text-left">Remark</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200">
+                    <!-- Example Rows -->
+                    <tr class="hover:bg-blue-50">
+                        <td class="py-3 px-4">1</td>
+                        <td class="py-3 px-4">John Doe</td>
+                        <td class="py-3 px-4">JSS 2A</td>
+                        <td class="py-3 px-4">Mathematics</td>
+                        <td class="py-3 px-4">88</td>
+                        <td class="py-3 px-4 font-medium text-green-600">A</td>
+                        <td class="py-3 px-4">Excellent</td>
+                    </tr>
+                    <tr class="hover:bg-blue-50">
+                        <td class="py-3 px-4">2</td>
+                        <td class="py-3 px-4">Mary Johnson</td>
+                        <td class="py-3 px-4">JSS 2B</td>
+                        <td class="py-3 px-4">English</td>
+                        <td class="py-3 px-4">72</td>
+                        <td class="py-3 px-4 font-medium text-blue-600">B</td>
+                        <td class="py-3 px-4">Very Good</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-secondary text-white py-6 text-center">
+        <p class="text-gray-300 text-sm">&copy; 2025 Emilia Foremost. All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html>

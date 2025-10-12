@@ -1,0 +1,196 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Staff Portal | PC Access Only</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          animation: {
+            'float': 'float 6s ease-in-out infinite',
+            'glow': 'glow 2s ease-in-out infinite alternate',
+            'shake': 'shake 0.5s ease-in-out',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-10px)' },
+            },
+            glow: {
+              'from': { boxShadow: '0 0 20px #3b82f6' },
+              'to': { boxShadow: '0 0 30px #1d4ed8, 0 0 40px #60a5fa' }
+            },
+            shake: {
+              '0%, 100%': { transform: 'translateX(0)' },
+              '25%': { transform: 'translateX(-5px)' },
+              '75%': { transform: 'translateX(5px)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+
+<body class="bg-gradient-to-br from-blue-900 to-indigo-900 min-h-screen flex items-center justify-center p-4">
+  <!-- STRICT PC-ONLY MODAL -->
+  <div id="deviceModal" class="fixed inset-0 bg-red-900 z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8 text-center">
+      <div class="text-red-500 text-6xl mb-4">
+        <i class="fas fa-ban"></i>
+      </div>
+      <h2 class="text-2xl font-bold text-gray-800 mb-4">🚫 PC Access Only</h2>
+      <p class="text-gray-600 mb-6">
+        <strong>This portal requires a desktop or laptop computer.</strong> 
+        Tablets, iPads, and smartphones are strictly blocked.
+      </p>
+
+      <div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+        <p class="text-red-700 text-sm font-medium">
+          Detected Device: <span id="detectedDevice" class="font-bold">Unknown Device</span>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN LOGIN -->
+  <div id="mainContent" class="w-full max-w-4xl">
+    <div class="bg-white/10 backdrop-blur-lg rounded-3xl shadow-2xl overflow-hidden border border-white/20">
+      <div class="flex flex-col md:flex-row">
+        
+        <!-- Left Section -->
+        <div class="md:w-1/2 bg-gradient-to-br from-blue-800 to-purple-800 p-8 text-white flex flex-col justify-between">
+          <div>
+            <div class="flex items-center mb-8">
+              <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center mr-3">
+                <i class="fas fa-graduation-cap text-2xl"></i>
+              </div>
+              <h1 class="text-2xl font-bold">EduPortal Pro</h1>
+            </div>
+
+            <h2 class="text-3xl font-bold mb-4">Staff Portal Access</h2>
+            <p class="text-blue-200 mb-6">
+              Secure login for authorized staff only. Access exam reports and results.
+            </p>
+          </div>
+
+          <div class="bg-black/20 rounded-xl p-4 border border-white/10">
+            <p class="text-sm text-blue-200">
+              <i class="fas fa-exclamation-circle mr-2"></i>
+              For security reasons, access is restricted to authorized personnel only.
+            </p>
+          </div>
+        </div>
+
+        <!-- Right Section - Login Form -->
+        <div class="md:w-1/2 p-8 bg-white">
+          <div class="text-center mb-8">
+            <h2 class="text-2xl font-bold text-gray-800">Staff Login</h2>
+            <p class="text-gray-600">Enter your credentials to continue</p>
+          </div>
+
+          <form method="POST" action="{% url 'staff_login' %}" class="space-y-6">
+            {% csrf_token %}
+            <div>
+              <label for="username" class="block text-sm font-medium text-gray-700 mb-2">Username</label>
+              <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <i class="fas fa-user text-gray-400"></i>
+                </div>
+                <input type="text" id="username" name="username" required
+                  class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                  placeholder="Enter your username">
+              </div>
+            </div>
+
+            <div>
+              <label for="password" class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+              <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <i class="fas fa-lock text-gray-400"></i>
+                </div>
+                <input type="password" id="password" name="password" required
+                  class="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                  placeholder="Enter your password">
+                <button type="button" id="togglePassword" class="absolute inset-y-0 right-0 pr-3 flex items-center">
+                  <i class="fas fa-eye text-gray-400 hover:text-gray-600"></i>
+                </button>
+              </div>
+            </div>
+
+            {% if messages %}
+            <div class="text-center">
+              {% for message in messages %}
+                <p class="text-red-600 font-semibold">{{ message }}</p>
+              {% endfor %}
+            </div>
+            {% endif %}
+
+            <button type="submit"
+              class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3 px-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center">
+              Sign In
+            </button>
+          </form>
+
+          <div class="mt-8 pt-6 border-t border-gray-200 text-center">
+            <p class="text-gray-600 mb-4">Don’t have login credentials?</p>
+            <button id="requestAccessBtn"
+              class="w-full bg-gradient-to-r from-green-500 to-emerald-500 text-white py-3 px-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center">
+              <i class="fab fa-whatsapp mr-2 text-lg"></i>
+              Request Access via WhatsApp
+            </button>
+            <p class="text-xs text-gray-500 mt-3">Contact admin to get your Staff ID and Password</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Password toggle
+    const togglePassword = document.getElementById("togglePassword");
+    const passwordField = document.getElementById("password");
+    togglePassword.addEventListener("click", () => {
+      const type = passwordField.getAttribute("type") === "password" ? "text" : "password";
+      passwordField.setAttribute("type", type);
+      togglePassword.querySelector("i").classList.toggle("fa-eye-slash");
+    });
+
+    // WhatsApp request
+    document.getElementById("requestAccessBtn")?.addEventListener("click", function() {
+      const msg = encodeURIComponent("Hello, I am a staff and I need my Staff ID and password.");
+      window.open(`https://wa.me/2349057147497?text=${msg}`, "_blank");
+    });
+
+    // Basic device enforcement
+    function isPC() {
+      const ua = navigator.userAgent.toLowerCase();
+      const isMobile = /android|iphone|ipad|ipod|mobile|tablet/.test(ua);
+      const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+      return !isMobile && !hasTouch && window.innerWidth > 1024;
+    }
+
+    function enforcePCOnly() {
+      const modal = document.getElementById("deviceModal");
+      const mainContent = document.getElementById("mainContent");
+      if (isPC()) {
+        modal.classList.add("hidden");
+        mainContent.classList.remove("hidden");
+      } else {
+        modal.classList.remove("hidden");
+        mainContent.classList.add("hidden");
+        document.getElementById("detectedDevice").textContent = "Mobile/Tablet";
+      }
+    }
+
+    window.addEventListener("load", enforcePCOnly);
+    window.addEventListener("resize", enforcePCOnly);
+  </script>
+</body>
+</html>

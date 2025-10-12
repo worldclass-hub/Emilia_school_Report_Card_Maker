@@ -15,18 +15,20 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from . import settings
-import reports
-from django.conf.urls.static import static
 from django.urls import path, include
+from reports import views  # import your views (like staff_login)
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
-    path('', include('reports.urls')),
-
     path('admin/', admin.site.urls),
-]
 
+    # 👇 Make login page the home route
+    path('', views.staff_login, name='home'),
+
+    # 👇 Include other app routes (like broadsheet, etc.)
+    path('staff/', include('reports.urls')),
+]
 
 
 
