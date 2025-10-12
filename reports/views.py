@@ -41,3 +41,13 @@ def exam_result_view(request):
 @login_required(login_url="/")
 def staff_broadsheet(request):
     return render(request, "reports/staff_broadsheet.html")
+
+
+
+@login_required(login_url="/")
+def about_us(request):
+    return render(request, "reports/about_us.html")
+
+@login_required(login_url="/")
+def academic_calendar(request):
+    return render(request, "reports/academic_calendar.html")

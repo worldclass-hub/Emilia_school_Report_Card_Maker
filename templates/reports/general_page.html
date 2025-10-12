@@ -55,11 +55,16 @@
         .mobile-lock body > *:not(#deviceModal) {
             filter: blur(3px);
         }
+        
+        /* Completely hide main content when blocked */
+        .content-hidden {
+            display: none !important;
+        }
     </style>
 </head>
 <body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen flex flex-col">
     <!-- Device Restriction Modal -->
-    <div id="deviceModal" class="fixed inset-0 z-50 flex items-center justify-center modal-overlay hidden">
+    <div id="deviceModal" class="fixed inset-0 z-50 flex items-center justify-center modal-overlay">
         <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full mx-4 p-8 transform transition-all duration-500">
             <div class="text-center mb-6">
                 <div class="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -71,13 +76,12 @@
             <div class="bg-blue-50 p-4 rounded-lg">
                 <p class="text-sm text-blue-700 text-center"><i class="fas fa-info-circle mr-2"></i>For optimal performance and full functionality, please use a desktop computer or laptop with a screen width of at least 1024px.</p>
             </div>
-            <!-- Removed the "Try Anyway" button completely -->
         </div>
     </div>
 
-    <!-- Main Content -->
-    <div class="flex-1 flex flex-col">
-        <!-- Header -->
+    <!-- Main Content - Initially hidden -->
+    <div id="mainContent" class="flex-1 flex flex-col content-hidden">
+        <!-- Your existing header, hero section, and footer content remains the same -->
         <header class="py-6 px-4 sm:px-8 bg-white/80 backdrop-blur-sm shadow-sm">
             <div class="max-w-7xl mx-auto flex justify-between items-center">
                 <div class="flex items-center space-x-3">
@@ -167,7 +171,7 @@
     </div>
 
     <!-- Footer -->
-    <footer class="bg-secondary text-white py-12 px-4">
+    <footer id="mainFooter" class="bg-secondary text-white py-12 px-4 content-hidden">
         <div class="max-w-7xl mx-auto">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div class="md:col-span-2">
@@ -209,8 +213,8 @@
   </a>
 </li>
 {% endif %}
-                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">About Us</a></li>
-                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Academic Calendar</a></li>
+                        <li><a href="{% url 'about_us' %}" class="text-gray-300 hover:text-white transition-colors">About Us</a></li>
+                        <li><a href="{% url 'academic_calendar' %}" class="text-gray-300 hover:text-white transition-colors">Academic Calendar</a></li>
 <li>
   <a href="{% url 'staff_logout' %}" class="text-gray-300 hover:text-white transition-colors">
     Sign Out
@@ -223,15 +227,15 @@
                     <ul class="space-y-3">
                         <li class="flex items-start">
                             <i class="fas fa-map-marker-alt text-primary mt-1 mr-3"></i>
-                            <span class="text-gray-300">123 Education Avenue, Academic City</span>
+                            <span class="text-gray-300">2, Olasupo Avenue, Off Adeyemi Street, Oke-Agbo, Ojo, Lagos</span>
                         </li>
                         <li class="flex items-start">
                             <i class="fas fa-phone text-primary mt-1 mr-3"></i>
-                            <span class="text-gray-300">+1 (555) 123-4567</span>
+                            <span class="text-gray-300">+234 803 339 1900</span>
                         </li>
                         <li class="flex items-start">
                             <i class="fas fa-envelope text-primary mt-1 mr-3"></i>
-                            <span class="text-gray-300">info@emiliaforemost.edu</span>
+                            <span class="text-gray-300">emiliaforemost@gmail.com</span>
                         </li>
                     </ul>
                 </div>
@@ -243,70 +247,104 @@
     </footer>
 
     <script>
-        // Device detection and modal control
+        // Enhanced device detection and modal control
         document.addEventListener('DOMContentLoaded', function() {
             const deviceModal = document.getElementById('deviceModal');
+            const mainContent = document.getElementById('mainContent');
+            const mainFooter = document.getElementById('mainFooter');
             const examBtn = document.getElementById('examBtn');
             const broadsheetBtn = document.getElementById('broadsheetBtn');
             
-            // Check if device is mobile/tablet
-            function isMobileDevice() {
-                return window.innerWidth < 1024;
+            // Comprehensive device detection
+            function isPCOnly() {
+                const userAgent = navigator.userAgent.toLowerCase();
+                const screenWidth = window.screen.width;
+                const screenHeight = window.screen.height;
+                
+                // Block iPad Pro and other tablets
+                const isiPadPro = /ipad/.test(userAgent) && 'ontouchend' in document;
+                const isTablet = /(tablet|ipad|playbook|silk)|(android(?!.*mobile))/i.test(userAgent);
+                const isMobile = /mobile|android|iphone|ipod|blackberry|opera mini|iemobile/i.test(userAgent);
+                
+                // Check for touch capabilities (tablets and mobiles have this)
+                const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+                
+                // Consider it a PC if:
+                // - Not mobile, not tablet, not iPad Pro
+                // - No touch capabilities OR screen is large enough (desktop typically)
+                // - User agent doesn't contain mobile/tablet indicators
+                const isPC = !isMobile && !isTablet && !isiPadPro && 
+                            screenWidth >= 1024 && 
+                            (!hasTouch || screenWidth > 1366);
+                
+                return isPC;
             }
             
-            // Show modal if on mobile/tablet
-            if (isMobileDevice()) {
+            // Show/hide content based on device
+            if (isPCOnly()) {
+                // Allow access for PC users
+                deviceModal.classList.add('hidden');
+                mainContent.classList.remove('content-hidden');
+                mainFooter.classList.remove('content-hidden');
+                document.body.style.overflow = 'auto';
+            } else {
+                // Block everything else
                 deviceModal.classList.remove('hidden');
+                mainContent.classList.add('content-hidden');
+                mainFooter.classList.add('content-hidden');
                 document.body.style.overflow = 'hidden';
-                document.body.classList.add('mobile-lock');
                 
-                // Make all content non-interactive on mobile
-                document.querySelectorAll('body > *:not(#deviceModal)').forEach(el => {
-                    el.classList.add('non-dismissible');
+                // Prevent any interaction
+                document.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                });
+                
+                document.addEventListener('keydown', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                });
+                
+                document.addEventListener('touchstart', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
                 });
             }
             
-            // Navigation buttons - replace with your actual URLs
+            // Navigation buttons
             examBtn.addEventListener('click', function() {
-                if (!isMobileDevice()) {
+                if (isPCOnly()) {
                     alert('Redirecting to Exam Report Card Portal');
                     window.location.href = '{% url 'exam_result' %}';
                 }
             });
             
             broadsheetBtn.addEventListener('click', function() {
-                if (!isMobileDevice()) {
+                if (isPCOnly()) {
                     alert('Redirecting to Class Broadsheet Portal');
                     window.location.href = '{% url 'staff_broadsheet' %}';
                 }
             });
             
-            // Prevent any interaction with content behind modal on mobile devices
-            document.addEventListener('click', function(e) {
-                if (isMobileDevice()) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                }
-            });
-            
-            // Also prevent keyboard interactions on mobile
-            document.addEventListener('keydown', function(e) {
-                if (isMobileDevice()) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                }
-            });
-            
-            // Continuously check screen size and show modal if resized to mobile
+            // Continuously check screen size and device type
             window.addEventListener('resize', function() {
-                if (isMobileDevice()) {
-                    deviceModal.classList.remove('hidden');
-                    document.body.style.overflow = 'hidden';
-                    document.body.classList.add('mobile-lock');
-                } else {
+                if (isPCOnly()) {
                     deviceModal.classList.add('hidden');
+                    mainContent.classList.remove('content-hidden');
+                    mainFooter.classList.remove('content-hidden');
                     document.body.style.overflow = 'auto';
-                    document.body.classList.remove('mobile-lock');
+                } else {
+                    deviceModal.classList.remove('hidden');
+                    mainContent.classList.add('content-hidden');
+                    mainFooter.classList.add('content-hidden');
+                    document.body.style.overflow = 'hidden';
+                }
+            });
+            
+            // Additional protection: prevent context menu
+            document.addEventListener('contextmenu', function(e) {
+                if (!isPCOnly()) {
+                    e.preventDefault();
                 }
             });
         });
