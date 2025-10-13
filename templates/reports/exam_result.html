@@ -752,9 +752,9 @@
 
       <!-- Export Options -->
       <div class="p-6 space-y-4">
-        <!-- PDF Option -->
+        <!-- PDF Option - Now triggers print -->
         <button 
-          onclick="downloadPDF()" 
+          onclick="printReport()" 
           class="w-full group relative overflow-hidden bg-gradient-to-r from-red-50 to-red-50 dark:from-red-900/20 dark:to-red-900/10 border border-red-200 dark:border-red-800 rounded-xl p-4 hover:from-red-100 hover:to-red-50 dark:hover:from-red-900/30 dark:hover:to-red-900/20 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
         >
           <div class="flex items-center justify-between">
@@ -766,7 +766,7 @@
               </div>
               <div class="text-left">
                 <h3 class="font-semibold text-gray-900 dark:text-white">Save as PDF</h3>
-                <p class="text-sm text-gray-500 dark:text-gray-400">High quality document</p>
+                <p class="text-sm text-gray-500 dark:text-gray-400">Print document as PDF</p>
               </div>
             </div>
             <svg class="w-5 h-5 text-gray-400 group-hover:text-red-500 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -798,9 +798,9 @@
           </div>
         </button>
 
-        <!-- Share Option -->
+        <!-- Share Option - Now saves PDF and opens share dialog -->
         <button 
-          onclick="shareReport()" 
+          onclick="sharePDF()" 
           class="w-full group relative overflow-hidden bg-gradient-to-r from-green-50 to-green-50 dark:from-green-900/20 dark:to-green-900/10 border border-green-200 dark:border-green-800 rounded-xl p-4 hover:from-green-100 hover:to-green-50 dark:hover:from-green-900/30 dark:hover:to-green-900/20 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
         >
           <div class="flex items-center justify-between">
@@ -812,7 +812,7 @@
               </div>
               <div class="text-left">
                 <h3 class="font-semibold text-gray-900 dark:text-white">Share Report</h3>
-                <p class="text-sm text-gray-500 dark:text-gray-400">Send to others</p>
+                <p class="text-sm text-gray-500 dark:text-gray-400">Save PDF and share</p>
               </div>
             </div>
             <svg class="w-5 h-5 text-gray-400 group-hover:text-green-500 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -1123,6 +1123,93 @@
   }
 
   /* ---------------------------
+     Share PDF Function - NEW
+  --------------------------- */
+  async function sharePDF() {
+    closeExportModal();
+    showToast("Preparing PDF for sharing...", "loading");
+
+    try {
+      const clone = prepareExportClone();
+      if (!clone) { showToast("Nothing to share", "error"); return; }
+
+      const wrapper = document.createElement('div');
+      wrapper.style.position = 'fixed';
+      wrapper.style.left = '-9999px';
+      wrapper.style.top = '0';
+      wrapper.style.zIndex = '-9999';
+      wrapper.appendChild(clone);
+      document.body.appendChild(wrapper);
+
+      const canvas = await html2canvas(clone, {
+        scale: 2,
+        logging: false,
+        useCORS: true,
+        allowTaint: true
+      });
+
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF("p", "pt", "a4");
+      const imgData = canvas.toDataURL("image/png");
+      const imgProps = doc.getImageProperties(imgData);
+      const pdfPageWidth = doc.internal.pageSize.getWidth();
+      const pdfPageHeight = doc.internal.pageSize.getHeight();
+      const imgRatio = imgProps.width / imgProps.height;
+
+      let renderWidth = pdfPageWidth;
+      let renderHeight = renderWidth / imgRatio;
+
+      if (renderHeight > pdfPageHeight) {
+        renderHeight = pdfPageHeight;
+        renderWidth = renderHeight * imgRatio;
+      }
+
+      doc.addImage(imgData, "PNG", (pdfPageWidth - renderWidth) / 2, 0, renderWidth, renderHeight);
+      
+      // Generate PDF blob for sharing
+      const pdfBlob = doc.output('blob');
+      const fileName = generateFileName() + ".pdf";
+      
+      document.body.removeChild(wrapper);
+
+      // Try to use native sharing API
+      if (navigator.share && navigator.canShare) {
+        const file = new File([pdfBlob], fileName, { type: 'application/pdf' });
+        
+        if (navigator.canShare({ files: [file] })) {
+          await navigator.share({
+            files: [file],
+            title: 'Student Report Card',
+            text: 'Check out this student report card!'
+          });
+          showToast("PDF shared successfully!", "success");
+        } else {
+          // Fallback: Download and notify
+          const downloadLink = document.createElement("a");
+          downloadLink.href = URL.createObjectURL(pdfBlob);
+          downloadLink.download = fileName;
+          document.body.appendChild(downloadLink);
+          downloadLink.click();
+          document.body.removeChild(downloadLink);
+          showToast("PDF downloaded! You can now share it.", "info");
+        }
+      } else {
+        // Fallback for browsers without share API
+        const downloadLink = document.createElement("a");
+        downloadLink.href = URL.createObjectURL(pdfBlob);
+        downloadLink.download = fileName;
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+        showToast("PDF downloaded! You can now share it manually.", "info");
+      }
+    } catch (error) {
+      console.error("PDF sharing error:", error);
+      showToast("Failed to share PDF", "error");
+    }
+  }
+
+  /* ---------------------------
      Utility Functions
   --------------------------- */
   function generateFileName() {
@@ -1187,7 +1274,7 @@
   }
 
   /* ---------------------------
-     WhatsApp Share
+     WhatsApp Share (Legacy - kept for compatibility)
   --------------------------- */
   async function shareReport() {
     closeExportModal();
