@@ -1,5 +1,3 @@
-{% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -90,7 +88,7 @@
     }
   </style>
   
-  <!-- REST OF YOUR EXISTING STYLES -->
+  <!-- PERFECT PRINT STYLES FOR PARENT PRESENTATION -->
   <style>
     @media print {
       body {
@@ -111,6 +109,42 @@
         display: none;
       }
       
+      /* PERFECT TABLE SIZE FOR PARENTS */
+      table {
+        font-size: 12px !important;
+        width: 105% !important;
+        margin-left: -2.5% !important;
+      }
+      
+      /* CLEAR TABLE HEADERS */
+      table th {
+        font-size: 12.5px !important;
+        font-weight: bold !important;
+        padding: 6px 3px !important;
+      }
+      
+      /* READABLE TABLE CELLS */
+      table td {
+        font-size: 11.5px !important;
+        padding: 4px 2px !important;
+      }
+      
+      /* CLEAR INPUT TEXT */
+      table input {
+        font-size: 11px !important;
+        font-weight: bold !important;
+      }
+      
+      /* CLEAR SELECT TEXT */
+      table select {
+        font-size: 11px !important;
+      }
+      
+      /* PROPER ROW HEIGHT */
+      #table-body tr {
+        height: 20px !important;
+      }
+
       /* Compress everything for printing */
       .max-w-\[794px\] {
         max-width: 794px !important;
@@ -119,133 +153,118 @@
         transform: scale(0.99);
         transform-origin: top center;
       }
-      
-      /* NUCLEAR OPTION - COMPRESS MORE WITHOUT HIDING CONTENT */
-      /* REDUCE TABLE ROWS HEIGHT */
-      #table-body tr {
-        height: 18px !important;
-      }
 
       /* COMPRESS EVERYTHING MORE */
       * {
         line-height: 1.1 !important;
       }
 
-      /* Reduce spacing between sections - but not too much */
+      /* Reduce spacing between sections */
       .mb-2, .mt-6, .mt-8, .mt-10 {
         margin-top: 0.3rem !important;
         margin-bottom: 0.3rem !important;
       }
       
-      /* CARRY TABLE AND EVERYTHING DOWN */
-      /* CARRY TABLE DOWN SMALL */
+      /* TABLE SPACING */
       .mt-8 {
-        margin-top: 1.5rem !important; /* CARRY TABLE DOWN FROM DEFAULT */
+        margin-top: 1.5rem !important;
       }
 
-      /* CARRY ALL SECTIONS BELOW TABLE DOWN TO MATCH */
+      /* SECTIONS BELOW TABLE */
       .mt-8 + .mt-6.text-sm.flex.justify-start.flex-nowrap.font-medium.tracking-wide.items-end {
-        margin-top: 2.5rem !important; /* CARRY DOWN FROM 2rem */
+        margin-top: 2.5rem !important;
       }
 
       .mt-6.text-sm.flex.justify-start.flex-nowrap.font-medium.tracking-wide.items-end,
       .mt-6.text-sm.flex.justify-start.font-medium.tracking-wide.items-end,
       .mt-8.text-sm.flex.flex-col.items-center.w-40.ml-4 {
-        margin-top: 1.2rem !important; /* CARRY DOWN FROM 1rem */
+        margin-top: 1.2rem !important;
       }
 
       table ~ .mt-6:first-of-type {
-        margin-top: 3rem !important; /* CARRY DOWN FROM 2.5rem */
+        margin-top: 3rem !important;
       }
 
-/* PUSH TEXT MORE TO LEFT */
-.flex-1.text-xs.font-semibold.tracking-wide {
-  order: 1 !important;
-  margin-left: -40px !important; /* PUSH MORE LEFT FROM -50px */
-  margin-right: auto !important;
-  margin-top: 15px !important;
-  text-align: left !important;
-  flex: 1 !important;
-  max-width: none !important;
-  padding-right: 10px !important;
-  word-wrap: break-word !important;
-  overflow-wrap: break-word !important;
-  width: auto !important;
-  font-size: 15px !important;
-  font-weight: bold !important;
-  line-height: 1.2 !important;
-}
+      /* LEFT TEXT */
+      .flex-1.text-xs.font-semibold.tracking-wide {
+        order: 1 !important;
+        margin-left: -40px !important;
+        margin-right: auto !important;
+        margin-top: -135px !important; /* CHANGED FROM 0px TO -5px */
+        text-align: left !important;
+        flex: 1 !important;
+        max-width: none !important;
+        padding-right: 10px !important;
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+        width: auto !important;
+        font-size: 15px !important;
+        font-weight: bold !important;
+        line-height: 1.2 !important;
+      }
+           /* RIGHT BOX */
+      .border.border-black.px-4.py-2.text-sm.font-semibold.w-56 {
+        order: 2 !important;
+        margin-left: auto !important;
+        margin-right: -85px !important;
+        flex-shrink: 0 !important;
+        width: 170px !important;
+        font-size: 14px !important;
+        margin-top: -200px !important; /* CHANGED FROM -75px TO -85px */
+        padding: 8px !important;
+        border: 1px solid black !important;
+        background: white !important;
+        overflow: hidden !important;
+      }
 
-/* PUSH BOX MORE TO RIGHT - WITH LARGER TEXT */
-.border.border-black.px-4.py-2.text-sm.font-semibold.w-56 {
-  order: 2 !important;
-  margin-left: auto !important;
-  margin-right: -85px !important; /* PUSH MORE RIGHT FROM -55px */
-  flex-shrink: 0 !important;
-  width: 170px !important;
-  font-size: 14px !important; /* LARGER TEXT SIZE */
-  margin-top: -40px !important;
-  padding: 8px !important;
-  border: 1px solid black !important;
-  background: white !important;
-  overflow: hidden !important;
-}
-
-/* MAKE TEXT INSIDE THE BOX EVEN LARGER */
-.border.border-black.px-4.py-2.text-sm.font-semibold.w-56 .text-xs,
-.border.border-black.px-4.py-2.text-sm.font-semibold.w-56 .text-sm,
-.border.border-black.px-4.py-2.text-sm.font-semibold.w-56 div,
-.border.border-black.px-4.py-2.text-sm.font-semibold.w-56 span {
-  font-size: 13px !important; /* LARGER TEXT */
-  line-height: 1.2 !important;
-  font-weight: bold !important;
-}
-      
-      /* Compress table - but readable - PUSHED TO RIGHT */
-      table {
-        font-size: 10.4px !important;
-        width: 102% !important;
-        margin-left: 1% !important; /* CHANGED FROM -1% TO 1% TO PUSH RIGHT */
+      /* BOX TEXT */
+      .border.border-black.px-4.py-2.text-sm.font-semibold.w-56 .text-xs,
+      .border.border-black.px-4.py-2.text-sm.font-semibold.w-56 .text-sm,
+      .border.border-black.px-4.py-2.text-sm.font-semibold.w-56 div,
+      .border.border-black.px-4.py-2.text-sm.font-semibold.w-56 span {
+        font-size: 13px !important;
+        line-height: 1.2 !important;
+        font-weight: bold !important;
       }
       
-      /* Reduce header size but still visible */
+      /* HEADER SIZES */
       .text-2xl, .text-3xl {
         font-size: 1.48rem !important;
       }
       
-      /* MAKE SCHOOL NAME BIGGER - INCREASED MORE */
+      /* SCHOOL NAME */
       .text-2xl.md\:text-3xl.font-bold.text-center {
-        font-size: 2.2rem !important; /* INCREASED FROM 2rem TO 2.2rem */
+        font-size: 2.2rem !important;
       }
       
-      /* MAKE REPORT TITLE INPUT SAME AS SCHOOL NAME */
+      /* REPORT TITLE */
       .mt-2.border-b-2.border-gray-700 input {
-        font-size: 1.8rem !important; /* REDUCED FROM 2.2rem TO 1.8rem */
-        font-weight: bold !important; /* SAME AS SCHOOL NAME */
-        text-align: center !important; /* SAME AS SCHOOL NAME */
-        font-family: Georgia, serif !important; /* CHANGED TO GEORGIA */
+        font-size: 1.8rem !important;
+        font-weight: bold !important;
+        text-align: center !important;
+        font-family: Georgia, serif !important;
       }
       
-      /* INCREASE HEADER LINE LENGTH - STRETCHED MORE */
+      /* HEADER LINES */
       .border-b-2.border-gray-700.inline-block {
-        width: 38rem !important; /* INCREASED FROM 36rem TO 38rem */
+        width: 38rem !important;
       }
       
       .mt-2.border-b-2.border-gray-700 {
-        width: 38rem !important; /* SAME LINE LENGTH AS SCHOOL NAME */
+        width: 38rem !important;
       }
       
-      /* MOVE IMAGE TO THE LEFT - MOVED FURTHER */
+      /* IMAGE POSITION */
       .h-32.w-28.object-contain.mt-3 {
-        margin-left: -2rem !important; /* MOVED FROM -1rem TO -2rem */
+        margin-left: -2rem !important;
       }
       
-      /* Compress input fields spacing */
+      /* INPUT SPACING */
       .mt-6 {
         margin-top: 0.6rem !important;
       }
       
-      /* Ensure everything fits in one page */
+      /* SINGLE PAGE ENSURE */
       html, body {
         height: auto !important;
         overflow: hidden !important;
@@ -256,19 +275,18 @@
         break-inside: avoid;
       }
 
-      /* Additional compression for print */
-      /* Reduce all font sizes but not too small */
+      /* Additional compression */
       * {
         font-size: 98.5% !important;
       }
       
-      /* Compress the main container */
+      /* MAIN CONTAINER */
       .max-w-\[794px\] {
         padding: 10px !important;
         margin-top: -2px !important;
       }
       
-      /* Reduce logo size back */
+      /* LOGO SIZE */
       .h-32 {
         height: 110px !important;
       }
@@ -276,28 +294,28 @@
         width: 96px !important;
       }
       
-      /* Push image to the right AND carry am go up */
+      /* IMAGE ALIGNMENT */
       .flex.items-center.justify-center {
         justify-content: flex-start !important;
         padding-left: 20px !important;
         margin-top: -15px !important;
       }
       
-      /* CARRY EVERYTHING UP - REDUCE MARGINS TO FIT PAGE 1 */
+      /* TOP SECTION */
       .mt-10.flex.justify-between.items-start.w-full.max-w-\[794px\].gap-4 {
         display: flex !important;
         justify-content: space-between !important;
         align-items: flex-start !important;
         gap: 20px !important;
-        margin-top: 0.5rem !important; /* REDUCE TOP MARGIN TO PUSH UP */
+        margin-top: 0.5rem !important;
       }
 
-      /* FIX NAIRA SIGN POSITION INSIDE BOX - WITH LARGER TEXT */
+      /* NAIRA SIGN FIX */
       .border.border-black.px-4.py-2.text-sm.font-semibold.w-56 .flex.justify-between.items-center .relative {
         position: relative !important;
         display: flex !important;
         align-items: center !important;
-        height: 24px !important; /* LARGER HEIGHT */
+        height: 24px !important;
       }
 
       .border.border-black.px-4.py-2.text-sm.font-semibold.w-56 .flex.justify-between.items-center .relative span {
@@ -307,77 +325,77 @@
         transform: none !important;
         margin-right: 4px !important;
         line-height: 1 !important;
-        font-size: 13px !important; /* LARGER NAIRA SIGN */
+        font-size: 13px !important;
         font-weight: bold !important;
       }
 
       .border.border-black.px-4.py-2.text-sm.font-semibold.w-56 .flex.justify-between.items-center .relative input {
         margin-top: 0 !important;
-        height: 22px !important; /* LARGER INPUT HEIGHT */
+        height: 22px !important;
         line-height: 1 !important;
-        font-size: 13px !important; /* LARGER INPUT TEXT */
+        font-size: 13px !important;
         font-weight: bold !important;
       }
 
-      /* FIX MONEY INPUT INSIDE THE BOX - LARGER */
+      /* MONEY INPUT FIX */
       .border.border-black.px-4.py-2.text-sm.font-semibold.w-56 .flex.justify-between.items-center {
-        gap: 6px !important; /* LARGER GAP */
-        margin-bottom: 6px !important; /* LARGER MARGIN */
+        gap: 6px !important;
+        margin-bottom: 6px !important;
         align-items: center !important;
       }
 
       .border.border-black.px-4.py-2.text-sm.font-semibold.w-56 input {
-        width: 80px !important; /* LARGER INPUT WIDTH */
-        font-size: 13px !important; /* LARGER FONT */
-        padding: 2px 4px !important; /* LARGER PADDING */
+        width: 80px !important;
+        font-size: 13px !important;
+        padding: 2px 4px !important;
         border: none !important;
         background: transparent !important;
         font-weight: bold !important;
       }
 
       .border.border-black.px-4.py-2.text-sm.font-semibold.w-56 .relative {
-        width: 90px !important; /* LARGER CONTAINER WIDTH */
+        width: 90px !important;
       }
 
-      /* Compress table further but readable */
+      /* GENERAL TEXT */
       .text-\[11px\] {
-        font-size: 9.4px !important;
+        font-size: 10px !important;
       }
       
-      /* Reduce spacing in table */
+      /* TABLE PADDING */
       .py-1 {
         padding-top: 0.2rem !important;
         padding-bottom: 0.2rem !important;
       }
       
-      /* Remove the negative margin on terminal fees box */
+      /* TERMINAL FEES BOX */
       .mt-\[-62px\] {
-        margin-top: 0px !important; /* REMOVE NEGATIVE MARGIN */
+        margin-top: 0px !important;
       }
       
       .w-56 {
-        width: 170px !important; /* MATCH THE BOX WIDTH */
+        width: 170px !important;
       }
 
-      /* MOVE HEADER BLOCK TO THE RIGHT - SMALLER MOVE */
+      /* HEADER BLOCK */
       .flex.items-center.justify-center.mb-2.gap-4.mt-6 {
-          margin-left: 1rem !important; /* CHANGED FROM 2rem TO 1rem */
+          margin-left: 1rem !important;
       }
 
-      /* Ensure single page */
+      /* PAGE SETTINGS */
       @page {
         margin: 0.34cm;
         size: A4;
       }
       
-      /* Force single page */
+      /* SINGLE PAGE FORCE */
       body, html {
         width: 210mm;
         height: 297mm;
         overflow: hidden !important;
       }
       
-      /* Hide everything except the report */
+      /* HIDE EXTRAS */
       body > *:not(.max-w-\[794px\]) {
         display: none !important;
       }
@@ -463,14 +481,14 @@
       <div class="flex items-center relative">
         <label class="font-semibold mr-1">REPORT FOR</label>
         <div class="relative leading-none">
-          <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none">.....................................</span>
+          <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none">............................................</span>
           <input type="text" class="bg-transparent w-40 text-center text-sm font-extrabold text-black relative z-10 focus:outline-none pb-0.5 leading-[0.75rem]" />
         </div>
       </div>
       <div class="flex items-center relative">
         <label class="font-semibold mr-1">TERM OF</label>
         <div class="relative leading-none">
-          <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none">..........................................................</span>
+          <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none">......................................................................</span>
           <input type="text" class="bg-transparent w-48 text-center text-sm font-extrabold text-black relative z-10 focus:outline-none pb-0.5 leading-[0.75rem]" />
         </div>
       </div>
@@ -485,14 +503,14 @@
       <div class="flex items-center relative">
         <label class="font-semibold mr-1 whitespace-nowrap">NAME (SURNAME FIRST)</label>
         <div class="relative leading-none">
-          <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none">........................................................................</span>
+          <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none">........................................................................................</span>
           <input type="text" class="bg-transparent w-[22rem] text-left pl-3 text-sm font-extrabold text-black relative z-10 focus:outline-none pb-0.5 leading-[0.75rem]" />
         </div>
       </div>
       <div class="flex items-center relative ml-[-8px]">
         <label class="font-semibold mr-1">SEX</label>
         <div class="relative leading-none">
-          <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none">....................................</span>
+          <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none">........................................</span>
           <input type="text" class="bg-transparent w-28 text-center text-sm font-extrabold text-black relative z-10 focus:outline-none pb-0.5 leading-[0.75rem]" />
         </div>
       </div>
@@ -503,14 +521,14 @@
       <div class="flex items-center relative">
         <label class="font-semibold mr-1">CLASS</label>
         <div class="relative leading-none">
-          <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none">.................................</span>
+          <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none">........................................</span>
           <input type="text" class="bg-transparent w-44 text-left pl-10 text-sm font-extrabold text-black relative z-10 focus:outline-none pb-0.5 leading-[0.75rem]" />
         </div>
       </div>
       <div class="flex items-center relative ml-[-20px]">
         <label class="font-semibold mr-1 whitespace-nowrap">NUMBER OF TIMES SCHOOL OPEN</label>
         <div class="relative leading-none">
-          <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none">........................................................</span>
+          <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none">.................................................................</span>
           <input type="text" class="bg-transparent w-[18rem] text-center text-sm font-extrabold text-black relative z-10 focus:outline-none pb-0.5 leading-[0.75rem]" />
         </div>
       </div>
@@ -521,14 +539,14 @@
       <div class="flex items-center relative">
         <label class="font-semibold mr-1 whitespace-nowrap">NUMBER OF TIMES PRESENT</label>
         <div class="relative leading-none">
-          <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none">........................................</span>
+          <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none">................................................</span>
           <input type="text" class="bg-transparent w-52 text-center text-sm font-extrabold text-black relative z-10 focus:outline-none pb-0.5 leading-[0.75rem]" />
         </div>
       </div>
       <div class="flex items-center relative ml-[-20px]">
         <label class="font-semibold mr-1 whitespace-nowrap">TIMES ABSENT</label>
         <div class="relative leading-none">
-          <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none">.............................................</span>
+          <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none">....................................................</span>
           <input type="text" class="bg-transparent w-48 text-center text-sm font-extrabold text-black relative z-10 focus:outline-none pb-0.5 leading-[0.75rem]" />
         </div>
       </div>
@@ -539,7 +557,7 @@
       <div class="flex items-center relative">
         <label class="font-semibold mr-1 whitespace-nowrap">SCHOOL RE-OPEN ON</label>
         <div class="relative leading-none w-64">
-          <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none">............................................</span>
+          <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none">....................................................</span>
           <input type="text" class="bg-transparent w-full text-left pl-2 text-sm font-extrabold text-black relative z-10 focus:outline-none pb-0.5 leading-[0.7rem]" />
         </div>
       </div>
@@ -553,7 +571,7 @@
       <div class="flex items-center relative ml-[-12px]">
         <label class="font-semibold mr-1 whitespace-nowrap">RESULT</label>
         <div class="relative leading-none">
-          <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none">........................</span>
+          <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none">..........................</span>
           <input type="text" class="bg-transparent w-24 text-left pl-7 text-sm font-extrabold text-black relative z-10 focus:outline-none pb-0.5 leading-[0.75rem]" />
         </div>
       </div>
@@ -599,7 +617,7 @@
         <label class="font-semibold mr-1 whitespace-nowrap">TOTAL MARKS OBTAINED</label>
         <div class="relative leading-none">
           <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none">
-            ..................................
+            .........................................
           </span>
           <input type="text"
             class="bg-transparent w-52 text-left pl-9 text-sm font-extrabold relative z-10 focus:outline-none pb-0.5 leading-[0.75rem]" />
@@ -611,7 +629,7 @@
         <label class="font-semibold mr-1 whitespace-nowrap">TOTAL MARKS OBTAINABLE</label>
         <div class="relative leading-none">
           <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none">
-            .......................................
+            .....................................................
           </span>
           <input type="text"
             class="bg-transparent w-52 text-left pl-9 text-sm font-extrabold relative z-10 focus:outline-none pb-0.5 leading-[0.75rem]" />
@@ -624,7 +642,7 @@
       <label class="font-semibold mr-2 whitespace-nowrap">CLASS TEACHER'S REMARKS</label>
       <div class="relative leading-none flex-grow">
         <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none">
-          ............................................................................................................
+          .......................................................................................................................................
         </span>
         <input type="text"
           class="bg-transparent w-full text-left pl-4 text-sm font-extrabold text-black relative z-10 focus:outline-none pb-0.5 leading-[0.75rem]" />
