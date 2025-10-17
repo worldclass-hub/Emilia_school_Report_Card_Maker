@@ -10,7 +10,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   
   <!-- FLOATING HOME BUTTON STYLES -->
-  <style>
+<style>
     /* World-Class Floating Home Button */
     .floating-home-btn {
       position: fixed;
@@ -86,111 +86,143 @@
         display: none !important;
       }
     }
-  </style>
+</style>
   
-  <!-- PERFECT PRINT STYLES FOR PARENT PRESENTATION -->
-  <style>
-    @media print {
-      body {
+<!-- PERFECT PRINT STYLES FOR PARENT PRESENTATION -->
+<style>
+@media print {
+    body {
         margin: 0;
         padding: 0;
         zoom: 0.95;
-      }
-      .no-print {
+    }
+    .no-print {
         display: none !important;
-      }
-      select {
+    }
+    select {
         -webkit-appearance: none;
         -moz-appearance: none;
         appearance: none;
         background-image: none !important;
-      }
-      select::-ms-expand {
+    }
+    select::-ms-expand {
         display: none;
-      }
-      
-      /* PERFECT TABLE SIZE FOR PARENTS */
-      table {
+    }
+    
+    /* PERFECT TABLE SIZE FOR PARENTS */
+    table {
         font-size: 12px !important;
         width: 105% !important;
         margin-left: -2.5% !important;
-      }
-      
-      /* CLEAR TABLE HEADERS */
-      table th {
+    }
+    
+    /* CLEAR TABLE HEADERS */
+    table th {
         font-size: 12.5px !important;
         font-weight: bold !important;
         padding: 6px 3px !important;
-      }
-      
-      /* READABLE TABLE CELLS */
-      table td {
+    }
+    
+    /* READABLE TABLE CELLS */
+    table td {
         font-size: 11.5px !important;
         padding: 4px 2px !important;
-      }
-      
-      /* CLEAR INPUT TEXT */
-      table input {
+    }
+    
+    /* CLEAR INPUT TEXT */
+    table input {
         font-size: 11px !important;
         font-weight: bold !important;
-      }
-      
-      /* CLEAR SELECT TEXT */
-      table select {
+    }
+    
+    /* CLEAR SELECT TEXT */
+    table select {
         font-size: 11px !important;
-      }
-      
-      /* PROPER ROW HEIGHT */
-      #table-body tr {
+    }
+    
+    /* PROPER ROW HEIGHT */
+    #table-body tr {
         height: 20px !important;
-      }
+    }
 
-      /* Compress everything for printing */
-      .max-w-\[794px\] {
+    /* Compress everything for printing */
+    .max-w-\[794px\] {
         max-width: 794px !important;
         margin: 0 auto !important;
         padding: 17px !important;
         transform: scale(0.99);
         transform-origin: top center;
-      }
+    }
 
-      /* COMPRESS EVERYTHING MORE */
-      * {
+    /* COMPRESS EVERYTHING MORE */
+    * {
         line-height: 1.1 !important;
-      }
+    }
 
-      /* Reduce spacing between sections */
-      .mb-2, .mt-6, .mt-8, .mt-10 {
-        margin-top: 0.3rem !important;
-        margin-bottom: 0.3rem !important;
-      }
-      
-      /* TABLE SPACING */
-      .mt-8 {
-        margin-top: 1.5rem !important;
-      }
+    /* CARRY TABLE DOWN TINY LITTLE BIT - ADJUSTED */
+    .mt-8 {
+        margin-top: 0.8rem !important; /* Increased from 0.3rem */
+    }
 
-      /* SECTIONS BELOW TABLE */
-      .mt-8 + .mt-6.text-sm.flex.justify-start.flex-nowrap.font-medium.tracking-wide.items-end {
+    /* Increase spacing between sections above table slightly */
+    .mb-2, .mt-6, .mt-8, .mt-10 {
+        margin-top: 0.4rem !important; /* Increased from 0.2rem */
+        margin-bottom: 0.4rem !important;
+    }
+    
+    /* SPECIFICALLY INCREASE SPACING FOR SECTIONS BEFORE TABLE */
+    .mt-6.text-sm.flex.justify-start.flex-nowrap.font-medium.tracking-wide.items-end:last-of-type {
+        margin-top: 0.6rem !important; /* Increased from 0.2rem */
+    }
+
+    /* TABLE SPACING - CARRIED DOWN A BIT */
+    .mt-8 {
+        margin-top: 0.8rem !important; /* Increased from 0.2rem */
+    }
+
+    /* SECTIONS BELOW TABLE - KEEP ORIGINAL SPACING */
+    .mt-8 + .mt-6.text-sm.flex.justify-start.flex-nowrap.font-medium.tracking-wide.items-end {
         margin-top: 2.5rem !important;
-      }
+    }
 
-      .mt-6.text-sm.flex.justify-start.flex-nowrap.font-medium.tracking-wide.items-end,
-      .mt-6.text-sm.flex.justify-start.font-medium.tracking-wide.items-end,
-      .mt-8.text-sm.flex.flex-col.items-center.w-40.ml-4 {
+    .mt-6.text-sm.flex.justify-start.flex-nowrap.font-medium.tracking-wide.items-end,
+    .mt-6.text-sm.flex.justify-start.font-medium.tracking-wide.items-end,
+    .mt-8.text-sm.flex.flex-col.items-center.w-40.ml-4 {
         margin-top: 1.2rem !important;
-      }
+    }
 
-      table ~ .mt-6:first-of-type {
-        margin-top: 3rem !important;
-      }
+    /* NUCLEAR OPTION 2 - USE TRANSFORM */
+    .total-marks-section {
+        transform: translateY(-20px) !important;
+    }
 
-      /* LEFT TEXT */
-      .flex-1.text-xs.font-semibold.tracking-wide {
+        /* CARRY TEACHER'S REMARKS SECTION UP */
+    .teacher-remarks-section {
+        transform: translateY(-24px) !important;
+    }
+    
+        /* CARRY TEACHER'S SIGN SECTION UP */
+    .teacher-sign-section {
+        transform: translateY(-24px) !important;
+    }
+
+        /* CARRY PRINCIPAL'S REMARKS SECTION UP */
+    .principal-remarks-section {
+        transform: translateY(-36px) !important;
+    }
+
+        /* CARRY PRINCIPAL'S SIGN SECTION UP */
+    .principal-sign-section {
+        transform: translateY(-36px) !important;
+    }
+
+
+    /* LEFT TEXT */
+    .flex-1.text-xs.font-semibold.tracking-wide {
         order: 1 !important;
         margin-left: -40px !important;
         margin-right: auto !important;
-        margin-top: -135px !important; /* CHANGED FROM 0px TO -5px */
+        margin-top: -135px !important;
         text-align: left !important;
         flex: 1 !important;
         max-width: none !important;
@@ -201,124 +233,125 @@
         font-size: 15px !important;
         font-weight: bold !important;
         line-height: 1.2 !important;
-      }
-           /* RIGHT BOX */
-      .border.border-black.px-4.py-2.text-sm.font-semibold.w-56 {
+    }
+    
+    /* RIGHT BOX */
+    .border.border-black.px-4.py-2.text-sm.font-semibold.w-56 {
         order: 2 !important;
         margin-left: auto !important;
         margin-right: -85px !important;
         flex-shrink: 0 !important;
         width: 170px !important;
         font-size: 14px !important;
-        margin-top: -200px !important; /* CHANGED FROM -75px TO -85px */
+        margin-top: -210px !important;
         padding: 8px !important;
         border: 1px solid black !important;
         background: white !important;
         overflow: hidden !important;
-      }
+    }
 
-      /* BOX TEXT */
-      .border.border-black.px-4.py-2.text-sm.font-semibold.w-56 .text-xs,
-      .border.border-black.px-4.py-2.text-sm.font-semibold.w-56 .text-sm,
-      .border.border-black.px-4.py-2.text-sm.font-semibold.w-56 div,
-      .border.border-black.px-4.py-2.text-sm.font-semibold.w-56 span {
+    /* BOX TEXT */
+    .border.border-black.px-4.py-2.text-sm.font-semibold.w-56 .text-xs,
+    .border.border-black.px-4.py-2.text-sm.font-semibold.w-56 .text-sm,
+    .border.border-black.px-4.py-2.text-sm.font-semibold.w-56 div,
+    .border.border-black.px-4.py-2.text-sm.font-semibold.w-56 span {
         font-size: 13px !important;
         line-height: 1.2 !important;
         font-weight: bold !important;
-      }
-      
-      /* HEADER SIZES */
-      .text-2xl, .text-3xl {
+    }
+    
+    /* HEADER SIZES */
+    .text-2xl, .text-3xl {
         font-size: 1.48rem !important;
-      }
-      
-      /* SCHOOL NAME */
-      .text-2xl.md\:text-3xl.font-bold.text-center {
+    }
+    
+    /* SCHOOL NAME */
+    .text-2xl.md\:text-3xl.font-bold.text-center {
         font-size: 2.2rem !important;
-      }
-      
-      /* REPORT TITLE */
-      .mt-2.border-b-2.border-gray-700 input {
+    }
+    
+    /* REPORT TITLE */
+    .mt-2.border-b-2.border-gray-700 input {
         font-size: 1.8rem !important;
         font-weight: bold !important;
         text-align: center !important;
         font-family: Georgia, serif !important;
-      }
-      
-      /* HEADER LINES */
-      .border-b-2.border-gray-700.inline-block {
+    }
+    
+    /* HEADER LINES */
+    .border-b-2.border-gray-700.inline-block {
         width: 38rem !important;
-      }
-      
-      .mt-2.border-b-2.border-gray-700 {
+    }
+    
+    .mt-2.border-b-2.border-gray-700 {
         width: 38rem !important;
-      }
-      
-      /* IMAGE POSITION */
-      .h-32.w-28.object-contain.mt-3 {
+    }
+    
+    /* IMAGE POSITION */
+    .h-32.w-28.object-contain.mt-3 {
         margin-left: -2rem !important;
-      }
-      
-      /* INPUT SPACING */
-      .mt-6 {
-        margin-top: 0.6rem !important;
-      }
-      
-      /* SINGLE PAGE ENSURE */
-      html, body {
+    }
+    
+    /* INPUT SPACING - INCREASED A BIT */
+    .mt-6 {
+        margin-top: 0.6rem !important; /* Increased from 0.3rem */
+    }
+    
+    /* SINGLE PAGE ENSURE */
+    html, body {
         height: auto !important;
         overflow: hidden !important;
-      }
-      
-      .max-w-\[794px\] {
+    }
+    
+    .max-w-\[794px\] {
         page-break-inside: avoid;
         break-inside: avoid;
-      }
+    }
 
-      /* Additional compression */
-      * {
+    /* Additional compression */
+    * {
         font-size: 98.5% !important;
-      }
-      
-      /* MAIN CONTAINER */
-      .max-w-\[794px\] {
+    }
+    
+    /* MAIN CONTAINER */
+    .max-w-\[794px\] {
         padding: 10px !important;
         margin-top: -2px !important;
-      }
-      
-      /* LOGO SIZE */
-      .h-32 {
+    }
+    
+    /* LOGO SIZE */
+    .h-32 {
         height: 110px !important;
-      }
-      .w-28 {
+    }
+    .w-28 {
         width: 96px !important;
-      }
-      
-      /* IMAGE ALIGNMENT */
-      .flex.items-center.justify-center {
+    }
+    
+    /* IMAGE ALIGNMENT */
+    .flex.items-center.justify-center {
         justify-content: flex-start !important;
         padding-left: 20px !important;
         margin-top: -15px !important;
-      }
-      
-      /* TOP SECTION */
-      .mt-10.flex.justify-between.items-start.w-full.max-w-\[794px\].gap-4 {
+    }
+    
+    /* TOP SECTION */
+    .mt-10.flex.justify-between.items-start.w-full.max-w-\[794px\].gap-4 {
         display: flex !important;
         justify-content: space-between !important;
         align-items: flex-start !important;
         gap: 20px !important;
         margin-top: 0.5rem !important;
-      }
+    }
 
-      /* NAIRA SIGN FIX */
-      .border.border-black.px-4.py-2.text-sm.font-semibold.w-56 .flex.justify-between.items-center .relative {
+    /* NAIRA SIGN FIX */
+    .border.border-black.px-4.py-2.text-sm.font-semibold.w-56 .flex.justify-between.items-center .relative {
         position: relative !important;
         display: flex !important;
         align-items: center !important;
         height: 24px !important;
-      }
+    }
 
-      .border.border-black.px-4.py-2.text-sm.font-semibold.w-56 .flex.justify-between.items-center .relative span {
+    .border.border-black.px-4.py-2.text-sm.font-semibold.w-56 .flex.justify-between.items-center .relative span {
         position: relative !important;
         top: auto !important;
         left: auto !important;
@@ -327,88 +360,88 @@
         line-height: 1 !important;
         font-size: 13px !important;
         font-weight: bold !important;
-      }
+    }
 
-      .border.border-black.px-4.py-2.text-sm.font-semibold.w-56 .flex.justify-between.items-center .relative input {
+    .border.border-black.px-4.py-2.text-sm.font-semibold.w-56 .flex.justify-between.items-center .relative input {
         margin-top: 0 !important;
         height: 22px !important;
         line-height: 1 !important;
         font-size: 13px !important;
         font-weight: bold !important;
-      }
+    }
 
-      /* MONEY INPUT FIX */
-      .border.border-black.px-4.py-2.text-sm.font-semibold.w-56 .flex.justify-between.items-center {
+    /* MONEY INPUT FIX */
+    .border.border-black.px-4.py-2.text-sm.font-semibold.w-56 .flex.justify-between.items-center {
         gap: 6px !important;
         margin-bottom: 6px !important;
         align-items: center !important;
-      }
+    }
 
-      .border.border-black.px-4.py-2.text-sm.font-semibold.w-56 input {
+    .border.border-black.px-4.py-2.text-sm.font-semibold.w-56 input {
         width: 80px !important;
         font-size: 13px !important;
         padding: 2px 4px !important;
         border: none !important;
         background: transparent !important;
         font-weight: bold !important;
-      }
+    }
 
-      .border.border-black.px-4.py-2.text-sm.font-semibold.w-56 .relative {
+    .border.border-black.px-4.py-2.text-sm.font-semibold.w-56 .relative {
         width: 90px !important;
-      }
+    }
 
-      /* GENERAL TEXT */
-      .text-\[11px\] {
+    /* GENERAL TEXT */
+    .text-\[11px\] {
         font-size: 10px !important;
-      }
-      
-      /* TABLE PADDING */
-      .py-1 {
+    }
+    
+    /* TABLE PADDING */
+    .py-1 {
         padding-top: 0.2rem !important;
         padding-bottom: 0.2rem !important;
-      }
-      
-      /* TERMINAL FEES BOX */
-      .mt-\[-62px\] {
+    }
+    
+    /* TERMINAL FEES BOX */
+    .mt-\[-62px\] {
         margin-top: 0px !important;
-      }
-      
-      .w-56 {
+    }
+    
+    .w-56 {
         width: 170px !important;
-      }
+    }
 
-      /* HEADER BLOCK */
-      .flex.items-center.justify-center.mb-2.gap-4.mt-6 {
-          margin-left: 1rem !important;
-      }
+    /* HEADER BLOCK */
+    .flex.items-center.justify-center.mb-2.gap-4.mt-6 {
+        margin-left: 1rem !important;
+    }
 
-      /* PAGE SETTINGS */
-      @page {
+    /* PAGE SETTINGS */
+    @page {
         margin: 0.34cm;
         size: A4;
-      }
-      
-      /* SINGLE PAGE FORCE */
-      body, html {
+    }
+    
+    /* SINGLE PAGE FORCE */
+    body, html {
         width: 210mm;
         height: 297mm;
         overflow: hidden !important;
-      }
-      
-      /* HIDE EXTRAS */
-      body > *:not(.max-w-\[794px\]) {
+    }
+    
+    /* HIDE EXTRAS */
+    body > *:not(.max-w-\[794px\]) {
         display: none !important;
-      }
-      
-      .max-w-\[794px\] {
+    }
+    
+    .max-w-\[794px\] {
         width: 100% !important;
         max-width: 100% !important;
         margin: 0 !important;
         padding: 10mm !important;
         box-shadow: none !important;
         border: none !important;
-      }
     }
+}
     
     /* Hide dropdown arrows for print */
     @media print {
@@ -611,8 +644,8 @@
     </div>
     
     <!-- TOTAL MARKS OBTAINED – TOTAL MARKS OBTAINABLE -->
-    <div class="mt-6 text-sm flex justify-start flex-nowrap font-medium tracking-wide items-end">
-      <!-- TOTAL MARKS OBTAINED -->
+<!-- TOTAL MARKS OBTAINED – TOTAL MARKS OBTAINABLE -->
+<div class="mt-6 text-sm flex justify-start flex-nowrap font-medium tracking-wide items-end total-marks-section">      <!-- TOTAL MARKS OBTAINED -->
       <div class="flex items-center relative">
         <label class="font-semibold mr-1 whitespace-nowrap">TOTAL MARKS OBTAINED</label>
         <div class="relative leading-none">
@@ -638,8 +671,8 @@
     </div>
 
     <!-- CLASS TEACHER'S REMARKS -->
-    <div class="mt-6 text-sm flex justify-start font-medium tracking-wide items-end">
-      <label class="font-semibold mr-2 whitespace-nowrap">CLASS TEACHER'S REMARKS</label>
+<!-- CLASS TEACHER'S REMARKS -->
+<div class="mt-6 text-sm flex justify-start font-medium tracking-wide items-end teacher-remarks-section">      <label class="font-semibold mr-2 whitespace-nowrap">CLASS TEACHER'S REMARKS</label>
       <div class="relative leading-none flex-grow">
         <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none">
           .......................................................................................................................................
@@ -650,7 +683,7 @@
     </div>
 
     <!-- SIGN (aligned to the left) -->
-    <div class="mt-8 text-sm flex flex-col items-center w-40 ml-4">
+<div class="mt-8 text-sm flex flex-col items-center w-40 ml-4 teacher-sign-section">
       <div class="relative w-full">
         <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none">
           ...........................................
@@ -662,11 +695,11 @@
     </div>
 
     <!-- PRINCIPAL'S REMARKS -->
-    <div class="mt-6 text-sm flex justify-start font-medium tracking-wide items-end">
-      <label class="font-semibold mr-2 whitespace-nowrap">PRINCIPAL'S REMARKS</label>
+<!-- PRINCIPAL'S REMARKS -->
+<div class="mt-6 text-sm flex justify-start font-medium tracking-wide items-end principal-remarks-section">      <label class="font-semibold mr-2 whitespace-nowrap">PRINCIPAL'S REMARKS</label>
       <div class="relative leading-none w-full max-w-[35rem]">
         <span class="absolute inset-x-0 bottom-0 text-gray-400 tracking-wider pointer-events-none">
-          ..............................................................................................................
+          .....................................................................................................................................
         </span>
         <input type="text"
           class="bg-transparent w-full text-left pl-4 text-sm font-extrabold text-black relative z-10 focus:outline-none pb-0.5 leading-[0.75rem]" />
@@ -674,7 +707,7 @@
     </div>
 
     <!-- SIGN (aligned to the left) -->
-    <div class="mt-8 text-sm flex flex-col items-center w-40 ml-4">
+<div class="mt-8 text-sm flex flex-col items-center w-40 ml-4 principal-sign-section">
       <div class="relative w-full">
         <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none">
           ...........................................

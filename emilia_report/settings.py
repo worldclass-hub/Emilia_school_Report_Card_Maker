@@ -44,7 +44,7 @@ ALLOWED_HOSTS = ["*"]
 
 CSRF_TRUSTED_ORIGINS = [
     'https://emilia-school-report-card-maker.onrender.com',
-    'https://123b7f138ab3.ngrok-free.app',
+    'https://1309d0742134.ngrok-free.app',
     # 'https://9eb1-197-211-59-86.ngrok-free.app',
     'http://127.0.0.1:8000',
 ]
