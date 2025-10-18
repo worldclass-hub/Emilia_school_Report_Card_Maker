@@ -109,40 +109,95 @@
         display: none;
     }
     
-    /* PERFECT TABLE SIZE FOR PARENTS */
+    /* DYNAMIC TABLE HEIGHT SYSTEM - FIXED */
+    /* TABLE CONTAINER - FIXED HEIGHT BUT PROPER COLUMNS */
+    #table-body {
+        min-height: 324px !important; /* 18 rows × 18px = 324px */
+        display: table-row-group !important;
+    }
+    
+    /* DYNAMIC ROW HEIGHT - ADJUSTS BASED ON ROW COUNT */
+    #table-body tr {
+        height: calc(324px / var(--row-count, 18)) !important;
+        display: table-row !important;
+    }
+    
+    /* DYNAMIC FONT SIZE - PROPER INCREASE */
+    table input, table select {
+        font-size: calc(11px + (3px / var(--row-count, 18))) !important;
+    }
+    
+    table td:first-child input {
+        font-size: calc(12px + (3px / var(--row-count, 18))) !important;
+    }
+    
+    /* MAINTAIN TABLE STRUCTURE */
     table {
-        font-size: 12px !important;
+        font-size: 12.5px !important;
         width: 105% !important;
         margin-left: -2.5% !important;
+        table-layout: fixed !important;
+        border-collapse: collapse !important;
     }
     
-    /* CLEAR TABLE HEADERS */
+    /* CLEAR TABLE HEADERS - FIXED POSITIONS */
     table th {
-        font-size: 12.5px !important;
+        font-size: 13px !important;
         font-weight: bold !important;
-        padding: 6px 3px !important;
-    }
-    
-    /* READABLE TABLE CELLS */
-    table td {
-        font-size: 11.5px !important;
         padding: 4px 2px !important;
+        position: static !important;
     }
     
-    /* CLEAR INPUT TEXT */
+    /* READABLE TABLE CELLS - PROPER COLUMN ALIGNMENT */
+    table td {
+        font-size: 12px !important;
+        padding: 3px 1px !important;
+        display: table-cell !important;
+        vertical-align: middle !important;
+    }
+    
+    /* CLEAR INPUT TEXT - ADD PADDING TO AVOID TOUCHING LINES */
     table input {
-        font-size: 11px !important;
         font-weight: bold !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+        padding: 1px 2px !important; /* Added padding to avoid touching lines */
+        text-transform: uppercase !important; /* Force capital letters */
     }
     
     /* CLEAR SELECT TEXT */
     table select {
-        font-size: 11px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+        text-transform: uppercase !important; /* Force capital letters */
     }
     
-    /* PROPER ROW HEIGHT */
-    #table-body tr {
-        height: 20px !important;
+    /* SPECIAL STYLING FOR SUBJECT COLUMN INPUTS - MORE PADDING */
+    table td:first-child input {
+        font-weight: bold !important;
+        padding: 1px 4px !important; /* More padding for subject column */
+    }
+
+    /* LOCK THE BOX AND TEXT POSITION */
+    .mt-10.flex.justify-between.items-start.w-full.max-w-\[794px\].gap-4 {
+        position: fixed !important;
+        bottom: 20px !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        width: 90% !important;
+        margin-top: 0 !important;
+    }
+    
+    .flex-1.text-xs.font-semibold.tracking-wide {
+        margin-top: 0 !important;
+        margin-left: 0 !important;
+        order: 1 !important;
+    }
+    
+    .border.border-black.px-4.py-2.text-sm.font-semibold.w-56 {
+        margin-top: 0 !important;
+        margin-right: 0 !important;
+        order: 2 !important;
     }
 
     /* Compress everything for printing */
@@ -222,7 +277,7 @@
         order: 1 !important;
         margin-left: -40px !important;
         margin-right: auto !important;
-        margin-top: -135px !important;
+        margin-top: -60px !important;
         text-align: left !important;
         flex: 1 !important;
         max-width: none !important;
@@ -243,7 +298,7 @@
         flex-shrink: 0 !important;
         width: 170px !important;
         font-size: 14px !important;
-        margin-top: -210px !important;
+        margin-top: -1px !important;
         padding: 8px !important;
         border: 1px solid black !important;
         background: white !important;
@@ -477,6 +532,20 @@
       transform: scale(0.97);
       transform-origin: top center;
       margin: 0 auto;
+    }
+
+    /* FORCE UPPERCASE IN WEB VIEW TOO */
+    table input[type="text"] {
+        text-transform: uppercase;
+    }
+
+    table select {
+        text-transform: uppercase;
+    }
+
+    /* But keep placeholder normal case */
+    table input::placeholder {
+        text-transform: none;
     }
 </style>
 </head>
@@ -721,7 +790,7 @@
     <!-- Row containing: Editable Text (left) + Terminal Fees Box (right and raised higher) -->
 <div class="mt-10 flex justify-between items-start w-full max-w-[794px] gap-4">
   <!-- Editable Notice Text -->
-  <div class="flex-1 text-xs font-semibold tracking-wide">
+  <div class="flex-1 text-xs font-semibold.tracking-wide">
     <input type="text"
       value="SCHOOL FEES SHOULD BE PAID ON OR BEFORE RESUMPTION. THANKS"
       class="bg-transparent w-full text-left text-xs font-extrabold text-black focus:outline-none" />
@@ -946,84 +1015,134 @@
 
   <!-- ✅ Table Script -->
   <script>
-    function addRow() {
-      const tableBody = document.getElementById("table-body");
-
-      const row = document.createElement("tr");
-
-      row.innerHTML = `
-        <td class="border border-gray-800 px-2 py-1 relative">
-          <input type="text" class="w-full text-[10px] px-1 bg-transparent text-left focus:outline-none border-0 pr-5 font-bold" placeholder="Enter subject name" />
-          <button onclick="this.closest('tr').remove(); calculateGrandTotal()" class="absolute right-1 top-1/2 transform -translate-y-1/2 text-red-500 hover:text-red-700 transition-colors no-print" title="Delete row">
-            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-            </svg>
-          </button>
-        </td>
-        <td class="border border-gray-800 px-0 py-1">
-          <input type="number" class="w-full text-[10px] px-0 bg-transparent text-center focus:outline-none border-0 test1 font-bold" oninput="updateTotal(this)" max="20" />
-        </td>
-        <td class="border border-gray-800 px-0 py-1">
-          <input type="number" class="w-full text-[10px] px-0 bg-transparent text-center focus:outline-none border-0 test2 font-bold" oninput="updateTotal(this)" max="20" />
-        </td>
-        <td class="border border-gray-800 px-0 py-1">
-          <input type="number" class="w-full text-[10px] px-0 bg-transparent text-center focus:outline-none border-0 exam font-bold" oninput="updateTotal(this)" max="60" />
-        </td>
-        <td class="border border-gray-800 px-0 py-1">
-          <input type="number" class="w-full text-[10px] px-0 bg-transparent text-center focus:outline-none border-0 total font-bold" readonly />
-        </td>
-        <td class="border border-gray-800 px-0 py-1">
-          <input type="number" class="w-full text-[10px] px-0 bg-transparent text-center focus:outline-none border-0 font-bold" />
-        </td>
-        <td class="border border-gray-800 px-0 py-1">
-          <select class="w-full text-[10px] px-0 bg-transparent text-center focus:outline-none border-0 no-arrows font-bold">
-            <option value="">--</option>
-            <option>A</option><option>B</option><option>C</option>
-            <option>D</option><option>E</option><option>F</option>
-          </select>
-        </td>
-        <td class="border border-gray-800 px-1 py-1">
-          <select class="w-full text-[10px] px-0 bg-transparent text-center focus:outline-none border-0 no-arrows font-bold">
-            <option value="">--</option>
-            <option>Excellent</option>
-            <option>Very Good</option>
-            <option>Good</option>
-            <option>Fair</option>
-            <option>Poor</option>
-            <option>Fail</option>
-          </select>
-        </td>
-      `;
-
-      tableBody.appendChild(row);
+function updateTableHeight() {
+    const tableBody = document.getElementById("table-body");
+    const rowCount = tableBody.children.length;
+    
+    // Update CSS variable for dynamic calculations
+    document.documentElement.style.setProperty('--row-count', rowCount);
+    
+    // Force table layout recalculation
+    const table = document.querySelector('table');
+    if (table) {
+        table.style.tableLayout = 'fixed';
     }
+    
+    console.log(`Rows: ${rowCount}, Height per row: ${324 / rowCount}px`);
+}
 
-    function updateTotal(input) {
-      const row = input.closest("tr");
-      const test1 = parseFloat(row.querySelector(".test1")?.value || 0);
-      const test2 = parseFloat(row.querySelector(".test2")?.value || 0);
-      const exam = parseFloat(row.querySelector(".exam")?.value || 0);
-      const total = test1 + test2 + exam;
-      row.querySelector(".total").value = total;
-      calculateGrandTotal();
+function updateAddButtonVisibility() {
+    const tableBody = document.getElementById("table-body");
+    const addButton = document.querySelector('button[onclick="addRow()"]');
+    const rowCount = tableBody.children.length;
+    
+    // Hide add button when we have 18 rows, show when we have less
+    if (rowCount >= 18) {
+        addButton.style.display = 'none';
+    } else {
+        addButton.style.display = 'block';
     }
+    
+    console.log(`Rows: ${rowCount}, Add button: ${rowCount >= 18 ? 'hidden' : 'visible'}`);
+}
 
-    function calculateGrandTotal() {
-      const totals = document.querySelectorAll(".total");
-      let sum = 0;
-      totals.forEach(input => {
+// Modified delete function
+function deleteRow(button) {
+    button.closest('tr').remove();
+    calculateGrandTotal();
+    updateTableHeight(); // Update height after deletion
+    updateAddButtonVisibility(); // Update button visibility after deletion
+}
+
+function addRow() {
+    const tableBody = document.getElementById("table-body");
+    const addButton = document.querySelector('button[onclick="addRow()"]');
+    const rowCount = tableBody.children.length;
+    
+    // Don't add more than 18 rows
+    if (rowCount >= 18) {
+        return;
+    }
+    
+    const row = document.createElement("tr");
+
+    row.innerHTML = `
+    <td class="border border-gray-800 px-1 py-0 relative">
+      <input type="text" class="w-full text-[12.5px] px-1 bg-transparent text-left focus:outline-none border-0 pr-3 font-bold uppercase placeholder:normal-case" placeholder="Enter subject" oninput="this.value = this.value.toUpperCase()" />
+      <button onclick="deleteRow(this)" class="absolute right-0 top-1/2 transform -translate-y-1/2 text-red-500 hover:text-red-700 transition-colors no-print text-xs" title="Delete row">
+        <svg class="w-2 h-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+        </svg>
+      </button>
+    </td>
+    <td class="border border-gray-800 px-0 py-0">
+      <input type="number" class="w-full text-[11px] px-1 bg-transparent text-center focus:outline-none border-0 test1 font-bold" oninput="updateTotal(this)" max="20" />
+    </td>
+    <td class="border border-gray-800 px-0 py-0">
+      <input type="number" class="w-full text-[11px] px-1 bg-transparent text-center focus:outline-none border-0 test2 font-bold" oninput="updateTotal(this)" max="20" />
+    </td>
+    <td class="border border-gray-800 px-0 py-0">
+      <input type="number" class="w-full text-[11px] px-1 bg-transparent text-center focus:outline-none border-0 exam font-bold" oninput="updateTotal(this)" max="60" />
+    </td>
+    <td class="border border-gray-800 px-0 py-0">
+      <input type="number" class="w-full text-[11px] px-1 bg-transparent text-center focus:outline-none border-0 total font-bold" readonly />
+    </td>
+    <td class="border border-gray-800 px-0 py-0">
+      <input type="number" class="w-full text-[11px] px-1 bg-transparent text-center focus:outline-none border-0 font-bold" />
+    </td>
+    <td class="border border-gray-800 px-0 py-0">
+      <select class="w-full text-[11px] px-1 bg-transparent text-center focus:outline-none border-0 no-arrows font-bold uppercase">
+        <option value="">--</option>
+        <option>A</option><option>B</option><option>C</option>
+        <option>D</option><option>E</option><option>F</option>
+      </select>
+    </td>
+    <td class="border border-gray-800 px-0 py-0">
+      <select class="w-full text-[11px] px-1 bg-transparent text-center focus:outline-none border-0 no-arrows font-bold uppercase">
+        <option value="">--</option>
+        <option>EXCELLENT</option>
+        <option>VERY GOOD</option>
+        <option>GOOD</option>
+        <option>FAIR</option>
+        <option>POOR</option>
+        <option>FAIL</option>
+      </select>
+    </td>
+  `;
+
+    tableBody.appendChild(row);
+    updateTableHeight();
+    updateAddButtonVisibility(); // Update button visibility after adding
+}
+
+function updateTotal(input) {
+    const row = input.closest("tr");
+    const test1 = parseFloat(row.querySelector(".test1")?.value || 0);
+    const test2 = parseFloat(row.querySelector(".test2")?.value || 0);
+    const exam = parseFloat(row.querySelector(".exam")?.value || 0);
+    const total = test1 + test2 + exam;
+    row.querySelector(".total").value = total;
+    calculateGrandTotal();
+}
+
+function calculateGrandTotal() {
+    const totals = document.querySelectorAll(".total");
+    let sum = 0;
+    totals.forEach(input => {
         const val = parseFloat(input.value || 0);
         sum += val;
-      });
-      document.getElementById("total-sum").value = sum;
-    }
-
-    // Auto-add 19 rows for SS1 class
-    document.addEventListener('DOMContentLoaded', function() {
-      for (let i = 0; i < 19; i++) {
-        addRow();
-      }
     });
+    document.getElementById("total-sum").value = sum;
+}
+
+// Auto-add 18 rows for SS1 class
+document.addEventListener('DOMContentLoaded', function() {
+    for (let i = 0; i < 18; i++) {
+        addRow();
+    }
+    updateTableHeight(); // Set initial height
+    updateAddButtonVisibility(); // Set initial button state
+});
   </script>
     
 <!-- ✅ Enhanced Modal & Export Script -->
