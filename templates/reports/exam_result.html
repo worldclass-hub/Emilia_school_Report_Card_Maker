@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,7 +10,6 @@
 
   <script src="https://cdn.tailwindcss.com"></script>
   
-  <!-- FLOATING HOME BUTTON STYLES -->
 <style>
     /* World-Class Floating Home Button */
     .floating-home-btn {
@@ -87,30 +87,130 @@
       }
     }
 
-    /* TOMATO COLOR FOR TOTAL COLUMN - INCREASE WEB VIEW TINY BIT */
+    /* WATERMARK STYLES - FOR BOTH WEB AND PRINT */
+    #table-body {
+        position: relative;
+        min-height: 324px !important;
+        height: 324px !important;
+        display: table-row-group !important;
+    }
+
+    /* School logo watermark for BOTH web view AND print */
+    #table-body::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 350px;
+        height: 350px;
+        background-image: url('https://ncctazjcffmpuniwctkz.supabase.co/storage/v1/object/public/user-uploads/EMILIA%20LOGO.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        opacity: 0.08; /* Slightly more visible for print */
+        z-index: 1;
+        pointer-events: none;
+    }
+
+    /* CONSISTENT TABLE BORDERS FOR BOTH WEB VIEW AND PRINT */
+    table {
+        border: 1px solid #000000 !important;
+        border-collapse: collapse !important;
+        width: 100% !important;
+    }
+
+    table th {
+        border: 1px solid #000000 !important;
+        background-color: #f0f0f0 !important; /* Light gray for header */
+        font-weight: bold !important;
+        padding: 4px 2px !important;
+        /* REMOVE THE BOTTOM BORDER FROM HEADER TO ELIMINATE THE HORIZONTAL LINE */
+        border-bottom: none !important;
+    }
+
+    table td {
+        border: 1px solid #000000 !important;
+        padding: 3px 1px !important;
+        vertical-align: middle !important;
+    }
+
+    table tfoot td {
+        border: 1px solid #000000 !important;
+    }
+
+    /* Ensure all borders are visible and consistent */
+    table th,
+    table td,
+    table tfoot td {
+        border-width: 1px !important;
+        border-style: solid !important;
+        border-color: #000000 !important;
+    }
+
+    /* SPECIFICALLY REMOVE THE BOTTOM BORDER FROM TABLE HEADER */
+    table thead tr th {
+        border-bottom: none !important;
+    }
+
+    /* Make table cells transparent to show watermark */
+    table tbody tr td {
+        background-color: transparent !important;
+        position: relative;
+        z-index: 2; /* Ensure content appears above watermark */
+    }
+
+    /* Make table header transparent */
+    table thead tr th {
+        background-color: transparent !important;
+        position: relative;
+        z-index: 2;
+    }
+
+    /* Make table footer transparent */
+    table tfoot tr td {
+        background-color: transparent !important;
+        position: relative;
+        z-index: 2;
+    }
+
+    /* REMOVED ALL TABLE COLORS - Clean white background */
     table td:nth-child(5),
     table tfoot tr td:nth-child(5) {
-        background-color: rgba(255, 99, 71, 0.3) !important;
+        background-color: transparent !important;
         padding: 0 !important;
     }
 
-    /* MAKE INPUT FILL CELL PROPERLY - INCREASE WEB VIEW TINY BIT */
+    /* ✅ FIX TOTAL COLUMN FOR WEB VIEW - SAME AS OTHER COLUMNS */
     table td:nth-child(5) input,
     table tfoot tr td:nth-child(5) input,
     #total-sum {
-        background-color: rgba(255, 99, 71, 0.3) !important;
+        background-color: transparent !important;
         border: none !important;
-        padding: 4px 0 !important; /* Increase padding tiny bit more */
+        padding: 1px 2px !important; /* Same as other columns */
         margin: 0 !important;
         width: 100% !important;
         height: 100% !important;
         display: block !important;
         box-sizing: border-box !important;
-        font-size: 14px !important; /* Increase from 13px to 14px tiny bit */
+        font-size: 16px !important; /* Increase to match other columns */
         font-weight: bold !important;
     }
 
-    /* BLUE COLOR FOR CLASS-AVE COLUMN - JUST ADD COLOR, NO TOUCH FONT SIZE */
+    /* ✅ INCREASE ALL IMPORTANT COLUMNS FOR WEB VIEW */
+    table td:nth-child(2) input,
+    table td:nth-child(3) input,
+    table td:nth-child(4) input,
+    table td:nth-child(6) input,
+    table td:nth-child(7) input,
+    table td:nth-child(7) select,
+    table td:nth-child(8) input,
+    table td:nth-child(8) select {
+        font-size: 16px !important;
+        font-weight: bold !important;
+    }
+
+    /* REMOVED BLUE COLOR FOR CLASS-AVE COLUMN */
     table tbody tr:nth-child(1) td:nth-child(6),
     table tbody tr:nth-child(2) td:nth-child(6),
     table tbody tr:nth-child(5) td:nth-child(6),
@@ -127,76 +227,12 @@
     table tbody tr:nth-child(16) td:nth-child(6),
     table tbody tr:nth-child(17) td:nth-child(6),
     table tbody tr:nth-child(18) td:nth-child(6) {
-        background-color: rgba(59, 130, 246, 0.3) !important; /* Light blue */
+        background-color: transparent !important;
     }
 
-    /* GREEN COLOR FOR GRADE COLUMN - ONLY FIRST CELL */
+    /* REMOVED GREEN COLOR FOR GRADE COLUMN */
     table tbody tr:nth-child(1) td:nth-child(7) {
-        background-color: rgba(34, 197, 94, 0.3) !important; /* Light green */
-    }
-
-    /* FORCE TABLE BODY TO MAINTAIN FIXED HEIGHT IN WEB VIEW */
-    #table-body {
-        min-height: 324px !important;
-        height: 324px !important;
-        display: table-row-group !important;
-    }
-
-    /* For print view - KEEP AS IS */
-    @media print {
-        table td:nth-child(5),
-        table tfoot tr td:nth-child(5) {
-            background-color: rgba(255, 99, 71, 0.15) !important;
-            -webkit-print-color-adjust: exact !important;
-            print-color-adjust: exact !important;
-            padding: 0 !important;
-        }
-
-        table td:nth-child(5) input,
-        table tfoot tr td:nth-child(5) input,
-        #total-sum {
-            background-color: rgba(255, 99, 71, 0.15) !important;
-            -webkit-print-color-adjust: exact !important;
-            print-color-adjust: exact !important;
-            border: none !important;
-            padding: 2px 0 !important;
-            margin: 0 !important;
-            width: 100% !important;
-            height: 100% !important;
-            display: block !important;
-            box-sizing: border-box !important;
-            font-size: 12px !important;
-            font-weight: bold !important;
-        }
-
-        /* BLUE COLOR FOR CLASS-AVE COLUMN - JUST ADD COLOR FOR PRINT */
-        table tbody tr:nth-child(1) td:nth-child(6),
-        table tbody tr:nth-child(2) td:nth-child(6),
-        table tbody tr:nth-child(5) td:nth-child(6),
-        table tbody tr:nth-child(6) td:nth-child(6),
-        table tbody tr:nth-child(7) td:nth-child(6),
-        table tbody tr:nth-child(8) td:nth-child(6),
-        table tbody tr:nth-child(9) td:nth-child(6),
-        table tbody tr:nth-child(10) td:nth-child(6),
-        table tbody tr:nth-child(11) td:nth-child(6),
-        table tbody tr:nth-child(12) td:nth-child(6),
-        table tbody tr:nth-child(13) td:nth-child(6),
-        table tbody tr:nth-child(14) td:nth-child(6),
-        table tbody tr:nth-child(15) td:nth-child(6),
-        table tbody tr:nth-child(16) td:nth-child(6),
-        table tbody tr:nth-child(17) td:nth-child(6),
-        table tbody tr:nth-child(18) td:nth-child(6) {
-            background-color: rgba(59, 130, 246, 0.15) !important;
-            -webkit-print-color-adjust: exact !important;
-            print-color-adjust: exact !important;
-        }
-
-        /* GREEN COLOR FOR GRADE COLUMN - ONLY FIRST CELL (PRINT) */
-        table tbody tr:nth-child(1) td:nth-child(7) {
-            background-color: rgba(34, 197, 94, 0.15) !important;
-            -webkit-print-color-adjust: exact !important;
-            print-color-adjust: exact !important;
-        }
+        background-color: transparent !important;
     }
 
 </style>
@@ -222,8 +258,102 @@
         display: none;
     }
     
+    /* ✅ CONSISTENT TABLE BORDERS FOR PRINT */
+    table {
+        border: 1px solid #000000 !important;
+        border-collapse: collapse !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+    
+    table th {
+        border: 1px solid #000000 !important;
+        background-color: #f0f0f0 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        /* REMOVE THE BOTTOM BORDER FROM HEADER FOR PRINT TOO */
+        border-bottom: none !important;
+    }
+    
+    table td {
+        border: 1px solid #000000 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+    
+    table tfoot td {
+        border: 1px solid #000000 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+    
+    /* SPECIFICALLY REMOVE THE BOTTOM BORDER FROM TABLE HEADER FOR PRINT */
+    table thead tr th {
+        border-bottom: none !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+    
+    /* ✅ MAKE PRINT PREVIEW COMPLETELY TRANSPARENT FOR WATERMARK */
+    table,
+    table tbody,
+    table thead,
+    table tfoot,
+    table tr,
+    table td,
+    table th {
+        background-color: transparent !important;
+        background: transparent !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+    
+    /* ✅ ENSURE WATERMARK SHOWS IN PRINT PREVIEW */
+    #table-body::before {
+        display: block !important;
+        opacity: 0.12 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        z-index: 1 !important;
+        width: 350px !important;  /* ADD THIS LINE */
+        height: 350px !important; /* ADD THIS LINE */
+    }
+    
+    /* KEEP WATERMARK FOR PRINT - CHANGED FROM display: none */
+    #table-body::before {
+        display: block !important;
+        opacity: 0.12 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        width: 350px !important;  /* ADD THIS LINE */
+        height: 350px !important; /* ADD THIS LINE */
+    }
+    
+    /* ✅ ENSURE TABLE CONTENT STAYS ABOVE WATERMARK */
+    table tbody tr td,
+    table thead tr th,
+    table tfoot tr td {
+        position: relative;
+        z-index: 2 !important;
+        background-color: transparent !important;
+    }
+    
+    /* ✅ REMOVE ALL BACKGROUND COLORS */
+    .bg-white,
+    .bg-gray-200 {
+        background-color: transparent !important;
+        background: transparent !important;
+    }
+    
+    /* KEEP WATERMARK FOR PRINT - CHANGED FROM display: none */
+    #table-body::before {
+        display: block !important; /* Show watermark in print */
+        opacity: 0.12 !important; /* Slightly more visible for print */
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
     /* DYNAMIC TABLE HEIGHT SYSTEM - FIXED */
-    /* TABLE CONTAINER - FIXED HEIGHT BUT PROPER COLUMNS */
     #table-body {
         min-height: 324px !important; /* 18 rows × 18px = 324px */
         display: table-row-group !important;
@@ -303,6 +433,22 @@ table td:nth-child(8) select {
     table td:first-child input {
         font-weight: bold !important;
         padding: 1px 4px !important; /* More padding for subject column */
+    }
+
+    /* ✅ FIX TOTAL COLUMN FONT SIZE AND PADDING FOR PRINT */
+    table td:nth-child(5) input,
+    table tfoot tr td:nth-child(5) input,
+    #total-sum {
+        font-size: 16px !important;
+        padding: 1px 2px !important;  /* Same as other columns */
+        margin: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        display: block !important;
+        box-sizing: border-box !important;
+        font-weight: bold !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
     }
 
     /* LOCK THE BOX AND TEXT POSITION */
@@ -622,6 +768,44 @@ table td:nth-child(8) select {
         padding: 10mm !important;
         box-shadow: none !important;
         border: none !important;
+    }
+
+    /* For print view - REMOVED ALL COLORS */
+    table td:nth-child(5),
+    table tfoot tr td:nth-child(5) {
+        background-color: transparent !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        padding: 0 !important;
+    }
+
+    /* REMOVED BLUE COLOR FOR CLASS-AVE COLUMN */
+    table tbody tr:nth-child(1) td:nth-child(6),
+    table tbody tr:nth-child(2) td:nth-child(6),
+    table tbody tr:nth-child(5) td:nth-child(6),
+    table tbody tr:nth-child(6) td:nth-child(6),
+    table tbody tr:nth-child(7) td:nth-child(6),
+    table tbody tr:nth-child(8) td:nth-child(6),
+    table tbody tr:nth-child(9) td:nth-child(6),
+    table tbody tr:nth-child(10) td:nth-child(6),
+    table tbody tr:nth-child(11) td:nth-child(6),
+    table tbody tr:nth-child(12) td:nth-child(6),
+    table tbody tr:nth-child(13) td:nth-child(6),
+    table tbody tr:nth-child(14) td:nth-child(6),
+    table tbody tr:nth-child(15) td:nth-child(6),
+    table tbody tr:nth-child(16) td:nth-child(6),
+    table tbody tr:nth-child(17) td:nth-child(6),
+    table tbody tr:nth-child(18) td:nth-child(6) {
+        background-color: transparent !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    /* REMOVED GREEN COLOR FOR GRADE COLUMN */
+    table tbody tr:nth-child(1) td:nth-child(7) {
+        background-color: transparent !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
     }
 }
     
