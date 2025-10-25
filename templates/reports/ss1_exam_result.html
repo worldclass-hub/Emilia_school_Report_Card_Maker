@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -233,6 +232,14 @@
     /* REMOVED GREEN COLOR FOR GRADE COLUMN */
     table tbody tr:nth-child(1) td:nth-child(7) {
         background-color: transparent !important;
+    }
+
+    /* CARRY TEXT UP SMALL FOR DOTTED LINES */
+    .mt-8.text-sm.flex.justify-start.gap-4.pl-0.flex-wrap.font-medium.tracking-wide.items-end input,
+    .mt-6.text-sm.flex.justify-start.gap-0.pl-0.flex-wrap.font-medium.tracking-wide.items-end input,
+    .mt-6.text-sm.flex.justify-start.pl-0.flex-nowrap.font-medium.tracking-wide.items-end input,
+    .mt-6.text-sm.flex.justify-start.font-medium.tracking-wide.items-end input {
+        transform: translateY(-2px);
     }
 
 </style>
@@ -807,6 +814,14 @@ table td:nth-child(8) select {
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
     }
+
+    /* CARRY TEXT UP SMALL FOR DOTTED LINES IN PRINT */
+    .mt-8.text-sm.flex.justify-start.gap-4.pl-0.flex-wrap.font-medium.tracking-wide.items-end input,
+    .mt-6.text-sm.flex.justify-start.gap-0.pl-0.flex-wrap.font-medium.tracking-wide.items-end input,
+    .mt-6.text-sm.flex.justify-start.pl-0.flex-nowrap.font-medium.tracking-wide.items-end input,
+    .mt-6.text-sm.flex.justify-start.font-medium.tracking-wide.items-end input {
+        transform: translateY(-2px);
+    }
 }
     
     /* Hide dropdown arrows for print */
@@ -823,7 +838,38 @@ table td:nth-child(8) select {
       padding-right: 0.5rem;
     }
     
-    /* For web view - show arrows */
+    /* Special print optimization */
+    body.printing {
+      zoom: 0.97;
+    }
+
+    body.printing .max-w-\[794px\] {
+      transform: scale(0.97);
+      transform-origin: top center;
+      margin: 0 auto;
+    }
+
+    /* FORCE UPPERCASE IN WEB VIEW TOO */
+    table input[type="text"] {
+        text-transform: uppercase;
+    }
+
+    table select {
+        text-transform: uppercase;
+    }
+
+    /* But keep placeholder normal case */
+    table input::placeholder {
+        text-transform: none;
+    }
+
+    /* FIX FOR SUBJECT DROPDOWN ONLY - Remove custom arrow */
+    .subject-select {
+        background-image: none !important;
+        padding-right: 0.5rem !important;
+    }
+
+    /* For web view - show arrows (original working version) */
     @media screen {
       select {
         background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
@@ -832,7 +878,24 @@ table td:nth-child(8) select {
         background-size: 1.5em 1.5em;
         padding-right: 2.5rem;
       }
+      
+      /* Override for subject-select only */
+      .subject-select {
+        background-image: none !important;
+        padding-right: 0.5rem !important;
+      }
     }
+
+@media print {
+  input[value*="SCHOOL FEES SHOULD BE PAID"] {
+    transform: translateY(95px) !important;  /* move down */
+    display: inline-block !important;
+  }
+
+  .border.border-black.px-4.py-2.text-sm.font-semibold.w-56 {
+    transform: translateY(35px) !important;
+  }
+}
 
     /* Special print optimization */
     body.printing {
@@ -1337,6 +1400,30 @@ table td:nth-child(8) select {
 
   <!-- ✅ Table Script -->
   <script>
+// Define all subjects
+const allSubjects = [
+    "MATHEMATICS",
+    "ENGLISH STUDIES",
+    "PHYSICS",
+    "CHEMISTRY",
+    "ECONOMICS",
+    "FURTHER MATHEMATICS",
+    "LIT-IN-ENGLISH",
+    "CITIZENSHIP AND HERITAGE",
+    "GOVERNMENT",
+    "GEOGRAPHY",
+    "ACCOUNTING",
+    "MARKETING",
+    "COMMERCES",
+    "DIGITAL TECHNOLOGY",
+    "BIOLOGY",
+    "C.R.S",
+    "LIVESTOCK"
+];
+
+// Track used subjects to prevent duplicates
+let usedSubjects = new Set();
+
 // Set fixed height for table body - ALWAYS MAINTAIN 18 ROWS HEIGHT
 function maintainTableHeight() {
     const tableBody = document.getElementById("table-body");
@@ -1365,13 +1452,101 @@ function updateAddButtonVisibility() {
     }
 }
 
+// Get available subjects (not yet used)
+function getAvailableSubjects() {
+    return allSubjects.filter(subject => !usedSubjects.has(subject));
+}
+
+// Update subject dropdown when a subject is selected
+function updateSubjectDropdown(selectElement) {
+    const selectedValue = selectElement.value;
+    const row = selectElement.closest('tr');
+    const previousSubject = row.dataset.selectedSubject;
+    
+    console.log('Selected:', selectedValue, 'Previous:', previousSubject);
+    
+    // Remove previous subject from used set
+    if (previousSubject && previousSubject !== selectedValue) {
+        usedSubjects.delete(previousSubject);
+        console.log('Removed previous subject:', previousSubject);
+    }
+    
+    // Add new subject to used set
+    if (selectedValue && selectedValue !== "") {
+        usedSubjects.add(selectedValue);
+        row.dataset.selectedSubject = selectedValue;
+        console.log('Added new subject:', selectedValue);
+    } else {
+        // If empty selection, remove from used set
+        if (previousSubject) {
+            usedSubjects.delete(previousSubject);
+        }
+        delete row.dataset.selectedSubject;
+    }
+    
+    // Update all dropdowns to show available subjects
+    updateAllDropdowns();
+}
+
+// Update all dropdowns to reflect current available subjects
+function updateAllDropdowns() {
+    const availableSubjects = getAvailableSubjects();
+    const allDropdowns = document.querySelectorAll('.subject-select');
+    
+    console.log('Available subjects:', availableSubjects);
+    console.log('Used subjects:', Array.from(usedSubjects));
+    
+    allDropdowns.forEach(dropdown => {
+        const currentValue = dropdown.value;
+        const row = dropdown.closest('tr');
+        const rowSubject = row.dataset.selectedSubject;
+        
+        console.log('Updating dropdown, current value:', currentValue, 'row subject:', rowSubject);
+        
+        // Store current selection
+        dropdown.innerHTML = '<option value="">-- SELECT SUBJECT --</option>';
+        
+        // Add available subjects
+        availableSubjects.forEach(subject => {
+            const option = document.createElement('option');
+            option.value = subject;
+            option.textContent = subject;
+            dropdown.appendChild(option);
+        });
+        
+        // Add back the current row's selected subject if it exists and is not in available
+        if (rowSubject && !availableSubjects.includes(rowSubject)) {
+            const option = document.createElement('option');
+            option.value = rowSubject;
+            option.textContent = rowSubject;
+            dropdown.appendChild(option);
+        }
+        
+        // Restore current selection
+        if (rowSubject) {
+            dropdown.value = rowSubject;
+        } else if (currentValue && availableSubjects.includes(currentValue)) {
+            dropdown.value = currentValue;
+        }
+    });
+}
+
 // ACTUALLY DELETE THE ROW but maintain table height
 function deleteRow(button) {
     const row = button.closest('tr');
+    const selectedSubject = row.dataset.selectedSubject;
+    
+    // Remove subject from used set
+    if (selectedSubject) {
+        usedSubjects.delete(selectedSubject);
+        console.log('Removed subject on delete:', selectedSubject);
+    }
+    
     row.remove();
     calculateGrandTotal();
     maintainTableHeight(); // Update to maintain fixed height
     updateAddButtonVisibility();
+    updateAllDropdowns(); // Update other dropdowns when a row is deleted
 }
 
 function addRow() {
@@ -1388,7 +1563,9 @@ function addRow() {
 
     row.innerHTML = `
     <td class="border border-gray-800 px-1 py-0 relative">
-      <input type="text" class="w-full text-[12.5px] px-1 bg-transparent text-left focus:outline-none border-0 pr-3 font-bold uppercase placeholder:normal-case" placeholder="Enter subject" oninput="this.value = this.value.toUpperCase()" />
+      <select class="w-full text-[12.5px] px-1 bg-transparent text-left focus:outline-none border-0 pr-3 font-bold uppercase subject-select" onchange="updateSubjectDropdown(this)">
+        <option value="">-- SELECT SUBJECT --</option>
+      </select>
       <button onclick="deleteRow(this)" class="absolute right-0 top-1/2 transform -translate-y-1/2 text-red-500 hover:text-red-700 transition-colors no-print text-xs" title="Delete row">
         <svg class="w-2 h-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
@@ -1431,6 +1608,10 @@ function addRow() {
   `;
 
     tableBody.appendChild(row);
+    
+    // Update the dropdown for this new row
+    updateAllDropdowns();
+    
     maintainTableHeight();
     updateAddButtonVisibility();
 }

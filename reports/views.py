@@ -34,8 +34,24 @@ def staff_logout(request):
     return redirect("staff_login")
 
 
-def exam_result_view(request):
-    return render(request, 'reports/exam_result.html')  # You'll need to create this template
+def ss1_exam_result_view(request):
+    return render(request, 'reports/ss1_exam_result.html')  # You'll need to create this template
+
+def ss2_exam_result_view(request):
+    return render(request, 'reports/ss2_exam_result.html')  # You'll need to create this template
+
+def ss3_exam_result_view(request):
+    return render(request, 'reports/ss3_exam_result.html')  # You'll need to create this template
+
+
+def jss1_exam_result_view(request):
+    return render(request, 'reports/jss1_exam_result.html')  # You'll need to create this template
+
+def jss2_exam_result_view(request):
+    return render(request, 'reports/jss2_exam_result.html')  # You'll need to create this template
+
+def jss3_exam_result_view(request):
+    return render(request, 'reports/jss3_exam_result.html')  # You'll need to create this template
 
 
 @login_required(login_url="/")
