@@ -404,7 +404,7 @@ header h2 {
       <tbody id="tableBody">
         <tr>
           <td>1 <span class="delete-btn" onclick="deleteStudent(this)">🗑️</span></td>
-          <td contenteditable="true">John Doe</td>
+          <td contenteditable="true"></td> <!-- Empty student name field -->
           <!-- Subject cells will be inserted here -->
           <td contenteditable="true"></td>
           <td contenteditable="true"></td>
@@ -476,7 +476,7 @@ header h2 {
         tableBody.innerHTML = `
           <tr>
             <td>1 <span class="delete-btn" onclick="deleteStudent(this)">🗑️</span></td>
-            <td contenteditable="true">John Doe</td>
+            <td contenteditable="true"></td> <!-- Empty student name field -->
             <!-- Subject cells will be inserted here -->
             <td contenteditable="true"></td>
             <td contenteditable="true"></td>
@@ -639,7 +639,7 @@ header h2 {
       const headerCount = document.querySelectorAll('#headerRow th').length;
 
       let cells = `<td>${rowCount} <span class="delete-btn" onclick="deleteStudent(this)">🗑️</span></td>
-                   <td contenteditable="true">New Student</td>`;
+                   <td contenteditable="true"></td>`; <!-- Empty student name field -->
 
       // Add subject cells for each existing subject
       for (let controlId of subjectControlMap.keys()) {
