@@ -1,86 +1,674 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Staff Broadsheet - Emilia Foremost</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Professional Broad Sheet</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @page {
+      size: A4 landscape;
+      margin: 0.5cm;
+    }
+
+    @media print {
+      #controls, #subject-controls {
+        display: none;
+      }
+      
+      /* Hide delete buttons and dropdowns in print */
+      .delete-btn, .subject-control, .no-print {
+        display: none !important;
+      }
+      
+      /* Show print-only elements */
+      .print-only {
+        display: inline-block !important;
+      }
+      
+      /* Clean table headers for print */
+      th.vertical {
+        border: 1px solid #000 !important;
+      }
+      
+      /* Optimized column widths for print with larger fonts */
+      th:first-child, td:first-child {
+        width: 40px !important;
+        min-width: 40px !important;
+        max-width: 40px !important;
+        font-size: 14px !important;
+      }
+      
+      th:nth-child(2), td:nth-child(2) {
+        width: 180px !important;
+        min-width: 180px !important;
+        max-width: 180px !important;
+        font-size: 14px !important;
+      }
+      
+      /* Make subject columns with MUCH larger fonts for print */
+      th.vertical {
+        width: 32px !important;
+        max-width: 32px !important;
+        padding: 3px !important;
+        font-size: 14px !important;
+        font-weight: 700 !important;
+      }
+      
+      td.subject-cell {
+        width: 32px !important;
+        max-width: 32px !important;
+        padding: 2px !important;
+        font-size: 15px !important;
+        font-weight: 600 !important;
+      }
+      
+      /* TOTAL, GRADE, POSITION columns with larger fonts */
+      th.vertical:nth-last-child(-n+3), 
+      td:nth-last-child(-n+3) {
+        width: 35px !important;
+        max-width: 35px !important;
+        font-size: 14px !important;
+      }
+
+      /* Larger font for all table headers */
+      th {
+        font-size: 14px !important;
+        font-weight: 700 !important;
+      }
+    }
+
+    /* 🔽 Optimized subject columns for screen with larger fonts */
+    th.vertical {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      text-align: center;
+      padding: 4px;
+      font-weight: 700;
+      width: 35px;
+      max-width: 35px;
+      font-size: 14px;
+    }
+
+    /* 🔽 Match subject cell width to header */
+    td.subject-cell {
+      width: 35px;
+      max-width: 35px;
+      padding: 3px;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      table-layout: fixed;
+    }
+
+    th, td {
+      border: 1px solid #000;
+      text-align: center;
+      padding: 4px;
+      font-size: 14px;
+    }
+
+    /* S/N column styling with larger font */
+    th:first-child, td:first-child {
+      width: 50px;
+      min-width: 50px;
+      max-width: 50px;
+      font-size: 14px;
+    }
+
+    /* Student name column styling for screen with larger font */
+    th:nth-child(2), td:nth-child(2) {
+      width: 160px;
+      min-width: 160px;
+      max-width: 160px;
+      text-align: left;
+      padding-left: 8px;
+      font-size: 14px;
+    }
+
+    /* TOTAL, GRADE, POSITION columns with larger fonts */
+    th.vertical:nth-last-child(-n+3), 
+    td:nth-last-child(-n+3) {
+      width: 40px;
+      max-width: 40px;
+      font-size: 14px;
+    }
+
+    input, select {
+      width: 100%;
+      text-align: center;
+      border: none;
+      background: transparent;
+      outline: none;
+      font-size: 14px;
+    }
+
+    input:focus, select:focus {
+      background: #eef;
+    }
+
+    .delete-btn {
+      color: red;
+      cursor: pointer;
+      margin-left: 4px;
+      font-size: 14px;
+    }
+    
+    /* Subject controls styling */
+    #subject-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 8px;
+      padding: 6px;
+      background: #f5f5f5;
+      border-radius: 4px;
+    }
+    
+    .subject-control {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 6px;
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 3px;
+      font-size: 14px;
+    }
+    
+    .subject-control select {
+      width: auto;
+      min-width: 120px;
+      font-size: 13px;
+    }
+    
+    .subject-control button {
+      color: red;
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-size: 16px;
+    }
+
+    /* Header optimizations with larger fonts */
+    header {
+      margin-bottom: 4px;
+      margin-top: 30px; /* Added to move entire header down */
+    }
+
+    /* MUCH Larger logo size */
+    .school-logo {
+      width: 100px !important; /* Increased from 80px */
+      height: 100px !important; /* Increased from 80px */
+    }
+
+    /* MUCH Larger school name */
+    header h1 {
+  font-size: 38px !important;
+  margin-bottom: 20px !important; /* Increased space below school name */
+}
+
+header h2 {
+  font-size: 28px !important;
+  margin-top: 20px !important; /* Increased space above broad sheet title */
+}
+
+    .info-input {
+      font-size: 14px;
+    }
+
+    /* Ensure delete buttons are visible on screen */
+    .delete-btn {
+      display: inline-block;
+    }
+
+    /* Hide print-only elements on screen */
+    .print-only {
+      display: none;
+    }
+
+    /* Single underscore styling for both web and print */
+    .underscore-input {
+      border: none;
+      border-bottom: 1px solid #000;
+      background: transparent;
+      outline: none;
+      text-align: center;
+      min-width: 80px;
+      font-size: 14px;
+      margin: 0 4px;
+    }
+
+    .underscore-input:focus {
+      background: #eef;
+    }
+
+    /* Broad sheet level display */
+    .broad-sheet-level {
+      font-weight: bold;
+      margin-left: 4px;
+    }
+
+    /* Moved CLASS, TERM, YEAR, SESSION fields down */
+    .info-fields {
+      margin-top: 45px;
+    }
+
+    /* 🔽 SUPER POWERFUL FLOATING HOME BUTTON STYLES */
+    .floating-home-btn {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+      cursor: pointer;
+      z-index: 1000;
+      transition: all 0.3s ease;
+      border: none;
+      outline: none;
+      animation: pulse 2s infinite;
+    }
+
+    .floating-home-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+      background: linear-gradient(135deg, #1d4ed8, #1e40af);
+    }
+
+    .floating-home-btn:active {
+      transform: scale(0.95);
+    }
+
+    .floating-home-btn .tooltip {
+      position: absolute;
+      bottom: 70px;
+      right: 0;
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 14px;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .floating-home-btn:hover .tooltip {
+      opacity: 1;
+    }
+
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5);
+      }
+      50% {
+        box-shadow: 0 6px 25px rgba(59, 130, 246, 0.8);
+      }
+      100% {
+        box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5);
+      }
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .floating-home-btn {
+        width: 50px;
+        height: 50px;
+        bottom: 20px;
+        right: 20px;
+        font-size: 20px;
+      }
+    }
+  </style>
 </head>
-<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen flex flex-col">
+<body class="bg-white text-gray-900 p-2 font-sans">
 
-    <!-- Header -->
-    <header class="py-6 px-4 sm:px-8 bg-white/80 backdrop-blur-sm shadow-sm">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <div class="flex items-center space-x-3">
-                <div class="w-12 h-12 bg-gradient-to-r from-primary to-accent rounded-xl flex items-center justify-center">
-                    <i class="fas fa-chart-bar text-white text-xl"></i>
-                </div>
-                <div>
-                    <h1 class="text-2xl font-bold text-secondary">Staff Broadsheet</h1>
-                    <p class="text-sm text-gray-600">View and manage class performance data</p>
-                </div>
-            </div>
+  <!-- Header -->
+  <header class="text-center mb-4">
+    <div class="flex items-center justify-center gap-3">
+      <img 
+        src="https://ncctazjcffmpuniwctkz.supabase.co/storage/v1/object/public/user-uploads/EMILIA%20LOGO.png"
+        alt="Emilia Logo"
+        class="school-logo object-contain"
+      />
+      <div>
+        <h1 class="text-2xl font-extrabold uppercase">Emilia - Foremost High School</h1>
+        <h2 class="text-lg font-semibold uppercase">
+          Broad Sheet (
+          <input type="text" value="SSS" class="no-underline w-12 text-center no-print broad-sheet-input" />
+          <span class="print-only broad-sheet-level">SSS</span>
+          )
+        </h2>
+      </div>
+    </div>
 
-            <div class="flex items-center space-x-3">
-                <a href="{% url 'general_exam_page' %}" class="text-gray-700 hover:text-primary font-medium flex items-center">
-                    <i class="fas fa-arrow-left mr-2"></i> Back to Portal
-                </a>
-                <a href="{% url 'staff_logout' %}" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition flex items-center">
-                    <i class="fas fa-sign-out-alt mr-2"></i> Sign Out
-                </a>
-            </div>
-        </div>
-    </header>
+    <!-- Moved CLASS, TERM, YEAR, SESSION fields down -->
+    <div class="info-fields flex justify-center gap-6 text-base">
+      <label class="flex items-center gap-1 uppercase font-semibold">
+        Class: 
+        <input type="text" class="underscore-input w-20 class-input" placeholder="" />
+      </label>
+      <label class="flex items-center gap-1 uppercase font-semibold">
+        Term: 
+        <input type="text" class="underscore-input w-20 term-input" placeholder="" />
+      </label>
+      <label class="flex items-center gap-1 uppercase font-semibold">
+        Year: 
+        <input type="text" class="underscore-input w-20 year-input" placeholder="" />
+      </label>
+      <label class="flex items-center gap-1 uppercase font-semibold">
+        Session: 
+        <input type="text" class="underscore-input w-20 session-input" placeholder="" />
+      </label>
+    </div>
+  </header>
 
-    <!-- Content -->
-    <main class="flex-1 px-6 py-10 max-w-7xl mx-auto w-full">
-        <h2 class="text-3xl font-semibold text-gray-800 mb-8 text-center">Class Broadsheet</h2>
+  <!-- Controls -->
+  <div id="controls" class="flex gap-3 mb-3">
+    <button onclick="addSubject()" class="bg-green-600 text-white px-3 py-1 rounded text-sm hover:bg-green-700">➕ Add Subject</button>
+    <button onclick="addStudent()" class="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700">👩‍🎓 Add Student</button>
+    <button onclick="window.print()" class="bg-gray-800 text-white px-3 py-1 rounded text-sm hover:bg-black">🖨️ Print</button>
+  </div>
 
-        <!-- Broadsheet Table -->
-        <div class="bg-white rounded-2xl shadow-lg overflow-x-auto">
-            <table class="min-w-full border border-gray-200">
-                <thead class="bg-blue-600 text-white">
-                    <tr>
-                        <th class="py-3 px-4 text-left">#</th>
-                        <th class="py-3 px-4 text-left">Student Name</th>
-                        <th class="py-3 px-4 text-left">Class</th>
-                        <th class="py-3 px-4 text-left">Subject</th>
-                        <th class="py-3 px-4 text-left">Score</th>
-                        <th class="py-3 px-4 text-left">Grade</th>
-                        <th class="py-3 px-4 text-left">Remark</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-200">
-                    <!-- Example Rows -->
-                    <tr class="hover:bg-blue-50">
-                        <td class="py-3 px-4">1</td>
-                        <td class="py-3 px-4">John Doe</td>
-                        <td class="py-3 px-4">JSS 2A</td>
-                        <td class="py-3 px-4">Mathematics</td>
-                        <td class="py-3 px-4">88</td>
-                        <td class="py-3 px-4 font-medium text-green-600">A</td>
-                        <td class="py-3 px-4">Excellent</td>
-                    </tr>
-                    <tr class="hover:bg-blue-50">
-                        <td class="py-3 px-4">2</td>
-                        <td class="py-3 px-4">Mary Johnson</td>
-                        <td class="py-3 px-4">JSS 2B</td>
-                        <td class="py-3 px-4">English</td>
-                        <td class="py-3 px-4">72</td>
-                        <td class="py-3 px-4 font-medium text-blue-600">B</td>
-                        <td class="py-3 px-4">Very Good</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </main>
+  <!-- Subject Controls -->
+  <div id="subject-controls">
+    <!-- Subject controls will be inserted here -->
+  </div>
 
-    <!-- Footer -->
-    <footer class="bg-secondary text-white py-6 text-center">
-        <p class="text-gray-300 text-sm">&copy; 2025 Emilia Foremost. All Rights Reserved.</p>
-    </footer>
+  <!-- Table -->
+  <div class="overflow-x-auto">
+    <table id="broadSheetTable">
+      <thead class="bg-gray-200">
+        <tr id="headerRow">
+          <th>S/N</th>
+          <th>NAME OF STUDENTS</th>
+          <!-- Subject headers will be inserted here -->
+          <th class="vertical">TOTAL</th>
+          <th class="vertical">GRADE</th>
+          <th class="vertical">POSITION</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody">
+        <tr>
+          <td>1 <span class="delete-btn" onclick="deleteStudent(this)">🗑️</span></td>
+          <td contenteditable="true">John Doe</td>
+          <!-- Subject cells will be inserted here -->
+          <td contenteditable="true"></td>
+          <td contenteditable="true"></td>
+          <td contenteditable="true"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 🔽 SUPER POWERFUL FLOATING HOME BUTTON -->
+  <button class="floating-home-btn no-print" onclick="goHome()">
+    🏠
+    <span class="tooltip">Go to Home Page</span>
+  </button>
+
+  <script>
+    const subjects = [
+      "MATHS", "ENGLISH", "PHYSICS", "CHEMISTRY", "ECONOMICS",
+      "F/MATHS", "LIT-IN-ENGLISH", "CITIZENSHIP & Heri", "GOVERNMENT",
+      "GEOGRAPHY", "ACCOUNTING", "MARKETING", "COMMERCES", "DIGITAL TECH",
+      "BIOLOGY", "C.R.S", "LIVESTOCK", "AGRIC", "SOCIAL", "PHE",
+      "CCA", "HISTORY", "INTER/SCIENCE", "BUSINESS", "CROP PRODUCTION"
+    ];
+
+    // Track subject controls and their corresponding table columns
+    let subjectControlMap = new Map();
+    let subjectControlCounter = 0;
+
+    // Initialize header input tracking
+    document.addEventListener('DOMContentLoaded', function() {
+      // Set up input listeners for header fields
+      const broadSheetInput = document.querySelector('.broad-sheet-input');
+
+      // Update print display when broad sheet input changes
+      broadSheetInput.addEventListener('input', function() {
+        document.querySelector('.broad-sheet-level').textContent = this.value || 'SSS';
+      });
+
+      // Initialize print display
+      document.querySelector('.broad-sheet-level').textContent = broadSheetInput.value;
+    });
+
+    // 🔽 HOME BUTTON FUNCTIONALITY
+    function goHome() {
+      // You can customize this URL to point to your actual home page
+      const homeUrl = '/'; // Change this to your actual home URL
+      
+      // Show a confirmation dialog before navigating
+      const userConfirmed = confirm('Are you sure you want to go to the home page? Any unsaved changes will be lost.');
+      
+      if (userConfirmed) {
+        // Option 1: Redirect to home page
+        window.location.href = homeUrl;
+        
+        // Option 2: If you want to stay on the same page but reset the form, use:
+        // resetForm();
+        
+        // Option 3: If you want to show a success message, use:
+        // showHomeMessage();
+      }
+    }
+
+    // Alternative function to reset the form instead of navigating away
+    function resetForm() {
+      const confirmed = confirm('This will reset all data. Are you sure?');
+      if (confirmed) {
+        // Clear all student data
+        const tableBody = document.getElementById('tableBody');
+        tableBody.innerHTML = `
+          <tr>
+            <td>1 <span class="delete-btn" onclick="deleteStudent(this)">🗑️</span></td>
+            <td contenteditable="true">John Doe</td>
+            <!-- Subject cells will be inserted here -->
+            <td contenteditable="true"></td>
+            <td contenteditable="true"></td>
+            <td contenteditable="true"></td>
+          </tr>
+        `;
+        
+        // Clear subject controls
+        const subjectControls = document.getElementById('subject-controls');
+        subjectControls.innerHTML = '';
+        
+        // Reset header row
+        const headerRow = document.getElementById('headerRow');
+        headerRow.innerHTML = `
+          <th>S/N</th>
+          <th>NAME OF STUDENTS</th>
+          <th class="vertical">TOTAL</th>
+          <th class="vertical">GRADE</th>
+          <th class="vertical">POSITION</th>
+        `;
+        
+        // Clear form inputs
+        document.querySelector('.broad-sheet-input').value = 'SSS';
+        document.querySelector('.broad-sheet-level').textContent = 'SSS';
+        document.querySelector('.class-input').value = '';
+        document.querySelector('.term-input').value = '';
+        document.querySelector('.year-input').value = '';
+        document.querySelector('.session-input').value = '';
+        
+        // Reset subject tracking
+        subjectControlMap.clear();
+        subjectControlCounter = 0;
+        
+        alert('Form has been reset successfully!');
+      }
+    }
+
+    // Function to show a success message (alternative to navigation)
+    function showHomeMessage() {
+      alert('Welcome home! This is where you would navigate to the home page.');
+      
+      // You could also create a more stylish notification
+      const notification = document.createElement('div');
+      notification.textContent = '🏠 Navigating to home page...';
+      notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #10B981;
+        color: white;
+        padding: 12px 20px;
+        border-radius: 8px;
+        z-index: 1001;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      `;
+      document.body.appendChild(notification);
+      
+      setTimeout(() => {
+        notification.remove();
+      }, 3000);
+    }
+
+    function createSubjectHeader(subjectName, controlId) {
+      const th = document.createElement('th');
+      th.className = 'vertical';
+      th.textContent = subjectName;
+      th.dataset.controlId = controlId;
+      return th;
+    }
+
+    function createSubjectControl(subjectName, controlId) {
+      const control = document.createElement('div');
+      control.className = 'subject-control';
+      control.dataset.controlId = controlId;
+      
+      const select = document.createElement('select');
+      select.innerHTML = subjects.map(sub => `<option value="${sub}" ${sub === subjectName ? 'selected' : ''}>${sub}</option>`).join('');
+      select.onchange = () => updateSubjectHeader(controlId, select.value);
+      
+      const del = document.createElement('button');
+      del.innerHTML = '🗑️';
+      del.onclick = () => deleteSubject(controlId);
+      
+      control.appendChild(select);
+      control.appendChild(del);
+      
+      return control;
+    }
+
+    function updateSubjectHeader(controlId, subjectName) {
+      const headerRow = document.getElementById('headerRow');
+      // Find the header with matching controlId
+      const headers = headerRow.querySelectorAll('th.vertical');
+      for (let header of headers) {
+        if (header.dataset.controlId === controlId) {
+          header.textContent = subjectName;
+          break;
+        }
+      }
+    }
+
+    function addSubject() {
+      const headerRow = document.getElementById('headerRow');
+      const totalIndex = headerRow.children.length - 3;
+      const subjectName = subjects[0];
+      
+      // Create unique ID for this subject control
+      const controlId = `subject-${subjectControlCounter++}`;
+      
+      // Add subject header to table
+      headerRow.insertBefore(createSubjectHeader(subjectName, controlId), headerRow.children[totalIndex]);
+      
+      // Add subject control to top controls
+      const subjectControls = document.getElementById('subject-controls');
+      subjectControls.appendChild(createSubjectControl(subjectName, controlId));
+
+      // Add subject cells to all student rows
+      const rows = document.querySelectorAll('#tableBody tr');
+      rows.forEach(row => {
+        const td = document.createElement('td');
+        td.contentEditable = true;
+        td.classList.add('subject-cell');
+        td.dataset.controlId = controlId;
+        row.insertBefore(td, row.children[totalIndex]);
+      });
+      
+      // Store mapping
+      subjectControlMap.set(controlId, {
+        headerIndex: totalIndex,
+        subjectName: subjectName
+      });
+    }
+
+    function deleteSubject(controlId) {
+      // Remove subject control
+      const subjectControls = document.getElementById('subject-controls');
+      const control = subjectControls.querySelector(`.subject-control[data-control-id="${controlId}"]`);
+      if (control) control.remove();
+      
+      // Remove subject header from table
+      const headerRow = document.getElementById('headerRow');
+      const header = headerRow.querySelector(`th.vertical[data-control-id="${controlId}"]`);
+      if (header) header.remove();
+      
+      // Remove subject cells from all rows
+      const rows = document.querySelectorAll('#tableBody tr');
+      rows.forEach(row => {
+        const cell = row.querySelector(`td[data-control-id="${controlId}"]`);
+        if (cell) cell.remove();
+      });
+      
+      // Remove from mapping
+      subjectControlMap.delete(controlId);
+    }
+
+    function addStudent() {
+      const tableBody = document.getElementById('tableBody');
+      const row = document.createElement('tr');
+      const rowCount = tableBody.children.length + 1;
+      const headerCount = document.querySelectorAll('#headerRow th').length;
+
+      let cells = `<td>${rowCount} <span class="delete-btn" onclick="deleteStudent(this)">🗑️</span></td>
+                   <td contenteditable="true">New Student</td>`;
+
+      // Add subject cells for each existing subject
+      for (let controlId of subjectControlMap.keys()) {
+        cells += `<td contenteditable="true" class="subject-cell" data-control-id="${controlId}"></td>`;
+      }
+
+      cells += `
+        <td contenteditable="true"></td>
+        <td contenteditable="true"></td>
+        <td contenteditable="true"></td>
+      `;
+
+      row.innerHTML = cells;
+      tableBody.appendChild(row);
+    }
+
+    function deleteStudent(el) {
+      el.closest('tr').remove();
+      updateSerialNumbers();
+    }
+
+    function updateSerialNumbers() {
+      const rows = document.querySelectorAll('#tableBody tr');
+      rows.forEach((row, index) => {
+        const snCell = row.children[0];
+        snCell.innerHTML = `${index + 1} <span class="delete-btn" onclick="deleteStudent(this)">🗑️</span>`;
+      });
+    }
+  </script>
 
 </body>
 </html>

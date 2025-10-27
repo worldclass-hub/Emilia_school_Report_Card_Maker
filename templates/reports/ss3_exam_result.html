@@ -88,11 +88,11 @@
 
     /* WATERMARK STYLES - FOR BOTH WEB AND PRINT */
     #table-body {
-        position: relative;
-        min-height: 234px !important;
-        height: 234px !important;
-        display: table-row-group !important;
-    }
+    position: relative;
+    min-height: 180px !important;
+    height: 180px !important;
+    display: table-row-group !important;
+}
 
     /* School logo watermark for BOTH web view AND print */
     #table-body::before {
@@ -355,11 +355,11 @@
         print-color-adjust: exact !important;
     }
 
-    /* DYNAMIC TABLE HEIGHT SYSTEM - FIXED FOR 13 ROWS */
-    #table-body {
-        min-height: 234px !important; /* 13 rows × 18px = 234px */
-        display: table-row-group !important;
-    }
+    /* DYNAMIC TABLE HEIGHT SYSTEM - FIXED FOR 10 ROWS */
+#table-body {
+    min-height: 180px !important; /* 10 rows × 18px = 180px */
+    display: table-row-group !important;
+}
     
     /* DYNAMIC ROW HEIGHT - ADJUSTS BASED ON ROW COUNT */
     #table-body tr {
@@ -1425,8 +1425,8 @@ function updateAddButtonVisibility() {
     const addButton = document.querySelector('button[onclick="addRow()"]');
     const rowCount = tableBody.children.length;
     
-    // Hide add button when we have 13 rows, show when we have less
-    if (rowCount >= 13) {
+    // Hide add button when we have 10 rows, show when we have less
+    if (rowCount >= 10) {
         addButton.style.display = 'none';
     } else {
         addButton.style.display = 'block';
@@ -1535,8 +1535,8 @@ function addRow() {
     const addButton = document.querySelector('button[onclick="addRow()"]');
     const rowCount = tableBody.children.length;
     
-    // Don't add more than 13 rows
-    if (rowCount >= 13) {
+    // Don't add more than 10 rows
+    if (rowCount >= 10) {
         return;
     }
     
@@ -1617,9 +1617,9 @@ function calculateGrandTotal() {
     document.getElementById("total-sum").value = sum;
 }
 
-// Auto-add 13 rows instead of 18
+// Auto-add 10 rows
 document.addEventListener('DOMContentLoaded', function() {
-    for (let i = 0; i < 13; i++) {
+    for (let i = 0; i < 10; i++) {
         addRow();
     }
     maintainTableHeight();

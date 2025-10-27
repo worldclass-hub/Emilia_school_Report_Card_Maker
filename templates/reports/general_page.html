@@ -139,21 +139,37 @@
                     </div>
                 </div>
                 
-                <div class="flex items-center space-x-6">
-                    <div class="hidden md:flex items-center space-x-2 bg-blue-50 px-4 py-2 rounded-xl">
-                        <i class="fas fa-user-shield text-primary text-lg"></i>
-                        <span class="font-medium text-gray-700">Administrator</span>
-                    </div>
-                    <div class="flex items-center space-x-3">
-                        <div class="w-10 h-10 bg-gradient-to-r from-primary to-accent rounded-full flex items-center justify-center text-white">
-                            <i class="fas fa-user text-sm"></i>
-                        </div>
-                        <div class="hidden md:block">
-                            <p class="text-sm font-medium text-gray-800">Admin User</p>
-                            <p class="text-xs text-gray-500">Last login: Today</p>
-                        </div>
-                    </div>
-                </div>
+               <div class="flex items-center space-x-6">
+    {% if request.user.is_superuser %}
+    <div class="hidden md:flex items-center space-x-2 bg-blue-50 px-4 py-2 rounded-xl">
+        <i class="fas fa-user-shield text-primary text-lg"></i>
+        <span class="font-medium text-gray-700">Administrator</span>
+    </div>
+    {% else %}
+    <div class="hidden md:flex items-center space-x-2 bg-green-50 px-4 py-2 rounded-xl">
+        <i class="fas fa-user-tie text-green-600 text-lg"></i>
+        <span class="font-medium text-gray-700">Emilia Staff</span>
+    </div>
+    {% endif %}
+    
+    <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 bg-gradient-to-r from-primary to-accent rounded-full flex items-center justify-center text-white">
+            {% if request.user.is_superuser %}
+            <i class="fas fa-user-shield text-sm"></i>
+            {% else %}
+            <i class="fas fa-user-tie text-sm"></i>
+            {% endif %}
+        </div>
+        <div class="hidden md:block">
+            {% if request.user.is_superuser %}
+            <p class="text-sm font-medium text-gray-800">Admin User</p>
+            {% else %}
+            <p class="text-sm font-medium text-gray-800">Staff User</p>
+            {% endif %}
+            <p class="text-xs text-gray-500">Last login: Today</p>
+        </div>
+    </div>
+</div>
             </div>
         </header>
 
@@ -589,19 +605,26 @@
                 <div>
                     <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
                     <ul class="space-y-3">
-                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors flex items-center">
+                        {% if request.user.is_superuser %}
+                        <li><a href="/admin/" class="text-gray-300 hover:text-white transition-colors flex items-center">
                             <i class="fas fa-tachometer-alt mr-2 text-sm"></i>
                             Dashboard
                         </a></li>
-                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors flex items-center">
+                        {% else %}
+                        <li><a href="staff_broadsheet" class="text-gray-300 hover:text-white transition-colors flex items-center">
+                            <i class="fas fa-user-tie mr-2 text-sm"></i>
+                            Emilia Staff
+                        </a></li>
+                        {% endif %}
+                        <li><a href="{% url 'about_us' %}" class="text-gray-300 hover:text-white transition-colors flex items-center">
                             <i class="fas fa-info-circle mr-2 text-sm"></i>
                             About Us
                         </a></li>
-                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors flex items-center">
+                        <li><a href="{% url 'academic_calendar' %}" class="text-gray-300 hover:text-white transition-colors flex items-center">
                             <i class="fas fa-calendar-alt mr-2 text-sm"></i>
                             Academic Calendar
                         </a></li>
-                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors flex items-center">
+                        <li><a href="{% url 'staff_logout' %}" class="text-gray-300 hover:text-white transition-colors flex items-center">
                             <i class="fas fa-sign-out-alt mr-2 text-sm"></i>
                             Sign Out
                         </a></li>
