@@ -129,52 +129,52 @@
 
     <!-- Main Content -->
     <div id="mainContent" class="flex-1 flex flex-col">
-        <!-- Premium Header -->
-        <header class="py-4 px-6 bg-white/90 backdrop-blur-md shadow-sm border-b border-gray-200">
-            <div class="max-w-7xl mx-auto flex justify-between items-center">
-                <div class="flex items-center space-x-4">
-                    <div class="w-14 h-14 bg-gradient-to-r from-primary to-accent rounded-2xl flex items-center justify-center shadow-lg">
-                        <i class="fas fa-graduation-cap text-white text-2xl"></i>
-                    </div>
-                    <div>
-                        <h1 class="text-2xl font-bold text-secondary">Emilia Foremost</h1>
-                        <p class="text-sm text-gray-600 font-medium">Academic Excellence Portal</p>
-                    </div>
-                </div>
-                
-               <div class="flex items-center space-x-6">
-    {% if request.user.is_superuser %}
-    <div class="hidden md:flex items-center space-x-2 bg-blue-50 px-4 py-2 rounded-xl">
-        <i class="fas fa-user-shield text-primary text-lg"></i>
-        <span class="font-medium text-gray-700">Administrator</span>
-    </div>
-    {% else %}
-    <div class="hidden md:flex items-center space-x-2 bg-green-50 px-4 py-2 rounded-xl">
-        <i class="fas fa-user-tie text-green-600 text-lg"></i>
-        <span class="font-medium text-gray-700">Emilia Staff</span>
-    </div>
-    {% endif %}
-    
-    <div class="flex items-center space-x-3">
-        <div class="w-10 h-10 bg-gradient-to-r from-primary to-accent rounded-full flex items-center justify-center text-white">
-            {% if request.user.is_superuser %}
-            <i class="fas fa-user-shield text-sm"></i>
-            {% else %}
-            <i class="fas fa-user-tie text-sm"></i>
-            {% endif %}
-        </div>
-        <div class="hidden md:block">
-            {% if request.user.is_superuser %}
-            <p class="text-sm font-medium text-gray-800">Admin User</p>
-            {% else %}
-            <p class="text-sm font-medium text-gray-800">Staff User</p>
-            {% endif %}
-            <p class="text-xs text-gray-500">Last login: Today</p>
-        </div>
-    </div>
-</div>
+       <!-- Premium Header -->
+<header class="py-4 px-6 bg-white/90 backdrop-blur-md shadow-sm border-b border-gray-200">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+        <div class="flex items-center space-x-4">
+            <div class="w-14 h-14 bg-gradient-to-r from-primary to-accent rounded-2xl flex items-center justify-center shadow-lg">
+                <i class="fas fa-graduation-cap text-white text-2xl"></i>
             </div>
-        </header>
+            <div>
+                <h1 class="text-2xl font-bold text-secondary">Emilia Foremost</h1>
+                <p class="text-sm text-gray-600 font-medium">Academic Excellence Portal</p>
+            </div>
+        </div>
+        
+        <div class="flex items-center space-x-6">
+            {% if request.user.is_superuser %}
+            <div class="hidden md:flex items-center space-x-2 bg-blue-50 px-4 py-2 rounded-xl border border-blue-200">
+                <i class="fas fa-user-shield text-primary text-lg"></i>
+                <span class="font-bold text-gray-800 tracking-wide">ADMINISTRATOR</span>
+            </div>
+            {% else %}
+            <div class="hidden md:flex items-center space-x-2 bg-green-50 px-4 py-2 rounded-xl border border-green-200 shadow-sm">
+                <i class="fas fa-user-tie text-green-700 text-lg"></i>
+                <span class="font-bold text-gray-800 tracking-wide">EMILIA STAFF</span>
+            </div>
+            {% endif %}
+            
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 bg-gradient-to-r from-primary to-accent rounded-full flex items-center justify-center text-white shadow-md">
+                    {% if request.user.is_superuser %}
+                    <i class="fas fa-user-shield text-sm"></i>
+                    {% else %}
+                    <i class="fas fa-user-tie text-sm"></i>
+                    {% endif %}
+                </div>
+                <div class="hidden md:block">
+                    {% if request.user.is_superuser %}
+                    <p class="text-sm font-semibold text-gray-800">Admin User</p>
+                    {% else %}
+                    <p class="text-sm font-medium text-gray-800">Hi, {% if request.user.first_name %}{{ request.user.first_name }}{% else %}{{ request.user.username }}{% endif %}</p>
+                    {% endif %}
+                    <p class="text-xs text-gray-500">Last login: Today</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
 
         <!-- Dashboard Section -->
         <section class="py-8 px-6 flex-1">
