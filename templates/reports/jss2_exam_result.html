@@ -200,13 +200,18 @@
     table td:nth-child(2) input,
     table td:nth-child(3) input,
     table td:nth-child(4) input,
-    table td:nth-child(6) input,
-    table td:nth-child(7) input,
-    table td:nth-child(7) select,
-    table td:nth-child(8) input,
-    table td:nth-child(8) select {
+    table td:nth-child(6) input {
         font-size: 16px !important;
         font-weight: bold !important;
+    }
+
+    /* ✅ GRADE AND REMARK COLUMNS FOR WEB VIEW - 18px and Extra Bold 900 */
+    table td:nth-child(7),
+    table td:nth-child(8) {
+        font-size: 18px !important;
+        font-weight: 600 !important; /* EXTRA BOLD */
+        text-align: center !important;
+        padding: 3px 1px !important;
     }
 
     /* REMOVED BLUE COLOR FOR CLASS-AVE COLUMN */
@@ -376,19 +381,26 @@
         font-size: calc(15px + (3px / var(--row-count, 13))) !important;
     }
 
-/* ✅ INCREASE ALL IMPORTANT COLUMNS - BOTH INPUT AND SELECT ELEMENTS */
-table td:nth-child(2) input,
-table td:nth-child(3) input,
-table td:nth-child(4) input,
-table td:nth-child(5) input,
-table td:nth-child(6) input,
-table td:nth-child(7) input,
-table td:nth-child(7) select,
-table td:nth-child(8) input,
-table td:nth-child(8) select {
-    font-size: 16px !important;
-    font-weight: bold !important;
-}
+    /* ✅ GRADE AND REMARK FOR PRINT PREVIEW - 18px and Extra Bold 900 */
+    table td:nth-child(7),
+    table td:nth-child(8) {
+        font-size: 18px !important; /* 18px FOR PRINT */
+        font-weight: 600 !important; /* EXTRA BOLD FOR PRINT */
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        text-align: center !important;
+        padding: 3px 1px !important;
+    }
+
+    /* Other columns remain 16px */
+    table td:nth-child(2) input,
+    table td:nth-child(3) input,
+    table td:nth-child(4) input,
+    table td:nth-child(5) input,
+    table td:nth-child(6) input {
+        font-size: 16px !important;
+        font-weight: bold !important;
+    }
     
     /* MAINTAIN TABLE STRUCTURE */
     table {
@@ -1401,6 +1413,52 @@ const allSubjects = [
 // Track used subjects to prevent duplicates
 let usedSubjects = new Set();
 
+// Function to calculate grade based on total score
+function calculateGrade(total) {
+    if (total >= 70 && total <= 100) return "A";
+    if (total >= 60 && total <= 69) return "B";
+    if (total >= 50 && total <= 59) return "C";
+    if (total >= 45 && total <= 49) return "D";
+    if (total >= 40 && total <= 44) return "E";
+    if (total >= 0 && total <= 39) return "F";
+    return "--";
+}
+
+// Function to calculate remark based on total score
+function calculateRemark(total) {
+    if (total >= 70 && total <= 100) return "EXCELLENT";
+    if (total >= 60 && total <= 69) return "VERY GOOD";
+    if (total >= 50 && total <= 59) return "GOOD";
+    if (total >= 45 && total <= 49) return "FAIR";
+    if (total >= 40 && total <= 44) return "FAIR";
+    if (total >= 0 && total <= 39) return "POOR";
+    return "--";
+}
+
+// Function to update grade and remark based on total score
+function updateGradeAndRemark(row) {
+    const totalInput = row.querySelector(".total");
+    const gradeCell = row.querySelector("td:nth-child(7)");
+    const remarkCell = row.querySelector("td:nth-child(8)");
+    
+    const total = parseFloat(totalInput.value) || 0;
+    
+    const grade = calculateGrade(total);
+    const remark = calculateRemark(total);
+    
+    // Clear the cell content first
+    while (gradeCell.firstChild) {
+        gradeCell.removeChild(gradeCell.firstChild);
+    }
+    while (remarkCell.firstChild) {
+        remarkCell.removeChild(remarkCell.firstChild);
+    }
+    
+    // Add the text content
+    gradeCell.textContent = grade;
+    remarkCell.textContent = remark;
+}
+
 // Set fixed height for table body - NOW MAINTAIN 13 ROWS HEIGHT
 function maintainTableHeight() {
     const tableBody = document.getElementById("table-body");
@@ -1564,24 +1622,8 @@ function addRow() {
     <td class="border border-gray-800 px-0 py-0">
       <input type="number" class="w-full text-[11px] px-1 bg-transparent text-center focus:outline-none border-0 font-bold" />
     </td>
-    <td class="border border-gray-800 px-0 py-0">
-      <select class="w-full text-[11px] px-1 bg-transparent text-center focus:outline-none border-0 no-arrows font-bold uppercase">
-        <option value="">--</option>
-        <option>A</option><option>B</option><option>C</option>
-        <option>D</option><option>E</option><option>F</option>
-      </select>
-    </td>
-    <td class="border border-gray-800 px-0 py-0">
-      <select class="w-full text-[11px] px-1 bg-transparent text-center focus:outline-none border-0 no-arrows font-bold uppercase">
-        <option value="">--</option>
-        <option>EXCELLENT</option>
-        <option>VERY GOOD</option>
-        <option>GOOD</option>
-        <option>FAIR</option>
-        <option>POOR</option>
-        <option>FAIL</option>
-      </select>
-    </td>
+    <td class="border border-gray-800 px-0 py-0">--</td>
+    <td class="border border-gray-800 px-0 py-0">--</td>
   `;
 
     tableBody.appendChild(row);
@@ -1600,6 +1642,10 @@ function updateTotal(input) {
     const exam = parseFloat(row.querySelector(".exam")?.value || 0);
     const total = test1 + test2 + exam;
     row.querySelector(".total").value = total;
+    
+    // Update grade and remark based on total
+    updateGradeAndRemark(row);
+    
     calculateGrandTotal();
 }
 
