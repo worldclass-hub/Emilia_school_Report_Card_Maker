@@ -205,11 +205,11 @@
         font-weight: bold !important;
     }
 
-    /* ✅ GRADE AND REMARK COLUMNS FOR WEB VIEW - 18px and Extra Bold 900 */
+    /* ✅ GRADE AND REMARK COLUMNS FOR WEB VIEW - 18px and Bold 700 */
     table td:nth-child(7),
     table td:nth-child(8) {
         font-size: 18px !important;
-        font-weight: 600 !important; /* EXTRA BOLD */
+        font-weight: 700 !important; /* REGULAR BOLD */
         text-align: center !important;
         padding: 3px 1px !important;
     }
@@ -381,11 +381,11 @@
         font-size: calc(15px + (3px / var(--row-count, 13))) !important;
     }
 
-    /* ✅ GRADE AND REMARK FOR PRINT PREVIEW - 18px and Extra Bold 900 */
+    /* ✅ GRADE AND REMARK FOR PRINT PREVIEW - 18px and Bold 700 */
     table td:nth-child(7),
     table td:nth-child(8) {
         font-size: 18px !important; /* 18px FOR PRINT */
-        font-weight: 600 !important; /* EXTRA BOLD FOR PRINT */
+        font-weight: 700 !important; /* REGULAR BOLD FOR PRINT */
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
         text-align: center !important;
@@ -951,7 +951,7 @@
           </span>
         </h1>
         <div class="mt-2 border-b-2 border-gray-700 w-[32rem]">
-          <input type="text" placeholder="Type report title here..." class="w-full bg-transparent text-center text-base font-extrabold text-black focus:outline-none">
+          <input type="text" value="Junior Report Sheet" placeholder="Type report title here..." class="w-full bg-transparent text-center text-base font-extrabold text-black focus:outline-none">
         </div>
       </div>
     </div>
@@ -1002,7 +1002,7 @@
         <label class="font-semibold mr-1">CLASS</label>
         <div class="relative leading-none">
           <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none">........................................</span>
-          <input type="text" class="bg-transparent w-44 text-left pl-10 text-sm font-extrabold text-black relative z-10 focus:outline-none pb-0.5 leading-[0.75rem]" />
+          <input type="text" value="JSS 2" class="bg-transparent w-44 text-left pl-10 text-sm font-extrabold text-black relative z-10 focus:outline-none pb-0.5 leading-[0.75rem]" />
         </div>
       </div>
       <div class="flex items-center relative ml-[-20px]">
@@ -1033,6 +1033,7 @@
     </div>
 
     <!-- REOPEN – PERCENTAGE – RESULT -->
+    <!-- UPDATED: Added percentage calculation -->
     <div class="mt-6 text-sm flex justify-start pl-0 flex-nowrap font-medium tracking-wide items-end">
       <div class="flex items-center relative">
         <label class="font-semibold mr-1 whitespace-nowrap">SCHOOL RE-OPEN ON</label>
@@ -1045,14 +1046,14 @@
         <label class="font-semibold mr-1 whitespace-nowrap">PERCENTAGE</label>
         <div class="relative leading-none">
           <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none">.....................</span>
-          <input type="text" class="bg-transparent w-28 text-left pl-3 text-sm font-extrabold text-black relative z-10 focus:outline-none pb-0.5 leading-[0.75rem]" />
+          <input type="text" id="percentage-value" class="bg-transparent w-28 text-left pl-3 text-sm font-extrabold text-black relative z-10 focus:outline-none pb-0.5 leading-[0.75rem]" readonly />
         </div>
       </div>
       <div class="flex items-center relative ml-[-12px]">
         <label class="font-semibold mr-1 whitespace-nowrap">RESULT</label>
         <div class="relative leading-none">
           <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none">..........................</span>
-          <input type="text" class="bg-transparent w-24 text-left pl-7 text-sm font-extrabold text-black relative z-10 focus:outline-none pb-0.5 leading-[0.75rem]" />
+          <input type="text" id="result-value" class="bg-transparent w-24 text-left pl-7 text-sm font-extrabold text-black relative z-10 focus:outline-none pb-0.5 leading-[0.75rem]" readonly />
         </div>
       </div>
     </div>
@@ -1099,8 +1100,8 @@
           <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none">
             .........................................
           </span>
-          <input type="text"
-            class="bg-transparent w-52 text-left pl-9 text-sm font-extrabold relative z-10 focus:outline-none pb-0.5 leading-[0.75rem]" />
+          <input type="text" id="total-marks-obtained"
+            class="bg-transparent w-52 text-left pl-9 text-sm font-extrabold relative z-10 focus:outline-none pb-0.5 leading-[0.75rem]" readonly />
         </div>
       </div>
 
@@ -1111,8 +1112,8 @@
           <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none">
             .....................................................
           </span>
-          <input type="text"
-            class="bg-transparent w-52 text-left pl-9 text-sm font-extrabold relative z-10 focus:outline-none pb-0.5 leading-[0.75rem]" />
+          <input type="text" id="total-marks-obtainable"
+            class="bg-transparent w-52 text-left pl-9 text-sm font-extrabold relative z-10 focus:outline-none pb-0.5 leading-[0.75rem]" readonly />
         </div>
       </div>
     </div>
@@ -1409,7 +1410,6 @@ const allSubjects = [
     "CROP PRODUCTION"
 ];
 
-
 // Track used subjects to prevent duplicates
 let usedSubjects = new Set();
 
@@ -1421,6 +1421,18 @@ function calculateGrade(total) {
     if (total >= 45 && total <= 49) return "D";
     if (total >= 40 && total <= 44) return "E";
     if (total >= 0 && total <= 39) return "F";
+    return "--";
+}
+
+// Function to calculate letter grade based on percentage
+function calculateLetterGrade(percentage) {
+    // Handle decimal percentages properly
+    if (percentage >= 70) return "A";
+    if (percentage >= 60 && percentage < 70) return "B";
+    if (percentage >= 50 && percentage < 60) return "C";
+    if (percentage >= 45 && percentage < 50) return "D";
+    if (percentage >= 40 && percentage < 45) return "E";
+    if (percentage >= 0 && percentage < 40) return "F";
     return "--";
 }
 
@@ -1457,6 +1469,36 @@ function updateGradeAndRemark(row) {
     // Add the text content
     gradeCell.textContent = grade;
     remarkCell.textContent = remark;
+}
+
+// Function to calculate and update percentage
+function calculatePercentage() {
+    const totalObtained = parseFloat(document.getElementById('total-marks-obtained').value) || 0;
+    const totalObtainable = parseFloat(document.getElementById('total-marks-obtainable').value) || 0;
+    
+    let percentage = 0;
+    let result = "";
+    
+    if (totalObtainable > 0) {
+        percentage = (totalObtained / totalObtainable) * 100;
+        
+        // Format percentage to 2 decimal places
+        percentage = Math.round(percentage * 100) / 100;
+    }
+    
+    // Determine result based on percentage - Now showing letter grade
+    result = calculateLetterGrade(percentage);
+    
+    // Update percentage field with % symbol
+    const percentageField = document.getElementById('percentage-value');
+    if (percentage > 0) {
+        percentageField.value = percentage + "%";
+    } else {
+        percentageField.value = "--";
+    }
+    
+    // Update result field with letter grade
+    document.getElementById('result-value').value = result;
 }
 
 // Set fixed height for table body - NOW MAINTAIN 13 ROWS HEIGHT
@@ -1578,8 +1620,13 @@ function deleteRow(button) {
     }
     
     row.remove();
+    
+    // Recalculate both totals
     calculateGrandTotal();
-    maintainTableHeight(); // Update to maintain fixed height
+    calculateTotalObtainable();
+    calculatePercentage(); // Recalculate percentage after deletion
+    
+    maintainTableHeight();
     updateAddButtonVisibility();
     updateAllDropdowns(); // Update other dropdowns when a row is deleted
 }
@@ -1633,6 +1680,11 @@ function addRow() {
     
     maintainTableHeight();
     updateAddButtonVisibility();
+    
+    // Recalculate totals when new row is added
+    calculateGrandTotal();
+    calculateTotalObtainable();
+    calculatePercentage(); // Calculate percentage after adding row
 }
 
 function updateTotal(input) {
@@ -1646,9 +1698,13 @@ function updateTotal(input) {
     // Update grade and remark based on total
     updateGradeAndRemark(row);
     
+    // Calculate both totals
     calculateGrandTotal();
+    calculateTotalObtainable();
+    calculatePercentage(); // Calculate percentage when any score changes
 }
 
+// Calculate total marks obtained (sum of all subject totals)
 function calculateGrandTotal() {
     const totals = document.querySelectorAll(".total");
     let sum = 0;
@@ -1656,7 +1712,21 @@ function calculateGrandTotal() {
         const val = parseFloat(input.value || 0);
         sum += val;
     });
+    
+    // Update the table footer total
     document.getElementById("total-sum").value = sum;
+    
+    // ALSO update the TOTAL MARKS OBTAINED field
+    document.getElementById("total-marks-obtained").value = sum;
+}
+
+// Calculate total marks obtainable (maximum possible total)
+function calculateTotalObtainable() {
+    const rowCount = document.getElementById("table-body").children.length;
+    const maxPerSubject = 100; // Each subject has max 100 marks
+    
+    const totalObtainable = rowCount * maxPerSubject;
+    document.getElementById("total-marks-obtainable").value = totalObtainable;
 }
 
 // Auto-add 13 rows instead of 18
@@ -1666,6 +1736,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     maintainTableHeight();
     updateAddButtonVisibility();
+    
+    // Calculate initial totals
+    calculateGrandTotal();
+    calculateTotalObtainable();
+    calculatePercentage(); // Calculate initial percentage
 });
   </script>
     
@@ -1748,6 +1823,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // Force calculate totals before printing
     if (typeof calculateGrandTotal === 'function') {
       calculateGrandTotal();
+    }
+    if (typeof calculateTotalObtainable === 'function') {
+      calculateTotalObtainable();
+    }
+    if (typeof calculatePercentage === 'function') {
+      calculatePercentage();
     }
 
     setTimeout(() => {
@@ -1920,6 +2001,12 @@ document.addEventListener('DOMContentLoaded', function() {
   function prepareExportClone() {
     if (typeof calculateGrandTotal === 'function') {
       try { calculateGrandTotal(); } catch(e) { /* ignore */ }
+    }
+    if (typeof calculateTotalObtainable === 'function') {
+      try { calculateTotalObtainable(); } catch(e) { /* ignore */ }
+    }
+    if (typeof calculatePercentage === 'function') {
+      try { calculatePercentage(); } catch(e) { /* ignore */ }
     }
 
     const original = document.querySelector(".max-w-[794px]");
