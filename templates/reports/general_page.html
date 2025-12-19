@@ -397,10 +397,10 @@
                                     </div>
                                     <p class="text-gray-600 mb-6">Complete academic performance report for Senior Secondary 1 students with detailed subject analysis.</p>
                                     <div class="flex space-x-3">
-                                        <button onclick="openExamModal('SS1')" class="flex-1 py-3 bg-blue-600 text-white font-medium rounded-xl hover:bg-blue-700 transition-colors flex items-center justify-center">
+                                        <a href="{% url 'ss1_exam_result' %}" class="flex-1 py-3 bg-blue-600 text-white font-medium rounded-xl hover:bg-blue-700 transition-colors flex items-center justify-center">
                                             <span>Generate</span>
                                             <i class="fas fa-arrow-right ml-2"></i>
-                                        </button>
+                                        </a>
                                         <button class="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center hover:bg-blue-200 transition-colors">
                                             <i class="fas fa-cog"></i>
                                         </button>
@@ -428,10 +428,10 @@
                                     </div>
                                     <p class="text-gray-600 mb-6">Comprehensive academic evaluation for Senior Secondary 2 with WAEC/NECO preparation metrics.</p>
                                     <div class="flex space-x-3">
-                                        <button onclick="openExamModal('SS2')" class="flex-1 py-3 bg-green-600 text-white font-medium rounded-xl hover:bg-green-700 transition-colors flex items-center justify-center">
+                                        <a href="{% url 'ss2_exam_result' %}" class="flex-1 py-3 bg-green-600 text-white font-medium rounded-xl hover:bg-green-700 transition-colors flex items-center justify-center">
                                             <span>Generate</span>
                                             <i class="fas fa-arrow-right ml-2"></i>
-                                        </button>
+                                        </a>
                                         <button class="w-12 h-12 bg-green-100 text-green-600 rounded-xl flex items-center justify-center hover:bg-green-200 transition-colors">
                                             <i class="fas fa-cog"></i>
                                         </button>
@@ -462,10 +462,10 @@
                                     </div>
                                     <p class="text-gray-600 mb-6">Final year comprehensive report with university admission predictions and career guidance.</p>
                                     <div class="flex space-x-3">
-                                        <button onclick="openExamModal('SS3')" class="flex-1 py-3 bg-gradient-to-r from-purple-500 to-purple-600 text-white font-medium rounded-xl hover:from-purple-600 hover:to-purple-700 transition-colors flex items-center justify-center">
+                                        <a href="{% url 'ss3_exam_result' %}" class="flex-1 py-3 bg-gradient-to-r from-purple-500 to-purple-600 text-white font-medium rounded-xl hover:from-purple-600 hover:to-purple-700 transition-colors flex items-center justify-center">
                                             <span>Generate</span>
                                             <i class="fas fa-arrow-right ml-2"></i>
-                                        </button>
+                                        </a>
                                         <button class="w-12 h-12 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center hover:bg-purple-200 transition-colors">
                                             <i class="fas fa-cog"></i>
                                         </button>
@@ -504,10 +504,10 @@
                                     </div>
                                     <p class="text-gray-600 mb-6">Foundational skills assessment for Junior Secondary 1 with basic subject evaluation and behavioral tracking.</p>
                                     <div class="flex space-x-3">
-                                        <button onclick="openExamModal('JSS1')" class="flex-1 py-3 bg-orange-600 text-white font-medium rounded-xl hover:bg-orange-700 transition-colors flex items-center justify-center">
+                                        <a href="{% url 'jss1_exam_result' %}" class="flex-1 py-3 bg-orange-600 text-white font-medium rounded-xl hover:bg-orange-700 transition-colors flex items-center justify-center">
                                             <span>Generate</span>
                                             <i class="fas fa-arrow-right ml-2"></i>
-                                        </button>
+                                        </a>
                                         <button class="w-12 h-12 bg-orange-100 text-orange-600 rounded-xl flex items-center justify-center hover:bg-orange-200 transition-colors">
                                             <i class="fas fa-cog"></i>
                                         </button>
@@ -535,10 +535,10 @@
                                     </div>
                                     <p class="text-gray-600 mb-6">Intermediate academic evaluation for Junior Secondary 2 with skill development tracking and progress analysis.</p>
                                     <div class="flex space-x-3">
-                                        <button onclick="openExamModal('JSS2')" class="flex-1 py-3 bg-amber-600 text-white font-medium rounded-xl hover:bg-amber-700 transition-colors flex items-center justify-center">
+                                        <a href="{% url 'jss2_exam_result' %}" class="flex-1 py-3 bg-amber-600 text-white font-medium rounded-xl hover:bg-amber-700 transition-colors flex items-center justify-center">
                                             <span>Generate</span>
                                             <i class="fas fa-arrow-right ml-2"></i>
-                                        </button>
+                                        </a>
                                         <button class="w-12 h-12 bg-amber-100 text-amber-600 rounded-xl flex items-center justify-center hover:bg-amber-200 transition-colors">
                                             <i class="fas fa-cog"></i>
                                         </button>
@@ -566,10 +566,10 @@
                                     </div>
                                     <p class="text-gray-600 mb-6">Final junior secondary evaluation with comprehensive skill assessment and secondary school transition preparation.</p>
                                     <div class="flex space-x-3">
-                                        <button onclick="openExamModal('JSS3')" class="flex-1 py-3 bg-red-600 text-white font-medium rounded-xl hover:bg-red-700 transition-colors flex items-center justify-center">
+                                        <a href="{% url 'jss3_exam_result' %}" class="flex-1 py-3 bg-red-600 text-white font-medium rounded-xl hover:bg-red-700 transition-colors flex items-center justify-center">
                                             <span>Generate</span>
                                             <i class="fas fa-arrow-right ml-2"></i>
-                                        </button>
+                                        </a>
                                         <button class="w-12 h-12 bg-red-100 text-red-600 rounded-xl flex items-center justify-center hover:bg-red-200 transition-colors">
                                             <i class="fas fa-cog"></i>
                                         </button>
@@ -645,10 +645,10 @@
                                             SS3
                                         </button>
                                     </div>
-                                    <button id="broadsheetBtn" class="w-full mt-6 py-3 bg-green-600 text-white font-medium rounded-xl hover:bg-green-700 transition-colors flex items-center justify-center">
+                                    <a href="{% url 'staff_broadsheet' %}" id="broadsheetBtn" class="w-full mt-6 py-3 bg-green-600 text-white font-medium rounded-xl hover:bg-green-700 transition-colors flex items-center justify-center">
                                         <span>Access Broadsheet Portal</span>
                                         <i class="fas fa-arrow-right ml-2"></i>
-                                    </button>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -808,7 +808,6 @@
             const closeModal = document.getElementById('closeModal');
             const printBtn = document.getElementById('printBtn');
             const downloadBtn = document.getElementById('downloadBtn');
-            const broadsheetBtn = document.getElementById('broadsheetBtn');
             const pageContainer = document.getElementById('pageContainer');
             const scrollBoundary = document.getElementById('scrollBoundary');
             
@@ -926,359 +925,13 @@
                 });
             }
             
-            // Exam Report Card Modal Functions
-            window.openExamModal = function(type) {
-                let title = '';
-                let content = '';
-                
-                switch(type) {
-                    case 'SS1':
-                        title = 'SS1 Exam Report Card';
-                        content = generateSS1Content();
-                        break;
-                    case 'SS2':
-                        title = 'SS2 Exam Report Card';
-                        content = generateSS2Content();
-                        break;
-                    case 'SS3':
-                        title = 'SS3 Exam Report Card';
-                        content = generateSS3Content();
-                        break;
-                    case 'JSS1':
-                        title = 'JSS1 Exam Report Card';
-                        content = generateJSS1Content();
-                        break;
-                    case 'JSS2':
-                        title = 'JSS2 Exam Report Card';
-                        content = generateJSS2Content();
-                        break;
-                    case 'JSS3':
-                        title = 'JSS3 Exam Report Card';
-                        content = generateJSS3Content();
-                        break;
-                }
-                
-                modalTitle.textContent = title;
-                modalContent.innerHTML = content;
-                examModal.classList.remove('hidden');
-                disableBodyScroll();
-            }
-            
-            function generateSS1Content() {
-                return `
-                    <div class="fade-in">
-                        <div class="mb-6">
-                            <h4 class="text-xl font-bold text-secondary mb-4">SS1 Report Card Configuration</h4>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Term</label>
-                                    <select class="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary">
-                                        <option>First Term</option>
-                                        <option>Second Term</option>
-                                        <option>Third Term</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Session</label>
-                                    <select class="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary">
-                                        <option>2023/2024</option>
-                                        <option>2022/2023</option>
-                                        <option>2021/2022</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-6">
-                            <h4 class="text-lg font-semibold text-secondary mb-3">SS1 Subjects</h4>
-                            <div class="bg-blue-50 p-4 rounded-xl">
-                                <p class="text-blue-700">English Language, Mathematics, Physics, Chemistry, Biology, Geography, Economics, Civic Education, Computer Studies, Agricultural Science</p>
-                            </div>
-                        </div>
-                        <div class="mb-6">
-                            <h4 class="text-lg font-semibold text-secondary mb-3">Student Selection</h4>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Class</label>
-                                    <select class="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary">
-                                        <option>SS1A</option>
-                                        <option>SS1B</option>
-                                        <option>SS1C</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Student</label>
-                                    <select class="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary">
-                                        <option>All Students</option>
-                                        <option>Select Individual Student</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }
-            
-            function generateSS2Content() {
-                return `
-                    <div class="fade-in">
-                        <div class="mb-6">
-                            <h4 class="text-xl font-bold text-secondary mb-4">SS2 Report Card Configuration</h4>
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Class</label>
-                                    <select class="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary">
-                                        <option>SS2A</option>
-                                        <option>SS2B</option>
-                                        <option>SS2C</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Term</label>
-                                    <select class="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary">
-                                        <option>First Term</option>
-                                        <option>Second Term</option>
-                                        <option>Third Term</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Session</label>
-                                    <select class="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary">
-                                        <option>2023/2024</option>
-                                        <option>2022/2023</option>
-                                        <option>2021/2022</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-6">
-                            <h4 class="text-lg font-semibold text-secondary mb-3">Science & Arts Subjects</h4>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div class="bg-green-50 p-4 rounded-xl">
-                                    <h5 class="font-semibold text-green-800 mb-2">Science Subjects</h5>
-                                    <p class="text-green-700">Mathematics, Physics, Chemistry, Biology, Further Mathematics, Agricultural Science, Computer Studies</p>
-                                </div>
-                                <div class="bg-yellow-50 p-4 rounded-xl">
-                                    <h5 class="font-semibold text-yellow-800 mb-2">Arts Subjects</h5>
-                                    <p class="text-yellow-700">Literature in English, Government, Economics, Commerce, Accounting, Geography, Christian Religious Studies</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }
-            
-            function generateSS3Content() {
-                return `
-                    <div class="fade-in">
-                        <div class="mb-6">
-                            <h4 class="text-xl font-bold text-secondary mb-4">SS3 Report Card Configuration</h4>
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Class</label>
-                                    <select class="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary">
-                                        <option>SS3A</option>
-                                        <option>SS3B</option>
-                                        <option>SS3C</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Term</label>
-                                    <select class="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary">
-                                        <option>First Term</option>
-                                        <option>Second Term</option>
-                                        <option>Third Term</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Session</label>
-                                    <select class="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary">
-                                        <option>2023/2024</option>
-                                        <option>2022/2023</option>
-                                        <option>2021/2022</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-6">
-                            <h4 class="text-lg font-semibold text-secondary mb-3">External Exam Preparation</h4>
-                            <div class="bg-purple-50 p-4 rounded-xl">
-                                <p class="text-purple-700">This report includes WAEC/NECO predictive performance analysis and university admission guidance based on current academic performance.</p>
-                            </div>
-                        </div>
-                        <div class="mb-6">
-                            <h4 class="text-lg font-semibold text-secondary mb-3">Career Guidance</h4>
-                            <div class="flex items-center">
-                                <input type="checkbox" id="careerGuidance" class="h-5 w-5 text-primary rounded focus:ring-primary" checked>
-                                <label for="careerGuidance" class="ml-2 text-gray-700">Include career path suggestions based on subject performance</label>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }
-            
-            function generateJSS1Content() {
-                return `
-                    <div class="fade-in">
-                        <div class="mb-6">
-                            <h4 class="text-xl font-bold text-secondary mb-4">JSS1 Report Card Configuration</h4>
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Class</label>
-                                    <select class="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary">
-                                        <option>JSS1A</option>
-                                        <option>JSS1B</option>
-                                        <option>JSS1C</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Term</label>
-                                    <select class="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary">
-                                        <option>First Term</option>
-                                        <option>Second Term</option>
-                                        <option>Third Term</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Session</label>
-                                    <select class="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary">
-                                        <option>2023/2024</option>
-                                        <option>2022/2023</option>
-                                        <option>2021/2022</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-6">
-                            <h4 class="text-lg font-semibold text-secondary mb-3">JSS1 Subjects</h4>
-                            <div class="bg-orange-50 p-4 rounded-xl">
-                                <p class="text-orange-700">English Studies, Mathematics, Basic Science, Basic Technology, Social Studies, Business Studies, French, Nigerian Languages, Cultural & Creative Arts, Computer Studies, Physical & Health Education, Christian Religious Studies/Islamic Studies</p>
-                            </div>
-                        </div>
-                        <div class="mb-6">
-                            <h4 class="text-lg font-semibold text-secondary mb-3">Foundational Skills Assessment</h4>
-                            <div class="flex items-center mb-3">
-                                <input type="checkbox" id="foundationSkills" class="h-5 w-5 text-primary rounded focus:ring-primary" checked>
-                                <label for="foundationSkills" class="ml-2 text-gray-700">Include foundational skills evaluation</label>
-                            </div>
-                            <div class="bg-gray-50 p-4 rounded-xl">
-                                <p class="text-gray-600 text-sm">Foundational skills assessment includes: Reading comprehension, Numeracy skills, Critical thinking, and Communication abilities.</p>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }
-            
-            function generateJSS2Content() {
-                return `
-                    <div class="fade-in">
-                        <div class="mb-6">
-                            <h4 class="text-xl font-bold text-secondary mb-4">JSS2 Report Card Configuration</h4>
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Class</label>
-                                    <select class="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary">
-                                        <option>JSS2A</option>
-                                        <option>JSS2B</option>
-                                        <option>JSS2C</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Term</label>
-                                    <select class="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary">
-                                        <option>First Term</option>
-                                        <option>Second Term</option>
-                                        <option>Third Term</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Session</label>
-                                    <select class="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary">
-                                        <option>2023/2024</option>
-                                        <option>2022/2023</option>
-                                        <option>2021/2022</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-6">
-                            <h4 class="text-lg font-semibold text-secondary mb-3">JSS2 Subjects</h4>
-                            <div class="bg-amber-50 p-4 rounded-xl">
-                                <p class="text-amber-700">English Studies, Mathematics, Basic Science, Basic Technology, Social Studies, Business Studies, French, Nigerian Languages, Cultural & Creative Arts, Computer Studies, Physical & Health Education, Christian Religious Studies/Islamic Studies</p>
-                            </div>
-                        </div>
-                        <div class="mb-6">
-                            <h4 class="text-lg font-semibold text-secondary mb-3">Skill Development Tracking</h4>
-                            <div class="flex items-center mb-3">
-                                <input type="checkbox" id="skillTracking" class="h-5 w-5 text-primary rounded focus:ring-primary" checked>
-                                <label for="skillTracking" class="ml-2 text-gray-700">Include skill development progress tracking</label>
-                            </div>
-                            <div class="bg-gray-50 p-4 rounded-xl">
-                                <p class="text-gray-600 text-sm">Skill development tracking includes: Problem-solving abilities, Research skills, Teamwork, and Digital literacy progress.</p>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }
-            
-            function generateJSS3Content() {
-                return `
-                    <div class="fade-in">
-                        <div class="mb-6">
-                            <h4 class="text-xl font-bold text-secondary mb-4">JSS3 Report Card Configuration</h4>
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Class</label>
-                                    <select class="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary">
-                                        <option>JSS3A</option>
-                                        <option>JSS3B</option>
-                                        <option>JSS3C</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Term</label>
-                                    <select class="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary">
-                                        <option>First Term</option>
-                                        <option>Second Term</option>
-                                        <option>Third Term</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Session</label>
-                                    <select class="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary">
-                                        <option>2023/2024</option>
-                                        <option>2022/2023</option>
-                                        <option>2021/2022</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-6">
-                            <h4 class="text-lg font-semibold text-secondary mb-3">JSS3 Subjects</h4>
-                            <div class="bg-red-50 p-4 rounded-xl">
-                                <p class="text-red-700">English Studies, Mathematics, Basic Science, Basic Technology, Social Studies, Business Studies, French, Nigerian Languages, Cultural & Creative Arts, Computer Studies, Physical & Health Education, Christian Religious Studies/Islamic Studies</p>
-                            </div>
-                        </div>
-                        <div class="mb-6">
-                            <h4 class="text-lg font-semibold text-secondary mb-3">Secondary School Transition</h4>
-                            <div class="flex items-center mb-3">
-                                <input type="checkbox" id="transitionPrep" class="h-5 w-5 text-primary rounded focus:ring-primary" checked>
-                                <label for="transitionPrep" class="ml-2 text-gray-700">Include secondary school transition preparation assessment</label>
-                            </div>
-                            <div class="bg-gray-50 p-4 rounded-xl">
-                                <p class="text-gray-600 text-sm">Transition assessment evaluates readiness for senior secondary education, including academic preparedness and study habits.</p>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }
-            
-            // Close modal function
+            // Close modal function (keeping for other potential uses)
             function closeExamModal() {
                 examModal.classList.add('hidden');
                 enableBodyScroll();
             }
             
-            // Event listeners
+            // Event listeners (keeping for other potential uses)
             closeModal.addEventListener('click', closeExamModal);
             
             examModal.addEventListener('click', function(e) {
@@ -1293,13 +946,6 @@
             
             downloadBtn.addEventListener('click', function() {
                 alert('PDF download functionality would be implemented here');
-            });
-            
-            // Navigation buttons
-            broadsheetBtn.addEventListener('click', function() {
-                if (isPCOnly()) {
-                    alert('Broadsheet portal would open here');
-                }
             });
             
             // FIXED: Better scroll boundary handling
