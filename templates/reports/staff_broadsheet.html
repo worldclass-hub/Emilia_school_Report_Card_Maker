@@ -132,7 +132,7 @@
 
     /* TOTAL, GRADE, POSITION columns with larger fonts */
     th.vertical:nth-last-child(-n+3), 
-    td:nth-last-child(-n+3) {
+      td:nth-last-child(-n+3) {
       width: 40px;
       max-width: 40px;
       font-size: 14px;
@@ -208,14 +208,14 @@
 
     /* MUCH Larger school name */
     header h1 {
-  font-size: 38px !important;
-  margin-bottom: 20px !important; /* Increased space below school name */
-}
+      font-size: 38px !important;
+      margin-bottom: 20px !important; /* Increased space below school name */
+    }
 
-header h2 {
-  font-size: 28px !important;
-  margin-top: 20px !important; /* Increased space above broad sheet title */
-}
+    header h2 {
+      font-size: 28px !important;
+      margin-top: 20px !important; /* Increased space above broad sheet title */
+    }
 
     .info-input {
       font-size: 14px;
@@ -258,11 +258,104 @@ header h2 {
       margin-top: 45px;
     }
 
+    /* 🔽 SUPER POWERFUL WORLD-CLASS FLOATING ADD STUDENT BUTTON - MOVED HIGHER UP */
+    .floating-add-student-btn {
+      position: fixed;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+      cursor: pointer;
+      z-index: 1001;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      border: none;
+      outline: none;
+      animation: floatAddStudent 3s ease-in-out infinite;
+      user-select: none;
+      bottom: 150px; /* MOVED UP: Changed from 100px to 150px (50px higher) */
+      right: 30px;
+    }
+
+    .floating-add-student-btn:hover {
+      transform: scale(1.15) translateY(-5px);
+      box-shadow: 0 12px 35px rgba(16, 185, 129, 0.6);
+      background: linear-gradient(135deg, #059669, #047857);
+    }
+
+    .floating-add-student-btn:active {
+      transform: scale(0.95) translateY(2px);
+      box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+    }
+
+    .floating-add-student-btn .tooltip {
+      position: absolute;
+      bottom: 80px;
+      right: 0;
+      background: rgba(0, 0, 0, 0.85);
+      color: white;
+      padding: 10px 15px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .floating-add-student-btn:hover .tooltip {
+      opacity: 1;
+    }
+
+    /* Counter badge */
+    .student-counter {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background: #ef4444;
+      color: white;
+      font-size: 12px;
+      font-weight: bold;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4);
+      animation: pulseCounter 2s infinite;
+    }
+
+    @keyframes floatAddStudent {
+      0%, 100% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    @keyframes pulseCounter {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.1);
+      }
+    }
+
     /* 🔽 SUPER POWERFUL FLOATING HOME BUTTON STYLES */
     .floating-home-btn {
       position: fixed;
       bottom: 25px;
-      right: 25px;
+      right: 30px;
       width: 60px;
       height: 60px;
       border-radius: 50%;
@@ -272,7 +365,7 @@ header h2 {
       align-items: center;
       justify-content: center;
       font-size: 24px;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 6px 20px rgba(59, 130, 246, 0.3);
       cursor: pointer;
       z-index: 1000;
       transition: all 0.3s ease;
@@ -283,7 +376,7 @@ header h2 {
 
     .floating-home-btn:hover {
       transform: scale(1.1);
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
       background: linear-gradient(135deg, #1d4ed8, #1e40af);
     }
 
@@ -322,14 +415,48 @@ header h2 {
       }
     }
 
+    /* Add some space for the floating buttons */
+    body {
+      padding-bottom: 120px; /* Space for floating buttons */
+    }
+
     /* Responsive adjustments */
     @media (max-width: 768px) {
+      .floating-add-student-btn {
+        width: 60px;
+        height: 60px;
+        font-size: 24px;
+        right: 20px;
+        bottom: 130px; /* Adjusted for mobile - also moved up */
+      }
+      
       .floating-home-btn {
         width: 50px;
         height: 50px;
         bottom: 20px;
         right: 20px;
         font-size: 20px;
+      }
+      
+      .student-counter {
+        width: 20px;
+        height: 20px;
+        font-size: 10px;
+      }
+    }
+    
+    /* Very small screens */
+    @media (max-width: 480px) {
+      .floating-add-student-btn {
+        width: 55px;
+        height: 55px;
+        font-size: 22px;
+        right: 15px;
+        bottom: 120px; /* Adjusted for small screens - also moved up */
+      }
+      
+      body {
+        padding-bottom: 100px;
       }
     }
   </style>
@@ -348,7 +475,10 @@ header h2 {
         <h1 class="text-2xl font-extrabold uppercase">Emilia - Foremost High School</h1>
         <h2 class="text-lg font-semibold uppercase">
           Broad Sheet (
-          <input type="text" value="SSS" class="no-underline w-12 text-center no-print broad-sheet-input" />
+          <select class="no-underline w-14 text-center no-print broad-sheet-select">
+            <option value="JSS">JSS</option>
+            <option value="SSS" selected>SSS</option>
+          </select>
           <span class="print-only broad-sheet-level">SSS</span>
           )
         </h2>
@@ -379,7 +509,7 @@ header h2 {
   <!-- Controls -->
   <div id="controls" class="flex gap-3 mb-3">
     <button onclick="addSubject()" class="bg-green-600 text-white px-3 py-1 rounded text-sm hover:bg-green-700">➕ Add Subject</button>
-    <button onclick="addStudent()" class="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700">👩‍🎓 Add Student</button>
+    <!-- Removed Add Student button from here - now it's a floating button -->
     <button onclick="window.print()" class="bg-gray-800 text-white px-3 py-1 rounded text-sm hover:bg-black">🖨️ Print</button>
   </div>
 
@@ -414,6 +544,15 @@ header h2 {
     </table>
   </div>
 
+  <!-- 🔽 NO MORE SIGNATURE SECTION - COMPLETELY REMOVED -->
+
+  <!-- 🔽 WORLD-CLASS FLOATING ADD STUDENT BUTTON - NOW POSITIONED MUCH HIGHER -->
+  <button class="floating-add-student-btn no-print" onclick="addStudent()">
+    👩‍🎓
+    <div class="student-counter" id="studentCounter">1</div>
+    <span class="tooltip">Add New Student</span>
+  </button>
+
   <!-- 🔽 SUPER POWERFUL FLOATING HOME BUTTON -->
   <button class="floating-home-btn no-print" onclick="goHome()">
     🏠
@@ -432,95 +571,153 @@ header h2 {
     // Track subject controls and their corresponding table columns
     let subjectControlMap = new Map();
     let subjectControlCounter = 0;
+    let studentCount = 1;
 
-    // Initialize header input tracking
+    // Initialize
     document.addEventListener('DOMContentLoaded', function() {
       // Set up input listeners for header fields
-      const broadSheetInput = document.querySelector('.broad-sheet-input');
-
-      // Update print display when broad sheet input changes
-      broadSheetInput.addEventListener('input', function() {
-        document.querySelector('.broad-sheet-level').textContent = this.value || 'SSS';
+      const broadSheetSelect = document.querySelector('.broad-sheet-select');
+      broadSheetSelect.addEventListener('change', function() {
+        document.querySelector('.broad-sheet-level').textContent = this.value;
       });
-
-      // Initialize print display
-      document.querySelector('.broad-sheet-level').textContent = broadSheetInput.value;
+      document.querySelector('.broad-sheet-level').textContent = broadSheetSelect.value;
+      
+      // Initial position update for floating button
+      updateFloatingButtonPosition();
+      
+      // Show the button immediately
+      const addStudentBtn = document.querySelector('.floating-add-student-btn');
+      if (addStudentBtn) {
+        addStudentBtn.style.display = 'flex'; // Ensure it's visible
+      }
     });
+
+    // Function to update floating button position based on content
+    function updateFloatingButtonPosition() {
+      const addStudentBtn = document.querySelector('.floating-add-student-btn');
+      const homeBtn = document.querySelector('.floating-home-btn');
+      
+      if (!addStudentBtn || !homeBtn) return;
+      
+      // Get viewport height
+      const viewportHeight = window.innerHeight;
+      const scrollY = window.scrollY;
+      
+      // Calculate document height
+      const documentHeight = Math.max(
+        document.body.scrollHeight,
+        document.body.offsetHeight,
+        document.documentElement.clientHeight,
+        document.documentElement.scrollHeight,
+        document.documentElement.offsetHeight
+      );
+      
+      // Position add student button 125px above home button
+      const homeBtnBottom = parseInt(getComputedStyle(homeBtn).bottom) || 25;
+      let addStudentBtnBottom = homeBtnBottom + 125;
+      
+      // If we're near the bottom of the page, bring buttons up
+      if (scrollY + viewportHeight > documentHeight - 100) {
+        const adjustment = scrollY + viewportHeight - documentHeight + 100;
+        addStudentBtnBottom = Math.max(150, addStudentBtnBottom - adjustment);
+      }
+      
+      // Set the positions
+      addStudentBtn.style.bottom = addStudentBtnBottom + 'px';
+    }
+
+    // Update button position on scroll and resize
+    window.addEventListener('scroll', updateFloatingButtonPosition);
+    window.addEventListener('resize', updateFloatingButtonPosition);
 
     // 🔽 HOME BUTTON FUNCTIONALITY
     function goHome() {
-      // You can customize this URL to point to your actual home page
-      const homeUrl = '/'; // Change this to your actual home URL
-      
-      // Show a confirmation dialog before navigating
+      const homeUrl = '/';
       const userConfirmed = confirm('Are you sure you want to go to the home page? Any unsaved changes will be lost.');
-      
       if (userConfirmed) {
-        // Option 1: Redirect to home page
         window.location.href = homeUrl;
-        
-        // Option 2: If you want to stay on the same page but reset the form, use:
-        // resetForm();
-        
-        // Option 3: If you want to show a success message, use:
-        // showHomeMessage();
       }
     }
 
-    // Alternative function to reset the form instead of navigating away
-    function resetForm() {
-      const confirmed = confirm('This will reset all data. Are you sure?');
-      if (confirmed) {
-        // Clear all student data
-        const tableBody = document.getElementById('tableBody');
-        tableBody.innerHTML = `
-          <tr>
-            <td>1 <span class="delete-btn" onclick="deleteStudent(this)">🗑️</span></td>
-            <td contenteditable="true"></td> <!-- Empty student name field -->
-            <!-- Subject cells will be inserted here -->
-            <td contenteditable="true"></td>
-            <td contenteditable="true"></td>
-            <td contenteditable="true"></td>
-          </tr>
-        `;
-        
-        // Clear subject controls
-        const subjectControls = document.getElementById('subject-controls');
-        subjectControls.innerHTML = '';
-        
-        // Reset header row
-        const headerRow = document.getElementById('headerRow');
-        headerRow.innerHTML = `
-          <th>S/N</th>
-          <th>NAME OF STUDENTS</th>
-          <th class="vertical">TOTAL</th>
-          <th class="vertical">GRADE</th>
-          <th class="vertical">POSITION</th>
-        `;
-        
-        // Clear form inputs
-        document.querySelector('.broad-sheet-input').value = 'SSS';
-        document.querySelector('.broad-sheet-level').textContent = 'SSS';
-        document.querySelector('.class-input').value = '';
-        document.querySelector('.term-input').value = '';
-        document.querySelector('.year-input').value = '';
-        document.querySelector('.session-input').value = '';
-        
-        // Reset subject tracking
-        subjectControlMap.clear();
-        subjectControlCounter = 0;
-        
-        alert('Form has been reset successfully!');
-      }
-    }
-
-    // Function to show a success message (alternative to navigation)
-    function showHomeMessage() {
-      alert('Welcome home! This is where you would navigate to the home page.');
+    // 🔽 ENHANCED ADD STUDENT FUNCTION WITH FIXED SERIAL NUMBERING
+    function addStudent() {
+      const tableBody = document.getElementById('tableBody');
+      const rows = tableBody.querySelectorAll('tr');
       
-      // You could also create a more stylish notification
+      // Get the highest existing serial number instead of just counting
+      let maxSN = 0;
+      rows.forEach(row => {
+        const snText = row.children[0].textContent.trim();
+        const snNumber = parseInt(snText);
+        if (!isNaN(snNumber) && snNumber > maxSN) {
+          maxSN = snNumber;
+        }
+      });
+      
+      // The next student number should be maxSN + 1
+      // If there are no students (maxSN is 0), start from 1
+      const newSN = maxSN + 1;
+      
+      const row = document.createElement('tr');
+      
+      // Create row with animation
+      row.style.opacity = '0';
+      row.style.transform = 'translateY(-20px)';
+      
+      let cells = `<td>${newSN} <span class="delete-btn" onclick="deleteStudent(this)">🗑️</span></td>
+                   <td contenteditable="true" class="new-student-name"></td>`; // Empty student name field
+
+      // Add subject cells for each existing subject
+      for (let controlId of subjectControlMap.keys()) {
+        cells += `<td contenteditable="true" class="subject-cell" data-control-id="${controlId}"></td>`;
+      }
+
+      cells += `
+        <td contenteditable="true"></td>
+        <td contenteditable="true"></td>
+        <td contenteditable="true"></td>
+      `;
+
+      row.innerHTML = cells;
+      tableBody.appendChild(row);
+      
+      // Animate the new row
+      setTimeout(() => {
+        row.style.transition = 'all 0.4s ease';
+        row.style.opacity = '1';
+        row.style.transform = 'translateY(0)';
+      }, 10);
+      
+      // Update student counter - count actual rows
+      studentCount = tableBody.querySelectorAll('tr').length;
+      document.getElementById('studentCounter').textContent = studentCount;
+      
+      // Update floating button position
+      setTimeout(updateFloatingButtonPosition, 200);
+      
+      // Focus on the new student's name field
+      setTimeout(() => {
+        const nameField = row.querySelector('.new-student-name');
+        if (nameField) {
+          nameField.focus();
+        }
+      }, 300);
+      
+      // Show success notification
+      showNotification(`Student #${newSN} added successfully!`);
+    }
+
+    // Notification function
+    function showNotification(message) {
+      // Remove existing notification if any
+      const existingNotification = document.querySelector('.student-notification');
+      if (existingNotification) {
+        existingNotification.remove();
+      }
+      
       const notification = document.createElement('div');
-      notification.textContent = '🏠 Navigating to home page...';
+      notification.className = 'student-notification';
+      notification.textContent = message;
       notification.style.cssText = `
         position: fixed;
         top: 20px;
@@ -529,14 +726,117 @@ header h2 {
         color: white;
         padding: 12px 20px;
         border-radius: 8px;
-        z-index: 1001;
+        z-index: 1002;
         box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        animation: slideIn 0.3s ease;
+        font-weight: 500;
       `;
+      
       document.body.appendChild(notification);
       
       setTimeout(() => {
-        notification.remove();
-      }, 3000);
+        notification.style.animation = 'slideOut 0.3s ease';
+        setTimeout(() => {
+          notification.remove();
+        }, 300);
+      }, 2000);
+    }
+
+    // Add keyframe animations for notifications
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes slideIn {
+        from {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+      @keyframes slideOut {
+        from {
+          transform: translateX(0);
+          opacity: 1;
+        }
+        to {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+
+    // 🔽 FIXED DELETE STUDENT FUNCTION WITH PROPER SERIAL NUMBERING
+    function deleteStudent(el) {
+      const row = el.closest('tr');
+      const rows = document.querySelectorAll('#tableBody tr');
+      
+      // Get the SN of the row being deleted for the notification
+      const snText = row.children[0].textContent.trim();
+      const deletedSN = parseInt(snText) || 'unknown';
+      
+      // Animation for deletion
+      row.style.transition = 'all 0.3s ease';
+      row.style.opacity = '0';
+      row.style.transform = 'translateX(100%)';
+      
+      setTimeout(() => {
+        row.remove();
+        updateSerialNumbers();
+        updateFloatingButtonPosition();
+        showNotification(`Student #${deletedSN} removed successfully!`);
+      }, 300);
+    }
+
+    // 🔽 FIXED UPDATE SERIAL NUMBERS FUNCTION
+    function updateSerialNumbers() {
+      const rows = document.querySelectorAll('#tableBody tr');
+      studentCount = rows.length;
+      
+      rows.forEach((row, index) => {
+        const snCell = row.children[0];
+        const newSN = index + 1;
+        
+        // Preserve the delete button if it exists
+        const existingDeleteBtn = snCell.querySelector('.delete-btn');
+        if (existingDeleteBtn) {
+          snCell.innerHTML = `${newSN} <span class="delete-btn" onclick="deleteStudent(this)">🗑️</span>`;
+        } else {
+          // If no delete button exists (shouldn't happen but just in case)
+          snCell.innerHTML = `${newSN} <span class="delete-btn" onclick="deleteStudent(this)">🗑️</span>`;
+        }
+      });
+      
+      // Update the counter badge
+      document.getElementById('studentCounter').textContent = studentCount;
+    }
+
+    // 🔽 OPTIONAL: Function to revalidate all serial numbers (call this if things get out of sync)
+    function revalidateAllSerialNumbers() {
+      const rows = document.querySelectorAll('#tableBody tr');
+      let expectedSN = 1;
+      
+      rows.forEach(row => {
+        const snCell = row.children[0];
+        const currentSN = parseInt(snCell.textContent.trim());
+        
+        // If the SN doesn't match what's expected, fix it
+        if (currentSN !== expectedSN) {
+          const existingDeleteBtn = snCell.querySelector('.delete-btn');
+          if (existingDeleteBtn) {
+            snCell.innerHTML = `${expectedSN} <span class="delete-btn" onclick="deleteStudent(this)">🗑️</span>`;
+          } else {
+            snCell.innerHTML = `${expectedSN} <span class="delete-btn" onclick="deleteStudent(this)">🗑️</span>`;
+          }
+        }
+        expectedSN++;
+      });
+      
+      // Update global counts
+      studentCount = rows.length;
+      document.getElementById('studentCounter').textContent = studentCount;
     }
 
     function createSubjectHeader(subjectName, controlId) {
@@ -568,7 +868,6 @@ header h2 {
 
     function updateSubjectHeader(controlId, subjectName) {
       const headerRow = document.getElementById('headerRow');
-      // Find the header with matching controlId
       const headers = headerRow.querySelectorAll('th.vertical');
       for (let header of headers) {
         if (header.dataset.controlId === controlId) {
@@ -583,17 +882,13 @@ header h2 {
       const totalIndex = headerRow.children.length - 3;
       const subjectName = subjects[0];
       
-      // Create unique ID for this subject control
       const controlId = `subject-${subjectControlCounter++}`;
       
-      // Add subject header to table
       headerRow.insertBefore(createSubjectHeader(subjectName, controlId), headerRow.children[totalIndex]);
       
-      // Add subject control to top controls
       const subjectControls = document.getElementById('subject-controls');
       subjectControls.appendChild(createSubjectControl(subjectName, controlId));
 
-      // Add subject cells to all student rows
       const rows = document.querySelectorAll('#tableBody tr');
       rows.forEach(row => {
         const td = document.createElement('td');
@@ -603,70 +898,32 @@ header h2 {
         row.insertBefore(td, row.children[totalIndex]);
       });
       
-      // Store mapping
       subjectControlMap.set(controlId, {
         headerIndex: totalIndex,
         subjectName: subjectName
       });
+      
+      // Update button position after adding subject
+      updateFloatingButtonPosition();
     }
 
     function deleteSubject(controlId) {
-      // Remove subject control
       const subjectControls = document.getElementById('subject-controls');
       const control = subjectControls.querySelector(`.subject-control[data-control-id="${controlId}"]`);
       if (control) control.remove();
       
-      // Remove subject header from table
       const headerRow = document.getElementById('headerRow');
       const header = headerRow.querySelector(`th.vertical[data-control-id="${controlId}"]`);
       if (header) header.remove();
       
-      // Remove subject cells from all rows
       const rows = document.querySelectorAll('#tableBody tr');
       rows.forEach(row => {
         const cell = row.querySelector(`td[data-control-id="${controlId}"]`);
         if (cell) cell.remove();
       });
       
-      // Remove from mapping
       subjectControlMap.delete(controlId);
-    }
-
-    function addStudent() {
-      const tableBody = document.getElementById('tableBody');
-      const row = document.createElement('tr');
-      const rowCount = tableBody.children.length + 1;
-      const headerCount = document.querySelectorAll('#headerRow th').length;
-
-      let cells = `<td>${rowCount} <span class="delete-btn" onclick="deleteStudent(this)">🗑️</span></td>
-                   <td contenteditable="true"></td>`; <!-- Empty student name field -->
-
-      // Add subject cells for each existing subject
-      for (let controlId of subjectControlMap.keys()) {
-        cells += `<td contenteditable="true" class="subject-cell" data-control-id="${controlId}"></td>`;
-      }
-
-      cells += `
-        <td contenteditable="true"></td>
-        <td contenteditable="true"></td>
-        <td contenteditable="true"></td>
-      `;
-
-      row.innerHTML = cells;
-      tableBody.appendChild(row);
-    }
-
-    function deleteStudent(el) {
-      el.closest('tr').remove();
-      updateSerialNumbers();
-    }
-
-    function updateSerialNumbers() {
-      const rows = document.querySelectorAll('#tableBody tr');
-      rows.forEach((row, index) => {
-        const snCell = row.children[0];
-        snCell.innerHTML = `${index + 1} <span class="delete-btn" onclick="deleteStudent(this)">🗑️</span>`;
-      });
+      updateFloatingButtonPosition();
     }
   </script>
 
