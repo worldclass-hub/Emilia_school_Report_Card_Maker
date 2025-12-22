@@ -17,7 +17,7 @@
       }
       
       /* Hide delete buttons and dropdowns in print */
-      .delete-btn, .subject-control, .no-print {
+      .delete-btn, .subject-control, .no-print, .student-notification {
         display: none !important;
       }
       
@@ -76,6 +76,85 @@
         font-size: 14px !important;
         font-weight: 700 !important;
       }
+      
+      /* 🔽 SMALLER WATERMARK FOR PRINT */
+      .table-watermark {
+        display: block !important;
+        position: fixed !important;
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) rotate(-45deg) !important;
+        font-size: 65px !important; /* Reduced from 80px */
+        font-weight: 800 !important; /* Slightly lighter weight */
+        color: rgba(0, 0, 0, 0.08) !important; /* Slightly lighter */
+        z-index: 1000 !important;
+        pointer-events: none !important;
+        white-space: nowrap !important;
+        opacity: 0.85 !important; /* Slightly less opaque */
+        text-transform: uppercase !important;
+        letter-spacing: 1px !important; /* Reduced spacing */
+        text-align: center !important;
+        width: 100% !important;
+        line-height: 1 !important; /* Tighter line height */
+      }
+    }
+
+    /* 🔽 SMALLER WATERMARK FOR SCREEN */
+    .table-watermark {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-45deg);
+      font-size: 65px; /* Reduced from 80px */
+      font-weight: 800;
+      color: rgba(0, 0, 0, 0.06);
+      z-index: 999;
+      pointer-events: none;
+      white-space: nowrap;
+      opacity: 0.85;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      text-align: center;
+      width: 100%;
+      line-height: 1;
+    }
+
+    /* 🔽 NOTIFICATION STYLES */
+    .student-notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #10B981;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      z-index: 1004;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      animation: slideIn 0.3s ease;
+      font-weight: 500;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideOut {
+      from {
+        transform: translateX(0);
+        opacity: 1;
+      }
+      to {
+        transform: translateX(100%);
+        opacity: 0;
+      }
     }
 
     /* 🔽 Optimized subject columns for screen with larger fonts */
@@ -103,6 +182,8 @@
       border-collapse: collapse;
       width: 100%;
       table-layout: fixed;
+      position: relative;
+      z-index: 1;
     }
 
     th, td {
@@ -110,6 +191,8 @@
       text-align: center;
       padding: 4px;
       font-size: 14px;
+      position: relative;
+      z-index: 2;
     }
 
     /* S/N column styling with larger font */
@@ -167,6 +250,8 @@
       padding: 6px;
       background: #f5f5f5;
       border-radius: 4px;
+      position: relative;
+      z-index: 2;
     }
     
     .subject-control {
@@ -197,24 +282,26 @@
     /* Header optimizations with larger fonts */
     header {
       margin-bottom: 4px;
-      margin-top: 30px; /* Added to move entire header down */
+      margin-top: 30px;
+      position: relative;
+      z-index: 2;
     }
 
     /* MUCH Larger logo size */
     .school-logo {
-      width: 100px !important; /* Increased from 80px */
-      height: 100px !important; /* Increased from 80px */
+      width: 100px !important;
+      height: 100px !important;
     }
 
     /* MUCH Larger school name */
     header h1 {
       font-size: 38px !important;
-      margin-bottom: 20px !important; /* Increased space below school name */
+      margin-bottom: 20px !important;
     }
 
     header h2 {
       font-size: 28px !important;
-      margin-top: 20px !important; /* Increased space above broad sheet title */
+      margin-top: 20px !important;
     }
 
     .info-input {
@@ -241,6 +328,7 @@
       min-width: 80px;
       font-size: 14px;
       margin: 0 4px;
+      text-transform: uppercase;
     }
 
     .underscore-input:focus {
@@ -258,7 +346,7 @@
       margin-top: 45px;
     }
 
-    /* 🔽 SUPER POWERFUL WORLD-CLASS FLOATING ADD STUDENT BUTTON - MOVED HIGHER UP */
+    /* 🔽 FLOATING ADD STUDENT BUTTON */
     .floating-add-student-btn {
       position: fixed;
       width: 70px;
@@ -272,13 +360,13 @@
       font-size: 28px;
       box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
       cursor: pointer;
-      z-index: 1001;
+      z-index: 1003;
       transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       border: none;
       outline: none;
       animation: floatAddStudent 3s ease-in-out infinite;
       user-select: none;
-      bottom: 150px; /* MOVED UP: Changed from 100px to 150px (50px higher) */
+      bottom: 150px;
       right: 30px;
     }
 
@@ -351,7 +439,7 @@
       }
     }
 
-    /* 🔽 SUPER POWERFUL FLOATING HOME BUTTON STYLES */
+    /* 🔽 FLOATING HOME BUTTON STYLES */
     .floating-home-btn {
       position: fixed;
       bottom: 25px;
@@ -367,7 +455,7 @@
       font-size: 24px;
       box-shadow: 0 6px 20px rgba(59, 130, 246, 0.3);
       cursor: pointer;
-      z-index: 1000;
+      z-index: 1002;
       transition: all 0.3s ease;
       border: none;
       outline: none;
@@ -417,17 +505,25 @@
 
     /* Add some space for the floating buttons */
     body {
-      padding-bottom: 120px; /* Space for floating buttons */
+      padding-bottom: 120px;
+      position: relative;
+      overflow-x: hidden;
     }
 
-    /* Responsive adjustments */
+    /* Make sure all interactive elements are above watermark */
+    #controls, .overflow-x-auto, header, #subject-controls {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Responsive adjustments - EVEN SMALLER */
     @media (max-width: 768px) {
       .floating-add-student-btn {
         width: 60px;
         height: 60px;
         font-size: 24px;
         right: 20px;
-        bottom: 130px; /* Adjusted for mobile - also moved up */
+        bottom: 130px;
       }
       
       .floating-home-btn {
@@ -443,25 +539,82 @@
         height: 20px;
         font-size: 10px;
       }
+      
+      /* Much smaller watermark for mobile */
+      .table-watermark {
+        font-size: 45px !important;
+        letter-spacing: 0.8px !important;
+      }
+      
+      @media print {
+        .table-watermark {
+          font-size: 50px !important;
+        }
+      }
     }
     
-    /* Very small screens */
+    /* Very small screens - EVEN SMALLER */
     @media (max-width: 480px) {
       .floating-add-student-btn {
         width: 55px;
         height: 55px;
         font-size: 22px;
         right: 15px;
-        bottom: 120px; /* Adjusted for small screens - also moved up */
+        bottom: 120px;
       }
       
       body {
         padding-bottom: 100px;
       }
+      
+      .table-watermark {
+        font-size: 35px !important;
+        letter-spacing: 0.5px !important;
+      }
+      
+      @media print {
+        .table-watermark {
+          font-size: 40px !important;
+        }
+      }
+    }
+    
+    /* Desktop - MODERATE SIZE */
+    @media (min-width: 1024px) {
+      .table-watermark {
+        font-size: 70px !important;
+        letter-spacing: 1.2px !important;
+      }
+      
+      @media print {
+        .table-watermark {
+          font-size: 75px !important;
+        }
+      }
+    }
+    
+    /* Large desktop - STILL REASONABLE */
+    @media (min-width: 1440px) {
+      .table-watermark {
+        font-size: 75px !important;
+      }
+      
+      @media print {
+        .table-watermark {
+          font-size: 80px !important;
+        }
+      }
+    }
+    
+    /* 🔽 ENSURE WATERMARK STAYS BEHIND CONTENT */
+    .table-watermark {
+      mix-blend-mode: multiply;
     }
   </style>
 </head>
 <body class="bg-white text-gray-900 p-2 font-sans">
+  <!-- 🔽 WATERMARK ELEMENT -->
+  <div id="tableWatermark" class="table-watermark"></div>
 
   <!-- Header -->
   <header class="text-center mb-4">
@@ -489,19 +642,19 @@
     <div class="info-fields flex justify-center gap-6 text-base">
       <label class="flex items-center gap-1 uppercase font-semibold">
         Class: 
-        <input type="text" class="underscore-input w-20 class-input" placeholder="" />
+        <input type="text" class="underscore-input w-20 class-input" placeholder="" id="classInput" />
       </label>
       <label class="flex items-center gap-1 uppercase font-semibold">
         Term: 
-        <input type="text" class="underscore-input w-20 term-input" placeholder="" />
+        <input type="text" class="underscore-input w-20 term-input" placeholder="" id="termInput" />
       </label>
       <label class="flex items-center gap-1 uppercase font-semibold">
         Year: 
-        <input type="text" class="underscore-input w-20 year-input" placeholder="" />
+        <input type="text" class="underscore-input w-20 year-input" placeholder="" id="yearInput" />
       </label>
       <label class="flex items-center gap-1 uppercase font-semibold">
         Session: 
-        <input type="text" class="underscore-input w-20 session-input" placeholder="" />
+        <input type="text" class="underscore-input w-20 session-input" placeholder="" id="sessionInput" />
       </label>
     </div>
   </header>
@@ -509,7 +662,6 @@
   <!-- Controls -->
   <div id="controls" class="flex gap-3 mb-3">
     <button onclick="addSubject()" class="bg-green-600 text-white px-3 py-1 rounded text-sm hover:bg-green-700">➕ Add Subject</button>
-    <!-- Removed Add Student button from here - now it's a floating button -->
     <button onclick="window.print()" class="bg-gray-800 text-white px-3 py-1 rounded text-sm hover:bg-black">🖨️ Print</button>
   </div>
 
@@ -534,7 +686,7 @@
       <tbody id="tableBody">
         <tr>
           <td>1 <span class="delete-btn" onclick="deleteStudent(this)">🗑️</span></td>
-          <td contenteditable="true"></td> <!-- Empty student name field -->
+          <td contenteditable="true"></td>
           <!-- Subject cells will be inserted here -->
           <td contenteditable="true"></td>
           <td contenteditable="true"></td>
@@ -544,16 +696,14 @@
     </table>
   </div>
 
-  <!-- 🔽 NO MORE SIGNATURE SECTION - COMPLETELY REMOVED -->
-
-  <!-- 🔽 WORLD-CLASS FLOATING ADD STUDENT BUTTON - NOW POSITIONED MUCH HIGHER -->
+  <!-- 🔽 FLOATING ADD STUDENT BUTTON -->
   <button class="floating-add-student-btn no-print" onclick="addStudent()">
     👩‍🎓
     <div class="student-counter" id="studentCounter">1</div>
     <span class="tooltip">Add New Student</span>
   </button>
 
-  <!-- 🔽 SUPER POWERFUL FLOATING HOME BUTTON -->
+  <!-- 🔽 FLOATING HOME BUTTON -->
   <button class="floating-home-btn no-print" onclick="goHome()">
     🏠
     <span class="tooltip">Go to Home Page</span>
@@ -575,60 +725,224 @@
 
     // Initialize
     document.addEventListener('DOMContentLoaded', function() {
-      // Set up input listeners for header fields
       const broadSheetSelect = document.querySelector('.broad-sheet-select');
       broadSheetSelect.addEventListener('change', function() {
         document.querySelector('.broad-sheet-level').textContent = this.value;
       });
       document.querySelector('.broad-sheet-level').textContent = broadSheetSelect.value;
       
-      // Initial position update for floating button
+      // 🔽 SET UP INPUT LISTENERS
+      setupInputListeners();
+      
       updateFloatingButtonPosition();
       
-      // Show the button immediately
       const addStudentBtn = document.querySelector('.floating-add-student-btn');
       if (addStudentBtn) {
-        addStudentBtn.style.display = 'flex'; // Ensure it's visible
+        addStudentBtn.style.display = 'flex';
       }
+      
+      // Show watermark on page load
+      updateWatermarkFromAllFields();
+      
+      window.addEventListener('resize', function() {
+        updateWatermarkFromAllFields();
+      });
     });
 
-    // Function to update floating button position based on content
+    // 🔽 SET UP INPUT LISTENERS
+    function setupInputListeners() {
+      const classInput = document.getElementById('classInput');
+      const termInput = document.getElementById('termInput');
+      const yearInput = document.getElementById('yearInput');
+      const sessionInput = document.getElementById('sessionInput');
+      
+      const allInputs = [classInput, termInput, yearInput, sessionInput];
+      
+      allInputs.forEach(input => {
+        if (input) {
+          input.addEventListener('input', updateWatermarkFromAllFields);
+          input.addEventListener('blur', updateWatermarkFromAllFields);
+          input.addEventListener('keyup', updateWatermarkFromAllFields);
+        }
+      });
+    }
+
+    // 🔽 SIMPLIFIED FORMATTING FUNCTIONS
+    function formatClass(input) {
+      if (!input || input.trim() === '') return '';
+      return input.toString().trim().toUpperCase().replace(/\s+/g, ' ');
+    }
+
+    function formatTerm(input) {
+      if (!input || input.trim() === '') return '';
+      let cleaned = input.toString().trim().toUpperCase();
+      
+      // Simple term detection
+      if (cleaned.match(/^1(st)?$/i) || cleaned.includes('FIRST')) return 'TERM 1';
+      if (cleaned.match(/^2(nd)?$/i) || cleaned.includes('SECOND')) return 'TERM 2';
+      if (cleaned.match(/^3(rd)?$/i) || cleaned.includes('THIRD')) return 'TERM 3';
+      
+      // If it's a number
+      if (cleaned.match(/^\d+$/)) {
+        return 'TERM ' + cleaned;
+      }
+      
+      return cleaned;
+    }
+
+    function formatYear(input) {
+      if (!input || input.trim() === '') return '';
+      let cleaned = input.toString().trim();
+      
+      // Return full year if it's 4 digits
+      if (cleaned.match(/^\d{4}$/)) {
+        return cleaned;
+      }
+      
+      // If it's 2 digits, assume it's a year like "25" for "2025"
+      if (cleaned.match(/^\d{2}$/)) {
+        return '20' + cleaned;
+      }
+      
+      return cleaned;
+    }
+
+    // 🔽 UPDATED FUNCTION TO CREATE WATERMARK WITH FULL YEAR
+    function updateWatermarkFromAllFields() {
+      const classValue = document.getElementById('classInput').value;
+      const termValue = document.getElementById('termInput').value;
+      const yearValue = document.getElementById('yearInput').value;
+      
+      // Format values
+      const formattedClass = formatClass(classValue);
+      const formattedTerm = formatTerm(termValue);
+      const formattedYear = formatYear(yearValue);
+      
+      // Build the watermark parts
+      const parts = [];
+      if (formattedClass) parts.push(formattedClass);
+      if (formattedTerm) parts.push(formattedTerm);
+      if (formattedYear) parts.push(formattedYear); // Now shows full year like "2025"
+      
+      let watermarkText = '';
+      if (parts.length > 0) {
+        watermarkText = parts.join(' - ');
+      }
+      
+      updateWatermarkDisplay(watermarkText);
+    }
+
+    // 🔽 UPDATED WATERMARK DISPLAY WITH SMALLER SIZES
+    function updateWatermarkDisplay(watermarkText) {
+      const watermark = document.getElementById('tableWatermark');
+      if (!watermark) return;
+      
+      if (watermarkText && watermarkText.trim() !== '') {
+        watermark.textContent = watermarkText;
+        watermark.style.display = 'block';
+        
+        // Set base size - REDUCED FROM BEFORE
+        let baseSize = 65; // Reduced from 80px
+        
+        // Adjust for screen size - ALL REDUCED
+        if (window.innerWidth >= 1440) {
+          baseSize = 75; // Was 100
+        } else if (window.innerWidth >= 1024) {
+          baseSize = 70; // Was 90
+        } else if (window.innerWidth >= 768) {
+          baseSize = 45; // Was 60
+        } else {
+          baseSize = 35; // Was 50
+        }
+        
+        // Adjust for text length - MORE AGGRESSIVE REDUCTION
+        const textLength = watermarkText.length;
+        let adjustedSize = baseSize;
+        
+        if (textLength > 25) {
+          adjustedSize = baseSize * 0.60; // 40% reduction for very long text
+        } else if (textLength > 20) {
+          adjustedSize = baseSize * 0.70; // 30% reduction
+        } else if (textLength > 15) {
+          adjustedSize = baseSize * 0.80; // 20% reduction
+        } else if (textLength > 10) {
+          adjustedSize = baseSize * 0.90; // 10% reduction
+        }
+        
+        // Ensure minimum size
+        adjustedSize = Math.max(30, adjustedSize);
+        
+        // Apply styles
+        watermark.style.fontSize = adjustedSize + 'px';
+        watermark.style.position = 'fixed';
+        watermark.style.top = '50%';
+        watermark.style.left = '50%';
+        watermark.style.transform = 'translate(-50%, -50%) rotate(-45deg)';
+        watermark.style.opacity = '0.85';
+        watermark.style.zIndex = '998';
+        watermark.style.textAlign = 'center';
+        watermark.style.width = '100%';
+        watermark.style.lineHeight = '1';
+        watermark.style.letterSpacing = '1px';
+        watermark.style.fontWeight = '800';
+        
+        watermark.offsetHeight;
+      } else {
+        watermark.style.opacity = '0';
+        setTimeout(() => {
+          watermark.style.display = 'none';
+        }, 300);
+      }
+    }
+
+    // Function to update floating button position
     function updateFloatingButtonPosition() {
       const addStudentBtn = document.querySelector('.floating-add-student-btn');
       const homeBtn = document.querySelector('.floating-home-btn');
       
       if (!addStudentBtn || !homeBtn) return;
       
-      // Get viewport height
-      const viewportHeight = window.innerHeight;
-      const scrollY = window.scrollY;
-      
-      // Calculate document height
-      const documentHeight = Math.max(
-        document.body.scrollHeight,
-        document.body.offsetHeight,
-        document.documentElement.clientHeight,
-        document.documentElement.scrollHeight,
-        document.documentElement.offsetHeight
-      );
-      
-      // Position add student button 125px above home button
       const homeBtnBottom = parseInt(getComputedStyle(homeBtn).bottom) || 25;
       let addStudentBtnBottom = homeBtnBottom + 125;
       
-      // If we're near the bottom of the page, bring buttons up
-      if (scrollY + viewportHeight > documentHeight - 100) {
-        const adjustment = scrollY + viewportHeight - documentHeight + 100;
-        addStudentBtnBottom = Math.max(150, addStudentBtnBottom - adjustment);
-      }
-      
-      // Set the positions
       addStudentBtn.style.bottom = addStudentBtnBottom + 'px';
     }
 
-    // Update button position on scroll and resize
     window.addEventListener('scroll', updateFloatingButtonPosition);
     window.addEventListener('resize', updateFloatingButtonPosition);
+
+    // 🔽 PRINT FUNCTION WITH SMALLER SIZES
+    const originalPrint = window.print;
+    window.print = function() {
+      const notifications = document.querySelectorAll('.student-notification');
+      notifications.forEach(notification => notification.remove());
+      
+      // Update watermark for print
+      updateWatermarkFromAllFields();
+      
+      const watermark = document.getElementById('tableWatermark');
+      if (watermark && watermark.style.display === 'block') {
+        // Set print-specific size (slightly larger for print but still small)
+        const textLength = watermark.textContent.length;
+        let printSize = 65; // Base print size
+        
+        if (textLength > 25) {
+          printSize = 50;
+        } else if (textLength > 20) {
+          printSize = 55;
+        } else if (textLength > 15) {
+          printSize = 60;
+        }
+        
+        watermark.style.fontSize = printSize + 'px';
+        watermark.style.color = 'rgba(0, 0, 0, 0.08)';
+        watermark.style.fontWeight = '800';
+      }
+      
+      setTimeout(() => {
+        originalPrint.call(window);
+      }, 150);
+    };
 
     // 🔽 HOME BUTTON FUNCTIONALITY
     function goHome() {
@@ -639,12 +953,11 @@
       }
     }
 
-    // 🔽 ENHANCED ADD STUDENT FUNCTION WITH FIXED SERIAL NUMBERING
+    // 🔽 ADD STUDENT FUNCTION
     function addStudent() {
       const tableBody = document.getElementById('tableBody');
       const rows = tableBody.querySelectorAll('tr');
       
-      // Get the highest existing serial number instead of just counting
       let maxSN = 0;
       rows.forEach(row => {
         const snText = row.children[0].textContent.trim();
@@ -654,20 +967,15 @@
         }
       });
       
-      // The next student number should be maxSN + 1
-      // If there are no students (maxSN is 0), start from 1
       const newSN = maxSN + 1;
-      
       const row = document.createElement('tr');
       
-      // Create row with animation
       row.style.opacity = '0';
       row.style.transform = 'translateY(-20px)';
       
       let cells = `<td>${newSN} <span class="delete-btn" onclick="deleteStudent(this)">🗑️</span></td>
-                   <td contenteditable="true" class="new-student-name"></td>`; // Empty student name field
+                   <td contenteditable="true" class="new-student-name"></td>`;
 
-      // Add subject cells for each existing subject
       for (let controlId of subjectControlMap.keys()) {
         cells += `<td contenteditable="true" class="subject-cell" data-control-id="${controlId}"></td>`;
       }
@@ -681,21 +989,17 @@
       row.innerHTML = cells;
       tableBody.appendChild(row);
       
-      // Animate the new row
       setTimeout(() => {
         row.style.transition = 'all 0.4s ease';
         row.style.opacity = '1';
         row.style.transform = 'translateY(0)';
       }, 10);
       
-      // Update student counter - count actual rows
       studentCount = tableBody.querySelectorAll('tr').length;
       document.getElementById('studentCounter').textContent = studentCount;
       
-      // Update floating button position
       setTimeout(updateFloatingButtonPosition, 200);
       
-      // Focus on the new student's name field
       setTimeout(() => {
         const nameField = row.querySelector('.new-student-name');
         if (nameField) {
@@ -703,20 +1007,18 @@
         }
       }, 300);
       
-      // Show success notification
       showNotification(`Student #${newSN} added successfully!`);
     }
 
-    // Notification function
+    // 🔽 NOTIFICATION FUNCTION
     function showNotification(message) {
-      // Remove existing notification if any
       const existingNotification = document.querySelector('.student-notification');
       if (existingNotification) {
         existingNotification.remove();
       }
       
       const notification = document.createElement('div');
-      notification.className = 'student-notification';
+      notification.className = 'student-notification no-print';
       notification.textContent = message;
       notification.style.cssText = `
         position: fixed;
@@ -726,7 +1028,7 @@
         color: white;
         padding: 12px 20px;
         border-radius: 8px;
-        z-index: 1002;
+        z-index: 1004;
         box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         animation: slideIn 0.3s ease;
         font-weight: 500;
@@ -742,42 +1044,14 @@
       }, 2000);
     }
 
-    // Add keyframe animations for notifications
-    const style = document.createElement('style');
-    style.textContent = `
-      @keyframes slideIn {
-        from {
-          transform: translateX(100%);
-          opacity: 0;
-        }
-        to {
-          transform: translateX(0);
-          opacity: 1;
-        }
-      }
-      @keyframes slideOut {
-        from {
-          transform: translateX(0);
-          opacity: 1;
-        }
-        to {
-          transform: translateX(100%);
-          opacity: 0;
-        }
-      }
-    `;
-    document.head.appendChild(style);
-
-    // 🔽 FIXED DELETE STUDENT FUNCTION WITH PROPER SERIAL NUMBERING
+    // 🔽 DELETE STUDENT FUNCTION
     function deleteStudent(el) {
       const row = el.closest('tr');
       const rows = document.querySelectorAll('#tableBody tr');
       
-      // Get the SN of the row being deleted for the notification
       const snText = row.children[0].textContent.trim();
       const deletedSN = parseInt(snText) || 'unknown';
       
-      // Animation for deletion
       row.style.transition = 'all 0.3s ease';
       row.style.opacity = '0';
       row.style.transform = 'translateX(100%)';
@@ -790,7 +1064,7 @@
       }, 300);
     }
 
-    // 🔽 FIXED UPDATE SERIAL NUMBERS FUNCTION
+    // 🔽 UPDATE SERIAL NUMBERS
     function updateSerialNumbers() {
       const rows = document.querySelectorAll('#tableBody tr');
       studentCount = rows.length;
@@ -798,47 +1072,18 @@
       rows.forEach((row, index) => {
         const snCell = row.children[0];
         const newSN = index + 1;
-        
-        // Preserve the delete button if it exists
         const existingDeleteBtn = snCell.querySelector('.delete-btn');
         if (existingDeleteBtn) {
           snCell.innerHTML = `${newSN} <span class="delete-btn" onclick="deleteStudent(this)">🗑️</span>`;
         } else {
-          // If no delete button exists (shouldn't happen but just in case)
           snCell.innerHTML = `${newSN} <span class="delete-btn" onclick="deleteStudent(this)">🗑️</span>`;
         }
       });
       
-      // Update the counter badge
       document.getElementById('studentCounter').textContent = studentCount;
     }
 
-    // 🔽 OPTIONAL: Function to revalidate all serial numbers (call this if things get out of sync)
-    function revalidateAllSerialNumbers() {
-      const rows = document.querySelectorAll('#tableBody tr');
-      let expectedSN = 1;
-      
-      rows.forEach(row => {
-        const snCell = row.children[0];
-        const currentSN = parseInt(snCell.textContent.trim());
-        
-        // If the SN doesn't match what's expected, fix it
-        if (currentSN !== expectedSN) {
-          const existingDeleteBtn = snCell.querySelector('.delete-btn');
-          if (existingDeleteBtn) {
-            snCell.innerHTML = `${expectedSN} <span class="delete-btn" onclick="deleteStudent(this)">🗑️</span>`;
-          } else {
-            snCell.innerHTML = `${expectedSN} <span class="delete-btn" onclick="deleteStudent(this)">🗑️</span>`;
-          }
-        }
-        expectedSN++;
-      });
-      
-      // Update global counts
-      studentCount = rows.length;
-      document.getElementById('studentCounter').textContent = studentCount;
-    }
-
+    // Remaining functions (unchanged)
     function createSubjectHeader(subjectName, controlId) {
       const th = document.createElement('th');
       th.className = 'vertical';
@@ -903,7 +1148,6 @@
         subjectName: subjectName
       });
       
-      // Update button position after adding subject
       updateFloatingButtonPosition();
     }
 
