@@ -67,3 +67,10 @@ def about_us(request):
 @login_required(login_url="/")
 def academic_calendar(request):
     return render(request, "reports/academic_calendar.html")
+
+
+@login_required(login_url="/")
+def pdf_editor_dashboard(request):
+    return render(request, "reports/pdf_editor_dashboard.html")
+
+
