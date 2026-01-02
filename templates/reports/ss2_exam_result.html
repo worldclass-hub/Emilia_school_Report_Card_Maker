@@ -1043,7 +1043,7 @@
         <label class="font-semibold mr-1">REPORT FOR</label>
         <div class="relative leading-none">
           <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none">............................................</span>
-          <input type="text" id="student-name" class="bg-transparent w-40 text-center text-sm font-extrabold text-black relative z-10 focus:outline-none pb-0.5 leading-[0.75rem]" />
+          <input type="text" class="bg-transparent w-40 text-center text-sm font-extrabold text-black relative z-10 focus:outline-none pb-0.5 leading-[0.75rem]" />
         </div>
       </div>
       <div class="flex items-center relative">
@@ -1065,7 +1065,7 @@
         <label class="font-semibold mr-1 whitespace-nowrap">NAME (SURNAME FIRST)</label>
         <div class="relative leading-none">
           <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none">........................................................................................</span>
-          <input type="text" class="bg-transparent w-[22rem] text-left pl-3 text-sm font-extrabold text-black relative z-10 focus:outline-none pb-0.5 leading-[0.75rem]" />
+          <input type="text" id="student-name" class="bg-transparent w-[22rem] text-left pl-3 text-sm font-extrabold text-black relative z-10 focus:outline-none pb-0.5 leading-[0.75rem]" />
         </div>
       </div>
       <div class="flex items-center relative ml-[-8px]">
@@ -1279,18 +1279,37 @@
 </div>
 </div>
 
+    <!-- SAVE/LOAD BUTTONS SECTION -->
+<div class="flex justify-center gap-6 mt-8 mb-6 no-print">
+  <button onclick="saveCurrentReport()" 
+          class="bg-gradient-to-r from-blue-500 to-blue-700 text-white px-7 py-3.5 rounded-xl font-bold hover:from-blue-600 hover:to-blue-800 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 flex items-center gap-3">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path>
+    </svg>
+    💾 Save Report
+  </button>
+  
+  <button onclick="showSavedReportsModal()" 
+          class="bg-gradient-to-r from-green-500 to-green-700 text-white px-7 py-3.5 rounded-xl font-bold hover:from-green-600 hover:to-green-800 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 flex items-center gap-3">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+    </svg>
+    📂 Load Saved Report
+  </button>
+</div>
+
     <!-- 🚀 Super Print Button -->
-    <div class="flex justify-center mt-10 no-print">
+    <div class="flex justify-center mt-8 no-print">
       <button 
         onclick="openExportModal()" 
         aria-label="Print document"
-        class="relative group flex items-center space-x-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl font-bold hover:from-blue-700 hover:to-purple-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50"
+        class="relative group flex items-center space-x-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-10 py-4 rounded-xl font-bold hover:from-blue-700 hover:to-purple-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50"
       >
         <span class="relative flex items-center">
-          <svg class="w-6 h-6 mr-3 transition-transform duration-300 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <svg class="w-7 h-7 mr-3 transition-transform duration-300 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path>
           </svg>
-          PRINT DOCUMENT
+          PRINT DOCUMENT (Auto-Saves)
         </span>
       </button>
     </div>
@@ -1315,7 +1334,7 @@
             <div class="p-3 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl shadow-lg">
               <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path>
-              </svg>
+            </svg>
             </div>
             <div>
               <h2 class="text-2xl font-bold text-gray-900 dark:text-white bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
@@ -1345,7 +1364,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
               </svg>
             </div>
-            <div class="flex-1">
+            <div>
               <h3 class="font-semibold text-gray-900 dark:text-white text-sm">Professional Format</h3>
               <p class="text-xs text-gray-600 dark:text-gray-400 mt-1">
                 Optimized for A4 paper with school watermark and proper formatting
@@ -1359,7 +1378,7 @@
       <div class="px-8 pb-8 relative z-10">
         <!-- Main Print Button -->
         <button 
-          onclick="printReport()" 
+          onclick="printReportWithAutoSave()" 
           class="w-full group relative overflow-hidden bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white py-5 px-6 rounded-2xl font-bold text-lg transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 shadow-lg"
         >
           <div class="relative z-10 flex items-center justify-center space-x-3">
@@ -1407,12 +1426,75 @@
             Cancel
           </button>
           <button 
-            onclick="printReport()" 
+            onclick="printReportWithAutoSave()" 
             class="flex-1 px-6 py-3 bg-gray-900 dark:bg-white text-white dark:text-gray-900 hover:bg-gray-800 dark:hover:bg-gray-100 rounded-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 font-semibold shadow-md hover:shadow-lg"
           >
             Print Now
           </button>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 🚀 NUCLEAR SOLUTION: SAVED REPORTS MODAL - FIXED -->
+  <!-- This is placed OUTSIDE of any container and directly in body -->
+  <div id="savedReportsModal" class="fixed inset-0 bg-black/90 backdrop-blur-xl z-[99999] hidden no-print">
+    <div class="relative h-full w-full flex items-center justify-center p-4">
+      <div class="bg-white dark:bg-gray-900 rounded-3xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden border border-gray-200 dark:border-gray-800 transform transition-all duration-500 scale-95 opacity-0" id="savedReportsModalContent">
+        
+        <!-- Modal Header -->
+        <div class="px-8 py-6 border-b border-gray-200 dark:border-gray-800 flex justify-between items-center bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-gray-800 dark:to-gray-900">
+          <div class="flex items-center gap-4">
+            <div class="p-3 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl shadow-lg">
+              <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path>
+              </svg>
+            </div>
+            <div>
+              <h3 class="text-2xl font-bold text-gray-900 dark:text-white">📂 Saved Reports 
+                <!-- ADDED: Total files count badge -->
+                <span id="totalFilesCount" class="ml-3 px-3 py-1 text-sm font-bold bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-full">
+                  Loading...
+                </span>
+              </h3>
+              <p class="text-sm text-gray-600 dark:text-gray-400">Select a report to load</p>
+            </div>
+          </div>
+          <button onclick="closeSavedReportsModal()" 
+                  class="p-3 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-gray-400">
+            <svg class="w-6 h-6 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+        
+        <!-- Reports List -->
+        <div id="savedReportsList" class="p-6 overflow-y-auto max-h-[60vh]">
+          <!-- Reports will appear here dynamically -->
+          <div id="noReportsMessage" class="text-center py-12 text-gray-500 dark:text-gray-400">
+            <svg class="w-20 h-20 mx-auto mb-6 text-gray-300 dark:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+            </svg>
+            <p class="text-xl font-medium text-gray-700 dark:text-gray-300">No saved reports yet</p>
+            <p class="text-sm mt-2 text-gray-600 dark:text-gray-400">Save a report using the "💾 Save Report" button</p>
+          </div>
+        </div>
+        
+        <!-- Modal Footer -->
+        <div class="px-8 py-6 border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50 flex justify-between items-center">
+          <button onclick="clearAllSavedReports()" 
+                  class="px-6 py-3 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-semibold rounded-xl transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl flex items-center gap-3">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+            </svg>
+            Clear All Reports
+          </button>
+          <button onclick="closeSavedReportsModal()" 
+                  class="px-8 py-3 bg-gradient-to-r from-gray-600 to-gray-700 dark:from-gray-700 dark:to-gray-800 hover:from-gray-700 hover:to-gray-800 dark:hover:from-gray-600 dark:hover:to-gray-700 text-white font-semibold rounded-xl transition-all duration-300 hover:scale-105">
+            Close
+          </button>
+        </div>
+        
       </div>
     </div>
   </div>
@@ -1959,10 +2041,24 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   /* ---------------------------
-     Print Function
+     Print Function - UPDATED WITH AUTO-SAVE
   --------------------------- */
-  function printReport() {
+  function printReportWithAutoSave() {
     closeExportModal();
+    showToast("Saving report before printing...", "loading");
+    
+    // First, auto-save the current report
+    if (typeof saveCurrentReport === 'function') {
+      saveCurrentReport();
+    }
+    
+    // Then proceed with normal print
+    setTimeout(() => {
+      printReport();
+    }, 800);
+  }
+
+  function printReport() {
     showToast("Preparing for print...", "loading");
 
     // Force calculate totals before printing
@@ -1986,7 +2082,7 @@ document.addEventListener('DOMContentLoaded', function() {
       // Remove the class after printing
       setTimeout(() => {
         document.body.classList.remove('printing');
-        showToast("Print completed!", "success");
+        showToast("Print completed! Report was auto-saved.", "success");
       }, 1000);
     }, 1000);
   }
@@ -2136,8 +2232,7 @@ document.addEventListener('DOMContentLoaded', function() {
      Utility Functions
   --------------------------- */
   function generateFileName() {
-    const nameInput = Array.from(document.querySelectorAll("input"))
-      .find(el => (el.placeholder && /surname|name/i.test(el.placeholder)) || /name/i.test(el.previousElementSibling?.textContent || ''));
+    const nameInput = document.getElementById('student-name');
     const name = (nameInput?.value || "report").toString().trim().replace(/\s+/g, '_') || "report";
     const date = new Date().toISOString().split('T')[0];
     return `${name}_${date}`;
@@ -2285,6 +2380,513 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 </script>
 
+<!-- ✅ NUCLEAR SOLUTION: REPORT SAVE/LOAD SYSTEM - FIXED FOR SS2 -->
+<script>
+/* ============================================
+   NUCLEAR SOLUTION: REPORT SAVE/LOAD SYSTEM
+   100% GUARANTEED TO WORK WITHOUT PAGE REFRESH
+   FIXED VERSION - MODAL WILL ALWAYS APPEAR
+   UPDATED FOR SS2 SEPARATE STORAGE
+   ============================================ */
+
+// 🆕 SS2-SPECIFIC STORAGE KEY
+const SS2_STORAGE_KEY = 'savedReports_SS2';
+
+// Save current report data - UPDATED FOR SS2
+function saveCurrentReport() {
+    console.log("Saving SS2 report...");
+    
+    // Get the student name from the NAME (SURNAME FIRST) field
+    const studentNameField = document.querySelector('input[placeholder*="SURNAME"]') || 
+                            document.querySelector('input[id*="student-name"]') ||
+                            document.querySelector('input[name*="student-name"]');
+    
+    const studentName = studentNameField ? studentNameField.value.trim() : '';
+    
+    // Collect all form data
+    const reportData = {
+        // Student info
+        studentName: studentName,
+        studentSex: document.getElementById('student-sex').value,
+        timesPresent: document.getElementById('times-present').value,
+        timesAbsent: document.getElementById('times-absent').value,
+        percentageValue: document.getElementById('percentage-value').value,
+        resultValue: document.getElementById('result-value').value,
+        totalMarksObtained: document.getElementById('total-marks-obtained').value,
+        totalMarksObtainable: document.getElementById('total-marks-obtainable').value,
+        
+        // Header info
+        reportTitle: document.querySelector('input[placeholder*="title"]')?.value || '',
+        reportFor: document.querySelectorAll('.mt-8 input')[0]?.value || '',
+        termOf: document.querySelectorAll('.mt-8 input')[1]?.value || '',
+        
+        // Subjects data
+        subjects: [],
+        
+        // Teacher/Principal remarks
+        teacherRemarks: document.querySelector('.teacher-remarks-section input')?.value || '',
+        principalRemarks: document.querySelector('.principal-remarks-section input')?.value || '',
+        
+        // Fees
+        tuitionFees: document.querySelector('.border.border-black input[placeholder*="35,000"]')?.value || '',
+        
+        // Settings
+        usedSubjects: Array.from(usedSubjects),
+        
+        // 🆕 ADD CLASS IDENTIFIER FOR SS2
+        classType: 'SS2',
+        maxRows: 13, // SS2 has 13 rows
+        
+        // Timestamp
+        savedAt: new Date().toISOString()
+    };
+
+    // Collect all subjects from table
+    const rows = document.querySelectorAll('#table-body tr');
+    rows.forEach(row => {
+        const subjectSelect = row.querySelector('.subject-select');
+        const test1Input = row.querySelector('.test1');
+        const test2Input = row.querySelector('.test2');
+        const examInput = row.querySelector('.exam');
+        const totalInput = row.querySelector('.total');
+        const classAveInput = row.querySelector('td:nth-child(6) input');
+        const gradeCell = row.querySelector('td:nth-child(7)');
+        const remarkCell = row.querySelector('td:nth-child(8)');
+        
+        const subject = {
+            name: subjectSelect?.value || '',
+            test1: test1Input?.value || '',
+            test2: test2Input?.value || '',
+            exam: examInput?.value || '',
+            total: totalInput?.value || '',
+            classAve: classAveInput?.value || '',
+            grade: gradeCell?.textContent || '--',
+            remark: remarkCell?.textContent || '--'
+        };
+        reportData.subjects.push(subject);
+    });
+
+    // Generate unique ID
+    const reportName = studentName || 'Untitled_Report';
+    const reportId = 'report_SS2_' + Date.now() + '_' + reportName.replace(/[^a-zA-Z0-9]/g, '_');
+    
+    // Get existing reports FROM SS2 SPECIFIC STORAGE
+    let savedReports = JSON.parse(localStorage.getItem(SS2_STORAGE_KEY) || '[]');
+    
+    // Check if report with same name exists (update instead of duplicate)
+    const existingIndex = savedReports.findIndex(r => r.name === reportName);
+    
+    const reportEntry = {
+        id: reportId,
+        name: reportName || 'Untitled Report',
+        date: new Date().toLocaleString('en-US', { 
+            year: 'numeric', 
+            month: 'short', 
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        }),
+        data: reportData
+    };
+    
+    if (existingIndex > -1) {
+        // Update existing report
+        savedReports[existingIndex] = reportEntry;
+    } else {
+        // Add new report
+        savedReports.push(reportEntry);
+    }
+    
+       // Limit to last 200 reports (increased from 20 for more students)
+    if (savedReports.length > 200) {
+        savedReports = savedReports.slice(-200);
+    }
+
+
+    
+    // Save to localStorage WITH SS2 KEY
+    localStorage.setItem(SS2_STORAGE_KEY, JSON.stringify(savedReports));
+    
+    // Show confirmation
+    showToast(`SS2 Report "${reportName}" saved successfully!`, 'success');
+    console.log("SS2 Report saved with ID:", reportId, "Total SS2 saved:", savedReports.length);
+    
+    // Update the total files count if modal is open
+    updateTotalFilesCount();
+}
+
+// Function to update the total files count badge - UPDATED FOR SS2
+function updateTotalFilesCount() {
+    const savedReports = JSON.parse(localStorage.getItem(SS2_STORAGE_KEY) || '[]');
+    const totalFilesCountElement = document.getElementById('totalFilesCount');
+    
+    if (totalFilesCountElement) {
+        totalFilesCountElement.textContent = `${savedReports.length} file${savedReports.length !== 1 ? 's' : ''}`;
+        
+        // Update the badge color based on count
+        if (savedReports.length === 0) {
+            totalFilesCountElement.classList.remove('from-blue-500', 'to-purple-500');
+            totalFilesCountElement.classList.add('from-gray-500', 'to-gray-600');
+        } else if (savedReports.length < 5) {
+            totalFilesCountElement.classList.remove('from-gray-500', 'to-gray-600', 'from-green-500', 'to-green-600');
+            totalFilesCountElement.classList.add('from-blue-500', 'to-purple-500');
+        } else {
+            totalFilesCountElement.classList.remove('from-blue-500', 'to-purple-500', 'from-gray-500', 'to-gray-600');
+            totalFilesCountElement.classList.add('from-green-500', 'to-green-600');
+        }
+    }
+}
+
+// 🚀 NUCLEAR SOLUTION: Show saved reports modal (100% guaranteed)
+function showSavedReportsModal() {
+    console.log("🚀 NUCLEAR SOLUTION ACTIVATED: Showing saved reports modal...");
+    
+    // First load the saved reports data
+    loadSavedReportsData();
+    
+    // Update the total files count
+    updateTotalFilesCount();
+    
+    // Get modal element
+    const modal = document.getElementById('savedReportsModal');
+    const modalContent = document.getElementById('savedReportsModalContent');
+    
+    if (!modal) {
+        console.error("❌ ERROR: savedReportsModal element not found!");
+        return;
+    }
+    
+    // ✅ NUCLEAR SOLUTION: Force show the modal
+    modal.style.display = 'flex';
+    modal.style.opacity = '0';
+    modal.style.transition = 'opacity 0.3s ease';
+    
+    // Force browser reflow
+    modal.offsetHeight;
+    
+    // Now animate in
+    setTimeout(() => {
+        modal.style.opacity = '1';
+        if (modalContent) {
+            modalContent.style.opacity = '1';
+            modalContent.style.transform = 'scale(1)';
+            modalContent.style.transition = 'all 0.3s ease-out';
+        }
+    }, 10);
+    
+    // Lock body scroll
+    document.body.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.width = '100%';
+    document.body.style.height = '100%';
+    
+    console.log("✅ Modal should be visible now!");
+}
+
+// 🚀 NUCLEAR SOLUTION: Close saved reports modal
+function closeSavedReportsModal() {
+    console.log("Closing saved reports modal...");
+    
+    const modal = document.getElementById('savedReportsModal');
+    const modalContent = document.getElementById('savedReportsModalContent');
+    
+    if (!modal) return;
+    
+    // Animate out
+    if (modalContent) {
+        modalContent.style.opacity = '0';
+        modalContent.style.transform = 'scale(0.95)';
+    }
+    modal.style.opacity = '0';
+    
+    setTimeout(() => {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+        document.body.style.position = 'static';
+        document.body.style.width = 'auto';
+        document.body.style.height = 'auto';
+    }, 300);
+    
+    console.log("Modal closed!");
+}
+
+// Load saved reports data into the modal - UPDATED FOR SS2
+function loadSavedReportsData() {
+    const savedReports = JSON.parse(localStorage.getItem(SS2_STORAGE_KEY) || '[]');
+    const listContainer = document.getElementById('savedReportsList');
+    const noReportsMessage = document.getElementById('noReportsMessage');
+    
+    if (!listContainer) {
+        console.error("❌ ERROR: savedReportsList element not found!");
+        return;
+    }
+    
+    if (savedReports.length === 0) {
+        // Show "no reports" message
+        listContainer.innerHTML = `
+            <div id="noReportsMessage" class="text-center py-12 text-gray-500 dark:text-gray-400">
+                <svg class="w-20 h-20 mx-auto mb-6 text-gray-300 dark:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                </svg>
+                <p class="text-xl font-medium text-gray-700 dark:text-gray-300">No SS2 saved reports yet</p>
+                <p class="text-sm mt-2 text-gray-600 dark:text-gray-400">Save a report using the "💾 Save Report" button</p>
+            </div>
+        `;
+        return;
+    }
+    
+    // Hide "no reports" message if it exists
+    if (noReportsMessage) {
+        noReportsMessage.style.display = 'none';
+    }
+    
+    // Create HTML for saved reports
+    listContainer.innerHTML = savedReports.map(report => `
+        <div class="border-2 border-gray-200 dark:border-gray-800 rounded-2xl p-5 mb-4 hover:border-green-500 dark:hover:border-green-500 hover:shadow-xl transition-all duration-300 cursor-pointer bg-gradient-to-r from-white to-gray-50 dark:from-gray-900 dark:to-gray-800 group" 
+             onclick="loadReportAndCloseModal('${report.id}')">
+            <div class="flex justify-between items-start">
+                <div class="flex-1">
+                    <h4 class="font-bold text-xl text-gray-900 dark:text-white group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors mb-2">
+                        ${report.name}
+                    </h4>
+                    <div class="flex items-center gap-4 mt-2 text-sm text-gray-600 dark:text-gray-400">
+                        <span class="flex items-center gap-2 bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-lg">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 002-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                            ${report.date}
+                        </span>
+                        <span class="flex items-center gap-2 bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-lg">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                            </svg>
+                            ${report.data.subjects.length} subjects
+                        </span>
+                        <span class="flex items-center gap-2 bg-gradient-to-r from-blue-100 to-blue-200 dark:from-blue-900/30 dark:to-blue-800/30 text-blue-800 dark:text-blue-300 px-3 py-1 rounded-lg font-bold">
+                            SS2
+                        </span>
+                    </div>
+                </div>
+                <div class="pl-4">
+                    <span class="inline-flex items-center gap-2 bg-gradient-to-r from-green-500 to-green-600 text-white text-sm font-bold px-4 py-2 rounded-xl group-hover:from-green-600 group-hover:to-green-700 transition-all duration-300 shadow-lg">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                        </svg>
+                        LOAD
+                    </span>
+                </div>
+            </div>
+            <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
+                <div class="flex flex-wrap gap-3">
+                    <span class="text-sm bg-gradient-to-r from-blue-100 to-blue-200 dark:from-blue-900/30 dark:to-blue-800/30 text-blue-800 dark:text-blue-300 px-3 py-1.5 rounded-lg font-medium">
+                        Student: ${report.data.studentName || 'Not set'}
+                    </span>
+                    <span class="text-sm bg-gradient-to-r from-green-100 to-green-200 dark:from-green-900/30 dark:to-green-800/30 text-green-800 dark:text-green-300 px-3 py-1.5 rounded-lg font-medium">
+                        Total: ${report.data.totalMarksObtained || '0'} / ${report.data.totalMarksObtainable || '0'}
+                    </span>
+                    <span class="text-sm bg-gradient-to-r from-purple-100 to-purple-200 dark:from-purple-900/30 dark:to-purple-800/30 text-purple-800 dark:text-purple-300 px-3 py-1.5 rounded-lg font-medium">
+                        Grade: ${report.data.resultValue || '--'}
+                    </span>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+// Load report AND close modal
+function loadReportAndCloseModal(reportId) {
+    console.log("Loading report and closing modal for ID:", reportId);
+    loadReport(reportId);
+    closeSavedReportsModal();
+}
+
+// Load a specific report - UPDATED FOR SS2
+function loadReport(reportId) {
+    console.log("Loading SS2 report:", reportId);
+    
+    const savedReports = JSON.parse(localStorage.getItem(SS2_STORAGE_KEY) || '[]');
+    const report = savedReports.find(r => r.id === reportId);
+    
+    if (!report) {
+        showToast('SS2 Report not found!', 'error');
+        return;
+    }
+    
+    const data = report.data;
+    
+    // First, clear existing form data
+    clearDataFields();
+    
+    // Load basic student info
+    document.getElementById('student-name').value = data.studentName || '';
+    document.getElementById('student-sex').value = data.studentSex || '';
+    document.getElementById('times-present').value = data.timesPresent || '';
+    document.getElementById('times-absent').value = data.timesAbsent || '';
+    document.getElementById('percentage-value').value = data.percentageValue || '';
+    document.getElementById('result-value').value = data.resultValue || '';
+    document.getElementById('total-marks-obtained').value = data.totalMarksObtained || '';
+    document.getElementById('total-marks-obtainable').value = data.totalMarksObtainable || '';
+    
+    // Load header info
+    const titleInput = document.querySelector('input[placeholder*="title"]');
+    if (titleInput) titleInput.value = data.reportTitle || '';
+    
+    const headerInputs = document.querySelectorAll('.mt-8 input');
+    if (headerInputs[0]) headerInputs[0].value = data.reportFor || '';
+    if (headerInputs[1]) headerInputs[1].value = data.termOf || '';
+    
+    // Load teacher/principal remarks
+    const teacherRemarksInput = document.querySelector('.teacher-remarks-section input');
+    if (teacherRemarksInput) teacherRemarksInput.value = data.teacherRemarks || '';
+    
+    const principalRemarksInput = document.querySelector('.principal-remarks-section input');
+    if (principalRemarksInput) principalRemarksInput.value = data.principalRemarks || '';
+    
+    // Load fees
+    const feesInput = document.querySelector('.border.border-black input[placeholder*="35,000"]');
+    if (feesInput) feesInput.value = data.tuitionFees || '';
+    
+    // Restore used subjects
+    if (data.usedSubjects) {
+        usedSubjects = new Set(data.usedSubjects);
+    } else {
+        usedSubjects.clear();
+    }
+    
+    // Remove all existing rows
+    const tableBody = document.getElementById("table-body");
+    tableBody.innerHTML = '';
+    
+    // Add rows for each subject in the saved data (max 13 for SS2)
+    const maxRows = 13;
+    data.subjects.forEach((subjectData, index) => {
+        if (index >= maxRows) return; // Don't add more than 13 rows for SS2
+        
+        // Use your existing addRow function to create a row
+        addRow();
+        
+        // Get the newly added row (last row)
+        const rows = tableBody.querySelectorAll('tr');
+        const newRow = rows[rows.length - 1];
+        
+        if (newRow) {
+            // Fill subject data
+            const subjectSelect = newRow.querySelector('.subject-select');
+            const test1Input = newRow.querySelector('.test1');
+            const test2Input = newRow.querySelector('.test2');
+            const examInput = newRow.querySelector('.exam');
+            const totalInput = newRow.querySelector('.total');
+            const classAveInput = newRow.querySelector('td:nth-child(6) input');
+            const gradeCell = newRow.querySelector('td:nth-child(7)');
+            const remarkCell = newRow.querySelector('td:nth-child(8)');
+            
+            // Set values
+            if (subjectSelect && subjectData.name) {
+                // Mark this subject as used
+                usedSubjects.add(subjectData.name);
+                newRow.dataset.selectedSubject = subjectData.name;
+            }
+            
+            if (test1Input) test1Input.value = subjectData.test1 || '';
+            if (test2Input) test2Input.value = subjectData.test2 || '';
+            if (examInput) examInput.value = subjectData.exam || '';
+            if (totalInput) totalInput.value = subjectData.total || '';
+            if (classAveInput) classAveInput.value = subjectData.classAve || '';
+            
+            // Set grade and remark
+            if (gradeCell) gradeCell.textContent = subjectData.grade || '--';
+            if (remarkCell) remarkCell.textContent = subjectData.remark || '--';
+        }
+    });
+    
+    // Update dropdowns
+    setTimeout(() => {
+        updateAllDropdowns();
+        
+        // Set the selected values in dropdowns
+        const rows = tableBody.querySelectorAll('tr');
+        rows.forEach((row, index) => {
+            if (index < data.subjects.length && index < maxRows) {
+                const subjectSelect = row.querySelector('.subject-select');
+                if (subjectSelect && data.subjects[index].name) {
+                    subjectSelect.value = data.subjects[index].name;
+                }
+            }
+        });
+        
+        // Update calculations
+        maintainTableHeight();
+        updateAddButtonVisibility();
+        calculateGrandTotal();
+        calculateTotalObtainable();
+        calculatePercentage();
+    }, 100);
+    
+    // Show success message
+    showToast(`✅ SS2 Report "${report.name}" loaded successfully!`, 'success');
+}
+
+// Clear all saved reports - UPDATED FOR SS2
+function clearAllSavedReports() {
+    if (confirm('⚠️ ARE YOU SURE?\n\nThis will delete ALL SS2 saved reports permanently.\n\nThis action cannot be undone!')) {
+        localStorage.removeItem(SS2_STORAGE_KEY);
+        closeSavedReportsModal();
+        showToast('All SS2 saved reports have been cleared!', 'success');
+        
+        // Reload the modal to show empty state
+        setTimeout(() => {
+            loadSavedReportsData();
+            updateTotalFilesCount();
+        }, 100);
+    }
+}
+
+// Update the print button to use enhanced version
+document.addEventListener('DOMContentLoaded', function() {
+    // Update the Load button to use the new function
+    const loadButton = document.querySelector('button[onclick*="loadAndShowSavedReports"]');
+    if (loadButton) {
+        loadButton.setAttribute('onclick', 'showSavedReportsModal()');
+    }
+    
+    // Initialize the total files count on page load
+    updateTotalFilesCount();
+});
+
+// Auto-save every 2 minutes if changes detected
+let autoSaveTimeout;
+function setupAutoSave() {
+    // Listen for input changes
+    document.addEventListener('input', function() {
+        clearTimeout(autoSaveTimeout);
+        autoSaveTimeout = setTimeout(() => {
+            const studentName = document.getElementById('student-name').value;
+            if (studentName && studentName.trim().length > 0) {
+                saveCurrentReport();
+                console.log("Auto-saved report");
+            }
+        }, 120000); // 2 minutes
+    });
+}
+
+// Initialize auto-save when page loads
+document.addEventListener('DOMContentLoaded', setupAutoSave);
+
+// Close modal on Escape key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeSavedReportsModal();
+        closeExportModal();
+    }
+});
+
+// Close modal when clicking outside
+document.getElementById('savedReportsModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeSavedReportsModal();
+    }
+});
+</script>
 
 </body>
 </html>
