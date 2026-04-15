@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title> Emilia Report Card Maker</title>
+  <title> Emilia Report Card Maker - JSS 2</title>
     <!-- Favicon - Emilia Logo -->
-  <link rel="icon" type="image/x-icon" href="https://ncctazjcffmpuniwctkz.supabase.co/storage/v1/object/public/user-uploads/emilia_logo_circle.png¥">
+  <link rel="icon" type="image/x-icon" href="https://ncctazjcffmpuniwctkz.supabase.co/storage/v1/object/public/user-uploads/emilia_logo_circle.png">
 
   <script src="https://cdn.tailwindcss.com"></script>
   
@@ -178,7 +178,7 @@
         background-size: contain;
         background-repeat: no-repeat;
         background-position: center;
-        opacity: 0.08; /* Slightly more visible for print */
+        opacity: 0.08;
         z-index: 1;
         pointer-events: none;
     }
@@ -192,10 +192,9 @@
 
     table th {
         border: 1px solid #000000 !important;
-        background-color: #f0f0f0 !important; /* Light gray for header */
+        background-color: #f0f0f0 !important;
         font-weight: bold !important;
         padding: 4px 2px !important;
-        /* REMOVE THE BOTTOM BORDER FROM HEADER TO ELIMINATE THE HORIZONTAL LINE */
         border-bottom: none !important;
     }
 
@@ -209,7 +208,6 @@
         border: 1px solid #000000 !important;
     }
 
-    /* Ensure all borders are visible and consistent */
     table th,
     table td,
     table tfoot td {
@@ -218,56 +216,49 @@
         border-color: #000000 !important;
     }
 
-    /* SPECIFICALLY REMOVE THE BOTTOM BORDER FROM TABLE HEADER */
     table thead tr th {
         border-bottom: none !important;
     }
 
-    /* Make table cells transparent to show watermark */
     table tbody tr td {
         background-color: transparent !important;
         position: relative;
-        z-index: 2; /* Ensure content appears above watermark */
+        z-index: 2;
     }
 
-    /* Make table header transparent */
     table thead tr th {
         background-color: transparent !important;
         position: relative;
         z-index: 2;
     }
 
-    /* Make table footer transparent */
     table tfoot tr td {
         background-color: transparent !important;
         position: relative;
         z-index: 2;
     }
 
-    /* REMOVED ALL TABLE COLORS - Clean white background */
     table td:nth-child(5),
     table tfoot tr td:nth-child(5) {
         background-color: transparent !important;
         padding: 0 !important;
     }
 
-    /* ✅ FIX TOTAL COLUMN FOR WEB VIEW - SAME AS OTHER COLUMNS */
     table td:nth-child(5) input,
     table tfoot tr td:nth-child(5) input,
     #total-sum {
         background-color: transparent !important;
         border: none !important;
-        padding: 1px 2px !important; /* Same as other columns */
+        padding: 1px 2px !important;
         margin: 0 !important;
         width: 100% !important;
         height: 100% !important;
         display: block !important;
         box-sizing: border-box !important;
-        font-size: 16px !important; /* Increase to match other columns */
+        font-size: 16px !important;
         font-weight: bold !important;
     }
 
-    /* ✅ INCREASE ALL IMPORTANT COLUMNS FOR WEB VIEW */
     table td:nth-child(2) input,
     table td:nth-child(3) input,
     table td:nth-child(4) input,
@@ -276,16 +267,14 @@
         font-weight: bold !important;
     }
 
-    /* ✅ GRADE AND REMARK COLUMNS FOR WEB VIEW - 18px and Bold 700 */
     table td:nth-child(7),
     table td:nth-child(8) {
         font-size: 18px !important;
-        font-weight: 700 !important; /* REGULAR BOLD */
+        font-weight: 700 !important;
         text-align: center !important;
         padding: 3px 1px !important;
     }
 
-    /* REMOVED BLUE COLOR FOR CLASS-AVE COLUMN */
     table tbody tr:nth-child(1) td:nth-child(6),
     table tbody tr:nth-child(2) td:nth-child(6),
     table tbody tr:nth-child(5) td:nth-child(6),
@@ -300,12 +289,10 @@
         background-color: transparent !important;
     }
 
-    /* REMOVED GREEN COLOR FOR GRADE COLUMN */
     table tbody tr:nth-child(1) td:nth-child(7) {
         background-color: transparent !important;
     }
 
-    /* CARRY TEXT UP SMALL FOR DOTTED LINES */
     .mt-8.text-sm.flex.justify-start.gap-4.pl-0.flex-wrap.font-medium.tracking-wide.items-end input,
     .mt-6.text-sm.flex.justify-start.gap-0.pl-0.flex-wrap.font-medium.tracking-wide.items-end input,
     .mt-6.text-sm.flex.justify-start.pl-0.flex-nowrap.font-medium.tracking-wide.items-end input,
@@ -336,7 +323,6 @@
         display: none;
     }
     
-    /* ✅ CONSISTENT TABLE BORDERS FOR PRINT */
     table {
         border: 1px solid #000000 !important;
         border-collapse: collapse !important;
@@ -349,7 +335,6 @@
         background-color: #f0f0f0 !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
-        /* REMOVE THE BOTTOM BORDER FROM HEADER FOR PRINT TOO */
         border-bottom: none !important;
     }
     
@@ -365,14 +350,12 @@
         print-color-adjust: exact !important;
     }
     
-    /* SPECIFICALLY REMOVE THE BOTTOM BORDER FROM TABLE HEADER FOR PRINT */
     table thead tr th {
         border-bottom: none !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
     }
     
-    /* ✅ MAKE PRINT PREVIEW COMPLETELY TRANSPARENT FOR WATERMARK */
     table,
     table tbody,
     table thead,
@@ -386,28 +369,16 @@
         print-color-adjust: exact !important;
     }
     
-    /* ✅ ENSURE WATERMARK SHOWS IN PRINT PREVIEW */
     #table-body::before {
         display: block !important;
         opacity: 0.12 !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
         z-index: 1 !important;
-        width: 350px !important;  /* ADD THIS LINE */
-        height: 350px !important; /* ADD THIS LINE */
+        width: 350px !important;
+        height: 350px !important;
     }
     
-    /* KEEP WATERMARK FOR PRINT - CHANGED FROM display: none */
-    #table-body::before {
-        display: block !important;
-        opacity: 0.12 !important;
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-        width: 350px !important;  /* ADD THIS LINE */
-        height: 350px !important; /* ADD THIS LINE */
-    }
-    
-    /* ✅ ENSURE TABLE CONTENT STAYS ABOVE WATERMARK */
     table tbody tr td,
     table thead tr th,
     table tfoot tr td {
@@ -416,34 +387,22 @@
         background-color: transparent !important;
     }
     
-    /* ✅ REMOVE ALL BACKGROUND COLORS */
     .bg-white,
     .bg-gray-200 {
         background-color: transparent !important;
         background: transparent !important;
     }
     
-    /* KEEP WATERMARK FOR PRINT - CHANGED FROM display: none */
-    #table-body::before {
-        display: block !important; /* Show watermark in print */
-        opacity: 0.12 !important; /* Slightly more visible for print */
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-    }
-
-    /* DYNAMIC TABLE HEIGHT SYSTEM - FIXED FOR 13 ROWS */
     #table-body {
-        min-height: 234px !important; /* 13 rows × 18px = 234px */
+        min-height: 234px !important;
         display: table-row-group !important;
     }
     
-    /* DYNAMIC ROW HEIGHT - ADJUSTS BASED ON ROW COUNT */
     #table-body tr {
         height: calc(470px / var(--row-count, 13)) !important;
         display: table-row !important;
     }
     
-    /* DYNAMIC FONT SIZE - PROPER INCREASE - CHANGED FROM 11px TO 13px */
     table input, table select {
       font-size: calc(15px + (3px / var(--row-count, 13))) !important;
     }
@@ -452,18 +411,16 @@
         font-size: calc(15px + (3px / var(--row-count, 13))) !important;
     }
 
-    /* ✅ GRADE AND REMARK FOR PRINT PREVIEW - 18px and Bold 700 */
     table td:nth-child(7),
     table td:nth-child(8) {
-        font-size: 18px !important; /* 18px FOR PRINT */
-        font-weight: 700 !important; /* REGULAR BOLD FOR PRINT */
+        font-size: 18px !important;
+        font-weight: 700 !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
         text-align: center !important;
         padding: 3px 1px !important;
     }
 
-    /* Other columns remain 16px */
     table td:nth-child(2) input,
     table td:nth-child(3) input,
     table td:nth-child(4) input,
@@ -473,7 +430,6 @@
         font-weight: bold !important;
     }
     
-    /* MAINTAIN TABLE STRUCTURE */
     table {
         font-size: 12.5px !important;
         width: 105% !important;
@@ -482,7 +438,6 @@
         border-collapse: collapse !important;
     }
     
-    /* CLEAR TABLE HEADERS - FIXED POSITIONS */
     table th {
         font-size: 13px !important;
         font-weight: bold !important;
@@ -490,7 +445,6 @@
         position: static !important;
     }
     
-    /* READABLE TABLE CELLS - PROPER COLUMN ALIGNMENT */
     table td {
         font-size: 12px !important;
         padding: 3px 1px !important;
@@ -498,34 +452,30 @@
         vertical-align: middle !important;
     }
     
-    /* CLEAR INPUT TEXT - ADD PADDING TO AVOID TOUCHING LINES */
     table input {
         font-weight: bold !important;
         width: 100% !important;
         box-sizing: border-box !important;
-        padding: 1px 2px !important; /* Added padding to avoid touching lines */
-        text-transform: uppercase !important; /* Force capital letters */
+        padding: 1px 2px !important;
+        text-transform: uppercase !important;
     }
     
-    /* CLEAR SELECT TEXT */
     table select {
         width: 100% !important;
         box-sizing: border-box !important;
-        text-transform: uppercase !important; /* Force capital letters */
+        text-transform: uppercase !important;
     }
     
-    /* SPECIAL STYLING FOR SUBJECT COLUMN INPUTS - MORE PADDING */
     table td:first-child input {
         font-weight: bold !important;
-        padding: 1px 4px !important; /* More padding for subject column */
+        padding: 1px 4px !important;
     }
 
-    /* ✅ FIX TOTAL COLUMN FONT SIZE AND PADDING FOR PRINT */
     table td:nth-child(5) input,
     table tfoot tr td:nth-child(5) input,
     #total-sum {
         font-size: 16px !important;
-        padding: 1px 2px !important;  /* Same as other columns */
+        padding: 1px 2px !important;
         margin: 0 !important;
         width: 100% !important;
         height: 100% !important;
@@ -536,7 +486,6 @@
         print-color-adjust: exact !important;
     }
 
-    /* LOCK THE BOX AND TEXT POSITION */
     .mt-10.flex.justify-between.items-start.w-full.max-w-\[794px\].gap-4 {
         position: fixed !important;
         bottom: 20px !important;
@@ -558,7 +507,6 @@
         order: 2 !important;
     }
 
-    /* Compress everything for printing */
     .max-w-\[794px\] {
         max-width: 794px !important;
         margin: 0 auto !important;
@@ -567,33 +515,27 @@
         transform-origin: top center;
     }
 
-    /* COMPRESS EVERYTHING MORE */
     * {
         line-height: 1.1 !important;
     }
 
-    /* CARRY TABLE DOWN TINY LITTLE BIT - ADJUSTED */
     .mt-8 {
-        margin-top: 0.8rem !important; /* Increased from 0.3rem */
+        margin-top: 0.8rem !important;
     }
 
-    /* Increase spacing between sections above table slightly */
     .mb-2, .mt-6, .mt-8, .mt-10 {
-        margin-top: 0.4rem !important; /* Increased from 0.2rem */
+        margin-top: 0.4rem !important;
         margin-bottom: 0.4rem !important;
     }
     
-    /* SPECIFICALLY INCREASE SPACING FOR SECTIONS BEFORE TABLE */
     .mt-6.text-sm.flex.justify-start.flex-nowrap.font-medium.tracking-wide.items-end:last-of-type {
-        margin-top: 0.6rem !important; /* Increased from 0.2rem */
+        margin-top: 0.6rem !important;
     }
 
-    /* TABLE SPACING - CARRIED DOWN A BIT */
     .mt-8 {
-        margin-top: 0.8rem !important; /* Increased from 0.2rem */
+        margin-top: 0.8rem !important;
     }
 
-    /* SECTIONS BELOW TABLE - KEEP ORIGINAL SPACING */
     .mt-8 + .mt-6.text-sm.flex.justify-start.flex-nowrap.font-medium.tracking-wide.items-end {
         margin-top: 2.5rem !important;
     }
@@ -604,33 +546,27 @@
         margin-top: 1.2rem !important;
     }
 
-    /* NUCLEAR OPTION 2 - USE TRANSFORM */
     .total-marks-section {
         transform: translateY(-20px) !important;
     }
 
-        /* CARRY TEACHER'S REMARKS SECTION UP */
     .teacher-remarks-section {
         transform: translateY(-24px) !important;
     }
     
-        /* CARRY TEACHER'S SIGN SECTION UP */
     .teacher-sign-section {
         transform: translateY(-24px) !important;
     }
 
-        /* CARRY PRINCIPAL'S REMARKS SECTION UP */
     .principal-remarks-section {
         transform: translateY(-36px) !important;
     }
 
-        /* CARRY PRINCIPAL'S SIGN SECTION UP */
     .principal-sign-section {
         transform: translateY(-36px) !important;
     }
 
 
-    /* LEFT TEXT */
     .flex-1.text-xs.font-semibold.tracking-wide {
         order: 1 !important;
         margin-left: -40px !important;
@@ -648,7 +584,6 @@
         line-height: 1.2 !important;
     }
     
-    /* RIGHT BOX */
     .border.border-black.px-4.py-2.text-sm.font-semibold.w-56 {
         order: 2 !important;
         margin-left: auto !important;
@@ -663,7 +598,6 @@
         overflow: hidden !important;
     }
 
-    /* BOX TEXT */
     .border.border-black.px-4.py-2.text-sm.font-semibold.w-56 .text-xs,
     .border.border-black.px-4.py-2.text-sm.font-semibold.w-56 .text-sm,
     .border.border-black.px-4.py-2.text-sm.font-semibold.w-56 div,
@@ -673,17 +607,14 @@
         font-weight: bold !important;
     }
     
-    /* HEADER SIZES */
     .text-2xl, .text-3xl {
         font-size: 1.48rem !important;
     }
     
-    /* SCHOOL NAME */
     .text-2xl.md\:text-3xl.font-bold.text-center {
         font-size: 2.2rem !important;
     }
     
-    /* REPORT TITLE */
     .mt-2.border-b-2.border-gray-700 input {
         font-size: 1.8rem !important;
         font-weight: bold !important;
@@ -691,7 +622,6 @@
         font-family: Georgia, serif !important;
     }
     
-    /* HEADER LINES */
     .border-b-2.border-gray-700.inline-block {
         width: 38rem !important;
     }
@@ -700,17 +630,14 @@
         width: 38rem !important;
     }
     
-    /* IMAGE POSITION */
     .h-32.w-28.object-contain.mt-3 {
         margin-left: -2rem !important;
     }
     
-    /* INPUT SPACING - INCREASED A BIT */
     .mt-6 {
-        margin-top: 0.6rem !important; /* Increased from 0.3rem */
+        margin-top: 0.6rem !important;
     }
     
-    /* SINGLE PAGE ENSURE */
     html, body {
         height: auto !important;
         overflow: hidden !important;
@@ -721,18 +648,15 @@
         break-inside: avoid;
     }
 
-    /* Additional compression */
     * {
         font-size: 98.5% !important;
     }
     
-    /* MAIN CONTAINER */
     .max-w-\[794px\] {
         padding: 10px !important;
         margin-top: -2px !important;
     }
     
-    /* LOGO SIZE */
     .h-32 {
         height: 110px !important;
     }
@@ -740,14 +664,12 @@
         width: 96px !important;
     }
     
-    /* IMAGE ALIGNMENT */
     .flex.items-center.justify-center {
         justify-content: flex-start !important;
         padding-left: 20px !important;
         margin-top: -15px !important;
     }
     
-    /* TOP SECTION */
     .mt-10.flex.justify-between.items-start.w-full.max-w-\[794px\].gap-4 {
         display: flex !important;
         justify-content: space-between !important;
@@ -756,7 +678,6 @@
         margin-top: 0.5rem !important;
     }
 
-    /* NAIRA SIGN FIX */
     .border.border-black.px-4.py-2.text-sm.font-semibold.w-56 .flex.justify-between.items-center .relative {
         position: relative !important;
         display: flex !important;
@@ -783,7 +704,6 @@
         font-weight: bold !important;
     }
 
-    /* MONEY INPUT FIX */
     .border.border-black.px-4.py-2.text-sm.font-semibold.w-56 .flex.justify-between.items-center {
         gap: 6px !important;
         margin-bottom: 6px !important;
@@ -803,18 +723,15 @@
         width: 90px !important;
     }
 
-    /* GENERAL TEXT */
     .text-\[11px\] {
         font-size: 10px !important;
     }
     
-    /* TABLE PADDING */
     .py-1 {
         padding-top: 0.2rem !important;
         padding-bottom: 0.2rem !important;
     }
     
-    /* TERMINAL FEES BOX */
     .mt-\[-62px\] {
         margin-top: 0px !important;
     }
@@ -823,25 +740,21 @@
         width: 170px !important;
     }
 
-    /* HEADER BLOCK */
     .flex.items-center.justify-center.mb-2.gap-4.mt-6 {
         margin-left: 1rem !important;
     }
 
-    /* PAGE SETTINGS */
     @page {
         margin: 0.34cm;
         size: A4;
     }
     
-    /* SINGLE PAGE FORCE */
     body, html {
         width: 210mm;
         height: 297mm;
         overflow: hidden !important;
     }
     
-    /* HIDE EXTRAS */
     body > *:not(.max-w-\[794px\]) {
         display: none !important;
     }
@@ -855,7 +768,6 @@
         border: none !important;
     }
 
-    /* For print view - REMOVED ALL COLORS */
     table td:nth-child(5),
     table tfoot tr td:nth-child(5) {
         background-color: transparent !important;
@@ -864,7 +776,6 @@
         padding: 0 !important;
     }
 
-    /* REMOVED BLUE COLOR FOR CLASS-AVE COLUMN */
     table tbody tr:nth-child(1) td:nth-child(6),
     table tbody tr:nth-child(2) td:nth-child(6),
     table tbody tr:nth-child(5) td:nth-child(6),
@@ -881,14 +792,12 @@
         print-color-adjust: exact !important;
     }
 
-    /* REMOVED GREEN COLOR FOR GRADE COLUMN */
     table tbody tr:nth-child(1) td:nth-child(7) {
         background-color: transparent !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
     }
 
-    /* CARRY TEXT UP SMALL FOR DOTTED LINES IN PRINT */
     .mt-8.text-sm.flex.justify-start.gap-4.pl-0.flex-wrap.font-medium.tracking-wide.items-end input,
     .mt-6.text-sm.flex.justify-start.gap-0.pl-0.flex-wrap.font-medium.tracking-wide.items-end input,
     .mt-6.text-sm.flex.justify-start.pl-0.flex-nowrap.font-medium.tracking-wide.items-end input,
@@ -897,7 +806,6 @@
     }
 }
     
-    /* Hide dropdown arrows for print */
     @media print {
       select {
         background-image: none !important;
@@ -905,13 +813,11 @@
       }
     }
     
-    /* Ensure select elements look clean in print */
     select.no-arrows {
       background-image: none;
       padding-right: 0.5rem;
     }
     
-    /* Special print optimization */
     body.printing {
       zoom: 0.97;
     }
@@ -922,7 +828,6 @@
       margin: 0 auto;
     }
 
-    /* FORCE UPPERCASE IN WEB VIEW TOO */
     table input[type="text"] {
         text-transform: uppercase;
     }
@@ -931,18 +836,15 @@
         text-transform: uppercase;
     }
 
-    /* But keep placeholder normal case */
     table input::placeholder {
         text-transform: none;
     }
 
-    /* FIX FOR SUBJECT DROPDOWN ONLY - Remove custom arrow */
     .subject-select {
         background-image: none !important;
         padding-right: 0.5rem !important;
     }
 
-    /* For web view - show arrows (original working version) */
     @media screen {
       select {
         background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
@@ -952,14 +854,12 @@
         padding-right: 2.5rem;
       }
       
-      /* Override for subject-select only */
       .subject-select {
         background-image: none !important;
         padding-right: 0.5rem !important;
       }
     }
 
-    /* Special print optimization */
     body.printing {
       zoom: 0.97;
     }
@@ -970,7 +870,6 @@
       margin: 0 auto;
     }
 
-    /* FORCE UPPERCASE IN WEB VIEW TOO */
     table input[type="text"] {
         text-transform: uppercase;
     }
@@ -979,14 +878,13 @@
         text-transform: uppercase;
     }
 
-    /* But keep placeholder normal case */
     table input::placeholder {
         text-transform: none;
     }
 
 @media print {
   input[value*="SCHOOL FEES SHOULD BE PAID"] {
-    transform: translateX(-42px) translateY(105px) !important;  /* move left AND down */
+    transform: translateX(-42px) translateY(105px) !important;
     display: inline-block !important;
   }
 
@@ -1032,7 +930,7 @@
           </span>
         </h1>
         <div class="mt-2 border-b-2 border-gray-700 w-[32rem]">
-          <input type="text" value="Junior Report Sheet" placeholder="Type report title here..." class="w-full bg-transparent text-center text-base font-extrabold text-black focus:outline-none">
+          <input type="text" id="reportTitle" value="Junior Report Sheet" placeholder="Type report title here..." class="w-full bg-transparent text-center text-base font-extrabold text-black focus:outline-none">
         </div>
       </div>
     </div>
@@ -1043,14 +941,14 @@
         <label class="font-semibold mr-1">REPORT FOR</label>
         <div class="relative leading-none">
           <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none">............................................</span>
-          <input type="text" class="bg-transparent w-40 text-center text-sm font-extrabold text-black relative z-10 focus:outline-none pb-0.5 leading-[0.75rem]" />
+          <input type="text" id="reportFor" class="bg-transparent w-40 text-center text-sm font-extrabold text-black relative z-10 focus:outline-none pb-0.5 leading-[0.75rem]" />
         </div>
       </div>
       <div class="flex items-center relative">
         <label class="font-semibold mr-1">TERM OF</label>
         <div class="relative leading-none">
           <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none">......................................................................</span>
-          <input type="text" class="bg-transparent w-48 text-center text-sm font-extrabold text-black relative z-10 focus:outline-none pb-0.5 leading-[0.75rem]" />
+          <input type="text" id="termOf" class="bg-transparent w-48 text-center text-sm font-extrabold text-black relative z-10 focus:outline-none pb-0.5 leading-[0.75rem]" />
         </div>
       </div>
       <div class="flex items-center relative ml-[62px]">
@@ -1090,7 +988,7 @@
     <label class="font-semibold mr-1 whitespace-nowrap">NUMBER OF TIMES SCHOOL OPEN</label>
     <div class="relative leading-none">
       <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none">.................................................................</span>
-      <input type="text" class="bg-transparent w-[18rem] text-center text-sm font-extrabold text-black relative z-10 focus:outline-none pb-0.5 leading-[0.75rem]" />
+      <input type="text" id="school-open-count" class="bg-transparent w-[18rem] text-center text-sm font-extrabold text-black relative z-10 focus:outline-none pb-0.5 leading-[0.75rem]" />
     </div>
   </div>
 </div>
@@ -1114,13 +1012,12 @@
     </div>
 
     <!-- REOPEN – PERCENTAGE – RESULT -->
-    <!-- UPDATED: Added percentage calculation -->
     <div class="mt-6 text-sm flex justify-start pl-0 flex-nowrap font-medium tracking-wide items-end">
       <div class="flex items-center relative">
         <label class="font-semibold mr-1 whitespace-nowrap">SCHOOL RE-OPEN ON</label>
         <div class="relative leading-none w-64">
           <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none">....................................................</span>
-          <input type="text" class="bg-transparent w-full text-left pl-2 text-sm font-extrabold text-black relative z-10 focus:outline-none pb-0.5 leading-[0.7rem]" />
+          <input type="text" id="school-reopen-date" class="bg-transparent w-full text-left pl-2 text-sm font-extrabold text-black relative z-10 focus:outline-none pb-0.5 leading-[0.7rem]" />
         </div>
       </div>
       <div class="flex items-center relative ml-[-49px]">
@@ -1166,15 +1063,14 @@
         <td colspan="3" class="border border-gray-800 px-0 py-1"></td>
     </tr>
 </tfoot>   
-</table>
+      </table>
       <button onclick="addRow()" class="mt-3 bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700 transition-colors no-print text-xs">
         ➕ Add Row
       </button>
     </div>
     
     <!-- TOTAL MARKS OBTAINED – TOTAL MARKS OBTAINABLE -->
-<!-- TOTAL MARKS OBTAINED – TOTAL MARKS OBTAINABLE -->
-<div class="mt-6 text-sm flex justify-start flex-nowrap font-medium tracking-wide items-end total-marks-section">      <!-- TOTAL MARKS OBTAINED -->
+<div class="mt-6 text-sm flex justify-start flex-nowrap font-medium tracking-wide items-end total-marks-section">      
       <div class="flex items-center relative">
         <label class="font-semibold mr-1 whitespace-nowrap">TOTAL MARKS OBTAINED</label>
         <div class="relative leading-none">
@@ -1186,7 +1082,6 @@
         </div>
       </div>
 
-      <!-- TOTAL MARKS OBTAINABLE (moved even closer) -->
       <div class="flex items-center relative ml-[-48px]">
         <label class="font-semibold mr-1 whitespace-nowrap">TOTAL MARKS OBTAINABLE</label>
         <div class="relative leading-none">
@@ -1200,48 +1095,44 @@
     </div>
 
     <!-- CLASS TEACHER'S REMARKS -->
-<!-- CLASS TEACHER'S REMARKS -->
 <div class="mt-6 text-sm flex justify-start font-medium tracking-wide items-end teacher-remarks-section">      <label class="font-semibold mr-2 whitespace-nowrap">CLASS TEACHER'S REMARKS</label>
       <div class="relative leading-none flex-grow">
         <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none">
           .......................................................................................................................................
         </span>
-        <input type="text"
+        <input type="text" id="teacherRemarks"
           class="bg-transparent w-full text-left pl-4 text-sm font-extrabold text-black relative z-10 focus:outline-none pb-0.5 leading-[0.75rem]" />
       </div>
     </div>
 
-    <!-- SIGN (aligned to the left) -->
-<div class="mt-8 text-sm flex flex-col items-center w-40 ml-4 teacher-sign-section">
+    <div class="mt-8 text-sm flex flex-col items-center w-40 ml-4 teacher-sign-section">
       <div class="relative w-full">
         <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none">
           ...........................................
         </span>
-        <input type="text"
+        <input type="text" id="teacherSign"
           class="bg-transparent w-full text-center text-sm font-medium relative z-10 focus:outline-none pb-0.5 leading-[0.75rem]" />
       </div>
       <span class="mt-1 font-semibold">SIGN</span>
     </div>
 
     <!-- PRINCIPAL'S REMARKS -->
-<!-- PRINCIPAL'S REMARKS -->
 <div class="mt-6 text-sm flex justify-start font-medium tracking-wide items-end principal-remarks-section">      <label class="font-semibold mr-2 whitespace-nowrap">PRINCIPAL'S REMARKS</label>
       <div class="relative leading-none w-full max-w-[35rem]">
         <span class="absolute inset-x-0 bottom-0 text-gray-400 tracking-wider pointer-events-none">
           .....................................................................................................................................
         </span>
-        <input type="text"
+        <input type="text" id="principalRemarks"
           class="bg-transparent w-full text-left pl-4 text-sm font-extrabold text-black relative z-10 focus:outline-none pb-0.5 leading-[0.75rem]" />
       </div>
     </div>
 
-    <!-- SIGN (aligned to the left) -->
-<div class="mt-8 text-sm flex flex-col items-center w-40 ml-4 principal-sign-section">
+    <div class="mt-8 text-sm flex flex-col items-center w-40 ml-4 principal-sign-section">
       <div class="relative w-full">
         <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none">
           ...........................................
         </span>
-        <input type="text"
+        <input type="text" id="principalSign"
           class="bg-transparent w-full text-center text-sm font-medium relative z-10 focus:outline-none pb-0.5 leading-[0.75rem]" />
       </div>
       <span class="mt-1 font-semibold">SIGN</span>
@@ -1249,32 +1140,26 @@
 
     <!-- Row containing: Editable Text (left) + Terminal Fees Box (right and raised higher) -->
 <div class="mt-10 flex justify-between items-start w-full max-w-[794px] gap-4">
-  <!-- Editable Notice Text -->
   <div class="flex-1 text-xs font-semibold.tracking-wide">
-    <input type="text"
+    <input type="text" id="noticeText"
       value="SCHOOL FEES SHOULD BE PAID ON OR BEFORE RESUMPTION. THANKS"
       class="bg-transparent w-full text-left text-xs font-extrabold text-black focus:outline-none" />
   </div>
 
-<!-- Terminal Fees Box (lifted higher) -->
 <div class="border border-black px-4 py-2 text-sm font-semibold w-56 shrink-0 mt-[-62px]">
-  <!-- Centered "TERMINAL FEES" -->
   <p class="mb-1 text-center">TERMINAL FEES</p>
-
-  <!-- Updated label - centered, larger and bold -->
   <div class="mb-1">
     <label class="text-base font-bold block text-center">TUITION/UTILITY FEES</label>
     <div class="relative mt-1 flex items-center justify-end">
       <span class="text-sm font-medium mr-1">₦</span>
       <input 
         type="text" 
+        id="tuitionFees"
         placeholder="35,000"
         class="bg-transparent text-sm font-medium w-20 text-right pl-1 pr-1 focus:outline-none border-b border-gray-300" 
       />
     </div>
   </div>
-
-  <!-- Bigger and bolder bank details -->
   <p class="font-extrabold text-base text-center">1008189775 UBA</p>
 </div>
 </div>
@@ -1322,12 +1207,10 @@
       class="bg-gradient-to-br from-white to-gray-50 dark:from-gray-900 dark:to-gray-800 rounded-3xl shadow-2xl w-full max-w-lg transform transition-all duration-700 ease-out scale-95 opacity-0 border border-gray-200/50 dark:border-gray-700/50 relative overflow-hidden"
       onclick="event.stopPropagation()"
     >
-      <!-- Animated Background Elements -->
       <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-purple-600"></div>
       <div class="absolute -top-24 -right-24 w-48 h-48 bg-blue-500/5 rounded-full"></div>
       <div class="absolute -bottom-24 -left-24 w-48 h-48 bg-purple-500/5 rounded-full"></div>
       
-      <!-- Modal Header -->
       <div class="px-8 py-7 relative z-10">
         <div class="flex items-center justify-between mb-6">
           <div class="flex items-center space-x-4">
@@ -1356,7 +1239,6 @@
           </button>
         </div>
 
-        <!-- Print Information Card -->
         <div class="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-2xl p-5 mb-6 border border-blue-100 dark:border-blue-800/30">
           <div class="flex items-start space-x-3">
             <div class="p-2 bg-blue-100 dark:bg-blue-800/30 rounded-lg mt-1">
@@ -1374,9 +1256,7 @@
         </div>
       </div>
 
-      <!-- Print Action Section -->
       <div class="px-8 pb-8 relative z-10">
-        <!-- Main Print Button -->
         <button 
           onclick="printReportWithAutoSave()" 
           class="w-full group relative overflow-hidden bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white py-5 px-6 rounded-2xl font-bold text-lg transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 shadow-lg"
@@ -1388,14 +1268,10 @@
             <span class="text-lg font-bold">PRINT REPORT CARD</span>
           </div>
           
-          <!-- Animated background effect -->
           <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-          
-          <!-- Glow effect -->
           <div class="absolute inset-0 rounded-2xl bg-blue-400/20 blur-xl group-hover:bg-purple-400/30 transition-all duration-500"></div>
         </button>
 
-        <!-- Quick Tips -->
         <div class="mt-6 grid grid-cols-2 gap-3 text-xs">
           <div class="flex items-center space-x-2 text-gray-600 dark:text-gray-400">
             <div class="w-2 h-2 bg-green-500 rounded-full"></div>
@@ -1416,7 +1292,6 @@
         </div>
       </div>
 
-      <!-- Footer -->
       <div class="px-8 py-5 border-t border-gray-200/50 dark:border-gray-700/50 bg-white/50 dark:bg-gray-800/30 rounded-b-3xl backdrop-blur-sm">
         <div class="flex space-x-4">
           <button 
@@ -1436,124 +1311,66 @@
     </div>
   </div>
 
-  <!-- 🚀 NUCLEAR SOLUTION: SAVED REPORTS MODAL - FIXED -->
-  <!-- This is placed OUTSIDE of any container and directly in body -->
+  <!-- 🚀 ENHANCED SAVED REPORTS MODAL with SEARCH & DELETE BUTTONS -->
   <div id="savedReportsModal" class="fixed inset-0 bg-black/90 backdrop-blur-xl z-[99999] hidden no-print">
     <div class="relative h-full w-full flex items-center justify-center p-4">
-      <div class="bg-white dark:bg-gray-900 rounded-3xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden border border-gray-200 dark:border-gray-800 transform transition-all duration-500 scale-95 opacity-0" id="savedReportsModalContent">
-        
+      <div class="bg-white dark:bg-gray-900 rounded-3xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden border border-gray-200 dark:border-gray-800">
         <!-- Modal Header -->
-        <div class="px-8 py-6 border-b border-gray-200 dark:border-gray-800 flex justify-between items-center bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-gray-800 dark:to-gray-900">
-          <div class="flex items-center gap-4">
-            <div class="p-3 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl shadow-lg">
-              <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path>
-              </svg>
-            </div>
-            <div>
-              <h3 class="text-2xl font-bold text-gray-900 dark:text-white">📂 Saved Reports 
-                <!-- ADDED: Total files count badge -->
-                <span id="totalFilesCount" class="ml-3 px-3 py-1 text-sm font-bold bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-full">
-                  Loading...
-                </span>
-              </h3>
-              <p class="text-sm text-gray-600 dark:text-gray-400">Select a report to load</p>
-            </div>
+        <div class="px-8 py-6 border-b border-gray-200 dark:border-gray-800 flex justify-between items-center bg-gradient-to-r from-blue-50 to-indigo-50">
+          <div>
+            <h3 class="text-2xl font-bold text-gray-900 dark:text-white">📂 Saved Reports 
+              <span id="totalFilesCount" class="ml-3 px-3 py-1 text-sm font-bold bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-full">0</span>
+            </h3>
           </div>
-          <button onclick="closeSavedReportsModal()" 
-                  class="p-3 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-gray-400">
-            <svg class="w-6 h-6 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-            </svg>
-          </button>
+          <button onclick="closeSavedReportsModal()" class="p-3 hover:bg-gray-100 rounded-xl">✕</button>
         </div>
-        
+
+        <!-- SEARCH BAR (new) -->
+        <div class="p-4 border-b border-gray-200 bg-gray-50 dark:bg-gray-800/50">
+          <div class="relative">
+            <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+            <input type="text" id="searchReportsInput" onkeyup="filterReportsList()" 
+                   placeholder="Search by student name, date, or subjects..." 
+                   class="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+          </div>
+        </div>
+
         <!-- Reports List -->
-        <div id="savedReportsList" class="p-6 overflow-y-auto max-h-[60vh]">
-          <!-- Reports will appear here dynamically -->
-          <div id="noReportsMessage" class="text-center py-12 text-gray-500 dark:text-gray-400">
-            <svg class="w-20 h-20 mx-auto mb-6 text-gray-300 dark:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-            </svg>
-            <p class="text-xl font-medium text-gray-700 dark:text-gray-300">No saved reports yet</p>
-            <p class="text-sm mt-2 text-gray-600 dark:text-gray-400">Save a report using the "💾 Save Report" button</p>
-          </div>
-        </div>
-        
+        <div id="savedReportsList" class="p-6 overflow-y-auto max-h-[50vh]"></div>
+
         <!-- Modal Footer -->
-        <div class="px-8 py-6 border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50 flex justify-between items-center">
-          <button onclick="clearAllSavedReports()" 
-                  class="px-6 py-3 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-semibold rounded-xl transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl flex items-center gap-3">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-            </svg>
-            Clear All Reports
-          </button>
-          <button onclick="closeSavedReportsModal()" 
-                  class="px-8 py-3 bg-gradient-to-r from-gray-600 to-gray-700 dark:from-gray-700 dark:to-gray-800 hover:from-gray-700 hover:to-gray-800 dark:hover:from-gray-600 dark:hover:to-gray-700 text-white font-semibold rounded-xl transition-all duration-300 hover:scale-105">
-            Close
-          </button>
+        <div class="px-8 py-6 border-t border-gray-200 dark:border-gray-800 bg-gray-50 flex justify-between">
+          <button onclick="clearAllSavedReports()" class="px-6 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white font-semibold rounded-xl">Clear All Reports</button>
+          <button onclick="closeSavedReportsModal()" class="px-8 py-3 bg-gradient-to-r from-gray-600 to-gray-700 text-white font-semibold rounded-xl">Close</button>
         </div>
-        
       </div>
     </div>
   </div>
 
-<!-- ✅ Perfect Top-Centered Toast -->
-<div id="toast" class="fixed top-6 left-1/2 transform -translate-x-1/2 hidden z-[9999] no-print">
-  <div class="bg-gray-900 text-white px-6 py-4 rounded-xl shadow-2xl flex items-center space-x-3 toast-animate max-w-md border border-gray-700 backdrop-blur-sm">
-    <div id="toast-icon"></div>
-    <div id="toast-message" class="text-sm font-medium"></div>
+  <!-- Toast -->
+  <div id="toast" class="fixed top-6 left-1/2 transform -translate-x-1/2 hidden z-[9999] no-print">
+    <div class="bg-gray-900 text-white px-6 py-4 rounded-xl shadow-2xl flex items-center space-x-3 toast-animate max-w-md border border-gray-700 backdrop-blur-sm">
+      <div id="toast-icon"></div>
+      <div id="toast-message" class="text-sm font-medium"></div>
+    </div>
   </div>
-</div>
 
-  <!-- ✅ External Libraries -->
+  <!-- External Libraries -->
   <script src="https://cdn.jsdelivr.net/gh/evidenceprime/html-docx-js/dist/html-docx.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
-  <!-- ✅ Enhanced Styles -->
+  <!-- Enhanced Styles -->
   <style>
-    /* Modal Animation */
-    .modal-active {
-      opacity: 1;
-      transform: scale(1);
-    }
-    
-    /* Toast Animation - Perfect Center */
-    .toast-animate {
-      animation: toastSlide 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    }
-    
-    @keyframes toastSlide {
-      from {
-        opacity: 0;
-        transform: translateY(-30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* Smooth backdrop blur */
-    .backdrop-blur-sm {
-      backdrop-filter: blur(8px);
-    }
-
-    /* Dark mode support */
-    @media (prefers-color-scheme: dark) {
-      .modal-content {
-        background-color: #1f2937;
-      }
-      #toast > div {
-        background-color: #374151;
-        border: 1px solid #4b5563;
-      }
-    }
+    .modal-active { opacity: 1; transform: scale(1); }
+    .toast-animate { animation: toastSlide 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    @keyframes toastSlide { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+    .backdrop-blur-sm { backdrop-filter: blur(8px); }
   </style>
 
-  <!-- ✅ Table Script -->
+  <!-- Table Script -->
   <script>
 // Define all subjects
 const allSubjects = [
@@ -1573,10 +1390,8 @@ const allSubjects = [
     "CROP PRODUCTION"
 ];
 
-// Track used subjects to prevent duplicates
 let usedSubjects = new Set();
 
-// Function to calculate grade based on total score
 function calculateGrade(total) {
     if (total >= 70 && total <= 100) return "A";
     if (total >= 60 && total <= 69) return "B";
@@ -1587,9 +1402,7 @@ function calculateGrade(total) {
     return "--";
 }
 
-// Function to calculate letter grade based on percentage
 function calculateLetterGrade(percentage) {
-    // Handle decimal percentages properly
     if (percentage >= 70) return "A";
     if (percentage >= 60 && percentage < 70) return "B";
     if (percentage >= 50 && percentage < 60) return "C";
@@ -1599,7 +1412,6 @@ function calculateLetterGrade(percentage) {
     return "--";
 }
 
-// Function to calculate remark based on total score
 function calculateRemark(total) {
     if (total >= 70 && total <= 100) return "EXCELLENT";
     if (total >= 60 && total <= 69) return "VERY GOOD";
@@ -1610,244 +1422,125 @@ function calculateRemark(total) {
     return "--";
 }
 
-// Function to update grade and remark based on total score
 function updateGradeAndRemark(row) {
     const totalInput = row.querySelector(".total");
     const gradeCell = row.querySelector("td:nth-child(7)");
     const remarkCell = row.querySelector("td:nth-child(8)");
-    
     const total = parseFloat(totalInput.value) || 0;
-    
     const grade = calculateGrade(total);
     const remark = calculateRemark(total);
-    
-    // Clear the cell content first
-    while (gradeCell.firstChild) {
-        gradeCell.removeChild(gradeCell.firstChild);
-    }
-    while (remarkCell.firstChild) {
-        remarkCell.removeChild(remarkCell.firstChild);
-    }
-    
-    // Add the text content
+    while (gradeCell.firstChild) gradeCell.removeChild(gradeCell.firstChild);
+    while (remarkCell.firstChild) remarkCell.removeChild(remarkCell.firstChild);
     gradeCell.textContent = grade;
     remarkCell.textContent = remark;
 }
 
-// Function to calculate and update percentage
 function calculatePercentage() {
     const totalObtained = parseFloat(document.getElementById('total-marks-obtained').value) || 0;
     const totalObtainable = parseFloat(document.getElementById('total-marks-obtainable').value) || 0;
-    
     let percentage = 0;
-    let result = "";
-    
-    if (totalObtainable > 0) {
-        percentage = (totalObtained / totalObtainable) * 100;
-        
-        // Format percentage to 2 decimal places
-        percentage = Math.round(percentage * 100) / 100;
-    }
-    
-    // Determine result based on percentage - Now showing letter grade
-    result = calculateLetterGrade(percentage);
-    
-    // Update percentage field with % symbol
+    if (totalObtainable > 0) percentage = (totalObtained / totalObtainable) * 100;
+    percentage = Math.round(percentage * 100) / 100;
     const percentageField = document.getElementById('percentage-value');
-    if (percentage > 0) {
-        percentageField.value = percentage + "%";
-    } else {
-        percentageField.value = "--";
-    }
-    
-    // Update result field with letter grade
-    document.getElementById('result-value').value = result;
+    if (percentage > 0) percentageField.value = percentage + "%";
+    else percentageField.value = "--";
+    document.getElementById('result-value').value = calculateLetterGrade(percentage);
 }
 
-// Set fixed height for table body - NOW MAINTAIN 13 ROWS HEIGHT
 function maintainTableHeight() {
     const tableBody = document.getElementById("table-body");
-    const rowCount = tableBody.children.length;
-    
-    // Maintain 234px height (13 rows × 18px = 234px)
     tableBody.style.minHeight = "234px";
     tableBody.style.height = "234px";
-    
-    // Update CSS variable for font size calculations only
-    document.documentElement.style.setProperty('--row-count', Math.max(rowCount, 1));
-    
-    console.log(`Actual Rows: ${rowCount}, Maintained Height: 234px`);
+    document.documentElement.style.setProperty('--row-count', Math.max(tableBody.children.length, 1));
 }
 
 function updateAddButtonVisibility() {
     const tableBody = document.getElementById("table-body");
     const addButton = document.querySelector('button[onclick="addRow()"]');
-    const rowCount = tableBody.children.length;
-    
-    // Hide add button when we have 13 rows, show when we have less
-    if (rowCount >= 13) {
-        addButton.style.display = 'none';
-    } else {
-        addButton.style.display = 'block';
-    }
+    if (tableBody.children.length >= 13) addButton.style.display = 'none';
+    else addButton.style.display = 'block';
 }
 
-// Get available subjects (not yet used)
-function getAvailableSubjects() {
-    return allSubjects.filter(subject => !usedSubjects.has(subject));
-}
+function getAvailableSubjects() { return allSubjects.filter(subject => !usedSubjects.has(subject)); }
 
-// Update subject dropdown when a subject is selected
 function updateSubjectDropdown(selectElement) {
-    const selectedValue = selectElement.value;
     const row = selectElement.closest('tr');
     const previousSubject = row.dataset.selectedSubject;
-    
-    console.log('Selected:', selectedValue, 'Previous:', previousSubject);
-    
-    // Remove previous subject from used set
-    if (previousSubject && previousSubject !== selectedValue) {
-        usedSubjects.delete(previousSubject);
-        console.log('Removed previous subject:', previousSubject);
-    }
-    
-    // Add new subject to used set
-    if (selectedValue && selectedValue !== "") {
-        usedSubjects.add(selectedValue);
-        row.dataset.selectedSubject = selectedValue;
-        console.log('Added new subject:', selectedValue);
+    if (previousSubject && previousSubject !== selectElement.value) usedSubjects.delete(previousSubject);
+    if (selectElement.value && selectElement.value !== "") {
+        usedSubjects.add(selectElement.value);
+        row.dataset.selectedSubject = selectElement.value;
     } else {
-        // If empty selection, remove from used set
-        if (previousSubject) {
-            usedSubjects.delete(previousSubject);
-        }
+        if (previousSubject) usedSubjects.delete(previousSubject);
         delete row.dataset.selectedSubject;
     }
-    
-    // Update all dropdowns to show available subjects
     updateAllDropdowns();
 }
 
-// Update all dropdowns to reflect current available subjects
 function updateAllDropdowns() {
     const availableSubjects = getAvailableSubjects();
     const allDropdowns = document.querySelectorAll('.subject-select');
-    
-    console.log('Available subjects:', availableSubjects);
-    console.log('Used subjects:', Array.from(usedSubjects));
-    
     allDropdowns.forEach(dropdown => {
-        const currentValue = dropdown.value;
         const row = dropdown.closest('tr');
         const rowSubject = row.dataset.selectedSubject;
-        
-        console.log('Updating dropdown, current value:', currentValue, 'row subject:', rowSubject);
-        
-        // Store current selection
         dropdown.innerHTML = '<option value="">-- SELECT SUBJECT --</option>';
-        
-        // Add available subjects
         availableSubjects.forEach(subject => {
             const option = document.createElement('option');
             option.value = subject;
             option.textContent = subject;
             dropdown.appendChild(option);
         });
-        
-        // Add back the current row's selected subject if it exists and is not in available
         if (rowSubject && !availableSubjects.includes(rowSubject)) {
             const option = document.createElement('option');
             option.value = rowSubject;
             option.textContent = rowSubject;
             dropdown.appendChild(option);
         }
-        
-        // Restore current selection
-        if (rowSubject) {
-            dropdown.value = rowSubject;
-        } else if (currentValue && availableSubjects.includes(currentValue)) {
-            dropdown.value = currentValue;
-        }
+        if (rowSubject) dropdown.value = rowSubject;
     });
 }
 
-// ACTUALLY DELETE THE ROW but maintain table height
 function deleteRow(button) {
     const row = button.closest('tr');
-    const selectedSubject = row.dataset.selectedSubject;
-    
-    // Remove subject from used set
-    if (selectedSubject) {
-        usedSubjects.delete(selectedSubject);
-        console.log('Removed subject on delete:', selectedSubject);
-    }
-    
+    if (row.dataset.selectedSubject) usedSubjects.delete(row.dataset.selectedSubject);
     row.remove();
-    
-    // Recalculate both totals
     calculateGrandTotal();
     calculateTotalObtainable();
-    calculatePercentage(); // Recalculate percentage after deletion
-    
+    calculatePercentage();
     maintainTableHeight();
     updateAddButtonVisibility();
-    updateAllDropdowns(); // Update other dropdowns when a row is deleted
+    updateAllDropdowns();
 }
 
 function addRow() {
-    const tableBody = document.getElementById("table-body");
-    const addButton = document.querySelector('button[onclick="addRow()"]');
-    const rowCount = tableBody.children.length;
-    
-    // Don't add more than 13 rows
-    if (rowCount >= 13) {
-        return;
-    }
-    
+    if (document.getElementById("table-body").children.length >= 13) return;
     const row = document.createElement("tr");
-
     row.innerHTML = `
     <td class="border border-gray-800 px-1 py-0 relative" style="position: relative;">
-  <button onclick="deleteRow(this)" class="absolute -left-4 top-1/2 transform -translate-y-1/2 text-red-500 hover:text-red-700 transition-colors no-print text-xs" title="Delete row">
-    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-    </svg>
-  </button>
-  <select class="w-full text-[12.5px] px-1 bg-transparent text-left focus:outline-none border-0 pr-3 font-bold uppercase subject-select" onchange="updateSubjectDropdown(this)">
-    <option value="">-- SELECT SUBJECT --</option>
-  </select>
-</td>
-    <td class="border border-gray-800 px-0 py-0">
-      <input type="number" class="w-full text-[11px] px-1 bg-transparent text-center focus:outline-none border-0 test1 font-bold" oninput="updateTotal(this)" max="20" />
+      <button onclick="deleteRow(this)" class="absolute -left-4 top-1/2 transform -translate-y-1/2 text-red-500 hover:text-red-700 transition-colors no-print text-xs" title="Delete row">
+        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+        </svg>
+      </button>
+      <select class="w-full text-[12.5px] px-1 bg-transparent text-left focus:outline-none border-0 pr-3 font-bold uppercase subject-select" onchange="updateSubjectDropdown(this)">
+        <option value="">-- SELECT SUBJECT --</option>
+      </select>
     </td>
-    <td class="border border-gray-800 px-0 py-0">
-      <input type="number" class="w-full text-[11px] px-1 bg-transparent text-center focus:outline-none border-0 test2 font-bold" oninput="updateTotal(this)" max="20" />
-    </td>
-    <td class="border border-gray-800 px-0 py-0">
-      <input type="number" class="w-full text-[11px] px-1 bg-transparent text-center focus:outline-none border-0 exam font-bold" oninput="updateTotal(this)" max="60" />
-    </td>
-    <td class="border border-gray-800 px-0 py-0">
-      <input type="number" class="w-full text-[11px] px-1 bg-transparent text-center focus:outline-none border-0 total font-bold" readonly />
-    </td>
-    <td class="border border-gray-800 px-0 py-0">
-      <input type="number" class="w-full text-[11px] px-1 bg-transparent text-center focus:outline-none border-0 font-bold" />
-    </td>
+    <td class="border border-gray-800 px-0 py-0"><input type="number" class="w-full text-[11px] px-1 bg-transparent text-center focus:outline-none border-0 test1 font-bold" oninput="updateTotal(this)" max="20" /></td>
+    <td class="border border-gray-800 px-0 py-0"><input type="number" class="w-full text-[11px] px-1 bg-transparent text-center focus:outline-none border-0 test2 font-bold" oninput="updateTotal(this)" max="20" /></td>
+    <td class="border border-gray-800 px-0 py-0"><input type="number" class="w-full text-[11px] px-1 bg-transparent text-center focus:outline-none border-0 exam font-bold" oninput="updateTotal(this)" max="60" /></td>
+    <td class="border border-gray-800 px-0 py-0"><input type="number" class="w-full text-[11px] px-1 bg-transparent text-center focus:outline-none border-0 total font-bold" readonly /></td>
+    <td class="border border-gray-800 px-0 py-0"><input type="number" class="w-full text-[11px] px-1 bg-transparent text-center focus:outline-none border-0 font-bold" /></td>
     <td class="border border-gray-800 px-0 py-0">--</td>
     <td class="border border-gray-800 px-0 py-0">--</td>
-  `;
-
-    tableBody.appendChild(row);
-    
-    // Update the dropdown for this new row
+    `;
+    document.getElementById("table-body").appendChild(row);
     updateAllDropdowns();
-    
     maintainTableHeight();
     updateAddButtonVisibility();
-    
-    // Recalculate totals when new row is added
     calculateGrandTotal();
     calculateTotalObtainable();
-    calculatePercentage(); // Calculate percentage after adding row
+    calculatePercentage();
 }
 
 function updateTotal(input) {
@@ -1857,1032 +1550,367 @@ function updateTotal(input) {
     const exam = parseFloat(row.querySelector(".exam")?.value || 0);
     const total = test1 + test2 + exam;
     row.querySelector(".total").value = total;
-    
-    // Update grade and remark based on total
     updateGradeAndRemark(row);
-    
-    // Calculate both totals
     calculateGrandTotal();
     calculateTotalObtainable();
-    calculatePercentage(); // Calculate percentage when any score changes
+    calculatePercentage();
 }
 
-// Calculate total marks obtained (sum of all subject totals)
 function calculateGrandTotal() {
-    const totals = document.querySelectorAll(".total");
     let sum = 0;
-    totals.forEach(input => {
-        const val = parseFloat(input.value || 0);
-        sum += val;
-    });
-    
-    // Update the table footer total
+    document.querySelectorAll(".total").forEach(inp => sum += parseFloat(inp.value || 0));
     document.getElementById("total-sum").value = sum;
-    
-    // ALSO update the TOTAL MARKS OBTAINED field
     document.getElementById("total-marks-obtained").value = sum;
 }
 
-// Calculate total marks obtainable (maximum possible total)
 function calculateTotalObtainable() {
     const rowCount = document.getElementById("table-body").children.length;
-    const maxPerSubject = 100; // Each subject has max 100 marks
-    
-    const totalObtainable = rowCount * maxPerSubject;
-    document.getElementById("total-marks-obtainable").value = totalObtainable;
+    document.getElementById("total-marks-obtainable").value = rowCount * 100;
 }
 
-// SUPER POWERFUL DATA CLEAR FUNCTION
 function clearDataFields() {
-    // 1. Clear NAME field
-    const nameField = document.getElementById('student-name');
-    if (nameField) nameField.value = '';
+    // Clear student name and sex
+    document.getElementById('student-name').value = '';
+    document.getElementById('student-sex').value = '';
     
-    // 2. Clear SEX field
-    const sexField = document.getElementById('student-sex');
-    if (sexField) sexField.value = '';
+    // Clear present and absent counts
+    document.getElementById('times-present').value = '';
+    document.getElementById('times-absent').value = '';
     
-    // 3. Clear NUMBER OF TIMES PRESENT field
-    const presentField = document.getElementById('times-present');
-    if (presentField) presentField.value = '';
+    // DO NOT clear school-open-count and school-reopen-date – they are preserved
+    // document.getElementById('school-open-count').value = '';   // <-- REMOVED
+    // document.getElementById('school-reopen-date').value = ''; // <-- REMOVED
     
-    // 4. Clear TIMES ABSENT field
-    const absentField = document.getElementById('times-absent');
-    if (absentField) absentField.value = '';
+    // Clear all test, exam, total fields in the table
+    document.querySelectorAll('.test1,.test2,.exam,.total').forEach(f => f.value = '');
     
-    // 5. Clear all TEST 1, TEST 2, and EXAM fields in the table
-    const test1Fields = document.querySelectorAll('.test1');
-    const test2Fields = document.querySelectorAll('.test2');
-    const examFields = document.querySelectorAll('.exam');
-    const totalFields = document.querySelectorAll('.total');
+    // Reset grade and remark cells to '--'
+    document.querySelectorAll('td:nth-child(7),td:nth-child(8)').forEach(c => c.textContent = '--');
     
-    // Clear all score fields
-    test1Fields.forEach(field => field.value = '');
-    test2Fields.forEach(field => field.value = '');
-    examFields.forEach(field => field.value = '');
-    totalFields.forEach(field => field.value = '');
-    
-    // 6. Reset grade and remark cells to '--'
-    const gradeCells = document.querySelectorAll('table tbody tr td:nth-child(7)');
-    const remarkCells = document.querySelectorAll('table tbody tr td:nth-child(8)');
-    
-    gradeCells.forEach(cell => cell.textContent = '--');
-    remarkCells.forEach(cell => cell.textContent = '--');
-    
-    // 7. Reset all calculations
+    // Reset calculation fields
     document.getElementById('total-sum').value = '';
     document.getElementById('total-marks-obtained').value = '';
     document.getElementById('total-marks-obtainable').value = '';
     document.getElementById('percentage-value').value = '';
     document.getElementById('result-value').value = '';
     
-    // 8. Clear subject dropdown selections
-    const subjectSelects = document.querySelectorAll('.subject-select');
-    subjectSelects.forEach(select => select.value = '');
-    
-    // 9. Clear used subjects set
+    // Clear subject selections and usedSubjects set
     usedSubjects.clear();
     updateAllDropdowns();
     
-    // 10. Show success toast
-    if (typeof showToast === 'function') {
-        showToast('All data fields cleared successfully!', 'success');
-    } else {
-        alert('All data fields cleared successfully!');
-    }
+    showToast('All data fields cleared successfully!', 'success');
 }
 
-// Auto-add 13 rows instead of 18
 document.addEventListener('DOMContentLoaded', function() {
-    for (let i = 0; i < 13; i++) {
-        addRow();
-    }
+    for (let i = 0; i < 13; i++) addRow();
     maintainTableHeight();
     updateAddButtonVisibility();
-    
-    // Calculate initial totals
     calculateGrandTotal();
     calculateTotalObtainable();
-    calculatePercentage(); // Calculate initial percentage
+    calculatePercentage();
 });
   </script>
     
-<!-- ✅ Enhanced Modal & Export Script -->
-<script>
-  /* ---------------------------
-     World-Class Modal Functions
-     --------------------------- */
-  function openExportModal() {
+  <!-- Enhanced Modal & Export Script -->
+  <script>
+function openExportModal() {
     const modal = document.getElementById("exportModal");
     const modalContent = document.getElementById("modalContent");
-    
     modal.classList.remove("hidden");
     document.body.style.overflow = 'hidden';
-    
     setTimeout(() => {
-      modal.style.opacity = "1";
-      modalContent.classList.add("modal-active");
+        modal.style.opacity = "1";
+        modalContent.classList.add("modal-active");
     }, 10);
-  }
+}
 
-  function closeExportModal() {
+function closeExportModal() {
     const modal = document.getElementById("exportModal");
     const modalContent = document.getElementById("modalContent");
-    
     modalContent.classList.remove("modal-active");
     modal.style.opacity = "0";
-    
     setTimeout(() => {
-      modal.classList.add("hidden");
-      document.body.style.overflow = 'auto';
+        modal.classList.add("hidden");
+        document.body.style.overflow = 'auto';
     }, 300);
-  }
+}
 
-  // Close modal when clicking backdrop
-  document.getElementById("exportModal").addEventListener("click", closeExportModal);
+document.getElementById("exportModal").addEventListener("click", closeExportModal);
 
-  /* ---------------------------
-     Enhanced Toast System
-     --------------------------- */
-  function showToast(message, type = 'success') {
+function showToast(message, type = 'success') {
     const toast = document.getElementById("toast");
     const toastIcon = document.getElementById("toast-icon");
     const toastMessage = document.getElementById("toast-message");
-
     let icon = '';
     switch(type) {
-      case 'success':
-        icon = `<svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>`;
-        break;
-      case 'error':
-        icon = `<svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>`;
-        break;
-      case 'info':
-        icon = `<svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`;
-        break;
-      case 'loading':
-        icon = `<svg class="w-5 h-5 text-yellow-400 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>`;
-        break;
+        case 'success': icon = `<svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>`; break;
+        case 'error': icon = `<svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>`; break;
+        case 'info': icon = `<svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`; break;
+        case 'loading': icon = `<svg class="w-5 h-5 text-yellow-400 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>`; break;
     }
-
     toastIcon.innerHTML = icon;
     toastMessage.textContent = message;
     toast.classList.remove("hidden");
-    
-    if (type !== 'loading') {
-      setTimeout(() => {
-        toast.classList.add("hidden");
-      }, 4000);
-    }
-  }
+    if (type !== 'loading') setTimeout(() => toast.classList.add("hidden"), 4000);
+}
 
-  /* ---------------------------
-     Print Function - UPDATED WITH AUTO-SAVE
-  --------------------------- */
-  function printReportWithAutoSave() {
+function printReportWithAutoSave() {
     closeExportModal();
     showToast("Saving report before printing...", "loading");
-    
-    // First, auto-save the current report
-    if (typeof saveCurrentReport === 'function') {
-      saveCurrentReport();
-    }
-    
-    // Then proceed with normal print
-    setTimeout(() => {
-      printReport();
-    }, 800);
-  }
+    if (typeof saveCurrentReport === 'function') saveCurrentReport();
+    setTimeout(() => printReport(), 800);
+}
 
-  function printReport() {
+function printReport() {
     showToast("Preparing for print...", "loading");
-
-    // Force calculate totals before printing
-    if (typeof calculateGrandTotal === 'function') {
-      calculateGrandTotal();
-    }
-    if (typeof calculateTotalObtainable === 'function') {
-      calculateTotalObtainable();
-    }
-    if (typeof calculatePercentage === 'function') {
-      calculatePercentage();
-    }
-
+    if (typeof calculateGrandTotal === 'function') calculateGrandTotal();
+    if (typeof calculateTotalObtainable === 'function') calculateTotalObtainable();
+    if (typeof calculatePercentage === 'function') calculatePercentage();
     setTimeout(() => {
-      // Add a class to body for print optimization
-      document.body.classList.add('printing');
-      
-      // Print the document
-      window.print();
-      
-      // Remove the class after printing
-      setTimeout(() => {
-        document.body.classList.remove('printing');
-        showToast("Print completed! Report was auto-saved.", "success");
-      }, 1000);
+        document.body.classList.add('printing');
+        window.print();
+        setTimeout(() => {
+            document.body.classList.remove('printing');
+            showToast("Print completed! Report was auto-saved.", "success");
+        }, 1000);
     }, 1000);
-  }
+}
+  </script>
 
-  /* ---------------------------
-     PDF Export Function
-  --------------------------- */
-  async function downloadPDF() {
-    closeExportModal();
-    showToast("Generating PDF document...", "loading");
-
-    try {
-      const clone = prepareExportClone();
-      if (!clone) { showToast("Nothing to export", "error"); return; }
-
-      const wrapper = document.createElement('div');
-      wrapper.style.position = 'fixed';
-      wrapper.style.left = '-9999px';
-      wrapper.style.top = '0';
-      wrapper.style.zIndex = '-9999';
-      wrapper.appendChild(clone);
-      document.body.appendChild(wrapper);
-
-      const canvas = await html2canvas(clone, {
-        scale: 2,
-        logging: false,
-        useCORS: true,
-        allowTaint: true
-      });
-
-      const { jsPDF } = window.jspdf;
-      const doc = new jsPDF("p", "pt", "a4");
-      const imgData = canvas.toDataURL("image/png");
-      const imgProps = doc.getImageProperties(imgData);
-      const pdfPageWidth = doc.internal.pageSize.getWidth();
-      const pdfPageHeight = doc.internal.pageSize.getHeight();
-      const imgRatio = imgProps.width / imgProps.height;
-
-      let renderWidth = pdfPageWidth;
-      let renderHeight = renderWidth / imgRatio;
-
-      if (renderHeight > pdfPageHeight) {
-        renderHeight = pdfPageHeight;
-        renderWidth = renderHeight * imgRatio;
-      }
-
-      doc.addImage(imgData, "PNG", (pdfPageWidth - renderWidth) / 2, 0, renderWidth, renderHeight);
-      const fileName = generateFileName() + ".pdf";
-      doc.save(fileName);
-
-      document.body.removeChild(wrapper);
-      showToast("PDF downloaded successfully!", "success");
-    } catch (error) {
-      console.error("PDF generation error:", error);
-      showToast("Failed to generate PDF", "error");
-    }
-  }
-
-  /* ---------------------------
-     Share PDF Function - NEW
-  --------------------------- */
-  async function sharePDF() {
-    closeExportModal();
-    showToast("Preparing PDF for sharing...", "loading");
-
-    try {
-      const clone = prepareExportClone();
-      if (!clone) { showToast("Nothing to share", "error"); return; }
-
-      const wrapper = document.createElement('div');
-      wrapper.style.position = 'fixed';
-      wrapper.style.left = '-9999px';
-      wrapper.style.top = '0';
-      wrapper.style.zIndex = '-9999';
-      wrapper.appendChild(clone);
-      document.body.appendChild(wrapper);
-
-      const canvas = await html2canvas(clone, {
-        scale: 2,
-        logging: false,
-        useCORS: true,
-        allowTaint: true
-      });
-
-      const { jsPDF } = window.jspdf;
-      const doc = new jsPDF("p", "pt", "a4");
-      const imgData = canvas.toDataURL("image/png");
-      const imgProps = doc.getImageProperties(imgData);
-      const pdfPageWidth = doc.internal.pageSize.getWidth();
-      const pdfPageHeight = doc.internal.pageSize.getHeight();
-      const imgRatio = imgProps.width / imgProps.height;
-
-      let renderWidth = pdfPageWidth;
-      let renderHeight = renderWidth / imgRatio;
-
-      if (renderHeight > pdfPageHeight) {
-        renderHeight = pdfPageHeight;
-        renderWidth = renderHeight * imgRatio;
-      }
-
-      doc.addImage(imgData, "PNG", (pdfPageWidth - renderWidth) / 2, 0, renderWidth, renderHeight);
-      
-      // Generate PDF blob for sharing
-      const pdfBlob = doc.output('blob');
-      const fileName = generateFileName() + ".pdf";
-      
-      document.body.removeChild(wrapper);
-
-      // Try to use native sharing API
-      if (navigator.share && navigator.canShare) {
-        const file = new File([pdfBlob], fileName, { type: 'application/pdf' });
-        
-        if (navigator.canShare({ files: [file] })) {
-          await navigator.share({
-            files: [file],
-            title: 'Student Report Card',
-            text: 'Check out this student report card!'
-          });
-          showToast("PDF shared successfully!", "success");
-        } else {
-          // Fallback: Download and notify
-          const downloadLink = document.createElement("a");
-          downloadLink.href = URL.createObjectURL(pdfBlob);
-          downloadLink.download = fileName;
-          document.body.appendChild(downloadLink);
-          downloadLink.click();
-          document.body.removeChild(downloadLink);
-          showToast("PDF downloaded! You can now share it.", "info");
-        }
-      } else {
-        // Fallback for browsers without share API
-        const downloadLink = document.createElement("a");
-        downloadLink.href = URL.createObjectURL(pdfBlob);
-        downloadLink.download = fileName;
-        document.body.appendChild(downloadLink);
-        downloadLink.click();
-        document.body.removeChild(downloadLink);
-        showToast("PDF downloaded! You can now share it manually.", "info");
-      }
-    } catch (error) {
-      console.error("PDF sharing error:", error);
-      showToast("Failed to share PDF", "error");
-    }
-  }
-
-  /* ---------------------------
-     Utility Functions
-  --------------------------- */
-  function generateFileName() {
-    const nameInput = document.getElementById('student-name');
-    const name = (nameInput?.value || "report").toString().trim().replace(/\s+/g, '_') || "report";
-    const date = new Date().toISOString().split('T')[0];
-    return `${name}_${date}`;
-  }
-
-  function prepareExportClone() {
-    if (typeof calculateGrandTotal === 'function') {
-      try { calculateGrandTotal(); } catch(e) { /* ignore */ }
-    }
-    if (typeof calculateTotalObtainable === 'function') {
-      try { calculateTotalObtainable(); } catch(e) { /* ignore */ }
-    }
-    if (typeof calculatePercentage === 'function') {
-      try { calculatePercentage(); } catch(e) { /* ignore */ }
-    }
-
-    const original = document.querySelector(".max-w-[794px]");
-    if (!original) return null;
-    const clone = original.cloneNode(true);
-
-    const originalFields = original.querySelectorAll('input, textarea, select');
-    const cloneFields = clone.querySelectorAll('input, textarea, select');
-
-    for (let i = 0; i < cloneFields.length; i++) {
-      const orig = originalFields[i];
-      const cln = cloneFields[i];
-
-      if (!orig || !cln) continue;
-
-      let value = "";
-      if (orig.tagName === "SELECT") {
-        const opt = orig.options[orig.selectedIndex];
-        value = opt ? opt.text : "";
-      } else {
-        value = orig.value || orig.placeholder || "";
-      }
-
-      const span = document.createElement("span");
-      span.textContent = value;
-
-      try {
-        const cs = window.getComputedStyle(orig);
-        span.style.fontFamily = cs.fontFamily;
-        span.style.fontSize = cs.fontSize;
-        span.style.fontWeight = cs.fontWeight;
-        span.style.color = cs.color;
-        span.style.textAlign = cs.textAlign;
-        span.style.display = cs.display === 'block' ? 'block' : 'inline-block';
-        span.style.width = cln.style.width || cs.width;
-        span.style.padding = cs.padding;
-        span.style.margin = cs.margin;
-      } catch (e) {}
-
-      cln.replaceWith(span);
-    }
-
-    clone.querySelectorAll('.no-print, button, [onclick*="this.closest(\'tr\')"], .group').forEach(el => el.remove());
-    clone.querySelectorAll('#exportModal, #toast').forEach(el => el.remove());
-    clone.querySelectorAll('[tabindex]').forEach(e => e.removeAttribute('tabindex'));
-    clone.querySelectorAll('[role]').forEach(e => e.removeAttribute('role'));
-
-    return clone;
-  }
-
-  /* ---------------------------
-     WhatsApp Share (Legacy - kept for compatibility)
-  --------------------------- */
-  async function shareReport() {
-    closeExportModal();
-    showToast("Preparing to share...", "loading");
-
-    try {
-      const clone = prepareExportClone();
-      if (!clone) { showToast("Nothing to share", "error"); return; }
-
-      const wrapper = document.createElement('div');
-      wrapper.style.position = 'fixed';
-      wrapper.style.left = '-9999px';
-      wrapper.style.top = '0';
-      wrapper.style.zIndex = '-9999';
-      wrapper.appendChild(clone);
-      document.body.appendChild(wrapper);
-
-      const canvas = await html2canvas(clone, {
-        scale: 2,
-        logging: false,
-        useCORS: true,
-        allowTaint: true
-      });
-
-      canvas.toBlob(async (blob) => {
-        try {
-          if (navigator.share && navigator.canShare) {
-            const file = new File([blob], `${generateFileName()}.png`, { type: 'image/png' });
-            
-            if (navigator.canShare({ files: [file] })) {
-              await navigator.share({
-                files: [file],
-                title: 'Student Report Card',
-                text: 'Check out this student report card!'
-              });
-              showToast("Shared successfully!", "success");
-            } else {
-              fallbackWhatsAppShare(canvas);
-            }
-          } else {
-            fallbackWhatsAppShare(canvas);
-          }
-        } catch (error) {
-          console.error("Share error:", error);
-          fallbackWhatsAppShare(canvas);
-        }
-
-        document.body.removeChild(wrapper);
-      }, 'image/png');
-    } catch (error) {
-      console.error("WhatsApp share error:", error);
-      showToast("Failed to share", "error");
-    }
-  }
-
-  function fallbackWhatsAppShare(canvas) {
-    const imageDataUrl = canvas.toDataURL("image/png");
-    
-    const fileName = generateFileName() + ".png";
-    const downloadLink = document.createElement("a");
-    downloadLink.href = imageDataUrl;
-    downloadLink.download = fileName;
-    document.body.appendChild(downloadLink);
-    downloadLink.click();
-    document.body.removeChild(downloadLink);
-
-    const message = "Check out this student report card!";
-    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, '_blank');
-    
-    showToast("Image downloaded. Opening WhatsApp...", "info");
-  }
-
-  /* ---------------------------
-     Keyboard Navigation
-     --------------------------- */
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeExportModal();
-  });
-</script>
-
-<!-- ✅ NUCLEAR SOLUTION: REPORT SAVE/LOAD SYSTEM - FIXED FOR JSS2 -->
-<script>
-/* ============================================
-   NUCLEAR SOLUTION: REPORT SAVE/LOAD SYSTEM
-   100% GUARANTEED TO WORK WITHOUT PAGE REFRESH
-   FIXED VERSION - MODAL WILL ALWAYS APPEAR
-   UPDATED FOR JSS2 SEPARATE STORAGE
-   ============================================ */
-
-// 🆕 JSS2-SPECIFIC STORAGE KEY
+  <!-- NUCLEAR SOLUTION: REPORT SAVE/LOAD SYSTEM with SEARCH & DELETE (FULLY ENHANCED) -->
+  <script>
 const JSS2_STORAGE_KEY = 'savedReports_JSS2';
 
-// Save current report data - UPDATED FOR JSS2
 function saveCurrentReport() {
-    console.log("Saving JSS2 report...");
-    
-    // Get the student name from the NAME (SURNAME FIRST) field
-    const studentNameField = document.querySelector('input[placeholder*="SURNAME"]') || 
-                            document.querySelector('input[id*="student-name"]') ||
-                            document.querySelector('input[name*="student-name"]');
-    
-    const studentName = studentNameField ? studentNameField.value.trim() : '';
-    
-    // Collect all form data
+    const studentName = document.getElementById('student-name').value.trim() || 'Untitled';
     const reportData = {
-        // Student info
         studentName: studentName,
         studentSex: document.getElementById('student-sex').value,
         timesPresent: document.getElementById('times-present').value,
         timesAbsent: document.getElementById('times-absent').value,
+        schoolOpenCount: document.getElementById('school-open-count').value,
+        schoolReopenDate: document.getElementById('school-reopen-date').value,
         percentageValue: document.getElementById('percentage-value').value,
         resultValue: document.getElementById('result-value').value,
         totalMarksObtained: document.getElementById('total-marks-obtained').value,
         totalMarksObtainable: document.getElementById('total-marks-obtainable').value,
-        
-        // Header info
-        reportTitle: document.querySelector('input[placeholder*="title"]')?.value || '',
-        reportFor: document.querySelectorAll('.mt-8 input')[0]?.value || '',
-        termOf: document.querySelectorAll('.mt-8 input')[1]?.value || '',
-        
-        // Subjects data
+        reportTitle: document.getElementById('reportTitle').value,
+        reportFor: document.getElementById('reportFor').value,
+        termOf: document.getElementById('termOf').value,
+        teacherRemarks: document.getElementById('teacherRemarks').value,
+        principalRemarks: document.getElementById('principalRemarks').value,
+        teacherSign: document.getElementById('teacherSign').value,
+        principalSign: document.getElementById('principalSign').value,
+        noticeText: document.getElementById('noticeText').value,
+        tuitionFees: document.getElementById('tuitionFees').value,
         subjects: [],
-        
-        // Teacher/Principal remarks
-        teacherRemarks: document.querySelector('.teacher-remarks-section input')?.value || '',
-        principalRemarks: document.querySelector('.principal-remarks-section input')?.value || '',
-        
-        // Fees
-        tuitionFees: document.querySelector('.border.border-black input[placeholder*="35,000"]')?.value || '',
-        
-        // Settings
         usedSubjects: Array.from(usedSubjects),
-        
-        // 🆕 ADD CLASS IDENTIFIER FOR JSS2
-        classType: 'JSS2',
-        maxRows: 13, // JSS2 has 13 rows
-        
-        // Timestamp
         savedAt: new Date().toISOString()
     };
-
-    // Collect all subjects from table
-    const rows = document.querySelectorAll('#table-body tr');
-    rows.forEach(row => {
-        const subjectSelect = row.querySelector('.subject-select');
-        const test1Input = row.querySelector('.test1');
-        const test2Input = row.querySelector('.test2');
-        const examInput = row.querySelector('.exam');
-        const totalInput = row.querySelector('.total');
-        const classAveInput = row.querySelector('td:nth-child(6) input');
-        const gradeCell = row.querySelector('td:nth-child(7)');
-        const remarkCell = row.querySelector('td:nth-child(8)');
-        
-        const subject = {
-            name: subjectSelect?.value || '',
-            test1: test1Input?.value || '',
-            test2: test2Input?.value || '',
-            exam: examInput?.value || '',
-            total: totalInput?.value || '',
-            classAve: classAveInput?.value || '',
-            grade: gradeCell?.textContent || '--',
-            remark: remarkCell?.textContent || '--'
-        };
-        reportData.subjects.push(subject);
+    document.querySelectorAll('#table-body tr').forEach(row => {
+        reportData.subjects.push({
+            name: row.querySelector('.subject-select')?.value || '',
+            test1: row.querySelector('.test1')?.value || '',
+            test2: row.querySelector('.test2')?.value || '',
+            exam: row.querySelector('.exam')?.value || '',
+            total: row.querySelector('.total')?.value || '',
+            classAve: row.querySelector('td:nth-child(6) input')?.value || '',
+            grade: row.querySelector('td:nth-child(7)')?.textContent || '--',
+            remark: row.querySelector('td:nth-child(8)')?.textContent || '--'
+        });
     });
-
-    // Generate unique ID
-    const reportName = studentName || 'Untitled_Report';
-    const reportId = 'report_JSS2_' + Date.now() + '_' + reportName.replace(/[^a-zA-Z0-9]/g, '_');
-    
-    // Get existing reports FROM JSS2 SPECIFIC STORAGE
     let savedReports = JSON.parse(localStorage.getItem(JSS2_STORAGE_KEY) || '[]');
-    
-    // Check if report with same name exists (update instead of duplicate)
-    const existingIndex = savedReports.findIndex(r => r.name === reportName);
-    
+    const existingIndex = savedReports.findIndex(r => r.name === studentName);
     const reportEntry = {
-        id: reportId,
-        name: reportName || 'Untitled Report',
-        date: new Date().toLocaleString('en-US', { 
-            year: 'numeric', 
-            month: 'short', 
-            day: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit'
-        }),
+        id: 'report_JSS2_' + Date.now() + '_' + studentName.replace(/[^a-zA-Z0-9]/g, '_'),
+        name: studentName,
+        date: new Date().toLocaleString(),
         data: reportData
     };
-    
-    if (existingIndex > -1) {
-        // Update existing report
-        savedReports[existingIndex] = reportEntry;
-    } else {
-        // Add new report
-        savedReports.push(reportEntry);
-    }
-    
-        // Limit to last 200 reports (increased from 20 for more students)
-    if (savedReports.length > 200) {
-        savedReports = savedReports.slice(-200);
-    }
-
-
-    
-    // Save to localStorage WITH JSS2 KEY
+    if (existingIndex > -1) savedReports[existingIndex] = reportEntry;
+    else savedReports.push(reportEntry);
+    if (savedReports.length > 200) savedReports = savedReports.slice(-200);
     localStorage.setItem(JSS2_STORAGE_KEY, JSON.stringify(savedReports));
-    
-    // Show confirmation
-    showToast(`JSS2 Report "${reportName}" saved successfully!`, 'success');
-    console.log("JSS2 Report saved with ID:", reportId, "Total JSS2 saved:", savedReports.length);
-    
-    // Update the total files count if modal is open
+    showToast(`JSS2 Report "${studentName}" saved!`, 'success');
     updateTotalFilesCount();
 }
 
-// Function to update the total files count badge - UPDATED FOR JSS2
-function updateTotalFilesCount() {
+function loadReport(id) {
     const savedReports = JSON.parse(localStorage.getItem(JSS2_STORAGE_KEY) || '[]');
-    const totalFilesCountElement = document.getElementById('totalFilesCount');
-    
-    if (totalFilesCountElement) {
-        totalFilesCountElement.textContent = `${savedReports.length} file${savedReports.length !== 1 ? 's' : ''}`;
-        
-        // Update the badge color based on count
-        if (savedReports.length === 0) {
-            totalFilesCountElement.classList.remove('from-blue-500', 'to-purple-500');
-            totalFilesCountElement.classList.add('from-gray-500', 'to-gray-600');
-        } else if (savedReports.length < 5) {
-            totalFilesCountElement.classList.remove('from-gray-500', 'to-gray-600', 'from-green-500', 'to-green-600');
-            totalFilesCountElement.classList.add('from-blue-500', 'to-purple-500');
-        } else {
-            totalFilesCountElement.classList.remove('from-blue-500', 'to-purple-500', 'from-gray-500', 'to-gray-600');
-            totalFilesCountElement.classList.add('from-green-500', 'to-green-600');
+    const report = savedReports.find(r => r.id === id);
+    if (!report) return;
+    const d = report.data;
+    clearDataFields();
+    document.getElementById('student-name').value = d.studentName || '';
+    document.getElementById('student-sex').value = d.studentSex || '';
+    document.getElementById('times-present').value = d.timesPresent || '';
+    document.getElementById('times-absent').value = d.timesAbsent || '';
+    document.getElementById('school-open-count').value = d.schoolOpenCount || '';
+    document.getElementById('school-reopen-date').value = d.schoolReopenDate || '';
+    document.getElementById('percentage-value').value = d.percentageValue || '';
+    document.getElementById('result-value').value = d.resultValue || '';
+    document.getElementById('total-marks-obtained').value = d.totalMarksObtained || '';
+    document.getElementById('total-marks-obtainable').value = d.totalMarksObtainable || '';
+    document.getElementById('reportTitle').value = d.reportTitle || '';
+    document.getElementById('reportFor').value = d.reportFor || '';
+    document.getElementById('termOf').value = d.termOf || '';
+    document.getElementById('teacherRemarks').value = d.teacherRemarks || '';
+    document.getElementById('principalRemarks').value = d.principalRemarks || '';
+    document.getElementById('teacherSign').value = d.teacherSign || '';
+    document.getElementById('principalSign').value = d.principalSign || '';
+    document.getElementById('noticeText').value = d.noticeText || '';
+    document.getElementById('tuitionFees').value = d.tuitionFees || '';
+    if (d.usedSubjects) usedSubjects = new Set(d.usedSubjects);
+    else usedSubjects.clear();
+    const tbody = document.getElementById("table-body");
+    tbody.innerHTML = '';
+    d.subjects.forEach((sub, idx) => {
+        if (idx >= 13) return;
+        addRow();
+        const rows = tbody.querySelectorAll('tr');
+        const newRow = rows[rows.length - 1];
+        if (newRow) {
+            if (sub.name) {
+                usedSubjects.add(sub.name);
+                newRow.dataset.selectedSubject = sub.name;
+            }
+            if (newRow.querySelector('.test1')) newRow.querySelector('.test1').value = sub.test1 || '';
+            if (newRow.querySelector('.test2')) newRow.querySelector('.test2').value = sub.test2 || '';
+            if (newRow.querySelector('.exam')) newRow.querySelector('.exam').value = sub.exam || '';
+            if (newRow.querySelector('.total')) newRow.querySelector('.total').value = sub.total || '';
+            if (newRow.querySelector('td:nth-child(6) input')) newRow.querySelector('td:nth-child(6) input').value = sub.classAve || '';
+            newRow.querySelector('td:nth-child(7)').textContent = sub.grade || '--';
+            newRow.querySelector('td:nth-child(8)').textContent = sub.remark || '--';
         }
-    }
-}
-
-// 🚀 NUCLEAR SOLUTION: Show saved reports modal (100% guaranteed)
-function showSavedReportsModal() {
-    console.log("🚀 NUCLEAR SOLUTION ACTIVATED: Showing saved reports modal...");
-    
-    // First load the saved reports data
-    loadSavedReportsData();
-    
-    // Update the total files count
-    updateTotalFilesCount();
-    
-    // Get modal element
-    const modal = document.getElementById('savedReportsModal');
-    const modalContent = document.getElementById('savedReportsModalContent');
-    
-    if (!modal) {
-        console.error("❌ ERROR: savedReportsModal element not found!");
-        return;
-    }
-    
-    // ✅ NUCLEAR SOLUTION: Force show the modal
-    modal.style.display = 'flex';
-    modal.style.opacity = '0';
-    modal.style.transition = 'opacity 0.3s ease';
-    
-    // Force browser reflow
-    modal.offsetHeight;
-    
-    // Now animate in
+    });
     setTimeout(() => {
-        modal.style.opacity = '1';
-        if (modalContent) {
-            modalContent.style.opacity = '1';
-            modalContent.style.transform = 'scale(1)';
-            modalContent.style.transition = 'all 0.3s ease-out';
-        }
-    }, 10);
-    
-    // Lock body scroll
-    document.body.style.overflow = 'hidden';
-    document.body.style.position = 'fixed';
-    document.body.style.width = '100%';
-    document.body.style.height = '100%';
-    
-    console.log("✅ Modal should be visible now!");
+        updateAllDropdowns();
+        document.querySelectorAll('#table-body tr').forEach((row, i) => {
+            if (i < d.subjects.length) {
+                const sel = row.querySelector('.subject-select');
+                if (sel && d.subjects[i].name) sel.value = d.subjects[i].name;
+            }
+        });
+        calculateGrandTotal();
+        calculateTotalObtainable();
+        calculatePercentage();
+    }, 100);
+    showToast(`Loaded "${report.name}"`, 'success');
 }
 
-// 🚀 NUCLEAR SOLUTION: Close saved reports modal
-function closeSavedReportsModal() {
-    console.log("Closing saved reports modal...");
-    
-    const modal = document.getElementById('savedReportsModal');
-    const modalContent = document.getElementById('savedReportsModalContent');
-    
-    if (!modal) return;
-    
-    // Animate out
-    if (modalContent) {
-        modalContent.style.opacity = '0';
-        modalContent.style.transform = 'scale(0.95)';
+function deleteSavedReport(reportId, event) {
+    event.stopPropagation();
+    if (confirm('Delete this report permanently?')) {
+        let reports = JSON.parse(localStorage.getItem(JSS2_STORAGE_KEY) || '[]');
+        reports = reports.filter(r => r.id !== reportId);
+        localStorage.setItem(JSS2_STORAGE_KEY, JSON.stringify(reports));
+        loadSavedReportsData(document.getElementById('searchReportsInput')?.value || '');
+        updateTotalFilesCount();
+        showToast('Report deleted', 'info');
     }
-    modal.style.opacity = '0';
-    
-    setTimeout(() => {
-        modal.style.display = 'none';
-        document.body.style.overflow = 'auto';
-        document.body.style.position = 'static';
-        document.body.style.width = 'auto';
-        document.body.style.height = 'auto';
-    }, 300);
-    
-    console.log("Modal closed!");
 }
 
-// Load saved reports data into the modal - UPDATED FOR JSS2
-function loadSavedReportsData() {
+function loadSavedReportsData(searchTerm = '') {
     const savedReports = JSON.parse(localStorage.getItem(JSS2_STORAGE_KEY) || '[]');
-    const listContainer = document.getElementById('savedReportsList');
-    const noReportsMessage = document.getElementById('noReportsMessage');
-    
-    if (!listContainer) {
-        console.error("❌ ERROR: savedReportsList element not found!");
-        return;
-    }
-    
+    const container = document.getElementById('savedReportsList');
+    if (!container) return;
     if (savedReports.length === 0) {
-        // Show "no reports" message
-        listContainer.innerHTML = `
-            <div id="noReportsMessage" class="text-center py-12 text-gray-500 dark:text-gray-400">
-                <svg class="w-20 h-20 mx-auto mb-6 text-gray-300 dark:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                </svg>
-                <p class="text-xl font-medium text-gray-700 dark:text-gray-300">No JSS2 saved reports yet</p>
-                <p class="text-sm mt-2 text-gray-600 dark:text-gray-400">Save a report using the "💾 Save Report" button</p>
-            </div>
-        `;
+        container.innerHTML = `<div class="text-center py-12 text-gray-500">No saved reports. Save one first!</div>`;
         return;
     }
-    
-    // Hide "no reports" message if it exists
-    if (noReportsMessage) {
-        noReportsMessage.style.display = 'none';
+    let filtered = savedReports;
+    if (searchTerm) {
+        const term = searchTerm.toLowerCase();
+        filtered = savedReports.filter(r => 
+            r.name.toLowerCase().includes(term) ||
+            r.date.toLowerCase().includes(term) ||
+            r.data.subjects.some(s => s.name.toLowerCase().includes(term))
+        );
     }
-    
-    // Create HTML for saved reports
-    listContainer.innerHTML = savedReports.map(report => `
-        <div class="border-2 border-gray-200 dark:border-gray-800 rounded-2xl p-5 mb-4 hover:border-green-500 dark:hover:border-green-500 hover:shadow-xl transition-all duration-300 cursor-pointer bg-gradient-to-r from-white to-gray-50 dark:from-gray-900 dark:to-gray-800 group" 
-             onclick="loadReportAndCloseModal('${report.id}')">
+    container.innerHTML = filtered.map(report => `
+        <div class="border-2 border-gray-200 dark:border-gray-800 rounded-2xl p-5 mb-4 hover:border-green-500 cursor-pointer bg-white dark:bg-gray-800 transition-all">
             <div class="flex justify-between items-start">
                 <div class="flex-1">
-                    <h4 class="font-bold text-xl text-gray-900 dark:text-white group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors mb-2">
-                        ${report.name}
-                    </h4>
-                    <div class="flex items-center gap-4 mt-2 text-sm text-gray-600 dark:text-gray-400">
-                        <span class="flex items-center gap-2 bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-lg">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 002-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                            </svg>
-                            ${report.date}
-                        </span>
-                        <span class="flex items-center gap-2 bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-lg">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
-                            </svg>
-                            ${report.data.subjects.length} subjects
-                        </span>
-                        <span class="flex items-center gap-2 bg-gradient-to-r from-blue-100 to-blue-200 dark:from-blue-900/30 dark:to-blue-800/30 text-blue-800 dark:text-blue-300 px-3 py-1 rounded-lg font-bold">
-                            JSS2
-                        </span>
+                    <h4 class="font-bold text-xl text-gray-900 dark:text-white">${escapeHtml(report.name)}</h4>
+                    <div class="flex items-center gap-4 mt-2 text-sm text-gray-600">
+                        <span>📅 ${report.date}</span>
+                        <span>📚 ${report.data.subjects.length} subjects</span>
+                        <span class="bg-blue-100 px-2 py-1 rounded">JSS2</span>
                     </div>
                 </div>
-                <div class="pl-4">
-                    <span class="inline-flex items-center gap-2 bg-gradient-to-r from-green-500 to-green-600 text-white text-sm font-bold px-4 py-2 rounded-xl group-hover:from-green-600 group-hover:to-green-700 transition-all duration-300 shadow-lg">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                        </svg>
-                        LOAD
-                    </span>
+                <div class="flex gap-2">
+                    <button onclick="deleteSavedReport('${report.id}', event)" class="bg-red-500 hover:bg-red-700 text-white px-4 py-2 rounded-xl font-bold">🗑️ Delete</button>
+                    <button onclick="loadReportAndCloseModal('${report.id}')" class="bg-green-500 hover:bg-green-700 text-white px-4 py-2 rounded-xl font-bold">LOAD</button>
                 </div>
             </div>
-            <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
-                <div class="flex flex-wrap gap-3">
-                    <span class="text-sm bg-gradient-to-r from-blue-100 to-blue-200 dark:from-blue-900/30 dark:to-blue-800/30 text-blue-800 dark:text-blue-300 px-3 py-1.5 rounded-lg font-medium">
-                        Student: ${report.data.studentName || 'Not set'}
-                    </span>
-                    <span class="text-sm bg-gradient-to-r from-green-100 to-green-200 dark:from-green-900/30 dark:to-green-800/30 text-green-800 dark:text-green-300 px-3 py-1.5 rounded-lg font-medium">
-                        Total: ${report.data.totalMarksObtained || '0'} / ${report.data.totalMarksObtainable || '0'}
-                    </span>
-                    <span class="text-sm bg-gradient-to-r from-purple-100 to-purple-200 dark:from-purple-900/30 dark:to-purple-800/30 text-purple-800 dark:text-purple-300 px-3 py-1.5 rounded-lg font-medium">
-                        Grade: ${report.data.resultValue || '--'}
-                    </span>
-                </div>
+            <div class="mt-4 pt-4 border-t border-gray-100">
+                <span class="text-sm bg-gray-100 px-2 py-1 rounded">Student: ${escapeHtml(report.data.studentName || 'Not set')}</span>
             </div>
         </div>
     `).join('');
 }
 
-// Load report AND close modal
+function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/[&<>]/g, function(m) {
+        if (m === '&') return '&amp;';
+        if (m === '<') return '&lt;';
+        if (m === '>') return '&gt;';
+        return m;
+    });
+}
+
+function filterReportsList() {
+    const searchValue = document.getElementById('searchReportsInput')?.value || '';
+    loadSavedReportsData(searchValue);
+}
+
 function loadReportAndCloseModal(reportId) {
-    console.log("Loading report and closing modal for ID:", reportId);
     loadReport(reportId);
     closeSavedReportsModal();
 }
 
-// Load a specific report - UPDATED FOR JSS2
-function loadReport(reportId) {
-    console.log("Loading JSS2 report:", reportId);
-    
-    const savedReports = JSON.parse(localStorage.getItem(JSS2_STORAGE_KEY) || '[]');
-    const report = savedReports.find(r => r.id === reportId);
-    
-    if (!report) {
-        showToast('JSS2 Report not found!', 'error');
-        return;
-    }
-    
-    const data = report.data;
-    
-    // First, clear existing form data
-    clearDataFields();
-    
-    // Load basic student info
-    document.getElementById('student-name').value = data.studentName || '';
-    document.getElementById('student-sex').value = data.studentSex || '';
-    document.getElementById('times-present').value = data.timesPresent || '';
-    document.getElementById('times-absent').value = data.timesAbsent || '';
-    document.getElementById('percentage-value').value = data.percentageValue || '';
-    document.getElementById('result-value').value = data.resultValue || '';
-    document.getElementById('total-marks-obtained').value = data.totalMarksObtained || '';
-    document.getElementById('total-marks-obtainable').value = data.totalMarksObtainable || '';
-    
-    // Load header info
-    const titleInput = document.querySelector('input[placeholder*="title"]');
-    if (titleInput) titleInput.value = data.reportTitle || '';
-    
-    const headerInputs = document.querySelectorAll('.mt-8 input');
-    if (headerInputs[0]) headerInputs[0].value = data.reportFor || '';
-    if (headerInputs[1]) headerInputs[1].value = data.termOf || '';
-    
-    // Load teacher/principal remarks
-    const teacherRemarksInput = document.querySelector('.teacher-remarks-section input');
-    if (teacherRemarksInput) teacherRemarksInput.value = data.teacherRemarks || '';
-    
-    const principalRemarksInput = document.querySelector('.principal-remarks-section input');
-    if (principalRemarksInput) principalRemarksInput.value = data.principalRemarks || '';
-    
-    // Load fees
-    const feesInput = document.querySelector('.border.border-black input[placeholder*="35,000"]');
-    if (feesInput) feesInput.value = data.tuitionFees || '';
-    
-    // Restore used subjects
-    if (data.usedSubjects) {
-        usedSubjects = new Set(data.usedSubjects);
-    } else {
-        usedSubjects.clear();
-    }
-    
-    // Remove all existing rows
-    const tableBody = document.getElementById("table-body");
-    tableBody.innerHTML = '';
-    
-    // Add rows for each subject in the saved data (max 13 for JSS2)
-    const maxRows = 13;
-    data.subjects.forEach((subjectData, index) => {
-        if (index >= maxRows) return; // Don't add more than 13 rows for JSS2
-        
-        // Use your existing addRow function to create a row
-        addRow();
-        
-        // Get the newly added row (last row)
-        const rows = tableBody.querySelectorAll('tr');
-        const newRow = rows[rows.length - 1];
-        
-        if (newRow) {
-            // Fill subject data
-            const subjectSelect = newRow.querySelector('.subject-select');
-            const test1Input = newRow.querySelector('.test1');
-            const test2Input = newRow.querySelector('.test2');
-            const examInput = newRow.querySelector('.exam');
-            const totalInput = newRow.querySelector('.total');
-            const classAveInput = newRow.querySelector('td:nth-child(6) input');
-            const gradeCell = newRow.querySelector('td:nth-child(7)');
-            const remarkCell = newRow.querySelector('td:nth-child(8)');
-            
-            // Set values
-            if (subjectSelect && subjectData.name) {
-                // Mark this subject as used
-                usedSubjects.add(subjectData.name);
-                newRow.dataset.selectedSubject = subjectData.name;
-            }
-            
-            if (test1Input) test1Input.value = subjectData.test1 || '';
-            if (test2Input) test2Input.value = subjectData.test2 || '';
-            if (examInput) examInput.value = subjectData.exam || '';
-            if (totalInput) totalInput.value = subjectData.total || '';
-            if (classAveInput) classAveInput.value = subjectData.classAve || '';
-            
-            // Set grade and remark
-            if (gradeCell) gradeCell.textContent = subjectData.grade || '--';
-            if (remarkCell) remarkCell.textContent = subjectData.remark || '--';
-        }
-    });
-    
-    // Update dropdowns
-    setTimeout(() => {
-        updateAllDropdowns();
-        
-        // Set the selected values in dropdowns
-        const rows = tableBody.querySelectorAll('tr');
-        rows.forEach((row, index) => {
-            if (index < data.subjects.length && index < maxRows) {
-                const subjectSelect = row.querySelector('.subject-select');
-                if (subjectSelect && data.subjects[index].name) {
-                    subjectSelect.value = data.subjects[index].name;
-                }
-            }
-        });
-        
-        // Update calculations
-        maintainTableHeight();
-        updateAddButtonVisibility();
-        calculateGrandTotal();
-        calculateTotalObtainable();
-        calculatePercentage();
-    }, 100);
-    
-    // Show success message
-    showToast(`✅ JSS2 Report "${report.name}" loaded successfully!`, 'success');
+function showSavedReportsModal() {
+    loadSavedReportsData('');
+    updateTotalFilesCount();
+    const modal = document.getElementById('savedReportsModal');
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.width = '100%';
+    document.body.style.height = '100%';
 }
 
-// Clear all saved reports - UPDATED FOR JSS2
+function closeSavedReportsModal() {
+    const modal = document.getElementById('savedReportsModal');
+    modal.style.display = 'none';
+    document.body.style.overflow = 'auto';
+    document.body.style.position = 'static';
+    document.body.style.width = 'auto';
+    document.body.style.height = 'auto';
+}
+
 function clearAllSavedReports() {
-    if (confirm('⚠️ ARE YOU SURE?\n\nThis will delete ALL JSS2 saved reports permanently.\n\nThis action cannot be undone!')) {
+    if (confirm('⚠️ DELETE ALL JSS2 REPORTS? This cannot be undone.')) {
         localStorage.removeItem(JSS2_STORAGE_KEY);
         closeSavedReportsModal();
-        showToast('All JSS2 saved reports have been cleared!', 'success');
-        
-        // Reload the modal to show empty state
-        setTimeout(() => {
-            loadSavedReportsData();
-            updateTotalFilesCount();
-        }, 100);
+        showToast('All JSS2 reports cleared', 'success');
+        setTimeout(() => { loadSavedReportsData(''); updateTotalFilesCount(); }, 100);
     }
 }
 
-// Update the print button to use enhanced version
-document.addEventListener('DOMContentLoaded', function() {
-    // Update the Load button to use the new function
-    const loadButton = document.querySelector('button[onclick*="loadAndShowSavedReports"]');
-    if (loadButton) {
-        loadButton.setAttribute('onclick', 'showSavedReportsModal()');
-    }
-    
-    // Initialize the total files count on page load
-    updateTotalFilesCount();
-});
-
-// Auto-save every 2 minutes if changes detected
-let autoSaveTimeout;
-function setupAutoSave() {
-    // Listen for input changes
-    document.addEventListener('input', function() {
-        clearTimeout(autoSaveTimeout);
-        autoSaveTimeout = setTimeout(() => {
-            const studentName = document.getElementById('student-name').value;
-            if (studentName && studentName.trim().length > 0) {
-                saveCurrentReport();
-                console.log("Auto-saved report");
-            }
-        }, 120000); // 2 minutes
-    });
+function updateTotalFilesCount() {
+    const reports = JSON.parse(localStorage.getItem(JSS2_STORAGE_KEY) || '[]');
+    const badge = document.getElementById('totalFilesCount');
+    if (badge) badge.textContent = `${reports.length} file${reports.length !== 1 ? 's' : ''}`;
 }
 
-// Initialize auto-save when page loads
-document.addEventListener('DOMContentLoaded', setupAutoSave);
-
-// Close modal on Escape key
 document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-        closeSavedReportsModal();
-        closeExportModal();
-    }
+    if (e.key === 'Escape') { closeSavedReportsModal(); closeExportModal(); }
 });
-
-// Close modal when clicking outside
-document.getElementById('savedReportsModal').addEventListener('click', function(e) {
-    if (e.target === this) {
-        closeSavedReportsModal();
-    }
+document.getElementById('savedReportsModal')?.addEventListener('click', function(e) {
+    if (e.target === this) closeSavedReportsModal();
 });
-</script>
-
+  </script>
 </body>
 </html>
