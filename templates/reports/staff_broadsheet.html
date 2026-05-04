@@ -1,12 +1,14 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="https://cdn.tailwindcss.com"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Professional Broad Sheet</title>
+  <title> EMilia Professional Broad Sheet</title>
+      <!-- Favicon - Emilia Logo -->
   <link rel="icon" type="image/x-icon" href="https://ncctazjcffmpuniwctkz.supabase.co/storage/v1/object/public/user-uploads/emilia_logo_circle.png">
 
-  <script src="https://cdn.tailwindcss.com"></script>
   <style>
     @page {
       size: A4 landscape;
@@ -65,9 +67,9 @@
         font-weight: 600 !important;
       }
       
-      /* TOTAL, GRADE, POSITION columns with larger fonts */
-      th.vertical:nth-last-child(-n+3), 
-      td:nth-last-child(-n+3) {
+      /* TOTAL, GRADE, PERCENTAGE, POSITION columns with larger fonts */
+      th.vertical:nth-last-child(-n+4), 
+      td:nth-last-child(-n+4) {
         width: 35px !important;
         max-width: 35px !important;
         font-size: 14px !important;
@@ -86,18 +88,18 @@
         top: 50% !important;
         left: 50% !important;
         transform: translate(-50%, -50%) rotate(-45deg) !important;
-        font-size: 65px !important; /* Reduced from 80px */
-        font-weight: 800 !important; /* Slightly lighter weight */
-        color: rgba(0, 0, 0, 0.08) !important; /* Slightly lighter */
+        font-size: 65px !important;
+        font-weight: 800 !important;
+        color: rgba(0, 0, 0, 0.08) !important;
         z-index: 1000 !important;
         pointer-events: none !important;
         white-space: nowrap !important;
-        opacity: 0.85 !important; /* Slightly less opaque */
+        opacity: 0.85 !important;
         text-transform: uppercase !important;
-        letter-spacing: 1px !important; /* Reduced spacing */
+        letter-spacing: 1px !important;
         text-align: center !important;
         width: 100% !important;
-        line-height: 1 !important; /* Tighter line height */
+        line-height: 1 !important;
       }
     }
 
@@ -108,7 +110,7 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%) rotate(-45deg);
-      font-size: 65px; /* Reduced from 80px */
+      font-size: 65px;
       font-weight: 800;
       color: rgba(0, 0, 0, 0.06);
       z-index: 999;
@@ -215,9 +217,9 @@
       font-size: 14px;
     }
 
-    /* TOTAL, GRADE, POSITION columns with larger fonts */
-    th.vertical:nth-last-child(-n+3), 
-      td:nth-last-child(-n+3) {
+    /* TOTAL, GRADE, PERCENTAGE, POSITION columns with larger fonts */
+    th.vertical:nth-last-child(-n+4), 
+      td:nth-last-child(-n+4) {
       width: 40px;
       max-width: 40px;
       font-size: 14px;
@@ -621,11 +623,7 @@
   <!-- Header -->
   <header class="text-center mb-4">
     <div class="flex items-center justify-center gap-3">
-      <img 
-        src="https://ncctazjcffmpuniwctkz.supabase.co/storage/v1/object/public/user-uploads/EMILIA%20LOGO.png"
-        alt="Emilia Logo"
-        class="school-logo object-contain"
-      />
+          <img  src="https://ncctazjcffmpuniwctkz.supabase.co/storage/v1/object/public/user-uploads/EMILIA%20LOGO.png" alt="Emilia Logo" class="school-logo object-contain"/>
       <div>
         <h1 class="text-2xl font-extrabold uppercase">Emilia - Foremost High School</h1>
         <h2 class="text-lg font-semibold uppercase">
@@ -682,20 +680,22 @@
           <!-- Subject headers will be inserted here -->
           <th class="vertical">TOTAL</th>
           <th class="vertical">GRADE</th>
+          <th class="vertical">PERCENTAGE</th>   <!-- NEW PERCENTAGE COLUMN -->
           <th class="vertical">POSITION</th>
-        </tr>
+         </tr>
       </thead>
       <tbody id="tableBody">
-        <tr>
-          <td>1 <span class="delete-btn" onclick="deleteStudent(this)">🗑️</span></td>
+         <tr>
+           <td>1 <span class="delete-btn" onclick="deleteStudent(this)">🗑️</span></td>
           <td contenteditable="true"></td>
           <!-- Subject cells will be inserted here -->
           <td contenteditable="true"></td>
           <td contenteditable="true"></td>
+          <td contenteditable="true"></td>   <!-- PERCENTAGE CELL -->
           <td contenteditable="true"></td>
-        </tr>
+         </tr>
       </tbody>
-    </table>
+     </table>
   </div>
 
   <!-- 🔽 FLOATING ADD STUDENT BUTTON -->
@@ -733,9 +733,7 @@
       });
       document.querySelector('.broad-sheet-level').textContent = broadSheetSelect.value;
       
-      // 🔽 SET UP INPUT LISTENERS
       setupInputListeners();
-      
       updateFloatingButtonPosition();
       
       const addStudentBtn = document.querySelector('.floating-add-student-btn');
@@ -743,23 +741,18 @@
         addStudentBtn.style.display = 'flex';
       }
       
-      // Show watermark on page load
       updateWatermarkFromAllFields();
-      
       window.addEventListener('resize', function() {
         updateWatermarkFromAllFields();
       });
     });
 
-    // 🔽 SET UP INPUT LISTENERS
     function setupInputListeners() {
       const classInput = document.getElementById('classInput');
       const termInput = document.getElementById('termInput');
       const yearInput = document.getElementById('yearInput');
       const sessionInput = document.getElementById('sessionInput');
-      
       const allInputs = [classInput, termInput, yearInput, sessionInput];
-      
       allInputs.forEach(input => {
         if (input) {
           input.addEventListener('input', updateWatermarkFromAllFields);
@@ -769,7 +762,6 @@
       });
     }
 
-    // 🔽 SIMPLIFIED FORMATTING FUNCTIONS
     function formatClass(input) {
       if (!input || input.trim() === '') return '';
       return input.toString().trim().toUpperCase().replace(/\s+/g, ' ');
@@ -778,103 +770,54 @@
     function formatTerm(input) {
       if (!input || input.trim() === '') return '';
       let cleaned = input.toString().trim().toUpperCase();
-      
-      // Simple term detection
       if (cleaned.match(/^1(st)?$/i) || cleaned.includes('FIRST')) return 'TERM 1';
       if (cleaned.match(/^2(nd)?$/i) || cleaned.includes('SECOND')) return 'TERM 2';
       if (cleaned.match(/^3(rd)?$/i) || cleaned.includes('THIRD')) return 'TERM 3';
-      
-      // If it's a number
-      if (cleaned.match(/^\d+$/)) {
-        return 'TERM ' + cleaned;
-      }
-      
+      if (cleaned.match(/^\d+$/)) return 'TERM ' + cleaned;
       return cleaned;
     }
 
     function formatYear(input) {
       if (!input || input.trim() === '') return '';
       let cleaned = input.toString().trim();
-      
-      // Return full year if it's 4 digits
-      if (cleaned.match(/^\d{4}$/)) {
-        return cleaned;
-      }
-      
-      // If it's 2 digits, assume it's a year like "25" for "2025"
-      if (cleaned.match(/^\d{2}$/)) {
-        return '20' + cleaned;
-      }
-      
+      if (cleaned.match(/^\d{4}$/)) return cleaned;
+      if (cleaned.match(/^\d{2}$/)) return '20' + cleaned;
       return cleaned;
     }
 
-    // 🔽 UPDATED FUNCTION TO CREATE WATERMARK WITH FULL YEAR
     function updateWatermarkFromAllFields() {
       const classValue = document.getElementById('classInput').value;
       const termValue = document.getElementById('termInput').value;
       const yearValue = document.getElementById('yearInput').value;
-      
-      // Format values
       const formattedClass = formatClass(classValue);
       const formattedTerm = formatTerm(termValue);
       const formattedYear = formatYear(yearValue);
-      
-      // Build the watermark parts
       const parts = [];
       if (formattedClass) parts.push(formattedClass);
       if (formattedTerm) parts.push(formattedTerm);
-      if (formattedYear) parts.push(formattedYear); // Now shows full year like "2025"
-      
-      let watermarkText = '';
-      if (parts.length > 0) {
-        watermarkText = parts.join(' - ');
-      }
-      
+      if (formattedYear) parts.push(formattedYear);
+      let watermarkText = parts.join(' - ');
       updateWatermarkDisplay(watermarkText);
     }
 
-    // 🔽 UPDATED WATERMARK DISPLAY WITH SMALLER SIZES
     function updateWatermarkDisplay(watermarkText) {
       const watermark = document.getElementById('tableWatermark');
       if (!watermark) return;
-      
       if (watermarkText && watermarkText.trim() !== '') {
         watermark.textContent = watermarkText;
         watermark.style.display = 'block';
-        
-        // Set base size - REDUCED FROM BEFORE
-        let baseSize = 65; // Reduced from 80px
-        
-        // Adjust for screen size - ALL REDUCED
-        if (window.innerWidth >= 1440) {
-          baseSize = 75; // Was 100
-        } else if (window.innerWidth >= 1024) {
-          baseSize = 70; // Was 90
-        } else if (window.innerWidth >= 768) {
-          baseSize = 45; // Was 60
-        } else {
-          baseSize = 35; // Was 50
-        }
-        
-        // Adjust for text length - MORE AGGRESSIVE REDUCTION
+        let baseSize = 65;
+        if (window.innerWidth >= 1440) baseSize = 75;
+        else if (window.innerWidth >= 1024) baseSize = 70;
+        else if (window.innerWidth >= 768) baseSize = 45;
+        else baseSize = 35;
         const textLength = watermarkText.length;
         let adjustedSize = baseSize;
-        
-        if (textLength > 25) {
-          adjustedSize = baseSize * 0.60; // 40% reduction for very long text
-        } else if (textLength > 20) {
-          adjustedSize = baseSize * 0.70; // 30% reduction
-        } else if (textLength > 15) {
-          adjustedSize = baseSize * 0.80; // 20% reduction
-        } else if (textLength > 10) {
-          adjustedSize = baseSize * 0.90; // 10% reduction
-        }
-        
-        // Ensure minimum size
+        if (textLength > 25) adjustedSize = baseSize * 0.60;
+        else if (textLength > 20) adjustedSize = baseSize * 0.70;
+        else if (textLength > 15) adjustedSize = baseSize * 0.80;
+        else if (textLength > 10) adjustedSize = baseSize * 0.90;
         adjustedSize = Math.max(30, adjustedSize);
-        
-        // Apply styles
         watermark.style.fontSize = adjustedSize + 'px';
         watermark.style.position = 'fixed';
         watermark.style.top = '50%';
@@ -887,177 +830,111 @@
         watermark.style.lineHeight = '1';
         watermark.style.letterSpacing = '1px';
         watermark.style.fontWeight = '800';
-        
         watermark.offsetHeight;
       } else {
         watermark.style.opacity = '0';
-        setTimeout(() => {
-          watermark.style.display = 'none';
-        }, 300);
+        setTimeout(() => { watermark.style.display = 'none'; }, 300);
       }
     }
 
-    // Function to update floating button position
     function updateFloatingButtonPosition() {
       const addStudentBtn = document.querySelector('.floating-add-student-btn');
       const homeBtn = document.querySelector('.floating-home-btn');
-      
       if (!addStudentBtn || !homeBtn) return;
-      
       const homeBtnBottom = parseInt(getComputedStyle(homeBtn).bottom) || 25;
       let addStudentBtnBottom = homeBtnBottom + 125;
-      
       addStudentBtn.style.bottom = addStudentBtnBottom + 'px';
     }
 
     window.addEventListener('scroll', updateFloatingButtonPosition);
     window.addEventListener('resize', updateFloatingButtonPosition);
 
-    // 🔽 PRINT FUNCTION WITH SMALLER SIZES
     const originalPrint = window.print;
     window.print = function() {
       const notifications = document.querySelectorAll('.student-notification');
       notifications.forEach(notification => notification.remove());
-      
-      // Update watermark for print
       updateWatermarkFromAllFields();
-      
       const watermark = document.getElementById('tableWatermark');
       if (watermark && watermark.style.display === 'block') {
-        // Set print-specific size (slightly larger for print but still small)
         const textLength = watermark.textContent.length;
-        let printSize = 65; // Base print size
-        
-        if (textLength > 25) {
-          printSize = 50;
-        } else if (textLength > 20) {
-          printSize = 55;
-        } else if (textLength > 15) {
-          printSize = 60;
-        }
-        
+        let printSize = 65;
+        if (textLength > 25) printSize = 50;
+        else if (textLength > 20) printSize = 55;
+        else if (textLength > 15) printSize = 60;
         watermark.style.fontSize = printSize + 'px';
         watermark.style.color = 'rgba(0, 0, 0, 0.08)';
         watermark.style.fontWeight = '800';
       }
-      
-      setTimeout(() => {
-        originalPrint.call(window);
-      }, 150);
+      setTimeout(() => { originalPrint.call(window); }, 150);
     };
 
-    // 🔽 HOME BUTTON FUNCTIONALITY
     function goHome() {
       const homeUrl = '/';
       const userConfirmed = confirm('Are you sure you want to go to the home page? Any unsaved changes will be lost.');
-      if (userConfirmed) {
-        window.location.href = homeUrl;
-      }
+      if (userConfirmed) window.location.href = homeUrl;
     }
 
-    // 🔽 ADD STUDENT FUNCTION
     function addStudent() {
       const tableBody = document.getElementById('tableBody');
       const rows = tableBody.querySelectorAll('tr');
-      
       let maxSN = 0;
       rows.forEach(row => {
         const snText = row.children[0].textContent.trim();
         const snNumber = parseInt(snText);
-        if (!isNaN(snNumber) && snNumber > maxSN) {
-          maxSN = snNumber;
-        }
+        if (!isNaN(snNumber) && snNumber > maxSN) maxSN = snNumber;
       });
-      
       const newSN = maxSN + 1;
       const row = document.createElement('tr');
-      
       row.style.opacity = '0';
       row.style.transform = 'translateY(-20px)';
-      
       let cells = `<td>${newSN} <span class="delete-btn" onclick="deleteStudent(this)">🗑️</span></td>
                    <td contenteditable="true" class="new-student-name"></td>`;
-
       for (let controlId of subjectControlMap.keys()) {
         cells += `<td contenteditable="true" class="subject-cell" data-control-id="${controlId}"></td>`;
       }
-
-      cells += `
-        <td contenteditable="true"></td>
-        <td contenteditable="true"></td>
-        <td contenteditable="true"></td>
-      `;
-
+      cells += `<td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>`;
       row.innerHTML = cells;
       tableBody.appendChild(row);
-      
       setTimeout(() => {
         row.style.transition = 'all 0.4s ease';
         row.style.opacity = '1';
         row.style.transform = 'translateY(0)';
       }, 10);
-      
       studentCount = tableBody.querySelectorAll('tr').length;
       document.getElementById('studentCounter').textContent = studentCount;
-      
       setTimeout(updateFloatingButtonPosition, 200);
-      
       setTimeout(() => {
         const nameField = row.querySelector('.new-student-name');
-        if (nameField) {
-          nameField.focus();
-        }
+        if (nameField) nameField.focus();
       }, 300);
-      
       showNotification(`Student #${newSN} added successfully!`);
     }
 
-    // 🔽 NOTIFICATION FUNCTION
     function showNotification(message) {
       const existingNotification = document.querySelector('.student-notification');
-      if (existingNotification) {
-        existingNotification.remove();
-      }
-      
+      if (existingNotification) existingNotification.remove();
       const notification = document.createElement('div');
       notification.className = 'student-notification no-print';
       notification.textContent = message;
-      notification.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background: #10B981;
-        color: white;
-        padding: 12px 20px;
-        border-radius: 8px;
-        z-index: 1004;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        animation: slideIn 0.3s ease;
-        font-weight: 500;
-      `;
-      
+      notification.style.cssText = `position: fixed; top: 20px; right: 20px; background: #10B981; color: white; padding: 12px 20px; border-radius: 8px; z-index: 1004; box-shadow: 0 4px 12px rgba(0,0,0,0.2); animation: slideIn 0.3s ease; font-weight: 500;`;
       document.body.appendChild(notification);
-      
       setTimeout(() => {
         notification.style.animation = 'slideOut 0.3s ease';
-        setTimeout(() => {
-          notification.remove();
-        }, 300);
+        setTimeout(() => notification.remove(), 300);
       }, 2000);
     }
 
-    // 🔽 DELETE STUDENT FUNCTION
     function deleteStudent(el) {
       const row = el.closest('tr');
       const rows = document.querySelectorAll('#tableBody tr');
-      
       const snText = row.children[0].textContent.trim();
       const deletedSN = parseInt(snText) || 'unknown';
-      
       row.style.transition = 'all 0.3s ease';
       row.style.opacity = '0';
       row.style.transform = 'translateX(100%)';
-      
       setTimeout(() => {
         row.remove();
         updateSerialNumbers();
@@ -1066,26 +943,17 @@
       }, 300);
     }
 
-    // 🔽 UPDATE SERIAL NUMBERS
     function updateSerialNumbers() {
       const rows = document.querySelectorAll('#tableBody tr');
       studentCount = rows.length;
-      
       rows.forEach((row, index) => {
         const snCell = row.children[0];
         const newSN = index + 1;
-        const existingDeleteBtn = snCell.querySelector('.delete-btn');
-        if (existingDeleteBtn) {
-          snCell.innerHTML = `${newSN} <span class="delete-btn" onclick="deleteStudent(this)">🗑️</span>`;
-        } else {
-          snCell.innerHTML = `${newSN} <span class="delete-btn" onclick="deleteStudent(this)">🗑️</span>`;
-        }
+        snCell.innerHTML = `${newSN} <span class="delete-btn" onclick="deleteStudent(this)">🗑️</span>`;
       });
-      
       document.getElementById('studentCounter').textContent = studentCount;
     }
 
-    // Remaining functions (unchanged)
     function createSubjectHeader(subjectName, controlId) {
       const th = document.createElement('th');
       th.className = 'vertical';
@@ -1098,18 +966,14 @@
       const control = document.createElement('div');
       control.className = 'subject-control';
       control.dataset.controlId = controlId;
-      
       const select = document.createElement('select');
       select.innerHTML = subjects.map(sub => `<option value="${sub}" ${sub === subjectName ? 'selected' : ''}>${sub}</option>`).join('');
       select.onchange = () => updateSubjectHeader(controlId, select.value);
-      
       const del = document.createElement('button');
       del.innerHTML = '🗑️';
       del.onclick = () => deleteSubject(controlId);
-      
       control.appendChild(select);
       control.appendChild(del);
-      
       return control;
     }
 
@@ -1126,16 +990,12 @@
 
     function addSubject() {
       const headerRow = document.getElementById('headerRow');
-      const totalIndex = headerRow.children.length - 3;
+      const totalIndex = headerRow.children.length - 4; // Adjusted for PERCENTAGE column (now 4 static cols)
       const subjectName = subjects[0];
-      
       const controlId = `subject-${subjectControlCounter++}`;
-      
       headerRow.insertBefore(createSubjectHeader(subjectName, controlId), headerRow.children[totalIndex]);
-      
       const subjectControls = document.getElementById('subject-controls');
       subjectControls.appendChild(createSubjectControl(subjectName, controlId));
-
       const rows = document.querySelectorAll('#tableBody tr');
       rows.forEach(row => {
         const td = document.createElement('td');
@@ -1144,12 +1004,7 @@
         td.dataset.controlId = controlId;
         row.insertBefore(td, row.children[totalIndex]);
       });
-      
-      subjectControlMap.set(controlId, {
-        headerIndex: totalIndex,
-        subjectName: subjectName
-      });
-      
+      subjectControlMap.set(controlId, { headerIndex: totalIndex, subjectName: subjectName });
       updateFloatingButtonPosition();
     }
 
@@ -1157,21 +1012,17 @@
       const subjectControls = document.getElementById('subject-controls');
       const control = subjectControls.querySelector(`.subject-control[data-control-id="${controlId}"]`);
       if (control) control.remove();
-      
       const headerRow = document.getElementById('headerRow');
       const header = headerRow.querySelector(`th.vertical[data-control-id="${controlId}"]`);
       if (header) header.remove();
-      
       const rows = document.querySelectorAll('#tableBody tr');
       rows.forEach(row => {
         const cell = row.querySelector(`td[data-control-id="${controlId}"]`);
         if (cell) cell.remove();
       });
-      
       subjectControlMap.delete(controlId);
       updateFloatingButtonPosition();
     }
   </script>
-
 </body>
 </html>
