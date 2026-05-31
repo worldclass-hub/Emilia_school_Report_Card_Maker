@@ -16,8 +16,8 @@
     }
 
     @media print {
-      #controls, #subject-controls {
-        display: none;
+      #controls, #subject-controls, .floating-add-student-btn, .floating-home-btn, .floating-book-icon {
+        display: none !important;
       }
       
       /* Hide delete buttons and dropdowns in print */
@@ -100,6 +100,11 @@
         text-align: center !important;
         width: 100% !important;
         line-height: 1 !important;
+      }
+      
+      /* Hide print modal during print */
+      .print-modal-overlay {
+        display: none !important;
       }
     }
 
@@ -507,6 +512,180 @@
       }
     }
 
+    /* 🔽 FLOATING BOOK ICON (WHITE) - SHOWS NUMBER OF SUBJECTS */
+    .floating-book-icon {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ffffff, #f0f0f0);
+      color: #1e40af;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+      cursor: pointer;
+      z-index: 1002;
+      transition: all 0.3s ease;
+      border: 2px solid #e0e0e0;
+      outline: none;
+    }
+
+    .floating-book-icon:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+      background: linear-gradient(135deg, #f5f5f5, #e8e8e8);
+    }
+
+    .floating-book-icon:active {
+      transform: scale(0.95);
+    }
+
+    .floating-book-icon .tooltip {
+      position: absolute;
+      top: 70px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .floating-book-icon:hover .tooltip {
+      opacity: 1;
+    }
+
+    /* Subject counter badge on book icon */
+    .subject-counter-badge {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background: #ef4444;
+      color: white;
+      font-size: 11px;
+      font-weight: bold;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4);
+    }
+
+    /* 🔽 PRINT MODAL STYLES */
+    .print-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+    }
+    
+    .print-modal-content {
+      background: white;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 500px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      animation: modalFadeIn 0.3s ease;
+    }
+    
+    @keyframes modalFadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+    
+    .print-modal-header {
+      background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+      color: white;
+      padding: 15px 20px;
+      font-weight: bold;
+      font-size: 18px;
+    }
+    
+    .print-modal-body {
+      padding: 20px;
+    }
+    
+    .print-filename-display {
+      background: #f0f0f0;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 15px 0;
+      font-family: monospace;
+      font-size: 1rem;
+      word-break: break-word;
+      border-left: 4px solid #3b82f6;
+    }
+    
+    .print-modal-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 15px;
+    }
+    
+    .print-modal-button {
+      padding: 12px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      border: none;
+      transition: all 0.3s;
+      flex: 1;
+      min-width: 100px;
+    }
+    
+    .print-modal-button.print {
+      background: #3b82f6;
+      color: white;
+    }
+    
+    .print-modal-button.print:hover {
+      background: #2563eb;
+    }
+    
+    .print-modal-button.copy {
+      background: #10b981;
+      color: white;
+    }
+    
+    .print-modal-button.copy:hover {
+      background: #059669;
+    }
+    
+    .print-modal-button.cancel {
+      background: #ef4444;
+      color: white;
+    }
+    
+    .print-modal-button.cancel:hover {
+      background: #dc2626;
+    }
+
     /* Add some space for the floating buttons */
     body {
       padding-bottom: 120px;
@@ -520,7 +699,7 @@
       z-index: 2;
     }
 
-    /* Responsive adjustments - EVEN SMALLER */
+    /* Responsive adjustments */
     @media (max-width: 768px) {
       .floating-add-student-btn {
         width: 60px;
@@ -538,10 +717,32 @@
         font-size: 20px;
       }
       
+      .floating-book-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+        top: 15px;
+        left: 15px;
+      }
+      
       .student-counter {
         width: 20px;
         height: 20px;
         font-size: 10px;
+      }
+      
+      .subject-counter-badge {
+        width: 18px;
+        height: 18px;
+        font-size: 9px;
+      }
+      
+      .print-modal-buttons {
+        flex-direction: column;
+      }
+      
+      .print-modal-button {
+        width: 100%;
       }
       
       /* Much smaller watermark for mobile */
@@ -557,7 +758,7 @@
       }
     }
     
-    /* Very small screens - EVEN SMALLER */
+    /* Very small screens */
     @media (max-width: 480px) {
       .floating-add-student-btn {
         width: 55px;
@@ -565,6 +766,14 @@
         font-size: 22px;
         right: 15px;
         bottom: 120px;
+      }
+      
+      .floating-book-icon {
+        width: 45px;
+        height: 45px;
+        font-size: 18px;
+        top: 10px;
+        left: 10px;
       }
       
       body {
@@ -588,6 +797,12 @@
       .table-watermark {
         font-size: 70px !important;
         letter-spacing: 1.2px !important;
+      }
+      
+      .floating-book-icon {
+        width: 65px;
+        height: 65px;
+        font-size: 26px;
       }
       
       @media print {
@@ -619,6 +834,13 @@
 <body class="bg-white text-gray-900 p-2 font-sans">
   <!-- 🔽 WATERMARK ELEMENT -->
   <div id="tableWatermark" class="table-watermark"></div>
+
+  <!-- 🔽 FLOATING BOOK ICON (WHITE) - SHOWS NUMBER OF SUBJECTS -->
+  <div class="floating-book-icon no-print" onclick="showSubjectsInfo()">
+    📖
+    <div class="subject-counter-badge" id="subjectCounterBadge">0</div>
+    <span class="tooltip">Subjects Added</span>
+  </div>
 
   <!-- Header -->
   <header class="text-center mb-4">
@@ -662,7 +884,7 @@
   <!-- Controls -->
   <div id="controls" class="flex gap-3 mb-3">
     <button onclick="addSubject()" class="bg-green-600 text-white px-3 py-1 rounded text-sm hover:bg-green-700">➕ Add Subject</button>
-    <button onclick="window.print()" class="bg-gray-800 text-white px-3 py-1 rounded text-sm hover:bg-black">🖨️ Print</button>
+    <button onclick="showPrintModal()" class="bg-gray-800 text-white px-3 py-1 rounded text-sm hover:bg-black">🖨️ Print</button>
   </div>
 
   <!-- Subject Controls -->
@@ -680,22 +902,22 @@
           <!-- Subject headers will be inserted here -->
           <th class="vertical">TOTAL</th>
           <th class="vertical">GRADE</th>
-          <th class="vertical">PERCENTAGE</th>   <!-- NEW PERCENTAGE COLUMN -->
+          <th class="vertical">PERCENTAGE</th>
           <th class="vertical">POSITION</th>
-         </tr>
+        </tr>
       </thead>
       <tbody id="tableBody">
-         <tr>
-           <td>1 <span class="delete-btn" onclick="deleteStudent(this)">🗑️</span></td>
+        <tr>
+          <td>1 <span class="delete-btn" onclick="deleteStudent(this)">🗑️</span></td>
           <td contenteditable="true"></td>
           <!-- Subject cells will be inserted here -->
           <td contenteditable="true"></td>
           <td contenteditable="true"></td>
-          <td contenteditable="true"></td>   <!-- PERCENTAGE CELL -->
           <td contenteditable="true"></td>
-         </tr>
+          <td contenteditable="true"></td>
+        </tr>
       </tbody>
-     </table>
+    </table>
   </div>
 
   <!-- 🔽 FLOATING ADD STUDENT BUTTON -->
@@ -742,6 +964,7 @@
       }
       
       updateWatermarkFromAllFields();
+      updateSubjectCounterBadge();
       window.addEventListener('resize', function() {
         updateWatermarkFromAllFields();
       });
@@ -837,23 +1060,110 @@
       }
     }
 
-    function updateFloatingButtonPosition() {
-      const addStudentBtn = document.querySelector('.floating-add-student-btn');
-      const homeBtn = document.querySelector('.floating-home-btn');
-      if (!addStudentBtn || !homeBtn) return;
-      const homeBtnBottom = parseInt(getComputedStyle(homeBtn).bottom) || 25;
-      let addStudentBtnBottom = homeBtnBottom + 125;
-      addStudentBtn.style.bottom = addStudentBtnBottom + 'px';
+    function updateSubjectCounterBadge() {
+      const subjectCount = subjectControlMap.size;
+      const badge = document.getElementById('subjectCounterBadge');
+      if (badge) {
+        badge.textContent = subjectCount;
+      }
     }
 
-    window.addEventListener('scroll', updateFloatingButtonPosition);
-    window.addEventListener('resize', updateFloatingButtonPosition);
+    function showSubjectsInfo() {
+      const count = subjectControlMap.size;
+      const subjectNames = Array.from(subjectControlMap.values()).map(s => s.subjectName);
+      const message = `Total Subjects: ${count}\n\nSubjects:\n${subjectNames.join(', ') || 'No subjects added yet'}`;
+      alert(message);
+    }
 
-    const originalPrint = window.print;
-    window.print = function() {
+    // Generate filename for print
+    function generatePrintFilename() {
+      const classValue = document.getElementById('classInput').value.trim() || 'CLASS';
+      const termValue = document.getElementById('termInput').value.trim() || 'TERM';
+      const sessionValue = document.getElementById('sessionInput').value.trim() || '';
+      const yearValue = document.getElementById('yearInput').value.trim() || '';
+      
+      const formattedClass = formatClass(classValue);
+      const formattedTerm = formatTerm(termValue);
+      
+      let filename = `BROADSHEET - ${formattedClass || 'CLASS'} - ${formattedTerm || 'TERM'}`;
+      if (sessionValue) {
+        filename += ` - ${sessionValue}`;
+      } else if (yearValue) {
+        filename += ` - ${yearValue}`;
+      }
+      filename += '.pdf';
+      
+      return filename;
+    }
+
+    // Show print modal with filename
+    function showPrintModal() {
+      const filename = generatePrintFilename();
+      
+      // Remove any existing modal
+      const existingModal = document.querySelector('.print-modal-overlay');
+      if (existingModal) existingModal.remove();
+      
+      const modal = document.createElement('div');
+      modal.className = 'print-modal-overlay';
+      modal.innerHTML = `
+        <div class="print-modal-content">
+          <div class="print-modal-header">
+            <i class="fas fa-print"></i> Save PDF with Broad Sheet Information
+          </div>
+          <div class="print-modal-body">
+            <p style="margin-bottom: 12px; font-size: 0.9rem; color: #555;">When saving as PDF, use this filename:</p>
+            <div class="print-filename-display">
+              ${filename}
+            </div>
+            <p style="margin-bottom: 20px; color: #666; font-size: 0.85rem;">This includes: ${formatClass(document.getElementById('classInput').value) || 'CLASS'} - ${formatTerm(document.getElementById('termInput').value) || 'TERM'} - ${document.getElementById('sessionInput').value || document.getElementById('yearInput').value || 'SESSION'}</p>
+            <div class="print-modal-buttons">
+              <button class="print-modal-button print" onclick="proceedToPrint(); this.closest('.print-modal-overlay').remove();">
+                <i class="fas fa-print"></i> Print Now
+              </button>
+              <button class="print-modal-button copy" onclick="copyFilenameToClipboard('${filename}'); this.closest('.print-modal-overlay').remove();">
+                <i class="fas fa-copy"></i> Copy Filename
+              </button>
+              <button class="print-modal-button cancel" onclick="this.closest('.print-modal-overlay').remove();">
+                <i class="fas fa-times"></i> Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+      
+      document.body.appendChild(modal);
+      
+      // Close modal when clicking outside
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          modal.remove();
+        }
+      });
+    }
+
+    // Copy filename to clipboard
+    function copyFilenameToClipboard(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        showNotification(`✓ Filename copied: ${text}`);
+      }).catch(err => {
+        console.error('Failed to copy: ', err);
+        alert('Could not copy to clipboard. Please manually copy the filename.');
+      });
+    }
+
+    // Proceed to print
+    function proceedToPrint() {
+      const filename = generatePrintFilename();
+      document.title = filename;
+      
+      // Remove any existing notifications
       const notifications = document.querySelectorAll('.student-notification');
       notifications.forEach(notification => notification.remove());
+      
+      // Update watermark before printing
       updateWatermarkFromAllFields();
+      
       const watermark = document.getElementById('tableWatermark');
       if (watermark && watermark.style.display === 'block') {
         const textLength = watermark.textContent.length;
@@ -865,8 +1175,27 @@
         watermark.style.color = 'rgba(0, 0, 0, 0.08)';
         watermark.style.fontWeight = '800';
       }
-      setTimeout(() => { originalPrint.call(window); }, 150);
-    };
+      
+      // Show notification
+      showNotification(`Printing: ${filename}`);
+      
+      // Delay print to allow notification to show
+      setTimeout(() => {
+        window.print();
+      }, 300);
+    }
+
+    function updateFloatingButtonPosition() {
+      const addStudentBtn = document.querySelector('.floating-add-student-btn');
+      const homeBtn = document.querySelector('.floating-home-btn');
+      if (!addStudentBtn || !homeBtn) return;
+      const homeBtnBottom = parseInt(getComputedStyle(homeBtn).bottom) || 25;
+      let addStudentBtnBottom = homeBtnBottom + 125;
+      addStudentBtn.style.bottom = addStudentBtnBottom + 'px';
+    }
+
+    window.addEventListener('scroll', updateFloatingButtonPosition);
+    window.addEventListener('resize', updateFloatingButtonPosition);
 
     function goHome() {
       const homeUrl = '/';
@@ -986,11 +1315,14 @@
           break;
         }
       }
+      if (subjectControlMap.has(controlId)) {
+        subjectControlMap.get(controlId).subjectName = subjectName;
+      }
     }
 
     function addSubject() {
       const headerRow = document.getElementById('headerRow');
-      const totalIndex = headerRow.children.length - 4; // Adjusted for PERCENTAGE column (now 4 static cols)
+      const totalIndex = headerRow.children.length - 4;
       const subjectName = subjects[0];
       const controlId = `subject-${subjectControlCounter++}`;
       headerRow.insertBefore(createSubjectHeader(subjectName, controlId), headerRow.children[totalIndex]);
@@ -1006,6 +1338,8 @@
       });
       subjectControlMap.set(controlId, { headerIndex: totalIndex, subjectName: subjectName });
       updateFloatingButtonPosition();
+      updateSubjectCounterBadge();
+      showNotification(`Subject "${subjectName}" added! Total subjects: ${subjectControlMap.size}`);
     }
 
     function deleteSubject(controlId) {
@@ -1022,6 +1356,8 @@
       });
       subjectControlMap.delete(controlId);
       updateFloatingButtonPosition();
+      updateSubjectCounterBadge();
+      showNotification(`Subject removed! Remaining subjects: ${subjectControlMap.size}`);
     }
   </script>
 </body>

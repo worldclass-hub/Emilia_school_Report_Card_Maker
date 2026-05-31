@@ -1650,6 +1650,20 @@ function printReport() {
     if (typeof calculateGrandTotal === 'function') calculateGrandTotal();
     if (typeof calculateTotalObtainable === 'function') calculateTotalObtainable();
     if (typeof calculatePercentage === 'function') calculatePercentage();
+    
+    // Set document title for PDF filename with student name, class (JSS 3), term, and date
+    const studentName = document.getElementById('student-name').value.trim() || 'Student';
+    const className = 'JSS 3';
+    const termValue = document.getElementById('termOf').value.trim() || 'Term';
+    const now = new Date();
+    const day = now.getDate().toString().padStart(2, '0');
+    const month = (now.getMonth() + 1).toString().padStart(2, '0');
+    const year = now.getFullYear();
+    const formattedDate = `${day}/${month}/${year}`;
+    
+    const filename = `Report Card - ${studentName} - ${className} - ${termValue} - ${formattedDate}.pdf`;
+    document.title = filename;
+    
     setTimeout(() => {
         document.body.classList.add('printing');
         window.print();
