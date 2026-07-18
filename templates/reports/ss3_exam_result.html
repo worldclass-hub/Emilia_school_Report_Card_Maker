@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Emilia Report Card Maker - SS 3 (Enhanced with Save/Load & Signatures)</title>
+  <title>Emilia Report Card Maker - SS 3 (Enhanced with Save/Load, Export/Import & Signatures)</title>
   <!-- Favicon - Emilia Logo -->
   <link rel="icon" type="image/x-icon" href="https://ncctazjcffmpuniwctkz.supabase.co/storage/v1/object/public/user-uploads/emilia_logo_circle.png">
 
@@ -1505,23 +1505,40 @@
 </div>
 </div>
 
-    <!-- SAVE/LOAD BUTTONS SECTION -->
-<div class="flex justify-center gap-6 mt-8 mb-6 no-print">
+    <!-- SAVE/LOAD/EXPORT/IMPORT BUTTONS SECTION -->
+<div class="flex flex-wrap justify-center gap-4 mt-8 mb-6 no-print">
   <button onclick="saveCurrentReport()" 
-          class="bg-gradient-to-r from-blue-500 to-blue-700 text-white px-7 py-3.5 rounded-xl font-bold hover:from-blue-600 hover:to-blue-800 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 flex items-center gap-3">
-    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          class="bg-gradient-to-r from-blue-500 to-blue-700 text-white px-6 py-3 rounded-xl font-bold hover:from-blue-600 hover:to-blue-800 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 flex items-center gap-2">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path>
     </svg>
     💾 Save Report
   </button>
   
   <button onclick="showSavedReportsModal()" 
-          class="bg-gradient-to-r from-green-500 to-green-700 text-white px-7 py-3.5 rounded-xl font-bold hover:from-green-600 hover:to-green-800 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 flex items-center gap-3">
-    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          class="bg-gradient-to-r from-green-500 to-green-700 text-white px-6 py-3 rounded-xl font-bold hover:from-green-600 hover:to-green-800 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 flex items-center gap-2">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
     </svg>
     📂 Load Saved Report
   </button>
+  
+  <button onclick="exportAllReports()" 
+          class="bg-gradient-to-r from-purple-500 to-purple-700 text-white px-6 py-3 rounded-xl font-bold hover:from-purple-600 hover:to-purple-800 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 flex items-center gap-2">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+    </svg>
+    📤 Export All Reports
+  </button>
+  
+  <button onclick="document.getElementById('importFileInput').click()" 
+          class="bg-gradient-to-r from-orange-500 to-orange-700 text-white px-6 py-3 rounded-xl font-bold hover:from-orange-600 hover:to-orange-800 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 flex items-center gap-2">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+    </svg>
+    📥 Import Reports
+  </button>
+  <input type="file" id="importFileInput" accept=".json" class="hidden" onchange="importReports(event)" />
 </div>
 
     <!-- 🚀 Super Print Button -->
@@ -2168,6 +2185,7 @@ function printReport() {
   <!-- NUCLEAR SOLUTION: REPORT SAVE/LOAD SYSTEM with SEARCH & DELETE -->
   <script>
 const SS3_STORAGE_KEY = 'savedReports_SS3';
+const EXPECTED_CLASS = 'SS3';  // <-- THIS IS THE KEY ADDITION FOR CLASS VALIDATION
 
 function saveCurrentReport() {
     const studentName = document.getElementById('student-name').value.trim() || 'Untitled';
@@ -2217,7 +2235,8 @@ function saveCurrentReport() {
         principalSignatureData: principalSignatureData,
         subjects: [],
         usedSubjects: Array.from(usedSubjects),
-        savedAt: new Date().toISOString()
+        savedAt: new Date().toISOString(),
+        classLevel: EXPECTED_CLASS  // <-- SAVE THE CLASS LEVEL
     };
     document.querySelectorAll('#table-body tr').forEach(row => {
         reportData.subjects.push({
@@ -2496,6 +2515,155 @@ document.addEventListener('keydown', function(e) {
 document.getElementById('savedReportsModal')?.addEventListener('click', function(e) {
     if (e.target === this) closeSavedReportsModal();
 });
+
+// ============================================================
+// 🚀 EXPORT ALL REPORTS (Downloads JSON file)
+// ============================================================
+function exportAllReports() {
+    const savedReports = JSON.parse(localStorage.getItem(SS3_STORAGE_KEY) || '[]');
+    
+    if (savedReports.length === 0) {
+        showToast('No reports to export! Save some reports first.', 'error');
+        return;
+    }
+    
+    // Create export data with metadata
+    const exportData = {
+        exportDate: new Date().toISOString(),
+        exportDateFormatted: new Date().toLocaleString(),
+        classLevel: 'SS3',
+        totalReports: savedReports.length,
+        reports: savedReports,
+        version: '1.0'
+    };
+    
+    // Convert to JSON string with pretty formatting
+    const jsonData = JSON.stringify(exportData, null, 2);
+    
+    // Create download link
+    const blob = new Blob([jsonData], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    
+    // Generate filename with date
+    const now = new Date();
+    const dateStr = now.getFullYear() + '-' + 
+                    String(now.getMonth() + 1).padStart(2, '0') + '-' + 
+                    String(now.getDate()).padStart(2, '0') + '_' +
+                    String(now.getHours()).padStart(2, '0') + '-' +
+                    String(now.getMinutes()).padStart(2, '0');
+    link.download = `SS3_Reports_Export_${dateStr}.json`;
+    
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    
+    showToast(`✅ Exported ${savedReports.length} reports successfully!`, 'success');
+}
+
+// ============================================================
+// 🚀 IMPORT REPORTS (Uploads JSON file) - WITH CLASS VALIDATION
+// ============================================================
+function importReports(event) {
+    const file = event.target.files[0];
+    
+    if (!file) {
+        showToast('No file selected.', 'error');
+        return;
+    }
+    
+    // Check file type
+    if (!file.name.endsWith('.json')) {
+        showToast('Please select a JSON file.', 'error');
+        event.target.value = '';
+        return;
+    }
+    
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        try {
+            const importedData = JSON.parse(e.target.result);
+            
+            // Validate the imported data structure
+            if (!importedData.reports || !Array.isArray(importedData.reports)) {
+                showToast('Invalid file format. Please export a valid reports file.', 'error');
+                event.target.value = '';
+                return;
+            }
+            
+            // Check if it's a valid reports export
+            if (!importedData.classLevel || !importedData.exportDate) {
+                showToast('This doesn\'t appear to be a valid reports export file.', 'error');
+                event.target.value = '';
+                return;
+            }
+            
+            // 🔒 CLASS VALIDATION - CHECK IF THE FILE IS FOR THE CORRECT CLASS
+            if (importedData.classLevel !== 'SS3') {
+                showToast(`❌ Wrong file! This is a ${importedData.classLevel} file. Please use the correct class page.`, 'error');
+                event.target.value = '';
+                return;
+            }
+            
+            // Get existing reports
+            const existingReports = JSON.parse(localStorage.getItem(SS3_STORAGE_KEY) || '[]');
+            
+            // Check for duplicates and merge
+            let importedCount = 0;
+            let duplicateCount = 0;
+            
+            importedData.reports.forEach(importedReport => {
+                // Check if report with same ID already exists
+                const exists = existingReports.some(r => r.id === importedReport.id);
+                
+                if (!exists) {
+                    existingReports.push(importedReport);
+                    importedCount++;
+                } else {
+                    duplicateCount++;
+                }
+            });
+            
+            // Save merged reports back to localStorage
+            localStorage.setItem(SS3_STORAGE_KEY, JSON.stringify(existingReports));
+            
+            // Update the UI
+            updateTotalFilesCount();
+            
+            // Show success message
+            let message = `✅ Imported ${importedCount} new SS3 reports successfully!`;
+            if (duplicateCount > 0) {
+                message += ` (${duplicateCount} duplicates skipped)`;
+            }
+            if (importedCount === 0 && duplicateCount > 0) {
+                message = `ℹ️ All ${duplicateCount} reports already exist. No duplicates imported.`;
+            }
+            
+            showToast(message, 'success');
+            
+            // Refresh the saved reports list if modal is open
+            if (!document.getElementById('savedReportsModal').classList.contains('hidden')) {
+                loadSavedReportsData(document.getElementById('searchReportsInput')?.value || '');
+            }
+            
+        } catch (error) {
+            showToast('Error reading file. Please make sure it\'s a valid JSON file.', 'error');
+            console.error('Import error:', error);
+        }
+        
+        // Reset the file input
+        event.target.value = '';
+    };
+    
+    reader.onerror = function() {
+        showToast('Error reading file. Please try again.', 'error');
+        event.target.value = '';
+    };
+    
+    reader.readAsText(file);
+}
   </script>
 
   <!-- ============================================================
