@@ -1376,9 +1376,9 @@
           </div>
         </div>
 
-        <!-- Comment Categories -->
+        <!-- Comment Categories - ALL COMMENTS ARE ALWAYS SHOWN -->
         <div id="commentCategories" class="space-y-4">
-          <!-- Comments will be rendered here -->
+          <!-- All comments will be rendered here regardless of percentage -->
         </div>
       </div>
 
@@ -2799,6 +2799,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   <!-- ============================================================
        🖊️ COMMENT GENERATOR - COMPLETE ADD-ON (20 COMMENTS EACH)
+       FIX: ALL COMMENTS ARE ALWAYS VISIBLE REGARDLESS OF PERCENTAGE
        ============================================================ -->
   <script>
 // ============================================================
@@ -2956,8 +2957,8 @@ function openCommentModal() {
     selectedComment = null;
     selectedCommentCategory = null;
     
-    // Generate comment categories
-    renderCommentCategories(percentage);
+    // Generate comment categories - ALL CATEGORIES ARE ALWAYS SHOWN
+    renderAllCommentCategories();
     
     document.getElementById('commentModal').classList.remove('hidden');
     document.body.classList.add('modal-open');
@@ -2970,42 +2971,15 @@ function closeCommentModal() {
     document.body.style.overflow = 'auto';
 }
 
-function renderCommentCategories(percentage) {
+// NEW FUNCTION: ALWAYS SHOW ALL COMMENT CATEGORIES
+function renderAllCommentCategories() {
     const container = document.getElementById('commentCategories');
     container.innerHTML = '';
     
-    // Determine which categories to show based on percentage
-    let activeCategories = [];
-    
-    if (percentage >= 0 && percentage <= 39) {
-        activeCategories.push('0-39');
-    } else if (percentage >= 40 && percentage <= 49) {
-        activeCategories.push('40-49');
-    } else if (percentage >= 50 && percentage <= 59) {
-        activeCategories.push('50-59');
-    } else if (percentage >= 60 && percentage <= 69) {
-        activeCategories.push('60-69');
-    } else if (percentage >= 70 && percentage <= 100) {
-        activeCategories.push('70-100');
-    }
-    
-    // Also show adjacent categories for flexibility
+    // Show ALL categories regardless of percentage
     const allKeys = ['0-39', '40-49', '50-59', '60-69', '70-100'];
-    const currentIndex = allKeys.indexOf(activeCategories[0]);
     
-    // Show current and one below (if exists) and one above (if exists)
-    const categoriesToShow = [];
-    if (currentIndex > 0) categoriesToShow.push(allKeys[currentIndex - 1]);
-    categoriesToShow.push(allKeys[currentIndex]);
-    if (currentIndex < allKeys.length - 1) categoriesToShow.push(allKeys[currentIndex + 1]);
-    
-    // If percentage is 0, show all categories
-    if (percentage === 0) {
-        categoriesToShow.length = 0;
-        categoriesToShow.push('0-39', '40-49', '50-59', '60-69', '70-100');
-    }
-    
-    categoriesToShow.forEach(key => {
+    allKeys.forEach(key => {
         const data = commentData[key];
         if (!data) return;
         
