@@ -70,7 +70,18 @@ def academic_calendar(request):
 
 
 @login_required(login_url="/")
+def Student_id_maker(request):
+    return render(request, "reports/Student_id_maker.html")
+
+@login_required(login_url="/")
 def pdf_editor_dashboard(request):
     return render(request, "reports/pdf_editor_dashboard.html")
+
+
+
+@login_required(login_url="/")
+def pdf_editor_dashboard(request):
+    return render(request, "reports/pdf_editor_dashboard.html")
+
 
 

@@ -17,5 +17,6 @@ urlpatterns = [
     path('about_us/', views.about_us, name='about_us'),
     path('academic_calendar/', views.academic_calendar, name='academic_calendar'),
     path('pdf_editor_dashboard/', views.pdf_editor_dashboard, name='pdf_editor_dashboard'),
+    path('Student_id_maker/', views.Student_id_maker, name='Student_id_maker'),
 
 ]

@@ -1,0 +1,2373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <title>EMIFORPHS Student ID Generator - Ultimate Edition</title>
+
+    <!-- Favicon - Emilia Logo -->
+  <link rel="icon" type="image/x-icon" href="https://ncctazjcffmpuniwctkz.supabase.co/storage/v1/object/public/user-uploads/emilia_logo_circle.png">
+
+    <!-- CSRF Token for Django -->
+    <meta name="csrf-token" content="{{ csrf_token }}">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- ==================== ROCK SOLID SCROLL SYSTEM - NO RUBBER BAND EVER ==================== -->
+    <style>
+        /* 1. FIXED POSITION BODY - Completely prevents any body movement */
+        html, body {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            overflow: hidden;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            margin: 0;
+            padding: 0;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overscroll-behavior: none;
+            touch-action: pan-y pinch-zoom;
+        }
+        
+        /* 2. SINGLE SCROLL CONTAINER - Only this can scroll internally */
+        .scroll-container {
+            width: 100%;
+            height: 100%;
+            overflow-y: auto;
+            overflow-x: hidden;
+            position: relative;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 50%, #0f172a 100%);
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior: none;
+            touch-action: pan-y;
+            scroll-behavior: smooth;
+        }
+        
+        /* 3. Custom scrollbar styling */
+        .scroll-container::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        .scroll-container::-webkit-scrollbar-track {
+            background: linear-gradient(180deg, #f8fafc, #0f172a);
+            border-radius: 10px;
+        }
+        
+        .scroll-container::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #3b82f6, #1e40af);
+            border-radius: 10px;
+            border: 2px solid #f8fafc;
+            transition: all 0.3s ease;
+        }
+        
+        .scroll-container::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, #2563eb, #1e3a8a);
+        }
+        
+        /* 4. MAIN WRAPPER */
+        .main-wrapper {
+            width: 100%;
+            min-height: 100%;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 50%, #0f172a 100%);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* 5. Content wrapper with spacing */
+        .content-wrapper {
+            flex: 1 0 auto;
+            width: 100%;
+            position: relative;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+        
+        /* 6. FULL WIDTH FOOTER - DARK BLEND */
+        .page-footer {
+            flex-shrink: 0;
+            width: 100%;
+            background: #0f172a;
+            margin-top: auto;
+        }
+        
+        .full-width-footer {
+            width: 100vw;
+            position: relative;
+            left: 50%;
+            right: 50%;
+            margin-left: -50vw;
+            margin-right: -50vw;
+            background: #0f172a;
+        }
+        
+        /* Scroll progress indicator - matches dark theme */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(to right, #3b82f6, #8b5cf6, #10b981);
+            transform-origin: 0%;
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .scroll-progress.visible {
+            opacity: 1;
+        }
+        
+        /* ==================== ORIGINAL STYLES BELOW (unchanged) ==================== */
+        
+        /* SMOOTH SCROLLING BASE - KEPT FOR COMPATIBILITY */
+        .smooth-scroll {
+            scroll-behavior: smooth;
+        }
+        
+        /* OPTIMIZED SCROLL CONTAINERS */
+        .scroll-container-inner {
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #3b82f6 #f1f5f9;
+        }
+        
+        .scroll-container-inner::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .scroll-container-inner::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 4px;
+        }
+        
+        .scroll-container-inner::-webkit-scrollbar-thumb {
+            background: linear-gradient(to bottom, #3b82f6, #1e40af);
+            border-radius: 4px;
+        }
+        
+        .scroll-container-inner::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(to bottom, #2563eb, #1e3a8a);
+        }
+        
+        /* SMOOTH SCROLL ANIMATIONS */
+        .scroll-fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        
+        .scroll-fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* ENHANCED TABLE SCROLLING */
+        .table-scroll-container {
+            max-height: 400px;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+        }
+        
+        /* SMOOTH PAGE TRANSITIONS */
+        .page-transition {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* HOVER SCROLL EFFECTS */
+        .hover-scroll-effect {
+            transition: transform 0.2s ease-out;
+        }
+        
+        .hover-scroll-effect:hover {
+            transform: translateY(-2px);
+        }
+        
+        /* ==================== ORIGINAL LAYOUT STYLES ==================== */
+        
+        .page-container {
+            flex: 1 0 auto;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 100%;
+            position: relative;
+        }
+        
+        /* HEADER - NON-STICKY (FREE SCROLLING) */
+        .page-header {
+            width: 100%;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            z-index: 40;
+            position: relative;
+        }
+        
+        .no-overscroll {
+            overscroll-behavior: none;
+        }
+        
+        .content-container {
+            max-width: 7xl;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .content-container {
+                padding: 10px;
+            }
+        }
+        
+        /* ==================== ORIGINAL STYLES ==================== */
+        .logout-glow {
+            animation: logout-glow 3s infinite alternate;
+        }
+        
+        @keyframes logout-glow {
+            from {
+                box-shadow: 0 0 10px rgba(239, 68, 68, 0.5),
+                          0 0 20px rgba(239, 68, 68, 0.3),
+                          0 0 30px rgba(239, 68, 68, 0.1);
+            }
+            to {
+                box-shadow: 0 0 20px rgba(239, 68, 68, 0.8),
+                          0 0 30px rgba(239, 68, 68, 0.6),
+                          0 0 40px rgba(239, 68, 68, 0.4);
+            }
+        }
+        
+        .security-scan {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+            animation: security-scan 3s linear infinite;
+        }
+        
+        @keyframes security-scan {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        .session-timer {
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+        
+        .confetti {
+            position: fixed;
+            width: 15px;
+            height: 15px;
+            background-color: #f00;
+            top: 0;
+            opacity: 0;
+            z-index: 9999;
+        }
+        
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+        
+        .enhanced-notification {
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Original styles from Code B */
+        .gradient-bg {
+            background: linear-gradient(90deg, #1e40af 0%, #3b82f6 100%);
+        }
+        
+        .premium-gradient {
+            background: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 50%, #10b981 100%);
+        }
+        
+        .id-card {
+            background: linear-gradient(145deg, #ffffff, #f0f4f8);
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .id-card:hover {
+            transform: translateY(-8px) scale(1.01);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        .id-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: linear-gradient(90deg, #1e40af 0%, #3b82f6 100%);
+        }
+        
+        .pattern-bg {
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.08) 0%, transparent 25%),
+                radial-gradient(circle at 90% 80%, rgba(30, 64, 175, 0.08) 0%, transparent 25%);
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .floating-download-btn {
+            animation: float 6s ease-in-out infinite, pulse-glow 2s ease-in-out infinite;
+            z-index: 1000;
+        }
+        
+        .download-modal {
+            animation: slideUp 0.3s ease-out;
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Selection color */
+        ::selection {
+            background-color: rgba(59, 130, 246, 0.3);
+            color: #1e3a8a;
+        }
+        
+        /* Loading animation */
+        .loading-wave {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .loading-wave div {
+            width: 4px;
+            height: 20px;
+            background: linear-gradient(to top, #3b82f6, #8b5cf6);
+            animation: wave 1.2s ease-in-out infinite;
+            border-radius: 10px;
+        }
+        
+        .loading-wave div:nth-child(2) { animation-delay: 0.1s; }
+        .loading-wave div:nth-child(3) { animation-delay: 0.2s; }
+        .loading-wave div:nth-child(4) { animation-delay: 0.3s; }
+        
+        @keyframes wave {
+            0%, 100% { transform: scaleY(0.5); }
+            50% { transform: scaleY(1.5); }
+        }
+        
+        /* Smooth focus outline */
+        *:focus {
+            outline: 2px solid #3b82f6;
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+        
+        /* Reduce motion for users who prefer it */
+        @media (prefers-reduced-motion: reduce) {
+            .smooth-scroll,
+            .scroll-fade-in,
+            .page-transition,
+            .hover-scroll-effect,
+            .id-card,
+            .floating-download-btn,
+            .download-modal,
+            ::-webkit-scrollbar-thumb,
+            .loading-wave div {
+                transition: none !important;
+                animation: none !important;
+            }
+            
+            html {
+                scroll-behavior: auto;
+            }
+        }
+        
+        /* TABLE HEADER - STILL STICKY FOR SCROLLING WITHIN TABLE ONLY */
+        .table-scroll-container thead th {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        /* Mobile fit for main content */
+        @media (max-width: 768px) {
+            .id-card,
+            .bg-white.rounded-2xl {
+                margin-left: 4px !important;
+                margin-right: 4px !important;
+            }
+        }
+        
+        /* Dark bottom boundary - blends with footer */
+        .scroll-bottom-blend {
+            background: linear-gradient(to bottom, transparent, #0f172a 100%);
+            height: 60px;
+            width: 100%;
+            position: sticky;
+            bottom: 0;
+            pointer-events: none;
+            z-index: 5;
+        }
+        
+        /* Footer dark blend */
+        .footer-dark-blend {
+            background: #0f172a;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+    </style>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1e40af',
+                        secondary: '#1e3a8a',
+                        accent: '#3b82f6',
+                        success: '#10b981',
+                        warning: '#f59e0b',
+                        danger: '#ef4444',
+                        dark: '#1f2937',
+                        light: '#f8fafc',
+                        premium: '#8b5cf6',
+                        navy: '#0f172a'
+                    },
+                    fontFamily: {
+                        'poppins': ['Poppins', 'sans-serif']
+                    },
+                    boxShadow: {
+                        'card': '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+                        'hover': '0 20px 40px -10px rgba(0, 0, 0, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.06)',
+                        'float': '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+                        'glow': '0 0 30px rgba(59, 130, 246, 0.5)',
+                        'danger-glow': '0 0 30px rgba(239, 68, 68, 0.5)'
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
+                        'bounce-slow': 'bounce 3s infinite',
+                        'logout-glow': 'logout-glow 3s infinite alternate',
+                        'security-scan': 'security-scan 3s linear infinite'
+                    },
+                    keyframes: {
+                        'float': {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' }
+                        },
+                        'pulse-glow': {
+                            '0%, 100%': { 
+                                boxShadow: '0 0 20px rgba(139, 92, 246, 0.5)',
+                                transform: 'scale(1)'
+                            },
+                            '50%': { 
+                                boxShadow: '0 0 40px rgba(139, 92, 246, 0.8)',
+                                transform: 'scale(1.05)'
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="pattern-bg no-overscroll">
+    <!-- SINGLE SCROLL CONTAINER - Rock solid, no rubber band -->
+    <div class="scroll-container" id="scrollContainer">
+        <div class="main-wrapper">
+            <div class="content-wrapper">
+                <!-- Scroll Progress Indicator -->
+                <div id="scrollProgress" class="scroll-progress"></div>
+                
+                <!-- Main Page Container -->
+                <div class="page-container" id="pageContainer">
+                    
+                    <!-- ================ ULTIMATE LOGOUT SYSTEM ================ -->
+                    
+                    <!-- Floating Download Button -->
+                    <div id="floatingDownloadBtn" class="floating-download-btn fixed bottom-8 right-8 w-16 h-16 rounded-full premium-gradient flex items-center justify-center shadow-float cursor-pointer z-50 hover:shadow-glow transition-all duration-300">
+                        <i class="fas fa-file-export text-white text-2xl"></i>
+                        <div class="absolute -top-2 -right-2 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center text-white text-xs font-bold animate-pulse">
+                            <span id="downloadCount">0</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Enhanced Logout Confirmation Modal -->
+                    <div id="logoutModal" class="fixed inset-0 bg-black bg-opacity-70 hidden items-center justify-center z-[9999] p-4 backdrop-blur-sm">
+                        <div class="bg-gradient-to-br from-gray-900 to-black rounded-3xl shadow-2xl max-w-md w-full overflow-hidden border border-gray-800">
+                            <!-- Security Scan Effect -->
+                            <div class="security-scan"></div>
+                            
+                            <div class="p-8">
+                                <!-- Modal Header -->
+                                <div class="text-center mb-8">
+                                    <div class="w-20 h-20 rounded-full bg-gradient-to-br from-red-600 to-red-800 mx-auto mb-6 flex items-center justify-center shadow-danger-glow">
+                                        <i class="fas fa-lock text-white text-3xl"></i>
+                                    </div>
+                                    <h3 class="text-2xl font-bold text-white mb-2">
+                                        <i class="fas fa-shield-alt text-red-500 mr-3"></i>
+                                        Secure Session Termination
+                                    </h3>
+                                    <p class="text-gray-400">Confirm logout from the system</p>
+                                </div>
+                                
+                                <!-- Security Status -->
+                                <div class="bg-gray-900/50 rounded-xl p-4 mb-6 border border-gray-800">
+                                    <div class="flex items-center justify-between mb-3">
+                                        <div class="flex items-center">
+                                            <div class="w-3 h-3 rounded-full bg-green-500 animate-pulse mr-3"></div>
+                                            <span class="text-green-400 font-medium">Session Active</span>
+                                        </div>
+                                        <div class="session-timer text-red-400" id="sessionTimer">29:45</div>
+                                    </div>
+                                    <div class="text-xs text-gray-500">
+                                        <i class="fas fa-info-circle mr-1"></i>
+                                        All unsaved data will be secured before logout
+                                    </div>
+                                </div>
+                                
+                                <!-- Action Buttons -->
+                                <div class="space-y-4">
+                                    <button id="confirmLogoutBtn" 
+                                            class="w-full bg-gradient-to-r from-red-700 to-red-900 hover:from-red-600 hover:to-red-800 text-white font-bold py-4 rounded-xl transition-all duration-300 flex items-center justify-center transform hover:scale-[1.02] active:scale-95 shadow-lg group">
+                                        <div class="flex items-center">
+                                            <i class="fas fa-sign-out-alt text-xl mr-3 group-hover:animate-spin"></i>
+                                            <span class="text-lg">Confirm Logout</span>
+                                        </div>
+                                    </button>
+                                    
+                                    <button id="cancelLogoutBtn" 
+                                            class="w-full bg-gray-800 hover:bg-gray-700 text-gray-300 font-bold py-4 rounded-xl transition-all duration-300 flex items-center justify-center transform hover:scale-[1.02] active:scale-95 border border-gray-700">
+                                        <div class="flex items-center">
+                                            <i class="fas fa-times text-xl mr-3"></i>
+                                            <span>Cancel & Return</span>
+                                        </div>
+                                    </button>
+                                </div>
+                                
+                                <!-- Security Notice -->
+                                <div class="mt-8 pt-6 border-t border-gray-800">
+                                    <div class="flex items-start">
+                                        <i class="fas fa-exclamation-triangle text-yellow-500 mt-1 mr-3"></i>
+                                        <div class="text-sm text-gray-400">
+                                            <span class="font-medium text-gray-300">Security Protocol:</span> This action will terminate your session, clear temporary data, and log you out from all devices.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Logout Success Modal -->
+                    <div id="logoutSuccessModal" class="fixed inset-0 bg-black bg-opacity-70 hidden items-center justify-center z-[9999] p-4 backdrop-blur-sm">
+                        <div class="bg-gradient-to-br from-green-900/20 to-emerald-900/20 rounded-3xl shadow-2xl max-w-md w-full overflow-hidden border border-green-800/30">
+                            <div class="p-10 text-center">
+                                <div class="w-24 h-24 rounded-full bg-gradient-to-br from-green-500 to-emerald-600 mx-auto mb-8 flex items-center justify-center shadow-lg animate-bounce">
+                                    <i class="fas fa-check text-white text-4xl"></i>
+                                </div>
+                                <h3 class="text-3xl font-bold text-white mb-4">
+                                    <i class="fas fa-shield-check text-green-400 mr-3"></i>
+                                    Logout Successful!
+                                </h3>
+                                <p class="text-gray-300 text-lg mb-2">Session terminated securely</p>
+                                <p class="text-gray-400 mb-8">Redirecting to login page...</p>
+                                
+                                <div class="w-full bg-gray-800 rounded-full h-2 mb-6">
+                                    <div id="logoutProgress" class="bg-gradient-to-r from-green-500 to-emerald-600 h-2 rounded-full w-0 transition-all duration-1000"></div>
+                                </div>
+                                
+                                <p class="text-sm text-gray-500">
+                                    <i class="fas fa-lock mr-1"></i>
+                                    All data secured • Session cleared • Security protocol complete
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Download Modal -->
+                    <div id="downloadModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4">
+                        <div class="bg-white rounded-2xl shadow-float max-w-md w-full download-modal">
+                            <div class="p-6">
+                                <div class="flex justify-between items-center mb-6">
+                                    <h3 class="text-2xl font-bold text-dark">
+                                        <i class="fas fa-download text-accent mr-2"></i>
+                                        Export Student Data
+                                    </h3>
+                                    <button id="closeModal" class="text-gray-400 hover:text-gray-600 text-2xl">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                                
+                                <p class="text-gray-600 mb-6">
+                                    Export all generated student IDs in your preferred format. 
+                                    <span class="font-semibold text-primary" id="exportCount">0 records</span> will be exported.
+                                </p>
+                                
+                                <div class="space-y-4">
+                                    <button id="exportWordBtn" class="w-full bg-blue-50 hover:bg-blue-100 border-2 border-blue-200 text-blue-800 p-4 rounded-xl flex items-center justify-between transition-all duration-300 group hover:scale-[1.02]">
+                                        <div class="flex items-center">
+                                            <div class="w-12 h-12 rounded-lg bg-blue-100 flex items-center justify-center mr-4 group-hover:bg-blue-200">
+                                                <i class="fab fa-microsoft text-blue-600 text-2xl"></i>
+                                            </div>
+                                            <div class="text-left">
+                                                <h4 class="font-bold text-lg">Microsoft Word</h4>
+                                                <p class="text-sm text-blue-600">Professional table format</p>
+                                            </div>
+                                        </div>
+                                        <i class="fas fa-chevron-right text-blue-400 group-hover:text-blue-600"></i>
+                                    </button>
+                                    
+                                    <button id="exportPDFBtn" class="w-full bg-red-50 hover:bg-red-100 border-2 border-red-200 text-red-800 p-4 rounded-xl flex items-center justify-between transition-all duration-300 group hover:scale-[1.02]">
+                                        <div class="flex items-center">
+                                            <div class="w-12 h-12 rounded-lg bg-red-100 flex items-center justify-center mr-4 group-hover:bg-red-200">
+                                                <i class="fas fa-file-pdf text-red-600 text-2xl"></i>
+                                            </div>
+                                            <div class="text-left">
+                                                <h4 class="font-bold text-lg">PDF Document</h4>
+                                                <p class="text-sm text-red-600">Print-ready format</p>
+                                            </div>
+                                        </div>
+                                        <i class="fas fa-chevron-right text-red-400 group-hover:text-red-600"></i>
+                                    </button>
+                                    
+                                    <button id="exportCSVBtn" class="w-full bg-green-50 hover:bg-green-100 border-2 border-green-200 text-green-800 p-4 rounded-xl flex items-center justify-between transition-all duration-300 group hover:scale-[1.02]">
+                                        <div class="flex items-center">
+                                            <div class="w-12 h-12 rounded-lg bg-green-100 flex items-center justify-center mr-4 group-hover:bg-green-200">
+                                                <i class="fas fa-file-csv text-green-600 text-2xl"></i>
+                                            </div>
+                                            <div class="text-left">
+                                                <h4 class="font-bold text-lg">CSV Spreadsheet</h4>
+                                                <p class="text-sm text-green-600">Excel/Google Sheets compatible</p>
+                                            </div>
+                                        </div>
+                                        <i class="fas fa-chevron-right text-green-400 group-hover:text-green-600"></i>
+                                    </button>
+                                </div>
+                                
+                                <div class="mt-8 pt-6 border-t border-gray-200">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" id="includeTimestamp" class="w-4 h-4 text-accent rounded focus:ring-accent" checked>
+                                        <span class="ml-2 text-gray-700">Include generation timestamp</span>
+                                    </label>
+                                    <label class="flex items-center mt-3">
+                                        <input type="checkbox" id="includeChecksum" class="w-4 h-4 text-accent rounded focus:ring-accent" checked>
+                                        <span class="ml-2 text-gray-700">Include checksum verification</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Loading Overlay -->
+                    <div id="loadingOverlay" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+                        <div class="bg-white rounded-2xl p-8 shadow-float text-center">
+                            <div class="loading-wave mb-4">
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                            </div>
+                            <p class="text-dark font-medium" id="loadingText">Preparing your document...</p>
+                        </div>
+                    </div>
+                    
+                    <!-- ==================== MAIN CONTENT ==================== -->
+                    <div class="content-container page-transition">
+                        <!-- Header - NOW SCROLLS FREELY WITH PAGE -->
+                        <header class="page-header mb-8 md:mb-12 text-center">
+                            <div class="flex flex-col md:flex-row items-center justify-between mb-6">
+                               <a href="{% url 'general_exam_page' %}" class="flex items-center mb-4 md:mb-0 hover:opacity-80 transition-opacity">
+                                    <div class="w-16 h-16 rounded-full premium-gradient flex items-center justify-center mr-4 shadow-float animate-bounce-slow">
+                                        <i class="fas fa-id-card-alt text-white text-2xl"></i>
+                                    </div>
+                                    <div class="text-left">
+                                        <h1 class="text-2xl md:text-4xl font-bold text-dark bg-gradient-to-r from-primary to-premium bg-clip-text text-transparent">
+                                            EMIFORPHS Student ID Generator
+                                        </h1>
+                                        <p class="text-gray-600">Ultimate Enterprise Edition • Official ID System</p>
+                                    </div>
+                                </a>
+                                
+                                <div class="flex flex-col items-end">
+                                    <div class="flex items-center mb-3">
+                                        <!-- Simple Logout Button without user profile pop-up -->
+                                        <button onclick="showEnhancedLogout()" 
+                                                class="px-4 py-2 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white rounded-xl font-medium flex items-center shadow-lg hover:shadow-danger-glow transition-all duration-300">
+                                            <i class="fas fa-power-off mr-2"></i>
+                                            <span class="hidden md:inline">Logout</span>
+                                        </button>
+                                    </div>
+                                    
+                                    <div class="flex items-center glass-effect rounded-full px-4 py-2 shadow-card mb-2">
+                                        <i class="fas fa-graduation-cap text-accent mr-2"></i>
+                                        <span class="font-medium">Format: <code class="bg-gray-100 px-2 py-1 rounded font-mono">EMFHS-YYYY-XXX-XX</code></span>
+                                    </div>
+                                    <div id="storageIndicator" class="text-sm text-gray-600">
+                                        <i class="fas fa-database mr-1"></i>
+                                        Storage: <span id="storageUsed">0</span> / 5MB
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Storage Warning -->
+                            <div id="storageWarning" class="hidden bg-gradient-to-r from-yellow-50 to-orange-50 border border-yellow-200 rounded-xl p-4 mb-4">
+                                <div class="flex items-center">
+                                    <i class="fas fa-exclamation-triangle text-yellow-600 text-xl mr-3"></i>
+                                    <div>
+                                        <h3 class="font-bold text-yellow-800">Storage Optimization Recommended</h3>
+                                        <p class="text-yellow-700">You're approaching storage limit. Use the export feature to backup your data.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </header>
+                        
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                            <!-- Left Column: Input Form & Stats -->
+                            <div class="space-y-8">
+                                <!-- Input Form Section -->
+                                <div class="bg-white rounded-2xl shadow-card p-6 md:p-8 id-card hover-scroll-effect">
+                                    <h2 class="text-2xl font-bold text-dark mb-6 flex items-center">
+                                        <i class="fas fa-user-plus text-accent mr-3"></i>
+                                        Student Information
+                                    </h2>
+                                    
+                                    <form id="studentForm" class="space-y-6">
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                            <div>
+                                                <label for="fullName" class="block text-gray-700 font-medium mb-2">
+                                                    <i class="fas fa-user text-gray-500 mr-2"></i>Full Name
+                                                </label>
+                                                <input type="text" id="fullName" 
+                                                       class="w-full p-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-accent focus:border-accent outline-none transition-all duration-300"
+                                                       placeholder="Enter student's full name" required>
+                                            </div>
+                                            
+                                            <div>
+                                                <label for="enrollmentYear" class="block text-gray-700 font-medium mb-2">
+                                                    <i class="fas fa-calendar-alt text-gray-500 mr-2"></i>Enrollment Year
+                                                </label>
+                                                <select id="enrollmentYear" 
+                                                        class="w-full p-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-accent focus:border-accent outline-none transition-all duration-300">
+                                                    <!-- Years will be dynamically populated from 2020 to 3000 -->
+                                                </select>
+                                            </div>
+                                            
+                                            <div>
+                                                <label for="studentClass" class="block text-gray-700 font-medium mb-2">
+                                                    <i class="fas fa-school text-gray-500 mr-2"></i>Class
+                                                </label>
+                                                <select id="studentClass" 
+                                                        class="w-full p-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-accent focus:border-accent outline-none transition-all duration-300">
+                                                    <option value="JSS 1">JSS 1</option>
+                                                    <option value="JSS 2">JSS 2</option>
+                                                    <option value="JSS 3">JSS 3</option>
+                                                    <option value="SSS 1" selected>SSS 1</option>
+                                                    <option value="SSS 2">SSS 2</option>
+                                                    <option value="SSS 3">SSS 3</option>
+                                                </select>
+                                            </div>
+                                            
+                                            <div>
+                                                <label for="admissionDate" class="block text-gray-700 font-medium mb-2">
+                                                    <i class="fas fa-calendar-day text-gray-500 mr-2"></i>Admission Date
+                                                </label>
+                                                <input type="date" id="admissionDate" 
+                                                       class="w-full p-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-accent focus:border-accent outline-none transition-all duration-300"
+                                                       required>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="pt-4">
+                                            <button type="submit" 
+                                                    class="w-full premium-gradient text-white font-bold py-4 rounded-xl hover:opacity-90 transition duration-300 flex items-center justify-center shadow-card hover:shadow-hover transform hover:-translate-y-1">
+                                                <i class="fas fa-id-card mr-3"></i>
+                                                Generate Student ID
+                                            </button>
+                                        </div>
+                                    </form>
+                                    
+                                    <!-- Data Management Tools -->
+                                    <div class="mt-8 pt-6 border-t border-gray-200">
+                                        <h3 class="text-lg font-bold text-dark mb-4">Data Management</h3>
+                                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                            <button id="exportJsonBtn" class="bg-green-100 hover:bg-green-200 text-green-800 px-4 py-3 rounded-xl font-medium transition flex items-center justify-center transform hover:-translate-y-1">
+                                                <i class="fas fa-file-code mr-2"></i> Export JSON
+                                            </button>
+                                            <button id="importBtn" class="bg-purple-100 hover:bg-purple-200 text-purple-800 px-4 py-3 rounded-xl font-medium transition flex items-center justify-center transform hover:-translate-y-1">
+                                                <i class="fas fa-file-import mr-2"></i> Import
+                                            </button>
+                                            <button id="clearAllBtn" class="bg-red-100 hover:bg-red-200 text-red-800 px-4 py-3 rounded-xl font-medium transition flex items-center justify-center transform hover:-translate-y-1">
+                                                <i class="fas fa-trash mr-2"></i> Clear All
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Stats Section -->
+                                    <div class="mt-8 pt-6 border-t border-gray-200">
+                                        <h3 class="text-lg font-bold text-dark mb-4">System Statistics</h3>
+                                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                            <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-4 text-center transform hover:scale-105 transition">
+                                                <div class="text-2xl font-bold text-primary" id="totalIds">0</div>
+                                                <div class="text-gray-600 text-sm">Total Students</div>
+                                            </div>
+                                            <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-4 text-center transform hover:scale-105 transition">
+                                                <div class="text-2xl font-bold text-success" id="currentYearCount">0</div>
+                                                <div class="text-gray-600 text-sm" id="currentYearLabel">2025 Enrollees</div>
+                                            </div>
+                                            <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl p-4 text-center transform hover:scale-105 transition">
+                                                <div class="text-2xl font-bold text-premium" id="todayIds">0</div>
+                                                <div class="text-gray-600 text-sm">Today's Adds</div>
+                                            </div>
+                                            <div class="bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl p-4 text-center transform hover:scale-105 transition">
+                                                <div class="text-2xl font-bold text-warning" id="storagePercent">0%</div>
+                                                <div class="text-gray-600 text-sm">Storage Used</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Bulk Operations -->
+                                <div class="bg-white rounded-2xl shadow-card p-6 id-card hover-scroll-effect">
+                                    <h3 class="text-xl font-bold text-dark mb-4 flex items-center">
+                                        <i class="fas fa-bolt text-accent mr-3"></i>
+                                        Bulk Operations
+                                    </h3>
+                                    <div class="space-y-4">
+                                        <div>
+                                            <label class="block text-gray-700 font-medium mb-2">
+                                                <i class="fas fa-users text-gray-500 mr-2"></i>Generate Multiple IDs
+                                            </label>
+                                            <textarea id="bulkNames" 
+                                                      class="w-full p-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-accent focus:border-accent outline-none transition-all duration-300 h-32 resize-none"
+                                                      placeholder="Enter student names (one per line)&#10;Example:&#10;Adekunle Joy&#10;Bello Samuel&#10;Chukwu Emeka"></textarea>
+                                            <div class="text-sm text-gray-500 mt-1">Names will be assigned to the selected class and year</div>
+                                        </div>
+                                        <button id="bulkGenerateBtn" 
+                                                class="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold py-3 rounded-xl hover:opacity-90 transition flex items-center justify-center shadow-card transform hover:-translate-y-1">
+                                            <i class="fas fa-magic mr-2"></i>
+                                            Generate Bulk IDs
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Right Column: Preview & List -->
+                            <div class="space-y-8">
+                                <!-- ID Card Preview -->
+                                <div class="id-card shadow-card p-8 relative overflow-hidden hover-scroll-effect">
+                                    <!-- Decorative elements -->
+                                    <div class="absolute -top-20 -right-20 w-40 h-40 bg-gradient-to-br from-blue-100 to-transparent rounded-full opacity-50"></div>
+                                    <div class="absolute -bottom-20 -left-20 w-40 h-40 bg-gradient-to-tr from-purple-100 to-transparent rounded-full opacity-50"></div>
+                                    
+                                    <div class="flex justify-between items-start mb-6 relative">
+                                        <div>
+                                            <h2 class="text-xl font-bold text-dark">EMILIA FOREMOST HIGH SCHOOL</h2>
+                                            <p class="text-gray-600">Official Student Identification Card</p>
+                                        </div>
+                                        <div class="w-16 h-16 rounded-full premium-gradient flex items-center justify-center shadow-lg">
+                                            <i class="fas fa-graduation-cap text-white text-2xl"></i>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex flex-col md:flex-row items-center md:items-start mb-8 relative">
+                                        <div class="w-32 h-32 rounded-xl bg-gradient-to-br from-blue-100 to-gray-200 flex items-center justify-center mb-4 md:mb-0 md:mr-8 shadow-inner border-4 border-white">
+                                            <i class="fas fa-user text-gray-400 text-6xl"></i>
+                                        </div>
+                                        
+                                        <div class="flex-1">
+                                            <div class="mb-4">
+                                                <div class="text-gray-500 text-sm">STUDENT NAME</div>
+                                                <div class="text-xl font-bold text-dark" id="previewName">[Student Name]</div>
+                                            </div>
+                                            
+                                            <div class="grid grid-cols-2 gap-4 mb-6">
+                                                <div>
+                                                    <div class="text-gray-500 text-sm">STUDENT ID</div>
+                                                    <div class="text-lg font-mono font-bold text-primary" id="previewId">EMFHS-2025-A7K-B9</div>
+                                                </div>
+                                                <div>
+                                                    <div class="text-gray-500 text-sm">CLASS</div>
+                                                    <div class="text-lg font-bold text-dark" id="previewClass">SSS 1</div>
+                                                </div>
+                                                <div>
+                                                    <div class="text-gray-500 text-sm">ENROLLMENT YEAR</div>
+                                                    <div class="text-lg font-bold text-dark" id="previewYear">2025</div>
+                                                </div>
+                                                <div>
+                                                    <div class="text-gray-500 text-sm">ADMISSION DATE</div>
+                                                    <div class="text-lg font-bold text-dark" id="previewDate">Jan 10, 2025</div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="flex space-x-3">
+                                                <button onclick="copyCurrentId()" class="flex-1 bg-blue-100 hover:bg-blue-200 text-blue-800 px-4 py-2 rounded-lg font-medium transition flex items-center justify-center transform hover:-translate-y-1">
+                                                    <i class="fas fa-copy mr-2"></i> Copy ID
+                                                </button>
+                                                <button onclick="downloadSingleIdCard()" class="flex-1 bg-green-100 hover:bg-green-200 text-green-800 px-4 py-2 rounded-lg font-medium transition flex items-center justify-center transform hover:-translate-y-1">
+                                                    <i class="fas fa-id-card mr-2"></i> Save Card
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="text-xs text-gray-400 text-center pt-4 border-t border-gray-100">
+                                        <i class="fas fa-shield-alt mr-1"></i> Secure ID with verification checksum
+                                    </div>
+                                </div>
+                                
+                                <!-- Search & Generated IDs -->
+                                <div class="bg-white rounded-2xl shadow-card p-6 id-card hover-scroll-effect">
+                                    <div class="flex flex-col md:flex-row justify-between items-center mb-6">
+                                        <h2 class="text-2xl font-bold text-dark flex items-center mb-4 md:mb-0">
+                                            <i class="fas fa-list text-accent mr-3"></i>
+                                            Generated IDs
+                                        </h2>
+                                        
+                                        <div class="relative w-full md:w-64">
+                                            <input type="text" id="searchInput" 
+                                                   class="w-full p-3 pl-10 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-accent focus:border-accent outline-none transition-all duration-300"
+                                                   placeholder="Search students...">
+                                            <i class="fas fa-search text-gray-400 absolute left-3 top-3.5"></i>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Pagination Controls -->
+                                    <div class="flex justify-between items-center mb-4">
+                                        <div class="text-gray-600">
+                                            Showing <span id="pageStart">1</span>-<span id="pageEnd">10</span> of <span id="totalStudents">0</span>
+                                        </div>
+                                        <div class="flex space-x-2">
+                                            <button id="prevPage" class="px-3 py-1 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl disabled:opacity-50 transition transform hover:-translate-y-0.5">
+                                                <i class="fas fa-chevron-left"></i>
+                                            </button>
+                                            <span id="currentPage" class="px-3 py-1 font-medium">1</span>
+                                            <button id="nextPage" class="px-3 py-1 bg-gradient-to-r from-primary to-accent text-white rounded-xl disabled:opacity-50 transition transform hover:-translate-y-0.5">
+                                                <i class="fas fa-chevron-right"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="table-scroll-container rounded-xl border-2 border-gray-200">
+                                        <table class="min-w-full divide-y divide-gray-200">
+                                            <thead class="bg-gray-50 sticky top-0">
+                                                <tr>
+                                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">No.</th>
+                                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Student ID</th>
+                                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Name</th>
+                                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Class</th>
+                                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="idList" class="bg-white divide-y divide-gray-200">
+                                                <!-- IDs will be populated here -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    
+                                    <div class="mt-4 text-center text-gray-500" id="emptyMessage">
+                                        <i class="fas fa-user-graduate text-3xl mb-2 text-gray-300"></i>
+                                        <p class="font-medium">No student IDs generated yet.</p>
+                                        <p class="text-sm">Fill the form to create your first ID.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- FULL WIDTH FOOTER - DARK BLEND -->
+                    <footer class="full-width-footer page-footer footer-dark-blend mt-16">
+                        <div class="max-w-7xl mx-auto px-4 py-6 sm:py-8">
+                            <div class="text-center">
+                                <p class="mb-2 text-white"><strong>EMIFORPHS Student ID Generator System • Ultimate Edition • AI-Powered</strong></p>
+                                <p class="text-sm text-gray-400">Storage Capacity: 5MB • Supports 10,000+ Records • JSS/SSS Class System</p>
+                            </div>
+                            
+                            <div class="border-t border-gray-800 mt-6 sm:mt-8 pt-6 sm:pt-8 text-center">
+                                <p class="text-gray-500 text-xs sm:text-sm">
+                                    &copy; 2024 EMILIA FOREMOST HIGH SCHOOL. All Rights Reserved. • Secure Student ID Generator v3.0
+                                </p>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Hidden file input for import -->
+    <input type="file" id="fileInput" accept=".json" style="display: none;">
+    
+    <!-- Hidden logout form for Django -->
+    <form id="djangoLogoutForm" action="{% url 'staff_logout' %}" method="POST" style="display: none;">
+        {% csrf_token %}
+    </form>
+    
+    <script>
+        // ========== ROCK SOLID SCROLL - NO RUBBER BAND EVER ==========
+        const scrollContainer = document.getElementById('scrollContainer');
+        
+        if (scrollContainer) {
+            let touchStartY = 0;
+            let touchStartScrollTop = 0;
+            
+            // Store scroll positions
+            let scrollTop = 0;
+            let scrollHeight = 0;
+            let clientHeight = 0;
+            
+            // Function to enforce scroll boundaries - NO RUBBER BAND
+            function enforceBoundaries() {
+                if (!scrollContainer) return;
+                
+                scrollTop = scrollContainer.scrollTop;
+                scrollHeight = scrollContainer.scrollHeight;
+                clientHeight = scrollContainer.clientHeight;
+                
+                // Hard stop at top
+                if (scrollTop < 0) {
+                    scrollContainer.scrollTop = 0;
+                    return;
+                }
+                
+                // Hard stop at bottom
+                if (scrollTop + clientHeight > scrollHeight) {
+                    scrollContainer.scrollTop = Math.max(0, scrollHeight - clientHeight);
+                    return;
+                }
+            }
+            
+            // Prevent any rubber band effect on touch move
+            scrollContainer.addEventListener('touchstart', function(e) {
+                touchStartY = e.touches[0].clientY;
+                touchStartScrollTop = scrollContainer.scrollTop;
+            }, { passive: false });
+            
+            scrollContainer.addEventListener('touchmove', function(e) {
+                const currentY = e.touches[0].clientY;
+                const deltaY = currentY - touchStartY;
+                const currentScrollTop = scrollContainer.scrollTop;
+                const maxScrollTop = scrollContainer.scrollHeight - scrollContainer.clientHeight;
+                
+                // If at top and trying to pull down - PREVENT
+                if (currentScrollTop <= 0 && deltaY > 0) {
+                    e.preventDefault();
+                    return false;
+                }
+                
+                // If at bottom and trying to pull up - PREVENT
+                if (currentScrollTop >= maxScrollTop - 1 && deltaY < 0) {
+                    e.preventDefault();
+                    return false;
+                }
+            }, { passive: false });
+            
+            // Enforce boundaries on scroll
+            scrollContainer.addEventListener('scroll', function() {
+                enforceBoundaries();
+            });
+            
+            // Enforce boundaries on resize
+            window.addEventListener('resize', function() {
+                enforceBoundaries();
+            });
+            
+            // Initial enforcement
+            enforceBoundaries();
+            
+            // iOS specific fixes
+            if ('ontouchstart' in window) {
+                scrollContainer.style.WebkitOverflowScrolling = 'touch';
+            }
+        }
+        
+        // ====================
+        // ULTIMATE SYSTEM - ALL ORIGINAL CODE BELOW (unchanged)
+        // ====================
+        
+        // Configuration
+        const ITEMS_PER_PAGE = 20;
+        const STORAGE_LIMIT = 5 * 1024 * 1024; // 5MB
+        const START_YEAR = 2020;
+        const END_YEAR = 3000;
+        
+        // State management
+        let students = [];
+        let yearCounters = {};
+        let currentPage = 1;
+        let currentSearch = '';
+        let sessionTimerInterval;
+        let sessionTime = 1800; // 30 minutes in seconds
+        
+        // CHARACTER SETS FOR ID GENERATION
+        const ALPHANUMERIC_CHARS = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // Removed confusing chars: 0, O, 1, I
+        const NUMERIC_CHARS = '23456789'; // Only numbers 2-9 (avoid 0,1)
+        const ALPHABET_CHARS = 'ABCDEFGHJKLMNPQRSTUVWXYZ'; // Removed confusing letters
+        
+        // ==================== ENHANCED LOGOUT SYSTEM ====================
+        
+        // Initialize session timer
+        function initSessionTimer() {
+            updateSessionTimerDisplay();
+            sessionTimerInterval = setInterval(() => {
+                if (sessionTime > 0) {
+                    sessionTime--;
+                    updateSessionTimerDisplay();
+                    
+                    // Show warning at 5 minutes
+                    if (sessionTime === 300) {
+                        showNotification('Session expires in 5 minutes. Save your work.', 'warning');
+                    }
+                    
+                    // Auto-logout at 0
+                    if (sessionTime === 0) {
+                        performAutoLogout();
+                    }
+                }
+            }, 1000);
+        }
+        
+        function updateSessionTimerDisplay() {
+            const minutes = Math.floor(sessionTime / 60);
+            const seconds = sessionTime % 60;
+            const timerElement = document.getElementById('sessionTimer');
+            if (timerElement) {
+                timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                // Change color based on time
+                if (sessionTime < 300) { // Less than 5 minutes
+                    timerElement.className = 'session-timer text-red-500 animate-pulse';
+                } else if (sessionTime < 600) { // Less than 10 minutes
+                    timerElement.className = 'session-timer text-yellow-500';
+                } else {
+                    timerElement.className = 'session-timer text-green-400';
+                }
+            }
+        }
+        
+        // Show enhanced logout modal
+        function showEnhancedLogout() {
+            // Pause session timer
+            clearInterval(sessionTimerInterval);
+            
+            // Create confetti effect
+            createConfetti();
+            
+            // Show modal with animation
+            const modal = document.getElementById('logoutModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            
+            // Add entrance animation
+            setTimeout(() => {
+                modal.querySelector('div > div').style.transform = 'scale(1)';
+                modal.querySelector('div > div').style.opacity = '1';
+            }, 10);
+            
+            // Reset focus to cancel button
+            setTimeout(() => {
+                document.getElementById('cancelLogoutBtn').focus();
+            }, 100);
+        }
+        
+        // Hide logout modal
+        function hideLogoutModal() {
+            const modal = document.getElementById('logoutModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            
+            // Resume session timer
+            initSessionTimer();
+        }
+        
+        // Perform logout with Django
+        function performDjangoLogout() {
+            // Show success animation
+            showLogoutSuccessAnimation();
+            
+            // Clear all local data
+            clearAllLocalData();
+            
+            // After 2 seconds, submit Django logout form
+            setTimeout(() => {
+                // Create and submit Django logout form
+                const logoutForm = document.getElementById('djangoLogoutForm');
+                if (logoutForm) {
+                    // Add CSRF token if not present
+                    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                    const csrfInput = document.createElement('input');
+                    csrfInput.type = 'hidden';
+                    csrfInput.name = 'csrfmiddlewaretoken';
+                    csrfInput.value = csrfToken;
+                    logoutForm.appendChild(csrfInput);
+                    
+                    logoutForm.submit();
+                } else {
+                    // Fallback: Redirect to logout URL
+                    window.location.href = '/accounts/logout/';
+                }
+            }, 2000);
+        }
+        
+        // Auto logout when session expires
+        function performAutoLogout() {
+            showNotification('Session expired. Logging out automatically...', 'warning');
+            setTimeout(() => {
+                performDjangoLogout();
+            }, 2000);
+        }
+        
+        // Show logout success animation
+        function showLogoutSuccessAnimation() {
+            // Hide logout modal
+            hideLogoutModal();
+            
+            // Show success modal
+            const successModal = document.getElementById('logoutSuccessModal');
+            successModal.classList.remove('hidden');
+            successModal.classList.add('flex');
+            
+            // Animate progress bar
+            const progressBar = document.getElementById('logoutProgress');
+            setTimeout(() => {
+                progressBar.style.width = '100%';
+            }, 100);
+            
+            // Create more confetti
+            createEnhancedConfetti();
+            
+            // Play success sound (optional)
+            if (typeof Audio !== 'undefined') {
+                const successSound = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-correct-answer-tone-2870.mp3');
+                successSound.volume = 0.3;
+                successSound.play().catch(e => console.log('Audio play failed:', e));
+            }
+        }
+        
+        // Create confetti effect
+        function createConfetti() {
+            const colors = ['#ef4444', '#3b82f6', '#10b981', '#f59e0b', '#8b5cf6'];
+            const container = document.body;
+            
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animation = `confetti-fall ${Math.random() * 3 + 2}s linear forwards`;
+                confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                container.appendChild(confetti);
+                
+                // Remove after animation
+                setTimeout(() => {
+                    confetti.remove();
+                }, 5000);
+            }
+        }
+        
+        // Create enhanced confetti for success
+        function createEnhancedConfetti() {
+            const shapes = ['●', '■', '▲', '◆', '★'];
+            const container = document.body;
+            
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.width = '20px';
+                confetti.style.height = '20px';
+                confetti.style.fontSize = '12px';
+                confetti.style.color = '#10b981';
+                confetti.style.display = 'flex';
+                confetti.style.alignItems = 'center';
+                confetti.style.justifyContent = 'center';
+                confetti.textContent = shapes[Math.floor(Math.random() * shapes.length)];
+                confetti.style.animation = `confetti-fall ${Math.random() * 4 + 2}s linear forwards`;
+                confetti.style.animationDelay = Math.random() * 1 + 's';
+                container.appendChild(confetti);
+                
+                // Remove after animation
+                setTimeout(() => {
+                    confetti.remove();
+                }, 6000);
+            }
+        }
+        
+        // Clear all local data
+        function clearAllLocalData() {
+            try {
+                // Clear localStorage
+                localStorage.removeItem('emfhs_students');
+                localStorage.removeItem('emfhs_backup_' + Date.now());
+                
+                // Clear any session data
+                sessionStorage.clear();
+                
+                // Clear form data
+                document.getElementById('studentForm').reset();
+                
+                // Clear state
+                students = [];
+                yearCounters = {};
+                currentPage = 1;
+                currentSearch = '';
+                
+                console.log('All local data cleared securely');
+            } catch (error) {
+                console.error('Error clearing local data:', error);
+            }
+        }
+        
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize session timer
+            initSessionTimer();
+            
+            // Populate years from 2020 to 3000
+            populateYearOptions();
+            
+            // Set default admission date
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('admissionDate').value = today;
+            
+            // Load data
+            loadStudents();
+            updateStats();
+            updateStorageIndicator();
+            updateDownloadCount();
+            renderStudentList();
+            
+            // ==================== LOGOUT EVENT LISTENERS ====================
+            
+            // Logout modal buttons
+            document.getElementById('confirmLogoutBtn').addEventListener('click', performDjangoLogout);
+            document.getElementById('cancelLogoutBtn').addEventListener('click', hideLogoutModal);
+            
+            // Close modal when clicking outside
+            document.getElementById('logoutModal').addEventListener('click', function(e) {
+                if (e.target.id === 'logoutModal') {
+                    hideLogoutModal();
+                }
+            });
+            
+            // Keyboard shortcuts for logout
+            document.addEventListener('keydown', function(e) {
+                // Ctrl+Shift+L for logout
+                if (e.ctrlKey && e.shiftKey && e.key === 'L') {
+                    e.preventDefault();
+                    showEnhancedLogout();
+                }
+                
+                // Escape to cancel logout modal
+                if (e.key === 'Escape') {
+                    const logoutModal = document.getElementById('logoutModal');
+                    if (!logoutModal.classList.contains('hidden')) {
+                        hideLogoutModal();
+                    }
+                }
+            });
+            
+            // ==================== EXISTING EVENT LISTENERS ====================
+            
+            document.getElementById('studentForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                generateStudentID();
+            });
+            
+            document.getElementById('clearAllBtn').addEventListener('click', confirmClearAll);
+            document.getElementById('exportJsonBtn').addEventListener('click', exportJsonData);
+            document.getElementById('importBtn').addEventListener('click', () => document.getElementById('fileInput').click());
+            document.getElementById('bulkGenerateBtn').addEventListener('click', bulkGenerate);
+            document.getElementById('searchInput').addEventListener('input', function(e) {
+                currentSearch = e.target.value;
+                currentPage = 1;
+                renderStudentList();
+            });
+            
+            document.getElementById('prevPage').addEventListener('click', () => changePage(-1));
+            document.getElementById('nextPage').addEventListener('click', () => changePage(1));
+            
+            document.getElementById('fileInput').addEventListener('change', importData);
+            
+            // Floating download button events
+            document.getElementById('floatingDownloadBtn').addEventListener('click', showDownloadModal);
+            document.getElementById('closeModal').addEventListener('click', hideDownloadModal);
+            document.getElementById('exportWordBtn').addEventListener('click', exportToWord);
+            document.getElementById('exportPDFBtn').addEventListener('click', exportToPDF);
+            document.getElementById('exportCSVBtn').addEventListener('click', exportToCSV);
+            
+            // Close modal when clicking outside
+            document.getElementById('downloadModal').addEventListener('click', function(e) {
+                if (e.target.id === 'downloadModal') {
+                    hideDownloadModal();
+                }
+            });
+            
+            // Auto-save backup every 10 minutes
+            setInterval(() => {
+                if (students.length > 0) {
+                    localStorage.setItem('emfhs_backup_' + Date.now(), JSON.stringify(students));
+                    console.log('Auto-backup created');
+                }
+            }, 10 * 60 * 1000);
+            
+            // Reset session timer on user activity
+            ['click', 'keypress', 'mousemove', 'scroll'].forEach(event => {
+                document.addEventListener(event, () => {
+                    sessionTime = 1800; // Reset to 30 minutes
+                    updateSessionTimerDisplay();
+                });
+            });
+        });
+        
+        // Populate year options from 2020 to 3000
+        function populateYearOptions() {
+            const yearSelect = document.getElementById('enrollmentYear');
+            yearSelect.innerHTML = '';
+            
+            const currentYear = new Date().getFullYear();
+            let selectedSet = false;
+            
+            for (let year = START_YEAR; year <= END_YEAR; year++) {
+                const option = document.createElement('option');
+                option.value = year;
+                option.textContent = year;
+                
+                if (year === currentYear && !selectedSet) {
+                    option.selected = true;
+                    selectedSet = true;
+                }
+                
+                yearSelect.appendChild(option);
+            }
+        }
+        
+        // Load students
+        function loadStudents() {
+            const saved = localStorage.getItem('emfhs_students');
+            if (saved) {
+                try {
+                    students = JSON.parse(saved);
+                    
+                    // Initialize year counters
+                    students.forEach(student => {
+                        const year = student.year;
+                        if (!yearCounters[year]) {
+                            yearCounters[year] = 1;
+                        } else {
+                            yearCounters[year] += 1;
+                        }
+                    });
+                    
+                    console.log(`Loaded ${students.length} students from storage`);
+                } catch (e) {
+                    console.error('Error loading students:', e);
+                    students = [];
+                }
+            }
+        }
+        
+        // Save with storage check
+        function saveStudents() {
+            try {
+                const dataStr = JSON.stringify(students);
+                const dataSize = new Blob([dataStr]).size;
+                
+                // Check storage limit
+                if (dataSize > STORAGE_LIMIT) {
+                    showNotification('Storage limit reached! Cannot save more data.', 'error');
+                    return false;
+                }
+                
+                localStorage.setItem('emfhs_students', dataStr);
+                updateStats();
+                updateStorageIndicator();
+                updateDownloadCount();
+                return true;
+            } catch (e) {
+                console.error('Error saving students:', e);
+                showNotification('Error saving data!', 'error');
+                return false;
+            }
+        }
+        
+        // ==================== ENHANCED ID GENERATION ====================
+        
+        // Generate mixed alphanumeric code (3 characters)
+        function generateMiddleCode(year) {
+            // Create a unique seed based on year and current count
+            if (!yearCounters[year]) {
+                yearCounters[year] = 1;
+            } else {
+                yearCounters[year] += 1;
+            }
+            
+            const seed = year * 1000 + yearCounters[year];
+            
+            // Create a scrambled pattern that's not sequential
+            const patterns = [
+                'A1B', 'C2D', 'E3F', 'G4H', 'I5J', 'K6L', 'M7N', 'P8Q', 'R9S', 'T2U',
+                'V3W', 'X4Y', 'Z5A', 'B6C', 'D7E', 'F8G', 'H9I', 'J2K', 'L3M', 'N4O',
+                'P5Q', 'R6S', 'T7U', 'V8W', 'X9Y', 'Z2A', 'B3C', 'D4E', 'F5G', 'H6I'
+            ];
+            
+            // Use the seed to select a pattern, but make it non-sequential
+            const patternIndex = (seed * 13) % patterns.length;
+            let code = patterns[patternIndex];
+            
+            // Add some randomness
+            const randomChar = ALPHANUMERIC_CHARS.charAt(Math.floor(Math.random() * ALPHANUMERIC_CHARS.length));
+            const position = Math.floor(Math.random() * 3);
+            
+            // Replace one character in the code with a random character
+            code = code.substring(0, position) + randomChar + code.substring(position + 1);
+            
+            return code;
+        }
+        
+        // Generate checksum (2 characters)
+        function generateChecksum() {
+            let checksum = '';
+            for (let i = 0; i < 2; i++) {
+                checksum += ALPHANUMERIC_CHARS.charAt(Math.floor(Math.random() * ALPHANUMERIC_CHARS.length));
+            }
+            return checksum;
+        }
+        
+        // Generate unique student ID
+        function generateStudentID() {
+            const fullName = document.getElementById('fullName').value.trim();
+            const year = document.getElementById('enrollmentYear').value;
+            const studentClass = document.getElementById('studentClass').value;
+            const admissionDate = new Date(document.getElementById('admissionDate').value);
+            
+            if (!fullName) {
+                showNotification('Please enter a student name', 'warning');
+                return;
+            }
+            
+            // Check for duplicates
+            const duplicate = students.find(student => 
+                student.name.toLowerCase() === fullName.toLowerCase() && 
+                student.class === studentClass && 
+                student.year === year
+            );
+            
+            if (duplicate) {
+                showNotification(`Student "${fullName}" already exists in class ${studentClass} (${year})`, 'warning');
+                updatePreview(duplicate);
+                return;
+            }
+            
+            // Generate ID parts
+            const middleCode = generateMiddleCode(year);
+            const checksum = generateChecksum();
+            const studentId = `EMFHS-${year}-${middleCode}-${checksum}`;
+            
+            // Create student object
+            const student = {
+                id: studentId,
+                name: fullName,
+                class: studentClass,
+                year: year,
+                admissionDate: admissionDate.toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric'
+                }),
+                timestamp: new Date().toISOString(),
+                dateObj: admissionDate.toISOString().split('T')[0]
+            };
+            
+            students.unshift(student);
+            
+            if (saveStudents()) {
+                renderStudentList();
+                updatePreview(student);
+                document.getElementById('fullName').value = '';
+                document.getElementById('admissionDate').value = new Date().toISOString().split('T')[0];
+                showNotification(`ID ${studentId} generated for ${fullName}!`, 'success');
+                
+                // Smooth scroll to the new entry in the table
+                setTimeout(() => {
+                    const tableContainer = document.querySelector('.table-scroll-container');
+                    if (tableContainer) {
+                        tableContainer.scrollTop = 0;
+                    }
+                }, 100);
+            }
+        }
+        
+        // Bulk generate IDs
+        function bulkGenerate() {
+            const namesText = document.getElementById('bulkNames').value.trim();
+            if (!namesText) {
+                showNotification('Please enter student names', 'warning');
+                return;
+            }
+            
+            const names = namesText.split('\n').filter(name => name.trim());
+            const year = document.getElementById('enrollmentYear').value;
+            const studentClass = document.getElementById('studentClass').value;
+            
+            if (names.length > 100) {
+                if (!confirm(`You're about to generate ${names.length} IDs. Continue?`)) return;
+            }
+            
+            let generated = 0;
+            let skipped = 0;
+            
+            names.forEach(fullName => {
+                fullName = fullName.trim();
+                if (!fullName) return;
+                
+                // Check duplicate
+                const duplicate = students.find(student => 
+                    student.name.toLowerCase() === fullName.toLowerCase() && 
+                    student.class === studentClass && 
+                    student.year === year
+                );
+                
+                if (duplicate) {
+                    skipped++;
+                    return;
+                }
+                
+                // Generate ID
+                const middleCode = generateMiddleCode(year);
+                const checksum = generateChecksum();
+                const studentId = `EMFHS-${year}-${middleCode}-${checksum}`;
+                
+                const student = {
+                    id: studentId,
+                    name: fullName,
+                    class: studentClass,
+                    year: year,
+                    admissionDate: new Date().toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric'
+                    }),
+                    timestamp: new Date().toISOString(),
+                    dateObj: new Date().toISOString().split('T')[0]
+                };
+                
+                students.unshift(student);
+                generated++;
+            });
+            
+            if (saveStudents()) {
+                renderStudentList();
+                document.getElementById('bulkNames').value = '';
+                showNotification(`Generated ${generated} IDs, skipped ${skipped} duplicates`, 'success');
+            }
+        }
+        
+        // ====================
+        // DOWNLOAD/EXPORT FUNCTIONS
+        // ====================
+        
+        function showDownloadModal() {
+            if (students.length === 0) {
+                showNotification('No data to export', 'warning');
+                return;
+            }
+            
+            document.getElementById('exportCount').textContent = `${students.length} records`;
+            document.getElementById('downloadModal').classList.remove('hidden');
+            document.getElementById('downloadModal').classList.add('flex');
+        }
+        
+        function hideDownloadModal() {
+            document.getElementById('downloadModal').classList.add('hidden');
+            document.getElementById('downloadModal').classList.remove('flex');
+        }
+        
+        function showLoading(message = 'Preparing your document...') {
+            document.getElementById('loadingText').textContent = message;
+            document.getElementById('loadingOverlay').classList.remove('hidden');
+            document.getElementById('loadingOverlay').classList.add('flex');
+        }
+        
+        function hideLoading() {
+            document.getElementById('loadingOverlay').classList.add('hidden');
+            document.getElementById('loadingOverlay').classList.remove('flex');
+        }
+        
+        // Export to Word
+        function exportToWord() {
+            showLoading('Generating Word document...');
+            
+            setTimeout(() => {
+                const includeTimestamp = document.getElementById('includeTimestamp').checked;
+                const includeChecksum = document.getElementById('includeChecksum').checked;
+                
+                let content = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <meta charset="UTF-8">
+                    <title>EMFHS Student IDs - ${new Date().toLocaleDateString()}</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; margin: 40px; }
+                        h1 { color: #1e40af; border-bottom: 3px solid #3b82f6; padding-bottom: 10px; }
+                        h2 { color: #374151; margin-top: 30px; }
+                        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+                        th { background-color: #1e40af; color: white; padding: 12px; text-align: left; }
+                        td { padding: 10px; border-bottom: 1px solid #e5e7eb; }
+                        tr:nth-child(even) { background-color: #f8fafc; }
+                        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+                        .logo { font-size: 24px; font-weight: bold; color: #1e40af; }
+                        .footer { margin-top: 40px; color: #6b7280; font-size: 12px; text-align: center; }
+                        .checksum { font-family: monospace; color: #059669; }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <div>
+                            <h1>EMILIA FOREMOST HIGH SCHOOL</h1>
+                            <h2>Student ID Registry</h2>
+                        </div>
+                        <div class="logo">EMIFORPHS ID System</div>
+                    </div>
+                    
+                    <p><strong>Report Date:</strong> ${new Date().toLocaleDateString('en-US', { 
+                        year: 'numeric', 
+                        month: 'long', 
+                        day: 'numeric',
+                        weekday: 'long' 
+                    })}</p>
+                    <p><strong>Total Students:</strong> ${students.length}</p>
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>Student ID</th>
+                                <th>Full Name</th>
+                                <th>Class</th>
+                                <th>Enrollment Year</th>
+                                <th>Admission Date</th>
+                                ${includeTimestamp ? '<th>Generated On</th>' : ''}
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
+                
+                students.forEach((student, index) => {
+                    content += `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td><strong>${student.id}</strong></td>
+                        <td>${student.name}</td>
+                        <td>${student.class}</td>
+                        <td>${student.year}</td>
+                        <td>${student.admissionDate}</td>
+                        ${includeTimestamp ? `<td>${new Date(student.timestamp).toLocaleDateString()}</td>` : ''}
+                    </tr>
+                    `;
+                });
+                
+                content += `
+                        </tbody>
+                    </table>
+                    
+                    ${includeChecksum ? `
+                    <h2>Checksum Information</h2>
+                    <p>The 2-character checksum (last part of ID) is generated using a secure algorithm that avoids confusing characters (0/O, 1/I).</p>
+                    <p>Valid characters: <span class="checksum">ABCDEFGHJKLMNPQRSTUVWXYZ23456789</span></p>
+                    ` : ''}
+                    
+                    <div class="footer">
+                        <p>Generated by EMIFORPHS Student ID Generator System | Format: EMFHS-YYYY-XXX-XX</p>
+                        <p>© ${new Date().getFullYear()} Emilia Foremost High School. All rights reserved.</p>
+                    </div>
+                </body>
+                </html>
+                `;
+                
+                const blob = new Blob([content], { type: 'application/msword' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `EMIFORPHS_Students_${new Date().toISOString().split('T')[0]}.doc`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                hideDownloadModal();
+                hideLoading();
+                showNotification('Word document exported successfully!', 'success');
+            }, 1000);
+        }
+        
+        // Export to PDF
+        function exportToPDF() {
+            showLoading('Generating PDF document...');
+            
+            setTimeout(() => {
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF('p', 'mm', 'a4');
+                const includeTimestamp = document.getElementById('includeTimestamp').checked;
+                const includeChecksum = document.getElementById('includeChecksum').checked;
+                
+                // Title
+                doc.setFontSize(20);
+                doc.setTextColor(30, 64, 175);
+                doc.text('EMILIA FOREMOST HIGH SCHOOL', 105, 20, { align: 'center' });
+                
+                doc.setFontSize(16);
+                doc.setTextColor(55, 65, 81);
+                doc.text('Student ID Registry', 105, 30, { align: 'center' });
+                
+                // Report info
+                doc.setFontSize(10);
+                doc.setTextColor(107, 114, 128);
+                doc.text(`Report Date: ${new Date().toLocaleDateString()}`, 20, 45);
+                doc.text(`Total Students: ${students.length}`, 20, 52);
+                
+                // Table data
+                const headers = [
+                    ['No.', 'Student ID', 'Full Name', 'Class', 'Year', 'Admission Date']
+                ];
+                
+                if (includeTimestamp) {
+                    headers[0].push('Generated On');
+                }
+                
+                const data = students.map((student, index) => {
+                    const row = [
+                        (index + 1).toString(),
+                        student.id,
+                        student.name,
+                        student.class,
+                        student.year,
+                        student.admissionDate
+                    ];
+                    
+                    if (includeTimestamp) {
+                        row.push(new Date(student.timestamp).toLocaleDateString());
+                    }
+                    
+                    return row;
+                });
+                
+                // Generate table
+                doc.autoTable({
+                    head: headers,
+                    body: data,
+                    startY: 60,
+                    theme: 'grid',
+                    headStyles: { 
+                        fillColor: [30, 64, 175],
+                        textColor: 255,
+                        fontSize: 10
+                    },
+                    bodyStyles: { fontSize: 9 },
+                    alternateRowStyles: { fillColor: [248, 250, 252] }
+                });
+                
+                // Footer
+                const pageCount = doc.internal.getNumberOfPages();
+                for (let i = 1; i <= pageCount; i++) {
+                    doc.setPage(i);
+                    doc.setFontSize(8);
+                    doc.setTextColor(128, 128, 128);
+                    doc.text(
+                        `Page ${i} of ${pageCount} • Generated by EMIFORPHS ID System • © ${new Date().getFullYear()}`,
+                        105,
+                        doc.internal.pageSize.height - 10,
+                        { align: 'center' }
+                    );
+                }
+                
+                // Save PDF
+                doc.save(`EMIFORPHS_Students_${new Date().toISOString().split('T')[0]}.pdf`);
+                
+                hideDownloadModal();
+                hideLoading();
+                showNotification('PDF document exported successfully!', 'success');
+            }, 1000);
+        }
+        
+        // Export to CSV
+        function exportToCSV() {
+            showLoading('Generating CSV file...');
+            
+            setTimeout(() => {
+                const includeTimestamp = document.getElementById('includeTimestamp').checked;
+                
+                let csvContent = "No.,Student ID,Full Name,Class,Enrollment Year,Admission Date";
+                
+                if (includeTimestamp) {
+                    csvContent += ",Generated On";
+                }
+                
+                csvContent += "\n";
+                
+                students.forEach((student, index) => {
+                    const row = [
+                        index + 1,
+                        student.id,
+                        `"${student.name}"`,
+                        student.class,
+                        student.year,
+                        student.admissionDate
+                    ];
+                    
+                    if (includeTimestamp) {
+                        row.push(new Date(student.timestamp).toLocaleDateString());
+                    }
+                    
+                    csvContent += row.join(",") + "\n";
+                });
+                
+                const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `EMIFORPHS_Students_${new Date().toISOString().split('T')[0]}.csv`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                hideDownloadModal();
+                hideLoading();
+                showNotification('CSV file exported successfully!', 'success');
+            }, 500);
+        }
+        
+        // Export JSON data
+        function exportJsonData() {
+            if (students.length === 0) {
+                showNotification('No data to export', 'warning');
+                return;
+            }
+            
+            const dataStr = JSON.stringify(students, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `emforphs_students_${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            showNotification(`Exported ${students.length} records as JSON`, 'success');
+        }
+        
+        // Import data
+        function importData(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            if (!confirm('Importing data will replace current records. Continue?')) {
+                document.getElementById('fileInput').value = '';
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const imported = JSON.parse(e.target.result);
+                    
+                    // Validate imported data
+                    if (!Array.isArray(imported) || imported.length === 0) {
+                        throw new Error('Invalid data format');
+                    }
+                    
+                    // Check first item structure
+                    const first = imported[0];
+                    if (!first.id || !first.name || !first.year) {
+                        throw new Error('Data missing required fields');
+                    }
+                    
+                    // Check storage capacity
+                    const dataSize = new Blob([JSON.stringify(imported)]).size;
+                    if (dataSize > STORAGE_LIMIT) {
+                        showNotification(`Import too large (${formatBytes(dataSize)}). Max: 5MB`, 'error');
+                        return;
+                    }
+                    
+                    students = imported;
+                    
+                    // Reset year counters
+                    yearCounters = {};
+                    students.forEach(student => {
+                        const year = student.year;
+                        if (!yearCounters[year]) {
+                            yearCounters[year] = 1;
+                        } else {
+                            yearCounters[year] += 1;
+                        }
+                    });
+                    
+                    saveStudents();
+                    renderStudentList();
+                    updateStats();
+                    
+                    if (students.length > 0) {
+                        updatePreview(students[0]);
+                    }
+                    
+                    showNotification(`Imported ${students.length} records successfully`, 'success');
+                } catch (error) {
+                    console.error('Import error:', error);
+                    showNotification('Error importing data. Check file format.', 'error');
+                }
+                
+                // Reset file input
+                document.getElementById('fileInput').value = '';
+            };
+            
+            reader.readAsText(file);
+        }
+        
+        // ====================
+        // UI FUNCTIONS
+        // ====================
+        
+        // Render student list with pagination
+        function renderStudentList() {
+            const tbody = document.getElementById('idList');
+            const emptyMessage = document.getElementById('emptyMessage');
+            
+            // Filter students based on search
+            let filteredStudents = students;
+            if (currentSearch) {
+                const searchTerm = currentSearch.toLowerCase();
+                filteredStudents = students.filter(student => 
+                    student.name.toLowerCase().includes(searchTerm) ||
+                    student.id.toLowerCase().includes(searchTerm) ||
+                    student.class.toLowerCase().includes(searchTerm) ||
+                    student.year.includes(searchTerm)
+                );
+            }
+            
+            const total = filteredStudents.length;
+            const totalPages = Math.ceil(total / ITEMS_PER_PAGE);
+            
+            // Adjust current page if needed
+            if (currentPage > totalPages && totalPages > 0) currentPage = totalPages;
+            if (currentPage < 1) currentPage = 1;
+            
+            const start = (currentPage - 1) * ITEMS_PER_PAGE;
+            const end = start + ITEMS_PER_PAGE;
+            const pageStudents = filteredStudents.slice(start, end);
+            
+            // Update pagination info
+            document.getElementById('pageStart').textContent = total > 0 ? start + 1 : 0;
+            document.getElementById('pageEnd').textContent = Math.min(end, total);
+            document.getElementById('totalStudents').textContent = total;
+            document.getElementById('currentPage').textContent = currentPage;
+            
+            document.getElementById('prevPage').disabled = currentPage === 1;
+            document.getElementById('nextPage').disabled = currentPage === totalPages || totalPages === 0;
+            
+            // Render table
+            if (pageStudents.length === 0) {
+                tbody.innerHTML = '';
+                emptyMessage.style.display = 'block';
+                emptyMessage.textContent = currentSearch ? 
+                    'No students found matching your search' : 
+                    'No student IDs generated yet. Fill the form to create your first ID.';
+                return;
+            }
+            
+            emptyMessage.style.display = 'none';
+            
+            let html = '';
+            pageStudents.forEach((student, index) => {
+                const actualIndex = start + index;
+                html += `
+                <tr class="hover:bg-gray-50 transition hover-scroll-effect">
+                    <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-900">${actualIndex + 1}</td>
+                    <td class="px-4 py-3 whitespace-nowrap text-sm font-mono font-bold text-primary">
+                        <span class="cursor-pointer hover:text-secondary" onclick="copyToClipboard('${student.id}')" title="Click to copy">
+                            ${student.id}
+                        </span>
+                    </td>
+                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-900">${student.name}</td>
+                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">${student.class}</td>
+                    <td class="px-4 py-3 whitespace-nowrap text-sm">
+                        <button onclick="viewStudent(${students.indexOf(student)})" class="text-accent hover:text-secondary mr-3" title="View">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button onclick="editStudent(${students.indexOf(student)})" class="text-warning hover:text-orange-800 mr-3" title="Edit">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button onclick="deleteStudent(${students.indexOf(student)})" class="text-danger hover:text-red-800" title="Delete">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+                `;
+            });
+            
+            tbody.innerHTML = html;
+        }
+        
+        function changePage(delta) {
+            const total = currentSearch ? 
+                students.filter(s => 
+                    s.name.toLowerCase().includes(currentSearch) ||
+                    s.id.toLowerCase().includes(currentSearch) ||
+                    s.class.toLowerCase().includes(currentSearch) ||
+                    s.year.includes(currentSearch)
+                ).length : students.length;
+            
+            const totalPages = Math.ceil(total / ITEMS_PER_PAGE);
+            const newPage = currentPage + delta;
+            
+            if (newPage >= 1 && newPage <= totalPages) {
+                currentPage = newPage;
+                renderStudentList();
+                
+                // Smooth scroll to top of table
+                const tableContainer = document.querySelector('.table-scroll-container');
+                if (tableContainer) {
+                    tableContainer.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                }
+            }
+        }
+        
+        function updatePreview(student) {
+            document.getElementById('previewName').textContent = student.name;
+            document.getElementById('previewId').textContent = student.id;
+            document.getElementById('previewClass').textContent = student.class;
+            document.getElementById('previewYear').textContent = student.year;
+            document.getElementById('previewDate').textContent = student.admissionDate;
+        }
+        
+        function viewStudent(index) {
+            updatePreview(students[index]);
+            showNotification(`Viewing ${students[index].name}'s ID`, 'info');
+        }
+        
+        function editStudent(index) {
+            const student = students[index];
+            document.getElementById('fullName').value = student.name;
+            document.getElementById('enrollmentYear').value = student.year;
+            document.getElementById('studentClass').value = student.class;
+            
+            // Parse admission date
+            const date = new Date(student.dateObj || student.admissionDate);
+            document.getElementById('admissionDate').value = date.toISOString().split('T')[0];
+            
+            // Remove the old entry
+            students.splice(index, 1);
+            saveStudents();
+            renderStudentList();
+            
+            showNotification(`Editing ${student.name}. Fill form and click Generate to update.`, 'info');
+            
+            // Smooth scroll to form
+            const formElement = document.getElementById('fullName');
+            if (formElement) {
+                setTimeout(() => {
+                    formElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    formElement.focus();
+                }, 100);
+            }
+        }
+        
+        function deleteStudent(index) {
+            if (confirm(`Delete ${students[index].name}'s ID? This cannot be undone.`)) {
+                students.splice(index, 1);
+                saveStudents();
+                renderStudentList();
+                showNotification('Student ID deleted', 'success');
+            }
+        }
+        
+        function confirmClearAll() {
+            if (students.length === 0) {
+                showNotification('No data to clear', 'warning');
+                return;
+            }
+            
+            if (confirm(`Clear ALL ${students.length} student records? This cannot be undone!`)) {
+                students = [];
+                yearCounters = {};
+                saveStudents();
+                renderStudentList();
+                clearPreview();
+                showNotification('All data cleared successfully', 'success');
+            }
+        }
+        
+        function clearPreview() {
+            document.getElementById('previewName').textContent = '[Student Name]';
+            document.getElementById('previewId').textContent = 'EMFHS-2025-A7K-B9';
+            document.getElementById('previewClass').textContent = 'SSS 1';
+            document.getElementById('previewYear').textContent = '2025';
+            document.getElementById('previewDate').textContent = 'Jan 10, 2025';
+        }
+        
+        function updateStats() {
+            const today = new Date().toISOString().split('T')[0];
+            const todayCount = students.filter(s => s.timestamp && s.timestamp.split('T')[0] === today).length;
+            const currentYear = document.getElementById('enrollmentYear').value;
+            const currentYearCount = students.filter(s => s.year === currentYear).length;
+            
+            document.getElementById('totalIds').textContent = students.length.toLocaleString();
+            document.getElementById('currentYearCount').textContent = currentYearCount.toLocaleString();
+            document.getElementById('currentYearLabel').textContent = `${currentYear} Enrollees`;
+            document.getElementById('todayIds').textContent = todayCount.toLocaleString();
+        }
+        
+        function updateStorageIndicator() {
+            const dataStr = JSON.stringify(students);
+            const dataSize = new Blob([dataStr]).size;
+            const percentage = (dataSize / STORAGE_LIMIT) * 100;
+            
+            document.getElementById('storageUsed').textContent = formatBytes(dataSize);
+            document.getElementById('storagePercent').textContent = Math.round(percentage) + '%';
+            
+            // Show warning if > 70%
+            const warning = document.getElementById('storageWarning');
+            if (percentage > 70) {
+                warning.classList.remove('hidden');
+            } else {
+                warning.classList.add('hidden');
+            }
+        }
+        
+        function updateDownloadCount() {
+            document.getElementById('downloadCount').textContent = students.length;
+        }
+        
+        function formatBytes(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+        
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                showNotification(`Copied: ${text}`, 'success');
+            }).catch(err => {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showNotification(`Copied: ${text}`, 'success');
+            });
+        }
+        
+        function copyCurrentId() {
+            const id = document.getElementById('previewId').textContent;
+            if (id && id !== 'EMFHS-2025-A7K-B9') {
+                copyToClipboard(id);
+            }
+        }
+        
+        function downloadSingleIdCard() {
+            showNotification('Individual ID card download feature would generate a high-quality image', 'info');
+        }
+        
+        // Enhanced notification system
+        function showNotification(message, type = 'info') {
+            // Remove existing
+            const existing = document.querySelector('.notification');
+            if (existing) existing.remove();
+            
+            // Create new
+            const notification = document.createElement('div');
+            const icons = {
+                success: 'fa-check-circle',
+                error: 'fa-exclamation-circle',
+                warning: 'fa-exclamation-triangle',
+                info: 'fa-info-circle'
+            };
+            const colors = {
+                success: 'bg-gradient-to-r from-green-600 to-emerald-700',
+                error: 'bg-gradient-to-r from-red-600 to-red-800',
+                warning: 'bg-gradient-to-r from-yellow-600 to-orange-600',
+                info: 'bg-gradient-to-r from-blue-600 to-indigo-700'
+            };
+            
+            notification.className = `notification enhanced-notification fixed bottom-4 right-4 ${colors[type]} text-white px-6 py-4 rounded-xl z-50 transform transition-all duration-300`;
+            notification.innerHTML = `
+                <div class="flex items-center">
+                    <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center mr-3">
+                        <i class="fas ${icons[type]} text-xl"></i>
+                    </div>
+                    <span class="font-medium">${message}</span>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Auto-remove with animation
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateY(20px)';
+                setTimeout(() => notification.remove(), 300);
+            }, 4000);
+        }
+        
+        // Initialize with sample data if empty
+        if (!localStorage.getItem('emfhs_students')) {
+            setTimeout(() => {
+                const sampleStudents = [
+                    {id: 'EMFHS-2025-A7K-B9', name: 'Adekunle Joy', class: 'JSS 1', year: '2025', admissionDate: 'Jan 10, 2025', timestamp: new Date().toISOString(), dateObj: '2025-01-10'},
+                    {id: 'EMFHS-2025-C2D-E3', name: 'Bello Samuel', class: 'JSS 2', year: '2025', admissionDate: 'Jan 10, 2025', timestamp: new Date().toISOString(), dateObj: '2025-01-10'},
+                    {id: 'EMFHS-2025-E3F-G4', name: 'Chukwu Emeka', class: 'JSS 3', year: '2025', admissionDate: 'Jan 12, 2025', timestamp: new Date().toISOString(), dateObj: '2025-01-12'},
+                    {id: 'EMFHS-2025-G4H-I5', name: 'David Oluwaseun', class: 'SSS 1', year: '2025', admissionDate: 'Jan 12, 2025', timestamp: new Date().toISOString(), dateObj: '2025-01-12'}
+                ];
+                
+                students = sampleStudents;
+                yearCounters[2025] = 4;
+                saveStudents();
+                renderStudentList();
+                if (students.length > 0) updatePreview(students[0]);
+                
+                showNotification('Welcome! Sample data loaded. Try generating your own IDs!', 'info');
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

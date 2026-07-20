@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title> Emilia Report Card Maker</title>
-    <!-- Favicon - Emilia Logo -->
+  <title>Emilia Report Card Maker - JSS 1 (Enhanced with Save/Load, Export/Import & Signatures)</title>
+  <!-- Favicon - Emilia Logo -->
   <link rel="icon" type="image/x-icon" href="https://ncctazjcffmpuniwctkz.supabase.co/storage/v1/object/public/user-uploads/emilia_logo_circle.png">
 
   <script src="https://cdn.tailwindcss.com"></script>
@@ -71,6 +71,16 @@
     .floating-icon.signature:hover {
       transform: translateY(-4px) scale(1.08) rotate(3deg);
       box-shadow: 0 12px 48px rgba(79, 172, 254, 0.6);
+    }
+    
+    /* Comment Icon */
+    .floating-icon.comment {
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      box-shadow: 0 8px 32px rgba(240, 147, 251, 0.45);
+    }
+    .floating-icon.comment:hover {
+      transform: translateY(-4px) scale(1.08) rotate(3deg);
+      box-shadow: 0 12px 48px rgba(240, 147, 251, 0.6);
     }
     
     /* Glow effect on hover */
@@ -190,6 +200,15 @@
       box-shadow: 0 12px 48px rgba(102, 126, 234, 0.2);
     }
     .floating-icon.home .tooltip::before {
+      border-right-color: rgba(15, 23, 42, 0.95);
+    }
+    
+    /* Tooltip variant for comment - pink accent */
+    .floating-icon.comment .tooltip {
+      border-color: rgba(240, 147, 251, 0.3);
+      box-shadow: 0 12px 48px rgba(240, 147, 251, 0.2);
+    }
+    .floating-icon.comment .tooltip::before {
       border-right-color: rgba(15, 23, 42, 0.95);
     }
     
@@ -453,7 +472,7 @@
       image-rendering: auto;
     }
     
-    /* Hide signature when ANY modal is open */
+    /* Hide signature when ANY modal is open - WEB VIEW */
     .modal-open .draggable-signature {
       display: none !important;
     }
@@ -514,6 +533,7 @@
         height: auto !important;
       }
       
+      /* Show signature in print even when modal-open class is present */
       .modal-open .draggable-signature {
         display: block !important;
       }
@@ -611,6 +631,44 @@
       bottom: -7px;
       right: -7px;
       cursor: se-resize;
+    }
+
+    /* ============================================================
+       FIX: MODALS OVERLAY SHOULD BE ABOVE SIGNATURES
+       ============================================================ */
+
+    /* Give ALL modals a higher z-index than signatures */
+    #studentListModal,
+    #savedReportsModal,
+    #exportModal,
+    #signatureModal,
+    #signaturePlacementModal,
+    #commentModal,
+    #commentPlacementModal {
+      z-index: 999999 !important;
+    }
+
+    /* Ensure the modal backdrop covers everything */
+    #studentListModal .fixed.inset-0,
+    #savedReportsModal .fixed.inset-0,
+    #exportModal .fixed.inset-0,
+    #signatureModal .fixed.inset-0,
+    #signaturePlacementModal .fixed.inset-0,
+    #commentModal .fixed.inset-0,
+    #commentPlacementModal .fixed.inset-0 {
+      z-index: 999999 !important;
+    }
+
+    /* Ensure modal content is above backdrop */
+    #studentListModal > div,
+    #savedReportsModal > div,
+    #exportModal > div,
+    #signatureModal > div,
+    #signaturePlacementModal > div,
+    #commentModal > div,
+    #commentPlacementModal > div {
+      z-index: 9999999 !important;
+      position: relative !important;
     }
 
 </style>
@@ -1255,6 +1313,164 @@
       </div>
     </button>
 
+    <!-- 📤 IMPORT STUDENTS ICON -->
+    <button onclick="document.getElementById('studentImportInput').click()" class="floating-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); box-shadow: 0 8px 32px rgba(240, 147, 251, 0.45);">
+      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+        <polyline points="17 8 12 3 7 8"/>
+        <line x1="12" y1="3" x2="12" y2="15"/>
+      </svg>
+      <div class="tooltip">
+        <span class="tip-icon">📤</span> Import Students
+      </div>
+    </button>
+    <input type="file" id="studentImportInput" accept=".json" class="hidden" onchange="importStudents(event)" />
+
+    <!-- 📋 STUDENT LIST ICON -->
+    <button onclick="showStudentListModal()" class="floating-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); box-shadow: 0 8px 32px rgba(79, 172, 254, 0.45);">
+      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+        <circle cx="9" cy="7" r="4"/>
+        <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+      </svg>
+      <div class="tooltip">
+        <span class="tip-icon">📋</span> Student List
+      </div>
+    </button>
+
+    <!-- 💬 COMMENT GENERATOR ICON -->
+    <button onclick="openCommentModal()" class="floating-icon comment" title="Generate Comment">
+      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+      </svg>
+      <div class="tooltip">
+        <span class="tip-icon">💬</span> Generate Comment
+      </div>
+    </button>
+  </div>
+
+  <!-- 🖊️ COMMENT GENERATOR MODAL -->
+  <div id="commentModal" class="fixed inset-0 bg-black/80 backdrop-blur-xl hidden z-[99998] flex items-center justify-center p-4 no-print">
+    <div class="bg-white dark:bg-gray-900 rounded-3xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-hidden border border-gray-200 dark:border-gray-800">
+      <div class="px-8 py-6 border-b border-gray-200 dark:border-gray-800 flex justify-between items-center bg-gradient-to-r from-pink-50 to-purple-50">
+        <div>
+          <h3 class="text-2xl font-bold text-gray-900 dark:text-white">💬 Generate Comment</h3>
+          <p class="text-sm text-gray-500 mt-1">Select a comment based on the student's performance</p>
+        </div>
+        <button onclick="closeCommentModal()" class="p-3 hover:bg-gray-100 rounded-xl text-2xl">✕</button>
+      </div>
+      
+      <div class="p-6 overflow-y-auto max-h-[65vh]">
+        <!-- Current Percentage Display -->
+        <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-4 mb-4 border border-blue-200">
+          <div class="flex items-center justify-between">
+            <span class="font-semibold text-gray-700">📊 Current Percentage:</span>
+            <span id="commentModalPercentage" class="text-2xl font-bold text-blue-600">0%</span>
+          </div>
+          <div class="flex items-center justify-between mt-1">
+            <span class="font-semibold text-gray-700">🏷️ Grade:</span>
+            <span id="commentModalGrade" class="text-xl font-bold text-purple-600">--</span>
+          </div>
+          <div class="flex items-center justify-between mt-1">
+            <span class="font-semibold text-gray-700">👤 Student:</span>
+            <span id="commentModalStudentName" class="text-lg font-bold text-gray-800">No student loaded</span>
+          </div>
+        </div>
+
+        <!-- Comment Categories -->
+        <div id="commentCategories" class="space-y-4">
+          <!-- Comments will be rendered here -->
+        </div>
+      </div>
+
+      <div class="px-8 py-4 border-t border-gray-200 dark:border-gray-800 bg-gray-50 flex justify-between">
+        <button onclick="closeCommentModal()" class="px-6 py-2 bg-gray-300 hover:bg-gray-400 rounded-xl font-semibold">Close</button>
+        <button onclick="placeSelectedComment()" class="px-6 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl font-bold hover:scale-105 transition-transform shadow-lg">
+          📍 Place Selected Comment
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 🖊️ COMMENT PLACEMENT MODAL -->
+  <div id="commentPlacementModal" class="fixed inset-0 bg-black/80 backdrop-blur-xl hidden z-[99999] flex items-center justify-center p-4 no-print">
+    <div class="bg-white dark:bg-gray-900 rounded-3xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-hidden border border-gray-200 dark:border-gray-800">
+      <div class="px-8 py-6 border-b border-gray-200 dark:border-gray-800 flex justify-between items-center bg-gradient-to-r from-pink-50 to-purple-50">
+        <h3 class="text-2xl font-bold text-gray-900 dark:text-white">📌 Place Comment</h3>
+        <button onclick="closeCommentPlacementModal()" class="p-2 hover:bg-gray-100 rounded-xl text-2xl">✕</button>
+      </div>
+      
+      <div class="p-8">
+        <p class="text-center text-gray-600 mb-6">Where would you like to place this comment?</p>
+        <div id="commentPreview" class="bg-gray-50 border border-gray-200 rounded-xl p-4 mb-6 text-center text-gray-700 italic">
+          "No comment selected"
+        </div>
+        
+        <div class="flex flex-col gap-4">
+          <button onclick="placeComment('teacher')" 
+                  class="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-6 py-4 rounded-xl font-bold hover:from-blue-600 hover:to-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 flex items-center justify-center gap-3">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+            </svg>
+            👨‍🏫 Teacher Remarks
+          </button>
+          
+          <button onclick="placeComment('principal')" 
+                  class="bg-gradient-to-r from-purple-500 to-purple-600 text-white px-6 py-4 rounded-xl font-bold hover:from-purple-600 hover:to-purple-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 flex items-center justify-center gap-3">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"></path>
+            </svg>
+            🏫 Principal Remarks
+          </button>
+          
+          <button onclick="closeCommentPlacementModal()" 
+                  class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-6 py-3 rounded-xl font-semibold transition-colors">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STUDENT LIST MODAL -->
+  <div id="studentListModal" class="fixed inset-0 bg-black/90 backdrop-blur-xl hidden z-[99999] flex items-center justify-center p-4 no-print">
+    <div class="bg-white dark:bg-gray-900 rounded-3xl shadow-2xl w-full max-w-5xl max-h-[90vh] overflow-hidden border border-gray-200 dark:border-gray-800">
+      <div class="px-8 py-6 border-b border-gray-200 dark:border-gray-800 flex justify-between items-center bg-gradient-to-r from-blue-50 to-purple-50">
+        <div>
+          <h3 class="text-2xl font-bold text-gray-900 dark:text-white">📋 Student List 
+            <span id="studentListCount" class="ml-3 px-3 py-1 text-sm font-bold bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-full">0</span>
+          </h3>
+          <p class="text-sm text-gray-500 mt-1">Click any student to copy their ID</p>
+        </div>
+        <button onclick="closeStudentListModal()" class="p-3 hover:bg-gray-100 rounded-xl text-2xl">✕</button>
+      </div>
+      
+      <div class="p-4 border-b border-gray-200 bg-gray-50 dark:bg-gray-800/50">
+        <div class="relative">
+          <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+          <input type="text" id="searchStudentListInput" onkeyup="filterStudentList()" 
+                 placeholder="Search by name, ID, or class..." 
+                 class="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+        </div>
+      </div>
+
+      <div id="studentListContainer" class="p-6 overflow-y-auto max-h-[55vh] grid grid-cols-1 md:grid-cols-2 gap-3">
+        <!-- Students will be rendered here -->
+      </div>
+
+      <div class="px-8 py-4 border-t border-gray-200 dark:border-gray-800 bg-gray-50 flex justify-between items-center">
+        <div class="flex gap-3">
+          <button onclick="clearAllStudents()" class="px-6 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all">
+            🗑️ Clear All Students
+          </button>
+          <button onclick="closeStudentListModal()" class="px-6 py-3 bg-gradient-to-r from-gray-600 to-gray-700 text-white font-semibold rounded-xl">Close</button>
+        </div>
+        <span class="text-xs text-gray-400">Click any student card to copy their ID</span>
+      </div>
+    </div>
   </div>
 
   <!-- A4 container -->
@@ -1321,7 +1537,7 @@
     <label class="font-semibold mr-1">CLASS</label>
     <div class="relative leading-none">
       <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none">........................................</span>
-      <input type="text" value="JSS 1" class="bg-transparent w-44 text-left pl-10 text-sm font-extrabold text-black relative z-10 focus:outline-none pb-0.5 leading-[0.75rem]" />
+      <input type="text" id="student-class" value="JSS 1" class="bg-transparent w-44 text-left pl-10 text-sm font-extrabold text-black relative z-10 focus:outline-none pb-0.5 leading-[0.75rem]" />
     </div>
   </div>
   <div class="flex items-center relative ml-[-20px]">
@@ -1445,7 +1661,7 @@
       </div>
     </div>
 
-    <!-- CLASS TEACHER SIGN -->
+    <!-- CLASS TEACHER SIGN - UPDATED WITH SIGNATURE OVERLAY CONTAINER -->
     <div class="mt-8 text-sm flex flex-col items-center w-40 ml-4 teacher-sign-section">
       <div class="relative w-full signature-overlay-container">
         <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none" style="z-index: 0;">
@@ -1468,7 +1684,7 @@
       </div>
     </div>
 
-    <!-- PRINCIPAL SIGN -->
+    <!-- PRINCIPAL SIGN - UPDATED WITH SIGNATURE OVERLAY CONTAINER -->
     <div class="mt-8 text-sm flex flex-col items-center w-40 ml-4 principal-sign-section">
       <div class="relative w-full signature-overlay-container">
         <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none" style="z-index: 0;">
@@ -1559,7 +1775,7 @@
     </div>
   </div>
 
-  <!-- 🚀 SUPER POWERFUL PRINT MODAL -->
+  <!-- 🚀 SUPER POWERFUL PRINT MODAL (UPDATED) -->
   <div id="exportModal" class="fixed inset-0 bg-black/80 backdrop-blur-xl hidden z-50 flex items-center justify-center p-4 transition-all duration-500 no-print">
     <div 
       id="modalContent"
@@ -1598,6 +1814,54 @@
           </button>
         </div>
 
+        <!-- Student ID Input Section -->
+        <div class="bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl p-5 mb-6 border border-purple-200">
+          <div class="flex items-start space-x-3">
+            <div class="p-2 bg-purple-100 rounded-lg mt-1">
+              <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <rect x="2" y="4" width="20" height="16" rx="2"/>
+                <path d="M8 9h.01"/>
+                <path d="M16 9h.01"/>
+                <path d="M8 13h.01"/>
+                <path d="M16 13h.01"/>
+                <path d="M8 17h.01"/>
+                <path d="M16 17h.01"/>
+              </svg>
+            </div>
+            <div class="flex-1">
+              <p class="text-sm font-semibold text-gray-800">
+                👤 Student: <span id="printModalStudentName" class="text-purple-700">No student name entered</span>
+              </p>
+              <p class="text-xs text-gray-500 mt-1">Please enter the Student ID for this student to proceed with printing:</p>
+              <div class="flex gap-3 mt-3">
+                <input type="text" id="printStudentIdInput" placeholder="e.g. EMFHS-2020-N4O-GR" 
+                       class="flex-1 border-2 border-gray-300 rounded-xl px-4 py-2 text-sm focus:outline-none focus:border-purple-500 font-mono tracking-wider uppercase" />
+                <button onclick="verifyPrintStudentId()" 
+                        class="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-5 py-2 rounded-xl font-bold hover:scale-105 transition-transform shadow-lg text-sm whitespace-nowrap">
+                  🔍 Verify
+                </button>
+              </div>
+              <div id="printStudentIdResult" class="mt-3 hidden">
+                <div class="bg-green-50 border border-green-200 rounded-xl p-3">
+                  <p class="font-bold text-green-700">✅ Student Verified!</p>
+                  <div class="grid grid-cols-2 gap-2 mt-2 text-sm">
+                    <div><span class="font-semibold">Name:</span> <span id="printVerifiedName"></span></div>
+                    <div><span class="font-semibold">ID:</span> <span id="printVerifiedId" class="font-mono"></span></div>
+                    <div><span class="font-semibold">Class:</span> <span id="printVerifiedClass"></span></div>
+                    <div><span class="font-semibold">Year:</span> <span id="printVerifiedYear"></span></div>
+                  </div>
+                </div>
+              </div>
+              <div id="printStudentIdError" class="mt-3 hidden">
+                <div class="bg-red-50 border border-red-200 rounded-xl p-3">
+                  <p class="font-bold text-red-700">❌ Student Not Found!</p>
+                  <p class="text-gray-600 text-sm mt-1">Please check the ID and try again.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div class="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-2xl p-5 mb-6 border border-blue-100 dark:border-blue-800/30">
           <div class="flex items-start space-x-3">
             <div class="p-2 bg-blue-100 dark:bg-blue-800/30 rounded-lg mt-1">
@@ -1616,39 +1880,8 @@
       </div>
 
       <div class="px-8 pb-8 relative z-10">
-        <button 
-          onclick="printReportWithAutoSave()" 
-          class="w-full group relative overflow-hidden bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white py-5 px-6 rounded-2xl font-bold text-lg transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 shadow-lg"
-        >
-          <div class="relative z-10 flex items-center justify-center space-x-3">
-            <svg class="w-7 h-7 text-white group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path>
-            </svg>
-            <span class="text-lg font-bold">PRINT REPORT CARD</span>
-          </div>
-          
-          <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-          <div class="absolute inset-0 rounded-2xl bg-blue-400/20 blur-xl group-hover:bg-purple-400/30 transition-all duration-500"></div>
-        </button>
-
-        <div class="mt-6 grid grid-cols-2 gap-3 text-xs">
-          <div class="flex items-center space-x-2 text-gray-600 dark:text-gray-400">
-            <div class="w-2 h-2 bg-green-500 rounded-full"></div>
-            <span>Auto-calculated totals</span>
-          </div>
-          <div class="flex items-center space-x-2 text-gray-600 dark:text-gray-400">
-            <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
-            <span>School watermark</span>
-          </div>
-          <div class="flex items-center space-x-2 text-gray-600 dark:text-gray-400">
-            <div class="w-2 h-2 bg-purple-500 rounded-full"></div>
-            <span>A4 optimized</span>
-          </div>
-          <div class="flex items-center space-x-2 text-gray-600 dark:text-gray-400">
-            <div class="w-2 h-2 bg-orange-500 rounded-full"></div>
-            <span>Professional layout</span>
-          </div>
-        </div>
+        <!-- REMOVED THE BIG PURPLE PRINT BUTTON - ONLY KEPT BOTTOM BUTTONS -->
+        <!-- Print buttons moved to footer -->
       </div>
 
       <div class="px-8 py-5 border-t border-gray-200/50 dark:border-gray-700/50 bg-white/50 dark:bg-gray-800/30 rounded-b-3xl backdrop-blur-sm">
@@ -1661,7 +1894,8 @@
           </button>
           <button 
             onclick="printReportWithAutoSave()" 
-            class="flex-1 px-6 py-3 bg-gray-900 dark:bg-white text-white dark:text-gray-900 hover:bg-gray-800 dark:hover:bg-gray-100 rounded-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 font-semibold shadow-md hover:shadow-lg"
+            id="printModalPrintBtn2"
+            class="flex-1 px-6 py-3 bg-gray-900 dark:bg-white text-white dark:text-gray-900 hover:bg-gray-800 dark:hover:bg-gray-100 rounded-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 font-semibold shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Print Now
           </button>
@@ -1870,6 +2104,29 @@
     .toast-animate { animation: toastSlide 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
     @keyframes toastSlide { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
     .backdrop-blur-sm { backdrop-filter: blur(8px); }
+    
+    /* Toast Fix - Ensures toast appears on top of everything */
+    #toast {
+      z-index: 9999999 !important;
+      position: fixed !important;
+      top: 20px !important;
+      left: 50% !important;
+      transform: translateX(-50%) !important;
+      pointer-events: none !important;
+    }
+    
+    /* Comment Card Hover Effects */
+    .comment-card {
+      transition: all 0.2s ease;
+    }
+    .comment-card:hover {
+      transform: translateX(4px);
+      border-color: #a855f7;
+    }
+    .comment-card.selected {
+      border-color: #a855f7;
+      background: #f3e8ff;
+    }
   </style>
 
   <!-- Table Script -->
@@ -2118,12 +2375,32 @@ document.addEventListener('DOMContentLoaded', function() {
 function openExportModal() {
     const modal = document.getElementById("exportModal");
     const modalContent = document.getElementById("modalContent");
+    
+    // Show the student name in the print modal
+    const studentName = document.getElementById('student-name').value.trim() || 'No student name entered';
+    document.getElementById('printModalStudentName').textContent = studentName;
+    
+    // Reset the ID input and verification status
+    document.getElementById('printStudentIdInput').value = '';
+    document.getElementById('printStudentIdResult').classList.add('hidden');
+    document.getElementById('printStudentIdError').classList.add('hidden');
+    
+    // Enable print buttons (in case they were disabled)
+    document.getElementById('printModalPrintBtn2').disabled = false;
+    
+    // Clear any stored print data
+    delete window._printStudentData;
+    
     modal.classList.remove("hidden");
     document.body.classList.add('modal-open');
     document.body.style.overflow = 'hidden';
     setTimeout(() => {
         modal.style.opacity = "1";
         modalContent.classList.add("modal-active");
+        // Focus the ID input after modal opens
+        setTimeout(() => {
+            document.getElementById('printStudentIdInput').focus();
+        }, 300);
     }, 10);
 }
 
@@ -2158,10 +2435,102 @@ function showToast(message, type = 'success') {
     if (type !== 'loading') setTimeout(() => toast.classList.add("hidden"), 4000);
 }
 
+// ============================================================
+// 🚀 STUDENT ID VERIFICATION IN PRINT MODAL
+// ============================================================
+function verifyPrintStudentId() {
+    const id = document.getElementById('printStudentIdInput').value.trim().toUpperCase();
+    const resultDiv = document.getElementById('printStudentIdResult');
+    const errorDiv = document.getElementById('printStudentIdError');
+    const printBtn2 = document.getElementById('printModalPrintBtn2');
+    
+    // Reset
+    resultDiv.classList.add('hidden');
+    errorDiv.classList.add('hidden');
+    printBtn2.disabled = false;
+    delete window._printStudentData;
+    
+    if (!id) {
+        showToast('Please enter a Student ID.', 'error');
+        return;
+    }
+    
+    // Load students if not loaded
+    if (typeof importedStudents === 'undefined' || importedStudents.length === 0) {
+        loadImportedStudents();
+    }
+    
+    // Search for the student
+    const student = importedStudents.find(s => s.id.toUpperCase() === id);
+    
+    if (student) {
+        // Found!
+        document.getElementById('printVerifiedName').textContent = student.name;
+        document.getElementById('printVerifiedId').textContent = student.id;
+        document.getElementById('printVerifiedClass').textContent = student.class;
+        document.getElementById('printVerifiedYear').textContent = student.year || 'N/A';
+        resultDiv.classList.remove('hidden');
+        
+        // Check if the name matches the one on the report card
+        const reportName = document.getElementById('student-name').value.trim().toUpperCase();
+        const studentName = student.name.toUpperCase();
+        
+        if (reportName && reportName !== studentName) {
+            showToast(`⚠️ Warning: The name on the report card (${document.getElementById('student-name').value.trim()}) does not match the student name (${student.name}). Please verify.`, 'error');
+        } else {
+            showToast(`✅ Verified: ${student.name} (${student.id})`, 'success');
+        }
+        
+        // Store the student data for printing
+        window._printStudentData = {
+            id: student.id,
+            name: student.name,
+            class: student.class,
+            year: student.year || ''
+        };
+        
+        // Enable print buttons
+        printBtn2.disabled = false;
+        
+    } else {
+        // Not found
+        errorDiv.classList.remove('hidden');
+        printBtn2.disabled = true;
+        showToast('❌ Student ID not found. Please check and try again.', 'error');
+    }
+}
+
+// Enter key support for print modal ID input
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('printStudentIdInput').addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            verifyPrintStudentId();
+        }
+    });
+});
+
 function printReportWithAutoSave() {
+    // Check if student ID is verified
+    if (!window._printStudentData) {
+        showToast('Please verify the Student ID first!', 'error');
+        return;
+    }
+    
     closeExportModal();
-    showToast("Saving report before printing...", "loading");
-    if (typeof saveCurrentReport === 'function') saveCurrentReport();
+    showToast(`Printing for ${window._printStudentData.name} (${window._printStudentData.id})...`, 'loading');
+    
+    // Save the report with student ID info
+    if (typeof saveCurrentReport === 'function') {
+        // Temporarily set the student ID fields for saving
+        const idField = document.getElementById('studentIdInputField');
+        if (idField) {
+            idField.dataset.currentStudentId = window._printStudentData.id;
+            idField.dataset.currentStudentClass = window._printStudentData.class;
+            idField.dataset.currentStudentYear = window._printStudentData.year;
+        }
+        saveCurrentReport();
+    }
+    
     setTimeout(() => printReport(), 800);
 }
 
@@ -2171,7 +2540,7 @@ function printReport() {
     if (typeof calculateTotalObtainable === 'function') calculateTotalObtainable();
     if (typeof calculatePercentage === 'function') calculatePercentage();
     
-    // Set document title for PDF filename with student name, class (JSS 1), term, and date
+    // Set document title for PDF filename with student name, class, and ID
     const studentName = document.getElementById('student-name').value.trim() || 'Student';
     const className = 'JSS 1';
     const termValue = document.getElementById('termOf').value.trim() || 'Term';
@@ -2181,7 +2550,12 @@ function printReport() {
     const year = now.getFullYear();
     const formattedDate = `${day}/${month}/${year}`;
     
-    const filename = `Report Card - ${studentName} - ${className} - ${termValue} - ${formattedDate}.pdf`;
+    // Include student ID in filename if available
+    let filename = `Report Card - ${studentName} - ${className} - ${termValue} - ${formattedDate}`;
+    if (window._printStudentData && window._printStudentData.id) {
+        filename += ` - ${window._printStudentData.id}`;
+    }
+    filename += '.pdf';
     document.title = filename;
     
     setTimeout(() => {
@@ -2189,19 +2563,589 @@ function printReport() {
         window.print();
         setTimeout(() => {
             document.body.classList.remove('printing');
-            showToast("Print completed! Report was auto-saved.", "success");
+            showToast("Print completed! Report was auto-saved with Student ID.", "success");
+            // Clear the print student data after print
+            delete window._printStudentData;
         }, 1000);
     }, 1000);
+}
+  </script>
+
+  <!-- ============================================================
+       🚀 STUDENT ID SYSTEM - COMPLETE ADD-ON
+       ============================================================ -->
+  <script>
+// ============================================================
+// STUDENT ID SYSTEM - STATE
+// ============================================================
+const STUDENT_DATA_KEY = 'importedStudents_JSS1';
+let importedStudents = [];
+
+// ============================================================
+// IMPORT STUDENTS FROM JSON
+// ============================================================
+function importStudents(event) {
+    const file = event.target.files[0];
+    
+    if (!file) {
+        showToast('No file selected.', 'error');
+        return;
+    }
+    
+    // Check file type
+    if (!file.name.endsWith('.json')) {
+        showToast('Please select a JSON file.', 'error');
+        event.target.value = '';
+        return;
+    }
+    
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        try {
+            const importedData = JSON.parse(e.target.result);
+            
+            // Validate the imported data structure
+            if (!Array.isArray(importedData)) {
+                showToast('Invalid file format. Please export a valid students file.', 'error');
+                event.target.value = '';
+                return;
+            }
+            
+            // Check if it has the required fields
+            if (importedData.length > 0) {
+                const first = importedData[0];
+                if (!first.id || !first.name || !first.class) {
+                    showToast('Invalid student data. Missing id, name, or class fields.', 'error');
+                    event.target.value = '';
+                    return;
+                }
+            }
+            
+            // Save to localStorage
+            localStorage.setItem(STUDENT_DATA_KEY, JSON.stringify(importedData));
+            importedStudents = importedData;
+            
+            showToast(`✅ Imported ${importedData.length} students successfully!`, 'success');
+            updateStudentCounts();
+            
+        } catch (error) {
+            showToast('Error reading file. Please make sure it\'s a valid JSON file.', 'error');
+            console.error('Import error:', error);
+        }
+        
+        // Reset the file input
+        event.target.value = '';
+    };
+    
+    reader.onerror = function() {
+        showToast('Error reading file. Please try again.', 'error');
+        event.target.value = '';
+    };
+    
+    reader.readAsText(file);
+}
+
+// ============================================================
+// LOAD STUDENTS FROM LOCALSTORAGE
+// ============================================================
+function loadImportedStudents() {
+    const data = localStorage.getItem(STUDENT_DATA_KEY);
+    if (data) {
+        try {
+            importedStudents = JSON.parse(data);
+            updateStudentCounts();
+            return importedStudents;
+        } catch (e) {
+            importedStudents = [];
+        }
+    }
+    return [];
+}
+
+// ============================================================
+// UPDATE STUDENT COUNTS
+// ============================================================
+function updateStudentCounts() {
+    const count = importedStudents.length;
+    const listCount = document.getElementById('studentListCount');
+    if (listCount) listCount.textContent = count;
+}
+
+// ============================================================
+// CLEAR ALL STUDENTS
+// ============================================================
+function clearAllStudents() {
+    if (importedStudents.length === 0) {
+        showToast('No students to clear.', 'info');
+        return;
+    }
+    
+    if (confirm(`⚠️ Are you sure you want to delete all ${importedStudents.length} students? This cannot be undone.`)) {
+        localStorage.removeItem(STUDENT_DATA_KEY);
+        importedStudents = [];
+        updateStudentCounts();
+        renderStudentList('');
+        showToast('🗑️ All students cleared successfully!', 'success');
+    }
+}
+
+// ============================================================
+// STUDENT LIST MODAL
+// ============================================================
+function showStudentListModal() {
+    // Load students if not loaded
+    if (importedStudents.length === 0) {
+        loadImportedStudents();
+    }
+    
+    if (importedStudents.length === 0) {
+        showToast('No students imported. Please import a JSON file first.', 'error');
+        return;
+    }
+    
+    const modal = document.getElementById('studentListModal');
+    modal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+    
+    renderStudentList('');
+    updateStudentCounts();
+}
+
+function closeStudentListModal() {
+    const modal = document.getElementById('studentListModal');
+    modal.classList.add('hidden');
+    document.body.style.overflow = 'auto';
+}
+
+function renderStudentList(searchTerm = '') {
+    const container = document.getElementById('studentListContainer');
+    let filtered = importedStudents;
+    
+    if (searchTerm) {
+        const term = searchTerm.toLowerCase();
+        filtered = importedStudents.filter(s => 
+            s.name.toLowerCase().includes(term) ||
+            s.id.toLowerCase().includes(term) ||
+            s.class.toLowerCase().includes(term)
+        );
+    }
+    
+    if (filtered.length === 0) {
+        container.innerHTML = `<div class="col-span-2 text-center py-12 text-gray-500">No students found.</div>`;
+        return;
+    }
+    
+    container.innerHTML = filtered.map(student => `
+        <div onclick="copyStudentId('${student.id}')" 
+             class="border-2 border-gray-200 rounded-xl p-4 hover:border-purple-500 cursor-pointer transition-all hover:shadow-lg bg-white dark:bg-gray-800">
+            <div class="flex justify-between items-start">
+                <div>
+                    <p class="font-bold text-gray-800 dark:text-white">${escapeHtml(student.name)}</p>
+                    <p class="text-xs text-gray-500 font-mono">${student.id}</p>
+                </div>
+                <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">${student.class}</span>
+            </div>
+            <div class="mt-2 text-xs text-gray-400">
+                Year: ${student.year || 'N/A'} 
+                ${student.admissionDate ? `| Admission: ${student.admissionDate}` : ''}
+            </div>
+            <div class="mt-2 text-xs text-purple-500 flex items-center gap-1">
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                </svg>
+                Click to copy ID
+            </div>
+        </div>
+    `).join('');
+}
+
+function filterStudentList() {
+    const searchTerm = document.getElementById('searchStudentListInput').value;
+    renderStudentList(searchTerm);
+}
+
+function copyStudentId(id) {
+    navigator.clipboard.writeText(id).then(() => {
+        showToast(`✅ Copied: ${id}`, 'success');
+    }).catch(() => {
+        // Fallback
+        const textArea = document.createElement('textarea');
+        textArea.value = id;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        showToast(`✅ Copied: ${id}`, 'success');
+    });
+}
+
+function escapeHtml(str) {
+    if (!str) return '';
+    return String(str).replace(/[&<>"]/g, function(m) {
+        if (m === '&') return '&amp;';
+        if (m === '<') return '&lt;';
+        if (m === '>') return '&gt;';
+        if (m === '"') return '&quot;';
+        return m;
+    });
+}
+
+// ============================================================
+// INITIALIZATION
+// ============================================================
+document.addEventListener('DOMContentLoaded', function() {
+    // Load students on page load
+    loadImportedStudents();
+    
+    // ESC key to close modals
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeStudentListModal();
+            closeSavedReportsModal();
+            closeExportModal();
+            closeSignaturePlacementModal();
+            closeCommentModal();
+            closeCommentPlacementModal();
+        }
+    });
+});
+  </script>
+
+  <!-- ============================================================
+       🖊️ COMMENT GENERATOR - COMPLETE ADD-ON (20 COMMENTS EACH)
+       ============================================================ -->
+  <script>
+// ============================================================
+// COMMENT DATA - 20 COMMENTS PER CATEGORY
+// ============================================================
+const commentData = {
+    '0-39': {
+        label: '0–39 (Needs Improvement)',
+        color: 'red',
+        comments: [
+            'Needs improvement. Work harder.',
+            'Poor performance. Put in more effort.',
+            'Study harder next term.',
+            'Be more committed to your studies.',
+            'Attend classes regularly.',
+            'More seriousness is required.',
+            'Make better use of your study time.',
+            'Improve your reading habits.',
+            'Greater effort is expected.',
+            "Don't give up; keep trying.",
+            'A poor result. Work harder next term.',
+            'A poor result. Greater effort is required.',
+            'A poor result. Be more committed to your studies.',
+            'A poor result. Improve your study habits.',
+            'A poor result. Put in more effort.',
+            'A poor result. Take your studies more seriously.',
+            'A poor result. Strive for better performance.',
+            'A poor result. Attend to your work diligently.',
+            'A poor result. You can do better.',
+            'A poor result. Aim for improvement next term.'
+        ]
+    },
+    '40-49': {
+        label: '40–49 (Fair)',
+        color: 'yellow',
+        comments: [
+            'Fair performance. Try harder.',
+            'More effort will improve your results.',
+            'You can do better.',
+            'Stay focused on your studies.',
+            'Aim for higher achievement.',
+            'Work with greater consistency.',
+            'Keep improving your performance.',
+            'Be more attentive in class.',
+            'Put in extra effort next term.',
+            'Success comes with hard work.',
+            'A fair result. More effort is needed.',
+            'A fair result. Try harder next term.',
+            'A fair result. You have the ability to improve.',
+            'A fair result. Be more focused.',
+            'A fair result. Keep working towards success.',
+            'A fair result. Greater commitment is expected.',
+            'A fair result. Put in extra effort.',
+            'A fair result. Aim for a better result.',
+            'A fair result. Stay determined.',
+            'A fair result. Improvement is possible.'
+        ]
+    },
+    '50-59': {
+        label: '50–59 (Good)',
+        color: 'green',
+        comments: [
+            'Good performance. Keep improving.',
+            'Good effort. Stay consistent.',
+            'Keep working hard.',
+            'You are making steady progress.',
+            'Aim for a higher grade.',
+            'Continue to improve.',
+            'Well done. Don\'t relax.',
+            'Stay focused and determined.',
+            'Keep building on your strengths.',
+            'Better results are within your reach.',
+            'A good result. Keep pushing.',
+            'A good result. Keep improving.',
+            'A good result. Good effort. Aim higher.',
+            'A good result. Continue working hard.',
+            'A good result. You can achieve more.',
+            'A good result. Stay focused.',
+            'A good result. Build on this success.',
+            'A good result. Strive for excellence.',
+            'A good result. Maintain your effort.',
+            'A good result. Better results await you.'
+        ]
+    },
+    '60-69': {
+        label: '60–69 (Very Good)',
+        color: 'blue',
+        comments: [
+            'Very good performance. Keep it up.',
+            'Well done. Stay focused.',
+            'Keep striving for excellence.',
+            'Impressive performance.',
+            'Maintain this standard.',
+            'Your hard work is paying off.',
+            'Continue the good work.',
+            'Keep aiming higher.',
+            'You have done very well.',
+            'Keep your momentum going.',
+            'A very good result. Keep it up.',
+            'A very good result. Well done.',
+            'A very good result. Maintain the standard.',
+            'A very good result. Keep striving for excellence.',
+            'A very good result. Continue the good work.',
+            'A very good result. Stay focused.',
+            'A very good result. Aim even higher.',
+            'A very good result. Your efforts are commendable.',
+            'A very good result. Keep improving.',
+            'A very good result. Success is within reach.'
+        ]
+    },
+    '70-100': {
+        label: '70–100 (Excellent)',
+        color: 'purple',
+        comments: [
+            'Outstanding performance. Keep it up.',
+            'Excellent work. Congratulations.',
+            'Exceptional performance.',
+            'Remarkable achievement. Well done.',
+            'Excellent result. Maintain the standard.',
+            'Keep excelling in all subjects.',
+            'Superb performance. Keep shining.',
+            'You are a great example to others.',
+            'Continue to aim for excellence.',
+            'Brilliant performance. Congratulations.',
+            'An excellent result. Outstanding performance.',
+            'An excellent result. Keep excelling.',
+            'An excellent result. Congratulations.',
+            'An excellent result. Maintain this high standard.',
+            'An excellent result. Keep up the excellent work.',
+            'An excellent result. Your hard work has paid off.',
+            'An excellent result. Continue to shine.',
+            'An excellent result. A remarkable achievement.',
+            'An excellent result. Keep aiming higher.',
+            'An excellent result. Wishing you continued success.'
+        ]
+    }
+};
+
+// ============================================================
+// COMMENT MODAL CONTROLS
+// ============================================================
+let selectedComment = null;
+let selectedCommentCategory = null;
+
+function openCommentModal() {
+    // Get current percentage and student name
+    const percentage = parseFloat(document.getElementById('percentage-value').value) || 0;
+    const studentName = document.getElementById('student-name').value.trim() || 'No student loaded';
+    const grade = document.getElementById('result-value').value || '--';
+    
+    document.getElementById('commentModalPercentage').textContent = percentage + '%';
+    document.getElementById('commentModalGrade').textContent = grade;
+    document.getElementById('commentModalStudentName').textContent = studentName;
+    
+    selectedComment = null;
+    selectedCommentCategory = null;
+    
+    // Generate comment categories
+    renderCommentCategories(percentage);
+    
+    document.getElementById('commentModal').classList.remove('hidden');
+    document.body.classList.add('modal-open');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeCommentModal() {
+    document.getElementById('commentModal').classList.add('hidden');
+    document.body.classList.remove('modal-open');
+    document.body.style.overflow = 'auto';
+}
+
+function renderCommentCategories(percentage) {
+    const container = document.getElementById('commentCategories');
+    container.innerHTML = '';
+    
+    // Determine which categories to show based on percentage
+    let activeCategories = [];
+    
+    if (percentage >= 0 && percentage <= 39) {
+        activeCategories.push('0-39');
+    } else if (percentage >= 40 && percentage <= 49) {
+        activeCategories.push('40-49');
+    } else if (percentage >= 50 && percentage <= 59) {
+        activeCategories.push('50-59');
+    } else if (percentage >= 60 && percentage <= 69) {
+        activeCategories.push('60-69');
+    } else if (percentage >= 70 && percentage <= 100) {
+        activeCategories.push('70-100');
+    }
+    
+    // Also show adjacent categories for flexibility
+    const allKeys = ['0-39', '40-49', '50-59', '60-69', '70-100'];
+    const currentIndex = allKeys.indexOf(activeCategories[0]);
+    
+    // Show current and one below (if exists) and one above (if exists)
+    const categoriesToShow = [];
+    if (currentIndex > 0) categoriesToShow.push(allKeys[currentIndex - 1]);
+    categoriesToShow.push(allKeys[currentIndex]);
+    if (currentIndex < allKeys.length - 1) categoriesToShow.push(allKeys[currentIndex + 1]);
+    
+    // If percentage is 0, show all categories
+    if (percentage === 0) {
+        categoriesToShow.length = 0;
+        categoriesToShow.push('0-39', '40-49', '50-59', '60-69', '70-100');
+    }
+    
+    categoriesToShow.forEach(key => {
+        const data = commentData[key];
+        if (!data) return;
+        
+        const colorMap = {
+            red: 'border-red-200 bg-red-50 hover:border-red-400',
+            yellow: 'border-yellow-200 bg-yellow-50 hover:border-yellow-400',
+            green: 'border-green-200 bg-green-50 hover:border-green-400',
+            blue: 'border-blue-200 bg-blue-50 hover:border-blue-400',
+            purple: 'border-purple-200 bg-purple-50 hover:border-purple-400'
+        };
+        
+        const headerColorMap = {
+            red: 'text-red-700',
+            yellow: 'text-yellow-700',
+            green: 'text-green-700',
+            blue: 'text-blue-700',
+            purple: 'text-purple-700'
+        };
+        
+        const section = document.createElement('div');
+        section.className = 'border-2 rounded-xl p-4 ' + (colorMap[data.color] || 'border-gray-200 bg-gray-50');
+        
+        const header = document.createElement('div');
+        header.className = 'font-bold text-sm mb-2 ' + (headerColorMap[data.color] || 'text-gray-700');
+        header.textContent = data.label + ' (' + data.comments.length + ' comments)';
+        section.appendChild(header);
+        
+        const grid = document.createElement('div');
+        grid.className = 'grid grid-cols-1 md:grid-cols-2 gap-2';
+        
+        data.comments.forEach(comment => {
+            const card = document.createElement('div');
+            card.className = 'comment-card border-2 border-gray-200 rounded-lg p-2 cursor-pointer text-sm hover:border-purple-400 transition-all';
+            card.textContent = comment;
+            card.dataset.comment = comment;
+            card.dataset.category = key;
+            
+            card.addEventListener('click', function() {
+                // Remove selected from all
+                document.querySelectorAll('.comment-card').forEach(c => c.classList.remove('selected', 'border-purple-500', 'bg-purple-100'));
+                this.classList.add('selected', 'border-purple-500', 'bg-purple-100');
+                selectedComment = this.dataset.comment;
+                selectedCommentCategory = this.dataset.category;
+                showToast('✅ Comment selected! Click "Place Selected Comment" to choose where to put it.', 'success');
+            });
+            
+            grid.appendChild(card);
+        });
+        
+        section.appendChild(grid);
+        container.appendChild(section);
+    });
+}
+
+// ============================================================
+// COMMENT PLACEMENT
+// ============================================================
+function openCommentPlacementModal(comment) {
+    if (!comment) {
+        showToast('Please select a comment first!', 'error');
+        return;
+    }
+    
+    document.getElementById('commentPreview').textContent = '"' + comment + '"';
+    document.getElementById('commentPlacementModal').classList.remove('hidden');
+    document.body.classList.add('modal-open');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeCommentPlacementModal() {
+    document.getElementById('commentPlacementModal').classList.add('hidden');
+    document.body.classList.remove('modal-open');
+    document.body.style.overflow = 'auto';
+}
+
+function placeComment(target) {
+    if (!selectedComment) {
+        showToast('No comment selected!', 'error');
+        return;
+    }
+    
+    if (target === 'teacher') {
+        document.getElementById('teacherRemarks').value = selectedComment;
+        showToast('✅ Comment placed in Teacher Remarks!', 'success');
+    } else if (target === 'principal') {
+        document.getElementById('principalRemarks').value = selectedComment;
+        showToast('✅ Comment placed in Principal Remarks!', 'success');
+    }
+    
+    // Close both modals
+    closeCommentPlacementModal();
+    closeCommentModal();
+    
+    // Reset selection
+    selectedComment = null;
+    selectedCommentCategory = null;
+}
+
+// ============================================================
+// COMMENT MODAL - Override to use placement modal
+// ============================================================
+// Add a "Place Comment" button to the footer
+document.addEventListener('DOMContentLoaded', function() {
+    // We'll use the existing click handler but after selection, 
+    // we'll show a "Place Comment" button in the modal footer
+});
+
+// New function to handle placing selected comment
+function placeSelectedComment() {
+    if (!selectedComment) {
+        showToast('Please select a comment first by clicking on it!', 'error');
+        return;
+    }
+    
+    // Open the placement modal
+    openCommentPlacementModal(selectedComment);
 }
   </script>
 
   <!-- NUCLEAR SOLUTION: REPORT SAVE/LOAD SYSTEM with SEARCH & DELETE (FULLY ENHANCED) -->
   <script>
 const JSS1_STORAGE_KEY = 'savedReports_JSS1';
-const EXPECTED_CLASS = 'JSS1';  // <-- THIS IS THE KEY ADDITION FOR CLASS VALIDATION
+const EXPECTED_CLASS = 'JSS1';
 
 // ============================================================
-// SAVE CURRENT REPORT - NOW SAVES BOTH SIGNATURES
+// SAVE CURRENT REPORT - NOW SAVES BOTH SIGNATURES + STUDENT ID
 // ============================================================
 function saveCurrentReport() {
     const studentName = document.getElementById('student-name').value.trim() || 'Untitled';
@@ -2223,6 +3167,28 @@ function saveCurrentReport() {
         const sigImg = principalContainer.querySelector('.draggable-signature img');
         if (sigImg) {
             principalSignatureData = sigImg.src;
+        }
+    }
+    
+    // Get student ID data - check both the print modal data and the hidden input
+    let studentId = '';
+    let studentClass = '';
+    let studentYear = '';
+    
+    // First check if we have verified student data from print modal
+    if (window._printStudentData) {
+        studentId = window._printStudentData.id || '';
+        studentClass = window._printStudentData.class || '';
+        studentYear = window._printStudentData.year || '';
+    }
+    
+    // If not, check the hidden input field
+    if (!studentId) {
+        const idField = document.getElementById('studentIdInputField');
+        if (idField) {
+            studentId = idField.dataset.currentStudentId || '';
+            studentClass = idField.dataset.currentStudentClass || document.getElementById('student-class')?.value || 'JSS 1';
+            studentYear = idField.dataset.currentStudentYear || '';
         }
     }
     
@@ -2249,10 +3215,14 @@ function saveCurrentReport() {
         // SAVE BOTH SIGNATURES
         teacherSignatureData: teacherSignatureData,
         principalSignatureData: principalSignatureData,
+        // SAVE STUDENT ID INFO
+        studentId: studentId,
+        studentClass: studentClass,
+        studentYear: studentYear,
         subjects: [],
         usedSubjects: Array.from(usedSubjects),
         savedAt: new Date().toISOString(),
-        classLevel: EXPECTED_CLASS  // <-- SAVE THE CLASS LEVEL
+        classLevel: EXPECTED_CLASS
     };
     
     document.querySelectorAll('#table-body tr').forEach(row => {
@@ -2280,12 +3250,12 @@ function saveCurrentReport() {
     else savedReports.push(reportEntry);
     if (savedReports.length > 200) savedReports = savedReports.slice(-200);
     localStorage.setItem(JSS1_STORAGE_KEY, JSON.stringify(savedReports));
-    showToast(`JSS1 Report "${studentName}" saved with both signatures!`, 'success');
+    showToast(`JSS1 Report "${studentName}" saved with both signatures and Student ID!`, 'success');
     updateTotalFilesCount();
 }
 
 // ============================================================
-// LOAD REPORT - NOW LOADS BOTH SIGNATURES
+// LOAD REPORT - NOW LOADS BOTH SIGNATURES + STUDENT ID
 // ============================================================
 function loadReport(id) {
     const savedReports = JSON.parse(localStorage.getItem(JSS1_STORAGE_KEY) || '[]');
@@ -2312,6 +3282,18 @@ function loadReport(id) {
     document.getElementById('principalSign').value = d.principalSign || '';
     document.getElementById('noticeText').value = d.noticeText || '';
     document.getElementById('tuitionFees').value = d.tuitionFees || '';
+    
+    // Load Student ID info into hidden field
+    if (d.studentId) {
+        const idField = document.getElementById('studentIdInputField');
+        if (idField) {
+            idField.dataset.currentStudentId = d.studentId;
+            idField.dataset.currentStudentClass = d.studentClass || '';
+            idField.dataset.currentStudentYear = d.studentYear || '';
+            idField.value = d.studentId;
+        }
+    }
+    
     if (d.usedSubjects) usedSubjects = new Set(d.usedSubjects);
     else usedSubjects.clear();
     const tbody = document.getElementById("table-body");
@@ -2374,12 +3356,9 @@ function loadReport(id) {
         calculateTotalObtainable();
         calculatePercentage();
     }, 100);
-    showToast(`Loaded "${report.name}" with both signatures`, 'success');
+    showToast(`Loaded "${report.name}" with both signatures and Student ID`, 'success');
 }
 
-// ============================================================
-// CREATE SIGNATURE ELEMENT HELPER
-// ============================================================
 function createSignatureElement(signatureData) {
     const signatureEl = document.createElement('div');
     signatureEl.className = 'draggable-signature';
@@ -2446,7 +3425,8 @@ function loadSavedReportsData(searchTerm = '') {
         filtered = savedReports.filter(r => 
             r.name.toLowerCase().includes(term) ||
             r.date.toLowerCase().includes(term) ||
-            r.data.subjects.some(s => s.name.toLowerCase().includes(term))
+            r.data.subjects.some(s => s.name.toLowerCase().includes(term)) ||
+            (r.data.studentId && r.data.studentId.toLowerCase().includes(term))
         );
     }
     container.innerHTML = filtered.map(report => `
@@ -2458,6 +3438,7 @@ function loadSavedReportsData(searchTerm = '') {
                         <span>📅 ${report.date}</span>
                         <span>📚 ${report.data.subjects.length} subjects</span>
                         <span class="bg-blue-100 px-2 py-1 rounded">JSS1</span>
+                        ${report.data.studentId ? `<span class="bg-purple-100 px-2 py-1 rounded font-mono text-xs">${report.data.studentId}</span>` : ''}
                         ${report.data.teacherSignatureData ? '<span class="text-green-500">👨‍🏫 Teacher</span>' : ''}
                         ${report.data.principalSignatureData ? '<span class="text-purple-500">👨‍🎓 Principal</span>' : ''}
                     </div>
@@ -2469,6 +3450,9 @@ function loadSavedReportsData(searchTerm = '') {
             </div>
             <div class="mt-4 pt-4 border-t border-gray-100">
                 <span class="text-sm bg-gray-100 px-2 py-1 rounded">Student: ${escapeHtml(report.data.studentName || 'Not set')}</span>
+                ${report.data.studentId ? `<span class="ml-2 text-sm bg-purple-100 px-2 py-1 rounded font-mono">${report.data.studentId}</span>` : ''}
+                ${report.data.studentClass ? `<span class="ml-2 text-sm bg-blue-100 px-2 py-1 rounded">${report.data.studentClass}</span>` : ''}
+                ${report.data.studentYear ? `<span class="ml-2 text-sm bg-gray-100 px-2 py-1 rounded">Year: ${report.data.studentYear}</span>` : ''}
                 ${report.data.teacherSignatureData ? '<span class="ml-2 text-sm bg-green-100 px-2 py-1 rounded">✅ Teacher Signature</span>' : ''}
                 ${report.data.principalSignatureData ? '<span class="ml-2 text-sm bg-purple-100 px-2 py-1 rounded">✅ Principal Signature</span>' : ''}
             </div>
@@ -2532,13 +3516,6 @@ function updateTotalFilesCount() {
     const badge = document.getElementById('totalFilesCount');
     if (badge) badge.textContent = `${reports.length} file${reports.length !== 1 ? 's' : ''}`;
 }
-
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') { closeSavedReportsModal(); closeExportModal(); closeSignaturePlacementModal(); }
-});
-document.getElementById('savedReportsModal')?.addEventListener('click', function(e) {
-    if (e.target === this) closeSavedReportsModal();
-});
 
 // ============================================================
 // 🚀 EXPORT ALL REPORTS (Downloads JSON file)
@@ -2688,6 +3665,13 @@ function importReports(event) {
     
     reader.readAsText(file);
 }
+
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') { closeSavedReportsModal(); closeExportModal(); closeSignaturePlacementModal(); }
+});
+document.getElementById('savedReportsModal')?.addEventListener('click', function(e) {
+    if (e.target === this) closeSavedReportsModal();
+});
   </script>
 
   <!-- ============================================================
