@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Emilia Report Card Maker - JSS 2</title>
+  <title>Emilia Report Card Maker - JSS 2 (Enhanced with Save/Load, Export/Import & Signatures)</title>
   <!-- Favicon - Emilia Logo -->
   <link rel="icon" type="image/x-icon" href="https://ncctazjcffmpuniwctkz.supabase.co/storage/v1/object/public/user-uploads/emilia_logo_circle.png">
 
@@ -472,7 +472,7 @@
       image-rendering: auto;
     }
     
-    /* Hide signature when ANY modal is open */
+    /* Hide signature when ANY modal is open - WEB VIEW */
     .modal-open .draggable-signature {
       display: none !important;
     }
@@ -533,6 +533,7 @@
         height: auto !important;
       }
       
+      /* Show signature in print even when modal-open class is present */
       .modal-open .draggable-signature {
         display: block !important;
       }
@@ -1377,9 +1378,9 @@
           </div>
         </div>
 
-        <!-- Comment Categories -->
+        <!-- Comment Categories - ALL COMMENTS ARE ALWAYS SHOWN -->
         <div id="commentCategories" class="space-y-4">
-          <!-- Comments will be rendered here -->
+          <!-- All comments will be rendered here regardless of percentage -->
         </div>
       </div>
 
@@ -1660,7 +1661,7 @@
       </div>
     </div>
 
-    <!-- CLASS TEACHER SIGN -->
+    <!-- CLASS TEACHER SIGN - UPDATED WITH SIGNATURE OVERLAY CONTAINER -->
     <div class="mt-8 text-sm flex flex-col items-center w-40 ml-4 teacher-sign-section">
       <div class="relative w-full signature-overlay-container">
         <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none" style="z-index: 0;">
@@ -1683,7 +1684,7 @@
       </div>
     </div>
 
-    <!-- PRINCIPAL SIGN -->
+    <!-- PRINCIPAL SIGN - UPDATED WITH SIGNATURE OVERLAY CONTAINER -->
     <div class="mt-8 text-sm flex flex-col items-center w-40 ml-4 principal-sign-section">
       <div class="relative w-full signature-overlay-container">
         <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none" style="z-index: 0;">
@@ -1774,7 +1775,7 @@
     </div>
   </div>
 
-  <!-- 🚀 SUPER POWERFUL PRINT MODAL -->
+  <!-- 🚀 SUPER POWERFUL PRINT MODAL (UPDATED) -->
   <div id="exportModal" class="fixed inset-0 bg-black/80 backdrop-blur-xl hidden z-50 flex items-center justify-center p-4 transition-all duration-500 no-print">
     <div 
       id="modalContent"
@@ -2130,7 +2131,7 @@
 
   <!-- Table Script -->
   <script>
-// Define all subjects
+// Define all subjects (JSS2 specific)
 const allSubjects = [
     "MATHEMATICS",
     "ENGLISH STUDIES",
@@ -2812,6 +2813,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   <!-- ============================================================
        🖊️ COMMENT GENERATOR - COMPLETE ADD-ON (20 COMMENTS EACH)
+       FIX: ALL COMMENTS ARE ALWAYS VISIBLE REGARDLESS OF PERCENTAGE
        ============================================================ -->
   <script>
 // ============================================================
@@ -2969,8 +2971,8 @@ function openCommentModal() {
     selectedComment = null;
     selectedCommentCategory = null;
     
-    // Generate comment categories
-    renderCommentCategories(percentage);
+    // Generate comment categories - ALL CATEGORIES ARE ALWAYS SHOWN
+    renderAllCommentCategories();
     
     document.getElementById('commentModal').classList.remove('hidden');
     document.body.classList.add('modal-open');
@@ -2983,42 +2985,15 @@ function closeCommentModal() {
     document.body.style.overflow = 'auto';
 }
 
-function renderCommentCategories(percentage) {
+// NEW FUNCTION: ALWAYS SHOW ALL COMMENT CATEGORIES
+function renderAllCommentCategories() {
     const container = document.getElementById('commentCategories');
     container.innerHTML = '';
     
-    // Determine which categories to show based on percentage
-    let activeCategories = [];
-    
-    if (percentage >= 0 && percentage <= 39) {
-        activeCategories.push('0-39');
-    } else if (percentage >= 40 && percentage <= 49) {
-        activeCategories.push('40-49');
-    } else if (percentage >= 50 && percentage <= 59) {
-        activeCategories.push('50-59');
-    } else if (percentage >= 60 && percentage <= 69) {
-        activeCategories.push('60-69');
-    } else if (percentage >= 70 && percentage <= 100) {
-        activeCategories.push('70-100');
-    }
-    
-    // Also show adjacent categories for flexibility
+    // Show ALL categories regardless of percentage
     const allKeys = ['0-39', '40-49', '50-59', '60-69', '70-100'];
-    const currentIndex = allKeys.indexOf(activeCategories[0]);
     
-    // Show current and one below (if exists) and one above (if exists)
-    const categoriesToShow = [];
-    if (currentIndex > 0) categoriesToShow.push(allKeys[currentIndex - 1]);
-    categoriesToShow.push(allKeys[currentIndex]);
-    if (currentIndex < allKeys.length - 1) categoriesToShow.push(allKeys[currentIndex + 1]);
-    
-    // If percentage is 0, show all categories
-    if (percentage === 0) {
-        categoriesToShow.length = 0;
-        categoriesToShow.push('0-39', '40-49', '50-59', '60-69', '70-100');
-    }
-    
-    categoriesToShow.forEach(key => {
+    allKeys.forEach(key => {
         const data = commentData[key];
         if (!data) return;
         
@@ -3138,7 +3113,7 @@ function placeSelectedComment() {
 }
   </script>
 
-  <!-- NUCLEAR SOLUTION: REPORT SAVE/LOAD SYSTEM with SEARCH & DELETE -->
+  <!-- NUCLEAR SOLUTION: REPORT SAVE/LOAD SYSTEM with SEARCH & DELETE (FULLY ENHANCED) -->
   <script>
 const JSS2_STORAGE_KEY = 'savedReports_JSS2';
 const EXPECTED_CLASS = 'JSS2';
