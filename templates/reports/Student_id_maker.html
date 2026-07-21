@@ -1127,6 +1127,7 @@
         let currentSearch = '';
         let sessionTimerInterval;
         let sessionTime = 1800; // 30 minutes in seconds
+        let editingIndex = -1; // Track which student is being edited
         
         // CHARACTER SETS FOR ID GENERATION
         const ALPHANUMERIC_CHARS = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // Removed confusing chars: 0, O, 1, I
@@ -1340,6 +1341,7 @@
                 yearCounters = {};
                 currentPage = 1;
                 currentSearch = '';
+                editingIndex = -1;
                 
                 console.log('All local data cleared securely');
             } catch (error) {
@@ -1575,11 +1577,12 @@
                 return;
             }
             
-            // Check for duplicates
-            const duplicate = students.find(student => 
+            // Check for duplicates (excluding the one being edited)
+            const duplicate = students.find((student, index) => 
                 student.name.toLowerCase() === fullName.toLowerCase() && 
                 student.class === studentClass && 
-                student.year === year
+                student.year === year &&
+                index !== editingIndex
             );
             
             if (duplicate) {
@@ -1588,34 +1591,72 @@
                 return;
             }
             
-            // Generate ID parts
-            const middleCode = generateMiddleCode(year);
-            const checksum = generateChecksum();
-            const studentId = `EMFHS-${year}-${middleCode}-${checksum}`;
+            // If we are editing, we keep the existing ID
+            let studentId;
+            let student;
             
-            // Create student object
-            const student = {
-                id: studentId,
-                name: fullName,
-                class: studentClass,
-                year: year,
-                admissionDate: admissionDate.toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'short',
-                    day: 'numeric'
-                }),
-                timestamp: new Date().toISOString(),
-                dateObj: admissionDate.toISOString().split('T')[0]
-            };
-            
-            students.unshift(student);
+            if (editingIndex !== -1 && students[editingIndex]) {
+                // EDIT MODE: Keep the same ID
+                const existingStudent = students[editingIndex];
+                studentId = existingStudent.id;
+                
+                // Update the student with new data but keep ID
+                student = {
+                    id: studentId, // PRESERVE THE ORIGINAL ID
+                    name: fullName,
+                    class: studentClass,
+                    year: year,
+                    admissionDate: admissionDate.toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric'
+                    }),
+                    timestamp: new Date().toISOString(),
+                    dateObj: admissionDate.toISOString().split('T')[0]
+                };
+                
+                // Replace the student at the editing index
+                students[editingIndex] = student;
+                
+                // Reset editing state
+                editingIndex = -1;
+                
+                // Update the form button text back to normal
+                const submitBtn = document.querySelector('#studentForm button[type="submit"]');
+                if (submitBtn) {
+                    submitBtn.innerHTML = '<i class="fas fa-id-card mr-3"></i> Generate Student ID';
+                }
+                
+                showNotification(`✅ Updated "${fullName}" - ID ${studentId} maintained!`, 'success');
+            } else {
+                // NEW STUDENT MODE: Generate new ID
+                const middleCode = generateMiddleCode(year);
+                const checksum = generateChecksum();
+                studentId = `EMFHS-${year}-${middleCode}-${checksum}`;
+                
+                student = {
+                    id: studentId,
+                    name: fullName,
+                    class: studentClass,
+                    year: year,
+                    admissionDate: admissionDate.toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric'
+                    }),
+                    timestamp: new Date().toISOString(),
+                    dateObj: admissionDate.toISOString().split('T')[0]
+                };
+                
+                students.unshift(student);
+                showNotification(`ID ${studentId} generated for ${fullName}!`, 'success');
+            }
             
             if (saveStudents()) {
                 renderStudentList();
                 updatePreview(student);
                 document.getElementById('fullName').value = '';
                 document.getElementById('admissionDate').value = new Date().toISOString().split('T')[0];
-                showNotification(`ID ${studentId} generated for ${fullName}!`, 'success');
                 
                 // Smooth scroll to the new entry in the table
                 setTimeout(() => {
@@ -2183,6 +2224,11 @@
         
         function editStudent(index) {
             const student = students[index];
+            
+            // Set editing index
+            editingIndex = index;
+            
+            // Fill form with student data
             document.getElementById('fullName').value = student.name;
             document.getElementById('enrollmentYear').value = student.year;
             document.getElementById('studentClass').value = student.class;
@@ -2191,12 +2237,18 @@
             const date = new Date(student.dateObj || student.admissionDate);
             document.getElementById('admissionDate').value = date.toISOString().split('T')[0];
             
-            // Remove the old entry
-            students.splice(index, 1);
-            saveStudents();
-            renderStudentList();
+            // Update the form button text to indicate edit mode
+            const submitBtn = document.querySelector('#studentForm button[type="submit"]');
+            if (submitBtn) {
+                submitBtn.innerHTML = '<i class="fas fa-save mr-3"></i> Update Student (ID Preserved)';
+                submitBtn.style.background = 'linear-gradient(135deg, #f59e0b 0%, #f97316 100%)';
+            }
             
-            showNotification(`Editing ${student.name}. Fill form and click Generate to update.`, 'info');
+            // Show notification
+            showNotification(`✏️ Editing "${student.name}" - ID ${student.id} will be preserved`, 'info');
+            
+            // Update preview to show the student being edited
+            updatePreview(student);
             
             // Smooth scroll to form
             const formElement = document.getElementById('fullName');
@@ -2204,12 +2256,22 @@
                 setTimeout(() => {
                     formElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     formElement.focus();
-                }, 100);
+                    formElement.select();
+                }, 200);
             }
         }
         
         function deleteStudent(index) {
             if (confirm(`Delete ${students[index].name}'s ID? This cannot be undone.`)) {
+                // If deleting the student being edited, reset edit mode
+                if (editingIndex === index) {
+                    editingIndex = -1;
+                    const submitBtn = document.querySelector('#studentForm button[type="submit"]');
+                    if (submitBtn) {
+                        submitBtn.innerHTML = '<i class="fas fa-id-card mr-3"></i> Generate Student ID';
+                        submitBtn.style.background = '';
+                    }
+                }
                 students.splice(index, 1);
                 saveStudents();
                 renderStudentList();
@@ -2226,6 +2288,12 @@
             if (confirm(`Clear ALL ${students.length} student records? This cannot be undone!`)) {
                 students = [];
                 yearCounters = {};
+                editingIndex = -1;
+                const submitBtn = document.querySelector('#studentForm button[type="submit"]');
+                if (submitBtn) {
+                    submitBtn.innerHTML = '<i class="fas fa-id-card mr-3"></i> Generate Student ID';
+                    submitBtn.style.background = '';
+                }
                 saveStudents();
                 renderStudentList();
                 clearPreview();
