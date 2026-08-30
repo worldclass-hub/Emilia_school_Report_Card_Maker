@@ -6,7 +6,7 @@
     <title>EMIFORPHS Student ID Generator - Ultimate Edition</title>
 
     <!-- Favicon - Emilia Logo -->
-  <link rel="icon" type="image/x-icon" href="https://ncctazjcffmpuniwctkz.supabase.co/storage/v1/object/public/user-uploads/emilia_logo_circle.png">
+    <link rel="icon" type="image/x-icon" href="https://ncctazjcffmpuniwctkz.supabase.co/storage/v1/object/public/user-uploads/emilia_logo_circle.png">
 
     <!-- CSRF Token for Django -->
     <meta name="csrf-token" content="{{ csrf_token }}">
@@ -340,6 +340,54 @@
             z-index: 1000;
         }
         
+        /* ----- SUPER POWERFUL FLOATING HOME BUTTON (LEFT SIDE, SAME LEVEL) ----- */
+        .floating-home-btn {
+            position: fixed;
+            bottom: 32px;      /* EXACTLY same as download button (bottom-8 = 32px) */
+            left: 32px;        /* CHANGED to left side */
+            width: 64px;       /* w-16 = 64px, same as download button */
+            height: 64px;      /* h-16 = 64px, same as download button */
+            border-radius: 50%;
+            background: linear-gradient(145deg, #1e293b, #0f172a);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 0 2px rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 26px;
+            cursor: pointer;
+            z-index: 1001;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255,255,255,0.15);
+            backdrop-filter: blur(4px);
+            animation: float-home 5s ease-in-out infinite;
+            text-decoration: none;
+        }
+        .floating-home-btn:hover {
+            transform: scale(1.12) rotate(6deg);
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.7), 0 0 60px rgba(59, 130, 246, 0.3);
+            border-color: #3b82f6;
+            color: #93c5fd;
+        }
+        .floating-home-btn i {
+            filter: drop-shadow(0 0 6px rgba(255,255,255,0.3));
+        }
+        @keyframes float-home {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-6px) scale(1.02); }
+        }
+        /* small screen adjustment - keep same size as download btn */
+        @media (max-width: 640px) {
+            .floating-home-btn {
+                bottom: 32px;
+                left: 20px;
+                width: 56px;
+                height: 56px;
+                font-size: 22px;
+            }
+        }
+        /* ------------------------------------------------- */
+        
         .download-modal {
             animation: slideUp 0.3s ease-out;
         }
@@ -514,13 +562,18 @@
                     
                     <!-- ================ ULTIMATE LOGOUT SYSTEM ================ -->
                     
-                    <!-- Floating Download Button -->
+                    <!-- Floating Download Button (original - right side) -->
                     <div id="floatingDownloadBtn" class="floating-download-btn fixed bottom-8 right-8 w-16 h-16 rounded-full premium-gradient flex items-center justify-center shadow-float cursor-pointer z-50 hover:shadow-glow transition-all duration-300">
                         <i class="fas fa-file-export text-white text-2xl"></i>
                         <div class="absolute -top-2 -right-2 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center text-white text-xs font-bold animate-pulse">
                             <span id="downloadCount">0</span>
                         </div>
                     </div>
+                    
+                    <!-- ★★★★★ SUPER POWERFUL FLOATING HOME BUTTON (LEFT SIDE, SAME LEVEL) ★★★★★ -->
+                    <a href="/staff/general" id="floatingHomeBtn" class="floating-home-btn" title="Go to General Page">
+                        <i class="fas fa-house-chimney"></i>
+                    </a>
                     
                     <!-- Enhanced Logout Confirmation Modal -->
                     <div id="logoutModal" class="fixed inset-0 bg-black bg-opacity-70 hidden items-center justify-center z-[9999] p-4 backdrop-blur-sm">
@@ -1348,6 +1401,21 @@
                 console.error('Error clearing local data:', error);
             }
         }
+        
+        // ========== SUPER POWERFUL FLOATING HOME BUTTON (LEFT SIDE, SAME LEVEL) ==========
+        // The button is now an <a> tag pointing to /staff/general, so no JS needed.
+        // But we keep a small visual feedback.
+        document.addEventListener('DOMContentLoaded', function() {
+            const homeBtn = document.getElementById('floatingHomeBtn');
+            if (homeBtn) {
+                homeBtn.addEventListener('click', function(e) {
+                    // subtle feedback
+                    homeBtn.style.transform = 'scale(0.85)';
+                    setTimeout(() => { homeBtn.style.transform = ''; }, 200);
+                });
+            }
+        });
+        // ============================================================
         
         // Initialize the application
         document.addEventListener('DOMContentLoaded', function() {

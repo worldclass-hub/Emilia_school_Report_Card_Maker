@@ -14,7 +14,7 @@ JAZZMIN_SETTINGS = {
     "site_brand": "EMILIA",
 
     # Logo to use for your site, must be present in static files
-    "site_logo": "/img/GMMI_LOGO.png",
+    "site_logo": "/img/emilia_logo_circle.png",
 
     
 

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Emilia Report Card Maker - SS 1 (Enhanced with Save/Load, Export/Import & Signatures)</title>
+  <title>Emilia Report Card Maker - SS 1 (Enhanced with Signature Library)</title>
   <!-- Favicon - Emilia Logo -->
   <link rel="icon" type="image/x-icon" href="https://ncctazjcffmpuniwctkz.supabase.co/storage/v1/object/public/user-uploads/emilia_logo_circle.png">
 
@@ -674,6 +674,92 @@
     #commentPlacementModal > div {
       z-index: 9999999 !important;
       position: relative !important;
+    }
+
+    /* Signature Library Styles */
+    .library-signature-item {
+      transition: all 0.2s ease;
+      cursor: pointer;
+      position: relative;
+    }
+    .library-signature-item:hover {
+      transform: scale(1.05);
+      border-color: #7c3aed;
+      box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+    }
+    .library-signature-item.selected {
+      border-color: #7c3aed;
+      background: #ede9fe;
+    }
+    .library-signature-item .sig-name {
+      font-size: 10px;
+      font-weight: 600;
+      color: #374151;
+      text-align: center;
+      max-width: 80px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .library-signature-item .sig-delete-btn {
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      background: #ef4444;
+      color: white;
+      border: 1px solid white;
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      font-size: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+    .library-signature-item:hover .sig-delete-btn {
+      opacity: 1;
+    }
+
+    /* FIX: Prevent modal close on outside click - Force pointer-events on backdrop */
+    .modal-fixed-backdrop {
+      pointer-events: auto !important;
+      cursor: default !important;
+    }
+    
+    /* Ensure modal content is the only clickable area */
+    .modal-content-wrapper {
+      pointer-events: auto !important;
+      cursor: default !important;
+    }
+    
+    /* Disable backdrop click closing */
+    .modal-fixed-backdrop {
+      pointer-events: auto !important;
+    }
+    
+    .modal-fixed-backdrop > div:first-child {
+      pointer-events: none !important;
+    }
+    
+    .modal-fixed-backdrop > div:first-child > div {
+      pointer-events: auto !important;
+    }
+
+    /* Ensure export modal backdrop doesn't close on click */
+    #exportModal.modal-fixed-backdrop {
+      pointer-events: auto !important;
+      cursor: default !important;
+    }
+    
+    #exportModal.modal-fixed-backdrop > div:first-child {
+      pointer-events: none !important;
+    }
+    
+    #exportModal.modal-fixed-backdrop > div:first-child > div {
+      pointer-events: auto !important;
     }
 
 </style>
@@ -1421,7 +1507,7 @@
   </div>
 
   <!-- 🖊️ COMMENT GENERATOR MODAL -->
-  <div id="commentModal" class="fixed inset-0 bg-black/80 backdrop-blur-xl hidden z-[99998] flex items-center justify-center p-4 no-print">
+  <div id="commentModal" class="fixed inset-0 bg-black/80 backdrop-blur-xl hidden z-[99998] flex items-center justify-center p-4 no-print modal-fixed-backdrop" onclick="event.stopPropagation();">
     <div class="bg-white dark:bg-gray-900 rounded-3xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-hidden border border-gray-200 dark:border-gray-800">
       <div class="px-8 py-6 border-b border-gray-200 dark:border-gray-800 flex justify-between items-center bg-gradient-to-r from-pink-50 to-purple-50">
         <div>
@@ -1464,7 +1550,7 @@
   </div>
 
   <!-- 🖊️ COMMENT PLACEMENT MODAL -->
-  <div id="commentPlacementModal" class="fixed inset-0 bg-black/80 backdrop-blur-xl hidden z-[99999] flex items-center justify-center p-4 no-print">
+  <div id="commentPlacementModal" class="fixed inset-0 bg-black/80 backdrop-blur-xl hidden z-[99999] flex items-center justify-center p-4 no-print modal-fixed-backdrop" onclick="event.stopPropagation();">
     <div class="bg-white dark:bg-gray-900 rounded-3xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-hidden border border-gray-200 dark:border-gray-800">
       <div class="px-8 py-6 border-b border-gray-200 dark:border-gray-800 flex justify-between items-center bg-gradient-to-r from-pink-50 to-purple-50">
         <h3 class="text-2xl font-bold text-gray-900 dark:text-white">📌 Place Comment</h3>
@@ -1504,7 +1590,7 @@
   </div>
 
   <!-- STUDENT LIST MODAL -->
-  <div id="studentListModal" class="fixed inset-0 bg-black/90 backdrop-blur-xl hidden z-[99999] flex items-center justify-center p-4 no-print">
+  <div id="studentListModal" class="fixed inset-0 bg-black/90 backdrop-blur-xl hidden z-[99999] flex items-center justify-center p-4 no-print modal-fixed-backdrop" onclick="event.stopPropagation();">
     <div class="bg-white dark:bg-gray-900 rounded-3xl shadow-2xl w-full max-w-5xl max-h-[90vh] overflow-hidden border border-gray-200 dark:border-gray-800">
       <div class="px-8 py-6 border-b border-gray-200 dark:border-gray-800 flex justify-between items-center bg-gradient-to-r from-blue-50 to-purple-50">
         <div>
@@ -1845,8 +1931,8 @@
     </div>
   </div>
 
-  <!-- 🚀 SUPER POWERFUL PRINT MODAL (UPDATED) -->
-  <div id="exportModal" class="fixed inset-0 bg-black/80 backdrop-blur-xl hidden z-50 flex items-center justify-center p-4 transition-all duration-500 no-print">
+  <!-- 🚀 SUPER POWERFUL PRINT MODAL (UPDATED - FIXED BACKDROP CLOSE) -->
+  <div id="exportModal" class="fixed inset-0 bg-black/80 backdrop-blur-xl hidden z-50 flex items-center justify-center p-4 transition-all duration-500 no-print modal-fixed-backdrop" onclick="event.stopPropagation();">
     <div 
       id="modalContent"
       class="bg-gradient-to-br from-white to-gray-50 dark:from-gray-900 dark:to-gray-800 rounded-3xl shadow-2xl w-full max-w-lg transform transition-all duration-700 ease-out scale-95 opacity-0 border border-gray-200/50 dark:border-gray-700/50 relative overflow-hidden"
@@ -1975,7 +2061,7 @@
   </div>
 
   <!-- 🚀 ENHANCED SAVED REPORTS MODAL with SEARCH & DELETE BUTTONS -->
-  <div id="savedReportsModal" class="fixed inset-0 bg-black/90 backdrop-blur-xl z-[99999] hidden no-print">
+  <div id="savedReportsModal" class="fixed inset-0 bg-black/90 backdrop-blur-xl z-[99999] hidden no-print modal-fixed-backdrop" onclick="event.stopPropagation();">
     <div class="relative h-full w-full flex items-center justify-center p-4">
       <div class="bg-white dark:bg-gray-900 rounded-3xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden border border-gray-200 dark:border-gray-800">
         <!-- Modal Header -->
@@ -2013,7 +2099,7 @@
   </div>
 
   <!-- 🖊️ SIGNATURE PLACEMENT MODAL - Choose Teacher or Principal -->
-  <div id="signaturePlacementModal" class="fixed inset-0 bg-black/80 backdrop-blur-xl hidden z-[99999] flex items-center justify-center p-4 no-print">
+  <div id="signaturePlacementModal" class="fixed inset-0 bg-black/80 backdrop-blur-xl hidden z-[99999] flex items-center justify-center p-4 no-print modal-fixed-backdrop" onclick="event.stopPropagation();">
     <div class="bg-white dark:bg-gray-900 rounded-3xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-hidden border border-gray-200 dark:border-gray-800">
       <div class="px-8 py-6 border-b border-gray-200 dark:border-gray-800 flex justify-between items-center bg-gradient-to-r from-pink-50 to-purple-50">
         <h3 class="text-2xl font-bold text-gray-900 dark:text-white">📌 Place Signature</h3>
@@ -2049,20 +2135,44 @@
     </div>
   </div>
 
-  <!-- 🖊️ SIGNATURE CREATOR MODAL -->
-  <div id="signatureModal" class="fixed inset-0 bg-black/80 backdrop-blur-xl hidden z-[99998] flex items-center justify-center p-4 no-print">
+  <!-- 🖊️ SIGNATURE CREATOR MODAL (ENHANCED WITH LIBRARY & NAMING) -->
+  <div id="signatureModal" class="fixed inset-0 bg-black/80 backdrop-blur-xl hidden z-[99998] flex items-center justify-center p-4 no-print modal-fixed-backdrop" onclick="event.stopPropagation();">
     <div class="bg-white dark:bg-gray-900 rounded-3xl shadow-2xl w-full max-w-2xl max-h-[95vh] overflow-hidden border border-gray-200 dark:border-gray-800">
       <div class="px-8 py-6 border-b border-gray-200 dark:border-gray-800 flex justify-between items-center bg-gradient-to-r from-pink-50 to-purple-50">
-        <h3 class="text-2xl font-bold text-gray-900 dark:text-white">✍️ Signature Creator</h3>
+        <div>
+          <h3 class="text-2xl font-bold text-gray-900 dark:text-white">✍️ Signature Creator</h3>
+          <p class="text-sm text-gray-500 mt-1">Create or choose a named signature from your library</p>
+        </div>
         <button onclick="closeSignatureModal()" class="p-3 hover:bg-gray-100 rounded-xl text-2xl">✕</button>
       </div>
       
       <div class="p-6 overflow-y-auto max-h-[65vh]">
         <!-- Instructions -->
         <div class="bg-gradient-to-r from-pink-50 to-purple-50 rounded-xl p-4 mb-4 border border-pink-200">
-          <p class="text-sm text-gray-700 font-medium">👆 Create your signature below, then click <strong>"Insert Signature"</strong> to place it on the page.</p>
-          <p class="text-xs text-gray-500 mt-1">💡 You will be prompted to choose Teacher or Principal</p>
-          <p class="text-xs text-blue-600 mt-1">🖨️ Signature will appear in print exactly where you place it!</p>
+          <p class="text-sm text-gray-700 font-medium">👆 Create your signature below, or choose from your saved signatures.</p>
+          <p class="text-xs text-blue-600 mt-1">🖨️ Signatures are automatically saved with names to your library for reuse across pages!</p>
+        </div>
+
+        <!-- SIGNATURE LIBRARY SECTION -->
+        <div class="mb-6 border-2 border-purple-200 rounded-xl p-4 bg-purple-50">
+          <div class="flex items-center justify-between mb-3">
+            <h4 class="font-bold text-purple-800 text-sm flex items-center gap-2">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+              </svg>
+              📚 My Signature Library
+            </h4>
+            <div class="flex gap-2">
+              <button onclick="exportSignatureLibrary()" class="text-xs bg-blue-500 text-white px-3 py-1 rounded-lg hover:bg-blue-600">📤 Export</button>
+              <button onclick="document.getElementById('sigImportInput').click()" class="text-xs bg-green-500 text-white px-3 py-1 rounded-lg hover:bg-green-600">📥 Import</button>
+              <button onclick="clearSignatureLibrary()" class="text-xs text-red-500 hover:text-red-700 font-semibold">Clear All</button>
+            </div>
+          </div>
+          <input type="file" id="sigImportInput" accept=".json" class="hidden" onchange="importSignatureLibrary(event)" />
+          <div id="signatureLibraryContainer" class="flex flex-wrap gap-3 max-h-32 overflow-y-auto p-2 bg-white rounded-lg border border-gray-200">
+            <!-- Signatures will be rendered here -->
+          </div>
+          <p class="text-xs text-gray-500 mt-2">Click on any saved signature to use it instantly. Signatures are stored in your browser with their names.</p>
         </div>
 
         <!-- Tabs for signature methods -->
@@ -2091,7 +2201,7 @@
               ↩️ Undo
             </button>
             <button onclick="captureDrawnSignature()" class="bg-green-500 text-white px-4 py-2 rounded-lg text-sm hover:bg-green-600 font-bold">
-              ✅ Capture Signature
+              ✅ Capture & Name
             </button>
             <div class="flex-1"></div>
             <label class="text-sm text-gray-600 flex items-center gap-2">
@@ -2099,7 +2209,7 @@
               <input type="range" id="penSize" min="1" max="10" value="3" class="w-20" />
             </label>
           </div>
-          <p class="text-xs text-gray-500 mt-2">Draw your signature, then click <strong>"Capture Signature"</strong> to save it.</p>
+          <p class="text-xs text-gray-500 mt-2">Draw your signature, then click <strong>"Capture & Name"</strong> to save it with a name to your library.</p>
         </div>
 
         <!-- UPLOAD TAB -->
@@ -2114,7 +2224,7 @@
           <div id="uploadPreviewContainer" class="mt-3 hidden">
             <img id="uploadPreview" class="w-full h-auto max-h-[160px] object-contain border rounded" />
             <button onclick="confirmUploadSignature()" class="mt-2 bg-green-500 text-white px-4 py-2 rounded-lg text-sm hover:bg-green-600 w-full">
-              ✅ Use Uploaded Signature
+              ✅ Name & Save to Library
             </button>
           </div>
         </div>
@@ -2128,18 +2238,21 @@
             <p class="text-xs text-gray-400 text-center mt-2">Use a cursive/signature style font</p>
           </div>
           <button onclick="confirmTypeSignature()" class="mt-3 bg-green-500 text-white px-6 py-3 rounded-lg text-sm hover:bg-green-600 w-full">
-            ✅ Use Typed Signature
+            ✅ Name & Save Typed Signature
           </button>
         </div>
 
         <!-- Generated Signature Preview -->
         <div class="mt-6 border-t border-gray-200 pt-4">
-          <p class="text-sm font-semibold text-gray-700 mb-2">📋 Preview:</p>
+          <p class="text-sm font-semibold text-gray-700 mb-2">📋 Current Signature Preview:</p>
           <div id="signaturePreviewContainer" class="border-2 border-gray-300 rounded-lg p-4 bg-white min-h-[80px] flex items-center justify-center">
             <div id="signaturePreviewPlaceholder" class="text-gray-400 text-sm">
-              No signature created yet. Use the tabs above to create one.
+              No signature selected. Create or choose one above.
             </div>
             <img id="signaturePreviewImage" class="hidden max-h-[100px] object-contain" />
+          </div>
+          <div id="signatureNameDisplay" class="mt-2 text-center text-sm text-gray-600 hidden">
+            📛 <span id="selectedSignatureName" class="font-semibold text-purple-700"></span>
           </div>
         </div>
       </div>
@@ -2196,6 +2309,53 @@
     .comment-card.selected {
       border-color: #a855f7;
       background: #f3e8ff;
+    }
+
+    /* Signature Library Styles */
+    .library-signature-item {
+      transition: all 0.2s ease;
+      cursor: pointer;
+      position: relative;
+    }
+    .library-signature-item:hover {
+      transform: scale(1.05);
+      border-color: #7c3aed;
+      box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+    }
+    .library-signature-item.selected {
+      border-color: #7c3aed;
+      background: #ede9fe;
+    }
+    .library-signature-item .sig-name {
+      font-size: 10px;
+      font-weight: 600;
+      color: #374151;
+      text-align: center;
+      max-width: 80px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .library-signature-item .sig-delete-btn {
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      background: #ef4444;
+      color: white;
+      border: 1px solid white;
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      font-size: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+    .library-signature-item:hover .sig-delete-btn {
+      opacity: 1;
     }
   </style>
 
@@ -3708,9 +3868,294 @@ document.getElementById('savedReportsModal')?.addEventListener('click', function
 
   <!-- ============================================================
        🖊️ SIGNATURE SYSTEM - COMPLETE ADD-ON
+       WITH SIGNATURE LIBRARY FOR REUSE ACROSS PAGES
+       WITH NAMED SIGNATURES AND IMPORT/EXPORT
        ============================================================ -->
 
   <script>
+// ============================================================
+// SIGNATURE LIBRARY - PERSISTS ACROSS PAGES VIA localStorage
+// ============================================================
+const SIGNATURE_LIBRARY_KEY = 'emilia_signature_library';
+
+// Save a signature to the library with a name
+function saveSignatureToLibrary(dataURL, name = '') {
+    let library = JSON.parse(localStorage.getItem(SIGNATURE_LIBRARY_KEY) || '[]');
+    
+    // Generate a unique ID for the signature
+    const id = 'sig_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6);
+    
+    const entry = {
+        id: id,
+        name: name || `Signature ${library.length + 1}`,
+        data: dataURL,
+        createdAt: new Date().toISOString()
+    };
+    
+    library.push(entry);
+    
+    // Limit library size to prevent storage issues (max 50 signatures)
+    if (library.length > 50) {
+        library = library.slice(-50);
+    }
+    
+    localStorage.setItem(SIGNATURE_LIBRARY_KEY, JSON.stringify(library));
+    renderSignatureLibrary();
+    return id;
+}
+
+// Delete a signature from the library
+function deleteSignatureFromLibrary(id, event) {
+    if (event) event.stopPropagation();
+    
+    if (!confirm('Delete this signature from your library?')) return;
+    
+    let library = JSON.parse(localStorage.getItem(SIGNATURE_LIBRARY_KEY) || '[]');
+    library = library.filter(sig => sig.id !== id);
+    localStorage.setItem(SIGNATURE_LIBRARY_KEY, JSON.stringify(library));
+    renderSignatureLibrary();
+    showToast('Signature deleted from library.', 'info');
+}
+
+// Clear entire signature library
+function clearSignatureLibrary() {
+    if (!confirm('⚠️ Delete ALL signatures from your library? This cannot be undone!')) return;
+    
+    localStorage.removeItem(SIGNATURE_LIBRARY_KEY);
+    renderSignatureLibrary();
+    showToast('All signatures cleared from library.', 'info');
+}
+
+// Render the signature library in the modal
+function renderSignatureLibrary() {
+    const container = document.getElementById('signatureLibraryContainer');
+    if (!container) return;
+    
+    const library = JSON.parse(localStorage.getItem(SIGNATURE_LIBRARY_KEY) || '[]');
+    
+    if (library.length === 0) {
+        container.innerHTML = `
+            <div class="text-gray-400 text-sm text-center w-full py-4">
+                No saved signatures yet. Create one above!
+            </div>
+        `;
+        return;
+    }
+    
+    // Sort by name for easier browsing
+    library.sort((a, b) => a.name.localeCompare(b.name));
+    
+    container.innerHTML = library.map(sig => `
+        <div class="library-signature-item border-2 border-gray-200 rounded-lg p-2 flex flex-col items-center w-24 bg-white hover:bg-purple-50" 
+             onclick="useSignatureFromLibrary('${sig.id}')"
+             title="${sig.name} - Click to use">
+            <img src="${sig.data}" alt="${sig.name}" class="w-full h-10 object-contain bg-white rounded" />
+            <span class="sig-name mt-1">${escapeHtml(sig.name)}</span>
+            <button onclick="deleteSignatureFromLibrary('${sig.id}', event)" 
+                    class="sig-delete-btn">
+                ✕
+            </button>
+        </div>
+    `).join('');
+    
+    // Update the name display if a signature is selected
+    const selectedEl = container.querySelector('.library-signature-item.selected');
+    if (selectedEl) {
+        const nameEl = selectedEl.querySelector('.sig-name');
+        if (nameEl) {
+            document.getElementById('signatureNameDisplay').classList.remove('hidden');
+            document.getElementById('selectedSignatureName').textContent = nameEl.textContent;
+        }
+    }
+}
+
+// Use a signature from the library
+function useSignatureFromLibrary(id) {
+    const library = JSON.parse(localStorage.getItem(SIGNATURE_LIBRARY_KEY) || '[]');
+    const sig = library.find(s => s.id === id);
+    if (!sig) {
+        showToast('Signature not found.', 'error');
+        return;
+    }
+    
+    // Set as current signature
+    signatureDataURL = sig.data;
+    updateSignaturePreview(signatureDataURL);
+    updateSignatureName(sig.name);
+    
+    // Highlight the selected item
+    document.querySelectorAll('.library-signature-item').forEach(el => {
+        el.classList.remove('selected');
+    });
+    const items = document.querySelectorAll('.library-signature-item');
+    items.forEach(el => {
+        const nameEl = el.querySelector('.sig-name');
+        if (nameEl && nameEl.textContent === sig.name) {
+            el.classList.add('selected');
+        }
+    });
+    
+    showToast(`✅ Using "${sig.name}" from library! Click "Insert Signature" to place it.`, 'success');
+}
+
+// Update the signature name display
+function updateSignatureName(name) {
+    const display = document.getElementById('signatureNameDisplay');
+    const nameSpan = document.getElementById('selectedSignatureName');
+    if (name) {
+        display.classList.remove('hidden');
+        nameSpan.textContent = name;
+    } else {
+        display.classList.add('hidden');
+    }
+}
+
+// Prompt for signature name with validation
+function promptForSignatureName(defaultName = '') {
+    return new Promise((resolve) => {
+        const name = prompt('📛 Name this signature (so you can find it later):', defaultName || '');
+        if (name === null) {
+            resolve(null); // User cancelled
+        } else if (name.trim() === '') {
+            resolve('Unnamed Signature');
+        } else {
+            resolve(name.trim());
+        }
+    });
+}
+
+// Export the signature library as JSON (with names preserved)
+function exportSignatureLibrary() {
+    const library = JSON.parse(localStorage.getItem(SIGNATURE_LIBRARY_KEY) || '[]');
+    if (library.length === 0) {
+        showToast('No signatures in library to export.', 'error');
+        return;
+    }
+    
+    // Create export data with metadata
+    const exportData = {
+        exportDate: new Date().toISOString(),
+        exportDateFormatted: new Date().toLocaleString(),
+        totalSignatures: library.length,
+        signatures: library.map(sig => ({
+            id: sig.id,
+            name: sig.name, // ⭐ IMPORTANT: Preserve the name!
+            data: sig.data,
+            createdAt: sig.createdAt
+        })),
+        version: '2.0' // Bumped version to indicate named signatures
+    };
+    
+    const jsonData = JSON.stringify(exportData, null, 2);
+    const blob = new Blob([jsonData], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    const dateStr = new Date().toISOString().slice(0, 10);
+    link.download = `emilia_signatures_${dateStr}.json`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    
+    showToast(`✅ Exported ${library.length} named signatures!`, 'success');
+}
+
+// Import signature library from JSON (with names preserved)
+function importSignatureLibrary(event) {
+    const file = event.target.files[0];
+    if (!file) {
+        showToast('No file selected.', 'error');
+        return;
+    }
+    
+    if (!file.name.endsWith('.json')) {
+        showToast('Please select a JSON file.', 'error');
+        event.target.value = '';
+        return;
+    }
+    
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        try {
+            const importedData = JSON.parse(e.target.result);
+            
+            if (!importedData.signatures || !Array.isArray(importedData.signatures)) {
+                showToast('Invalid file format. Please export a valid signature file.', 'error');
+                event.target.value = '';
+                return;
+            }
+            
+            // Check if it has named signatures
+            const hasNames = importedData.signatures.some(s => s.name);
+            if (!hasNames) {
+                showToast('⚠️ This file contains unnamed signatures. Names will be auto-generated.', 'warning');
+            }
+            
+            // Get existing library
+            let library = JSON.parse(localStorage.getItem(SIGNATURE_LIBRARY_KEY) || '[]');
+            
+            let importedCount = 0;
+            let duplicateCount = 0;
+            
+            importedData.signatures.forEach(sig => {
+                if (sig.data) {
+                    // Check if we already have this signature (by data)
+                    const exists = library.some(existing => existing.data === sig.data);
+                    if (!exists) {
+                        // Use the name from the file, or generate one
+                        let name = sig.name || `Imported ${importedCount + 1}`;
+                        
+                        // If name already exists in library, append a number
+                        const nameExists = library.some(existing => existing.name === name);
+                        if (nameExists) {
+                            let counter = 2;
+                            let newName = name + ' (2)';
+                            while (library.some(existing => existing.name === newName)) {
+                                counter++;
+                                newName = name + ` (${counter})`;
+                            }
+                            name = newName;
+                        }
+                        
+                        library.push({
+                            id: sig.id || 'sig_imported_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
+                            name: name,
+                            data: sig.data,
+                            createdAt: sig.createdAt || new Date().toISOString()
+                        });
+                        importedCount++;
+                    } else {
+                        duplicateCount++;
+                    }
+                }
+            });
+            
+            if (library.length > 50) {
+                library = library.slice(-50);
+            }
+            
+            localStorage.setItem(SIGNATURE_LIBRARY_KEY, JSON.stringify(library));
+            renderSignatureLibrary();
+            
+            let message = `✅ Imported ${importedCount} named signatures successfully!`;
+            if (duplicateCount > 0) {
+                message += ` (${duplicateCount} duplicates skipped)`;
+            }
+            if (importedCount === 0 && duplicateCount > 0) {
+                message = `ℹ️ All ${duplicateCount} signatures already exist. No duplicates imported.`;
+            }
+            showToast(message, 'success');
+            
+        } catch (error) {
+            showToast('Error reading file. Please make sure it\'s a valid JSON file.', 'error');
+            console.error('Import error:', error);
+        }
+        event.target.value = '';
+    };
+    reader.readAsText(file);
+}
+
 // ============================================================
 // SIGNATURE STATE
 // ============================================================
@@ -3720,6 +4165,7 @@ let lastX = 0, lastY = 0;
 let signatureStrokes = [];
 let currentStroke = [];
 let isCanvasDirty = false;
+let currentSignatureName = '';
 
 // ============================================================
 // SIGNATURE MODAL CONTROLS
@@ -3730,6 +4176,7 @@ function openSignatureModal() {
     signatureStrokes = [];
     currentStroke = [];
     isCanvasDirty = false;
+    currentSignatureName = '';
     
     const canvas = document.getElementById('signatureDrawCanvas');
     const ctx = canvas.getContext('2d');
@@ -3742,6 +4189,10 @@ function openSignatureModal() {
     document.getElementById('signaturePreviewPlaceholder').classList.remove('hidden');
     document.getElementById('signaturePreviewImage').classList.add('hidden');
     document.getElementById('signaturePreviewImage').src = '';
+    document.getElementById('signatureNameDisplay').classList.add('hidden');
+    
+    // Render the library
+    renderSignatureLibrary();
     
     switchSignatureTab('draw');
     document.getElementById('signatureModal').classList.remove('hidden');
@@ -3780,14 +4231,29 @@ function openSignaturePlacementModal() {
         
         if (hasDrawing || signatureStrokes.length > 0) {
             signatureDataURL = canvas.toDataURL('image/png');
-            updateSignaturePreview(signatureDataURL);
-            showToast('✅ Signature captured from canvas!', 'success');
+            // Prompt for name and save
+            promptForSignatureName('Drawn Signature').then(name => {
+                if (name !== null) {
+                    saveSignatureToLibrary(signatureDataURL, name);
+                    currentSignatureName = name;
+                    updateSignaturePreview(signatureDataURL);
+                    updateSignatureName(name);
+                    showToast(`✅ Signature "${name}" saved to library!`, 'success');
+                    // Now open placement modal
+                    openPlacementModal();
+                }
+            });
+            return;
         } else {
-            showToast('Please create a signature first! Use Draw, Upload, or Type.', 'error');
+            showToast('Please create a signature first! Use Draw, Upload, Type, or choose from library.', 'error');
             return;
         }
     }
     
+    openPlacementModal();
+}
+
+function openPlacementModal() {
     document.getElementById('signatureModal').classList.add('hidden');
     document.body.classList.remove('modal-open');
     document.getElementById('signaturePlacementModal').classList.remove('hidden');
@@ -3824,10 +4290,11 @@ function placeSignature(targetKey) {
     signatureEl.style.width = '150px';
     signatureEl.style.zIndex = '99999';
     signatureEl.dataset.signatureData = signatureDataURL;
+    signatureEl.dataset.signatureName = currentSignatureName || 'Signature';
     
     const img = document.createElement('img');
     img.src = signatureDataURL;
-    img.alt = 'Signature';
+    img.alt = currentSignatureName || 'Signature';
     img.style.display = 'block';
     img.style.width = '100%';
     img.style.height = 'auto';
@@ -3860,7 +4327,8 @@ function placeSignature(targetKey) {
     
     closeSignaturePlacementModal();
     
-    showToast(`✅ Signature placed on ${targetKey.charAt(0).toUpperCase() + targetKey.slice(1)} sign! Drag to adjust position.`, 'success');
+    const nameDisplay = currentSignatureName ? ` "${currentSignatureName}"` : '';
+    showToast(`✅ Signature${nameDisplay} placed on ${targetKey.charAt(0).toUpperCase() + targetKey.slice(1)} sign!`, 'success');
 }
 
 // ============================================================
@@ -3996,8 +4464,17 @@ function captureDrawnSignature() {
     
     const canvas = document.getElementById('signatureDrawCanvas');
     signatureDataURL = canvas.toDataURL('image/png');
-    updateSignaturePreview(signatureDataURL);
-    showToast('✅ Signature captured! Click "Insert Signature" to place it on the page.', 'success');
+    
+    // Prompt for name and save
+    promptForSignatureName('Drawn Signature').then(name => {
+        if (name !== null) {
+            saveSignatureToLibrary(signatureDataURL, name);
+            currentSignatureName = name;
+            updateSignaturePreview(signatureDataURL);
+            updateSignatureName(name);
+            showToast(`✅ Signature "${name}" saved to library! Click "Insert Signature" to place it.`, 'success');
+        }
+    });
     return true;
 }
 
@@ -4034,7 +4511,7 @@ document.getElementById('signatureUpload')?.addEventListener('change', function(
         const img = document.getElementById('uploadPreview');
         img.src = event.target.result;
         document.getElementById('uploadPreviewContainer').classList.remove('hidden');
-        showToast('Image uploaded! Click "Use Uploaded Signature" to confirm.', 'success');
+        showToast('Image uploaded! Click "Name & Save to Library" to confirm.', 'success');
     };
     reader.readAsDataURL(file);
 });
@@ -4043,8 +4520,16 @@ function confirmUploadSignature() {
     const img = document.getElementById('uploadPreview');
     if (img.src && img.src !== '') {
         signatureDataURL = img.src;
-        updateSignaturePreview(signatureDataURL);
-        showToast('Uploaded signature ready! Click "Insert Signature" to place it.', 'success');
+        // Prompt for name and save
+        promptForSignatureName('Uploaded Signature').then(name => {
+            if (name !== null) {
+                saveSignatureToLibrary(signatureDataURL, name);
+                currentSignatureName = name;
+                updateSignaturePreview(signatureDataURL);
+                updateSignatureName(name);
+                showToast(`✅ Uploaded signature "${name}" saved to library!`, 'success');
+            }
+        });
     } else {
         showToast('Please upload an image first!', 'error');
     }
@@ -4068,8 +4553,16 @@ function confirmTypeSignature() {
         ctx.textBaseline = 'middle';
         ctx.fillText(text, canvas.width/2, canvas.height/2);
         signatureDataURL = canvas.toDataURL('image/png');
-        updateSignaturePreview(signatureDataURL);
-        showToast('Typed signature ready! Click "Insert Signature" to place it.', 'success');
+        // Prompt for name and save
+        promptForSignatureName(text + ' (typed)').then(name => {
+            if (name !== null) {
+                saveSignatureToLibrary(signatureDataURL, name);
+                currentSignatureName = name;
+                updateSignaturePreview(signatureDataURL);
+                updateSignatureName(name);
+                showToast(`✅ Typed signature "${name}" saved to library!`, 'success');
+            }
+        });
     } else {
         showToast('Please type your name first!', 'error');
     }
@@ -4221,6 +4714,7 @@ function makeDraggableAndResizable(element, container) {
 document.addEventListener('DOMContentLoaded', function() {
     initSignatureCanvas();
     setupSignatureDrawing();
+    renderSignatureLibrary(); // Load library on page load
     
     document.getElementById('penSize')?.addEventListener('input', redrawCanvas);
     
