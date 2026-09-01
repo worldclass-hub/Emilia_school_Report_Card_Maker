@@ -4,8 +4,230 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Emilia Report Card Maker - SS 2 (Enhanced with Signature Library)</title>
-  <!-- Favicon - Emilia Logo -->
-  <link rel="icon" type="image/x-icon" href="https://ncctazjcffmpuniwctkz.supabase.co/storage/v1/object/public/user-uploads/emilia_logo_circle.png">
+  <!-- Favicon - Emilia Logo (UPDATED) -->
+  <link rel="icon" type="image/x-icon" href="https://ncctazjcffmpuniwctkz.supabase.co/storage/v1/object/public/user-uploads/new_emilia_logo.png">
+
+  <!-- ============================================================
+       🚀 DEVICE RESTRICTION - DESKTOP ONLY
+       ============================================================ -->
+  <style>
+    /* HIDE PAGE ON MOBILE AND TABLET - SHOW BLOCK MESSAGE */
+    @media (max-width: 1024px) {
+      body {
+        overflow: hidden !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: #0a0a0a !important;
+        height: 100vh !important;
+        width: 100vw !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+      }
+      
+      /* Hide all content except block screen and home button */
+      body > *:not(.device-block-screen):not(.device-home-btn) {
+        display: none !important;
+      }
+      
+      /* Show block screen */
+      .device-block-screen {
+        display: flex !important;
+        position: fixed !important;
+        inset: 0 !important;
+        z-index: 9999999 !important;
+        background: linear-gradient(135deg, #0a0a0a 0%, #1a0533 50%, #0a0a0a 100%) !important;
+        align-items: center !important;
+        justify-content: center !important;
+        flex-direction: column !important;
+        padding: 30px !important;
+        text-align: center !important;
+        font-family: 'Segoe UI', system-ui, -apple-system, sans-serif !important;
+      }
+      
+      .device-block-screen .lock-icon {
+        font-size: 80px !important;
+        margin-bottom: 24px !important;
+        animation: pulse-lock 2s ease-in-out infinite !important;
+      }
+      
+      .device-block-screen h1 {
+        font-size: 28px !important;
+        font-weight: 800 !important;
+        color: #ffffff !important;
+        margin-bottom: 12px !important;
+        background: linear-gradient(135deg, #a855f7, #ec4899) !important;
+        -webkit-background-clip: text !important;
+        -webkit-text-fill-color: transparent !important;
+        background-clip: text !important;
+      }
+      
+      .device-block-screen p {
+        font-size: 16px !important;
+        color: #94a3b8 !important;
+        max-width: 480px !important;
+        line-height: 1.6 !important;
+        margin-bottom: 20px !important;
+      }
+      
+      .device-block-screen .device-icons {
+        font-size: 40px !important;
+        display: flex !important;
+        gap: 20px !important;
+        margin-top: 16px !important;
+        opacity: 0.6 !important;
+      }
+      
+      .device-block-screen .device-icons span {
+        filter: grayscale(0.3) !important;
+      }
+      
+      .device-block-screen .badge {
+        display: inline-block !important;
+        background: rgba(168, 85, 247, 0.2) !important;
+        border: 1px solid rgba(168, 85, 247, 0.3) !important;
+        padding: 8px 24px !important;
+        border-radius: 50px !important;
+        color: #a855f7 !important;
+        font-size: 13px !important;
+        font-weight: 600 !important;
+        margin-top: 12px !important;
+        letter-spacing: 1px !important;
+        text-transform: uppercase !important;
+        -webkit-text-fill-color: #a855f7 !important;
+      }
+      
+      .device-block-screen .emilia-logo-block {
+        width: 80px !important;
+        height: 80px !important;
+        border-radius: 50% !important;
+        background: linear-gradient(135deg, #7c3aed, #ec4899) !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        font-size: 40px !important;
+        font-weight: 900 !important;
+        color: white !important;
+        margin-bottom: 20px !important;
+        box-shadow: 0 20px 60px rgba(124, 58, 237, 0.3) !important;
+        -webkit-text-fill-color: white !important;
+      }
+      
+      /* Floating Home Button for restricted screens */
+      .device-home-btn {
+        display: flex !important;
+        position: fixed !important;
+        bottom: 30px !important;
+        right: 30px !important;
+        z-index: 99999999 !important;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+        color: white !important;
+        width: 60px !important;
+        height: 60px !important;
+        border-radius: 50% !important;
+        align-items: center !important;
+        justify-content: center !important;
+        font-size: 28px !important;
+        text-decoration: none !important;
+        box-shadow: 0 8px 32px rgba(102, 126, 234, 0.5) !important;
+        transition: all 0.3s ease !important;
+        border: none !important;
+        cursor: pointer !important;
+      }
+      
+      .device-home-btn:hover {
+        transform: scale(1.1) !important;
+        box-shadow: 0 12px 48px rgba(102, 126, 234, 0.7) !important;
+      }
+      
+      .device-home-btn span {
+        font-size: 30px !important;
+        line-height: 1 !important;
+      }
+      
+      @keyframes pulse-lock {
+        0%, 100% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.1); opacity: 0.7; }
+      }
+    }
+    
+    /* Default: hide block screen and home button on desktop */
+    .device-block-screen {
+      display: none !important;
+    }
+    
+    .device-home-btn {
+      display: none !important;
+    }
+    
+    /* Show home button on restricted screens */
+    @media (max-width: 1024px) {
+      .device-home-btn {
+        display: flex !important;
+      }
+    }
+    
+    /* Small extra protection for very small tablets */
+    @media (max-width: 1024px) and (orientation: portrait) {
+      .device-block-screen {
+        display: flex !important;
+      }
+      .device-home-btn {
+        display: flex !important;
+      }
+    }
+    
+    @media (max-width: 1024px) and (orientation: landscape) {
+      .device-block-screen {
+        display: flex !important;
+      }
+      .device-home-btn {
+        display: flex !important;
+      }
+    }
+    
+    /* Allow print mode to bypass restriction */
+    @media print {
+      .device-block-screen {
+        display: none !important;
+      }
+      .device-home-btn {
+        display: none !important;
+      }
+      body > *:not(.device-block-screen):not(.device-home-btn) {
+        display: block !important;
+      }
+      body {
+        display: block !important;
+        overflow: visible !important;
+        height: auto !important;
+        width: auto !important;
+        background: white !important;
+      }
+    }
+  </style>
+
+  <!-- DEVICE BLOCK SCREEN - Shown only on mobile/tablet -->
+  <div class="device-block-screen">
+    <div class="emilia-logo-block">E</div>
+    <div class="lock-icon">🖥️</div>
+    <h1>Desktop Access Only</h1>
+    <p>This report card system is optimized for desktop computers. Please open this page on a laptop or desktop for the best experience.</p>
+    <div class="device-icons">
+      <span>💻</span>
+      <span>🖥️</span>
+      <span>⌨️</span>
+    </div>
+    <div class="badge">🔒 Desktop Required</div>
+    <p style="font-size: 13px; color: #475569; margin-top: 24px; -webkit-text-fill-color: #475569;">
+      Emilia — Foremost High School
+    </p>
+  </div>
+
+  <!-- Floating Home Button - Shows only on restricted screens -->
+  <a href="{% url 'general_exam_page' %}" class="device-home-btn" title="Go Home">
+    <span>🏠</span>
+  </a>
 
   <script src="https://cdn.tailwindcss.com"></script>
   
@@ -757,6 +979,118 @@
       pointer-events: auto !important;
     }
 
+    /* ============================================================
+       🏷️ COMMENT CATEGORY BADGE - STYLES
+       ============================================================ */
+    .comment-category-badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 10px;
+      border-radius: 50px;
+      margin-left: 8px;
+    }
+    
+    .comment-category-badge.matching {
+      background: #22c55e;
+      color: white;
+      animation: pulse-badge 1.5s ease-in-out infinite;
+    }
+    
+    @keyframes pulse-badge {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    
+    .category-section {
+      border: 2px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 16px;
+      transition: all 0.3s ease;
+      background: #f9fafb;
+    }
+    
+    .category-section.matching-category {
+      border-color: #22c55e !important;
+      box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.3), 0 4px 12px rgba(34, 197, 94, 0.15) !important;
+      background: #f0fdf4 !important;
+    }
+    
+    .comment-card {
+      transition: all 0.2s ease;
+      position: relative;
+      border: 2px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 8px 12px;
+      cursor: pointer;
+      font-size: 14px;
+      background: white;
+    }
+    
+    .comment-card:hover {
+      transform: translateX(4px);
+      border-color: #a855f7;
+    }
+    
+    .comment-card.selected {
+      border-color: #a855f7;
+      background: #f3e8ff;
+    }
+    
+    .comment-card.suggested {
+      border-color: #22c55e;
+      background: #f0fdf4;
+    }
+    
+    .comment-card.suggested::after {
+      content: '⭐ RECOMMENDED';
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: #22c55e;
+      color: white;
+      font-size: 8px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 50px;
+      letter-spacing: 0.5px;
+    }
+    
+    /* Selected comment preview in modal */
+    .selected-comment-preview {
+      background: linear-gradient(135deg, #f3e8ff, #ede9fe);
+      border: 2px solid #a855f7;
+      border-radius: 12px;
+      padding: 12px 16px;
+      margin-bottom: 16px;
+      min-height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: #4a1a7a;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    
+    .selected-comment-preview.empty {
+      border-color: #d1d5db;
+      background: #f9fafb;
+      color: #9ca3af;
+      font-weight: 400;
+    }
+    
+    .selected-comment-preview .preview-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: #7c3aed;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-right: 12px;
+      background: rgba(124, 58, 237, 0.1);
+      padding: 2px 10px;
+      border-radius: 50px;
+    }
 </style>
   
 <!-- PERFECT PRINT STYLES FOR PARENT PRESENTATION -->
@@ -1434,13 +1768,13 @@
     </button>
   </div>
 
-  <!-- 🖊️ COMMENT GENERATOR MODAL -->
-  <div id="commentModal" class="fixed inset-0 bg-black/80 backdrop-blur-xl hidden z-[99998] flex items-center justify-center p-4 no-print modal-fixed-backdrop" onclick="event.stopPropagation();">
+  <!-- 🖊️ COMMENT GENERATOR MODAL - SHOWS ONLY RECOMMENDED COMMENTS WITH PREVIEW -->
+  <div id="commentModal" class="fixed inset-0 bg-black/80 backdrop-blur-xl hidden z-[99998] flex items-center justify-center p-4 no-print modal-fixed-backdrop">
     <div class="bg-white dark:bg-gray-900 rounded-3xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-hidden border border-gray-200 dark:border-gray-800">
       <div class="px-8 py-6 border-b border-gray-200 dark:border-gray-800 flex justify-between items-center bg-gradient-to-r from-pink-50 to-purple-50">
         <div>
-          <h3 class="text-2xl font-bold text-gray-900 dark:text-white">💬 Generate Comment</h3>
-          <p class="text-sm text-gray-500 mt-1">Select a comment based on the student's performance</p>
+          <h3 class="text-2xl font-bold text-gray-900 dark:text-white">💬 Recommended Comments</h3>
+          <p class="text-sm text-gray-500 mt-1">Showing comments based on the student's current percentage</p>
         </div>
         <button onclick="closeCommentModal()" class="p-3 hover:bg-gray-100 rounded-xl text-2xl">✕</button>
       </div>
@@ -1460,11 +1794,27 @@
             <span class="font-semibold text-gray-700">👤 Student:</span>
             <span id="commentModalStudentName" class="text-lg font-bold text-gray-800">No student loaded</span>
           </div>
+          <div class="flex items-center justify-between mt-2 pt-2 border-t border-blue-200">
+            <span class="font-semibold text-gray-700">📈 Total Marks:</span>
+            <span id="commentModalTotalMarks" class="text-lg font-bold text-gray-800">0 / 0</span>
+          </div>
         </div>
 
-        <!-- Comment Categories - ALL COMMENTS ARE ALWAYS SHOWN -->
+        <!-- SELECTED COMMENT PREVIEW -->
+        <div id="selectedCommentPreview" class="selected-comment-preview empty">
+          <span class="preview-label">📌 Selected</span>
+          <span id="selectedCommentText">No comment selected yet</span>
+        </div>
+
+        <!-- Recommended Comments - ONLY the matching category -->
         <div id="commentCategories" class="space-y-4">
-          <!-- All comments will be rendered here regardless of percentage -->
+          <!-- Only the matching category will be rendered here -->
+        </div>
+        
+        <!-- Info message when no comments match -->
+        <div id="noCommentsMessage" class="hidden text-center py-8 text-gray-500">
+          <p class="text-lg">No comments available for this percentage range.</p>
+          <p class="text-sm mt-2">Please check the student's marks and try again.</p>
         </div>
       </div>
 
@@ -1477,8 +1827,8 @@
     </div>
   </div>
 
-  <!-- 🖊️ COMMENT PLACEMENT MODAL -->
-  <div id="commentPlacementModal" class="fixed inset-0 bg-black/80 backdrop-blur-xl hidden z-[99999] flex items-center justify-center p-4 no-print modal-fixed-backdrop" onclick="event.stopPropagation();">
+  <!-- 🖊️ COMMENT PLACEMENT MODAL - FIXED: No backdrop close -->
+  <div id="commentPlacementModal" class="fixed inset-0 bg-black/80 backdrop-blur-xl hidden z-[99999] flex items-center justify-center p-4 no-print modal-fixed-backdrop">
     <div class="bg-white dark:bg-gray-900 rounded-3xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-hidden border border-gray-200 dark:border-gray-800">
       <div class="px-8 py-6 border-b border-gray-200 dark:border-gray-800 flex justify-between items-center bg-gradient-to-r from-pink-50 to-purple-50">
         <h3 class="text-2xl font-bold text-gray-900 dark:text-white">📌 Place Comment</h3>
@@ -1517,8 +1867,8 @@
     </div>
   </div>
 
-  <!-- STUDENT LIST MODAL -->
-  <div id="studentListModal" class="fixed inset-0 bg-black/90 backdrop-blur-xl hidden z-[99999] flex items-center justify-center p-4 no-print modal-fixed-backdrop" onclick="event.stopPropagation();">
+  <!-- STUDENT LIST MODAL - FIXED: No backdrop close -->
+  <div id="studentListModal" class="fixed inset-0 bg-black/90 backdrop-blur-xl hidden z-[99999] flex items-center justify-center p-4 no-print modal-fixed-backdrop">
     <div class="bg-white dark:bg-gray-900 rounded-3xl shadow-2xl w-full max-w-5xl max-h-[90vh] overflow-hidden border border-gray-200 dark:border-gray-800">
       <div class="px-8 py-6 border-b border-gray-200 dark:border-gray-800 flex justify-between items-center bg-gradient-to-r from-blue-50 to-purple-50">
         <div>
@@ -1560,7 +1910,7 @@
   <!-- A4 container -->
 <div class="w-full max-w-[794px] border border-gray-300 shadow-md p-5 mt-0" id="reportContainer">
 
-    <!-- Header block -->
+    <!-- Header block - UPDATED with correct Emilia logo -->
     <div class="flex items-center justify-center mb-2 gap-4 mt-6">
       <img src="https://ncctazjcffmpuniwctkz.supabase.co/storage/v1/object/public/user-uploads/EMILIA%20LOGO.png" alt="School Logo" class="h-32 w-28 object-contain mt-3">
       <div class="flex flex-col items-center">
@@ -1621,7 +1971,7 @@
     <label class="font-semibold mr-1">CLASS</label>
     <div class="relative leading-none">
       <span class="absolute inset-x-0 bottom-0 text-gray-400 pointer-events-none">........................................</span>
-      <input type="text" id="student-class" value="SSS 2" class="bg-transparent w-44 text-left pl-10 text-sm font-extrabold text-black relative z-10 focus:outline-none pb-0.5 leading-[0.75rem]" />
+      <input type="text" id="student-class" value="SSS 2" class="bg-transparent w-44 text-left pl-10 text-sm font-extrabold text-black relative z-10 focus:outline-none pb-0.5 leading-[0.75rem]" readonly />
     </div>
   </div>
   <div class="flex items-center relative ml-[-20px]">
@@ -1700,7 +2050,7 @@
         <td class="border border-gray-800 px-0 py-1" style="padding: 0 !important; margin: 0 !important;">
             <input type="number" id="total-sum" class="w-full text-center focus:outline-none font-bold" readonly />
         </td>
-        <td colspan="3" class="border border-gray-800 px-0 py-1"></td>
+        <td colspan="3" class="border border-gray-800 px-0 py-1"> </td>
     </tr>
 </tfoot>   
       </table>
@@ -1782,7 +2132,7 @@
 
     <!-- Row containing: Editable Text (left) + Terminal Fees Box (right and raised higher) -->
 <div class="mt-10 flex justify-between items-start w-full max-w-[794px] gap-4">
-  <div class="flex-1 text-xs font-semibold.tracking-wide">
+  <div class="flex-1 text-xs font-semibold tracking-wide">
     <input type="text" id="noticeText"
       value="SCHOOL FEES SHOULD BE PAID ON OR BEFORE RESUMPTION. THANKS"
       class="bg-transparent w-full text-left text-xs font-extrabold text-black focus:outline-none" />
@@ -1859,8 +2209,8 @@
     </div>
   </div>
 
-  <!-- 🚀 SUPER POWERFUL PRINT MODAL (UPDATED - FIXED BACKDROP CLOSE) -->
-  <div id="exportModal" class="fixed inset-0 bg-black/80 backdrop-blur-xl hidden z-50 flex items-center justify-center p-4 transition-all duration-500 no-print modal-fixed-backdrop" onclick="event.stopPropagation();">
+  <!-- 🚀 SUPER POWERFUL PRINT MODAL - FIXED: No backdrop close -->
+  <div id="exportModal" class="fixed inset-0 bg-black/80 backdrop-blur-xl hidden z-50 flex items-center justify-center p-4 transition-all duration-500 no-print modal-fixed-backdrop">
     <div 
       id="modalContent"
       class="bg-gradient-to-br from-white to-gray-50 dark:from-gray-900 dark:to-gray-800 rounded-3xl shadow-2xl w-full max-w-lg transform transition-all duration-700 ease-out scale-95 opacity-0 border border-gray-200/50 dark:border-gray-700/50 relative overflow-hidden"
@@ -1988,8 +2338,8 @@
     </div>
   </div>
 
-  <!-- 🚀 ENHANCED SAVED REPORTS MODAL with SEARCH & DELETE BUTTONS -->
-  <div id="savedReportsModal" class="fixed inset-0 bg-black/90 backdrop-blur-xl z-[99999] hidden no-print modal-fixed-backdrop" onclick="event.stopPropagation();">
+  <!-- 🚀 ENHANCED SAVED REPORTS MODAL - FIXED: No backdrop close -->
+  <div id="savedReportsModal" class="fixed inset-0 bg-black/90 backdrop-blur-xl z-[99999] hidden no-print modal-fixed-backdrop">
     <div class="relative h-full w-full flex items-center justify-center p-4">
       <div class="bg-white dark:bg-gray-900 rounded-3xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden border border-gray-200 dark:border-gray-800">
         <!-- Modal Header -->
@@ -2026,8 +2376,8 @@
     </div>
   </div>
 
-  <!-- 🖊️ SIGNATURE PLACEMENT MODAL - Choose Teacher or Principal -->
-  <div id="signaturePlacementModal" class="fixed inset-0 bg-black/80 backdrop-blur-xl hidden z-[99999] flex items-center justify-center p-4 no-print modal-fixed-backdrop" onclick="event.stopPropagation();">
+  <!-- 🖊️ SIGNATURE PLACEMENT MODAL - FIXED: No backdrop close -->
+  <div id="signaturePlacementModal" class="fixed inset-0 bg-black/80 backdrop-blur-xl hidden z-[99999] flex items-center justify-center p-4 no-print modal-fixed-backdrop">
     <div class="bg-white dark:bg-gray-900 rounded-3xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-hidden border border-gray-200 dark:border-gray-800">
       <div class="px-8 py-6 border-b border-gray-200 dark:border-gray-800 flex justify-between items-center bg-gradient-to-r from-pink-50 to-purple-50">
         <h3 class="text-2xl font-bold text-gray-900 dark:text-white">📌 Place Signature</h3>
@@ -2063,8 +2413,8 @@
     </div>
   </div>
 
-  <!-- 🖊️ SIGNATURE CREATOR MODAL (ENHANCED WITH LIBRARY & NAMING) -->
-  <div id="signatureModal" class="fixed inset-0 bg-black/80 backdrop-blur-xl hidden z-[99998] flex items-center justify-center p-4 no-print modal-fixed-backdrop" onclick="event.stopPropagation();">
+  <!-- 🖊️ SIGNATURE CREATOR MODAL - FIXED: No backdrop close -->
+  <div id="signatureModal" class="fixed inset-0 bg-black/80 backdrop-blur-xl hidden z-[99998] flex items-center justify-center p-4 no-print modal-fixed-backdrop">
     <div class="bg-white dark:bg-gray-900 rounded-3xl shadow-2xl w-full max-w-2xl max-h-[95vh] overflow-hidden border border-gray-200 dark:border-gray-800">
       <div class="px-8 py-6 border-b border-gray-200 dark:border-gray-800 flex justify-between items-center bg-gradient-to-r from-pink-50 to-purple-50">
         <div>
@@ -2225,19 +2575,6 @@
       transform: translateX(-50%) !important;
       pointer-events: none !important;
     }
-    
-    /* Comment Card Hover Effects */
-    .comment-card {
-      transition: all 0.2s ease;
-    }
-    .comment-card:hover {
-      transform: translateX(4px);
-      border-color: #a855f7;
-    }
-    .comment-card.selected {
-      border-color: #a855f7;
-      background: #f3e8ff;
-    }
 
     /* Signature Library Styles */
     .library-signature-item {
@@ -2284,6 +2621,12 @@
     }
     .library-signature-item:hover .sig-delete-btn {
       opacity: 1;
+    }
+    
+    /* Category section matching highlight */
+    .category-section.matching-category {
+      border-color: #22c55e !important;
+      box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.3), 0 4px 12px rgba(34, 197, 94, 0.15) !important;
     }
   </style>
 
@@ -2366,6 +2709,7 @@ function calculatePercentage() {
     if (percentage > 0) percentageField.value = percentage + "%";
     else percentageField.value = "--";
     document.getElementById('result-value').value = calculateLetterGrade(percentage);
+    return percentage;
 }
 
 function maintainTableHeight() {
@@ -2562,7 +2906,7 @@ function closeExportModal() {
     }, 300);
 }
 
-document.getElementById("exportModal").addEventListener("click", closeExportModal);
+// REMOVED: document.getElementById("exportModal").addEventListener("click", closeExportModal);
 
 function showToast(message, type = 'success') {
     const toast = document.getElementById("toast");
@@ -2958,8 +3302,7 @@ document.addEventListener('DOMContentLoaded', function() {
   </script>
 
   <!-- ============================================================
-       🖊️ COMMENT GENERATOR - COMPLETE ADD-ON (20 COMMENTS EACH)
-       FIX: ALL COMMENTS ARE ALWAYS VISIBLE REGARDLESS OF PERCENTAGE
+       🖊️ COMMENT GENERATOR - SHOWS ONLY RECOMMENDED COMMENTS WITH PREVIEW
        ============================================================ -->
   <script>
 // ============================================================
@@ -2969,6 +3312,8 @@ const commentData = {
     '0-39': {
         label: '0–39 (Needs Improvement)',
         color: 'red',
+        borderColor: 'border-red-200',
+        bgColor: 'bg-red-50',
         comments: [
             'Needs improvement. Work harder.',
             'Poor performance. Put in more effort.',
@@ -2995,6 +3340,8 @@ const commentData = {
     '40-49': {
         label: '40–49 (Fair)',
         color: 'yellow',
+        borderColor: 'border-yellow-200',
+        bgColor: 'bg-yellow-50',
         comments: [
             'Fair performance. Try harder.',
             'More effort will improve your results.',
@@ -3021,6 +3368,8 @@ const commentData = {
     '50-59': {
         label: '50–59 (Good)',
         color: 'green',
+        borderColor: 'border-green-200',
+        bgColor: 'bg-green-50',
         comments: [
             'Good performance. Keep improving.',
             'Good effort. Stay consistent.',
@@ -3047,6 +3396,8 @@ const commentData = {
     '60-69': {
         label: '60–69 (Very Good)',
         color: 'blue',
+        borderColor: 'border-blue-200',
+        bgColor: 'bg-blue-50',
         comments: [
             'Very good performance. Keep it up.',
             'Well done. Stay focused.',
@@ -3073,6 +3424,8 @@ const commentData = {
     '70-100': {
         label: '70–100 (Excellent)',
         color: 'purple',
+        borderColor: 'border-purple-200',
+        bgColor: 'bg-purple-50',
         comments: [
             'Outstanding performance. Keep it up.',
             'Excellent work. Congratulations.',
@@ -3099,26 +3452,79 @@ const commentData = {
 };
 
 // ============================================================
-// COMMENT MODAL CONTROLS
+// COMMENT MODAL CONTROLS - SHOWS ONLY RECOMMENDED WITH PREVIEW
 // ============================================================
 let selectedComment = null;
 let selectedCommentCategory = null;
 
-function openCommentModal() {
-    // Get current percentage and student name
-    const percentage = parseFloat(document.getElementById('percentage-value').value) || 0;
-    const studentName = document.getElementById('student-name').value.trim() || 'No student loaded';
-    const grade = document.getElementById('result-value').value || '--';
+// Function to get the current percentage using the SAME calculation as the page
+function getCurrentPercentage() {
+    const totalObtained = parseFloat(document.getElementById('total-marks-obtained').value) || 0;
+    const totalObtainable = parseFloat(document.getElementById('total-marks-obtainable').value) || 0;
+    let percentage = 0;
+    if (totalObtainable > 0) {
+        percentage = (totalObtained / totalObtainable) * 100;
+        percentage = Math.round(percentage * 100) / 100; // Same rounding as page
+    }
+    return percentage;
+}
+
+function getGradeForPercentage(percentage) {
+    if (percentage >= 70) return "A";
+    if (percentage >= 60 && percentage < 70) return "B";
+    if (percentage >= 50 && percentage < 60) return "C";
+    if (percentage >= 45 && percentage < 50) return "D";
+    if (percentage >= 40 && percentage < 45) return "E";
+    if (percentage >= 0 && percentage < 40) return "F";
+    return "--";
+}
+
+function getCommentCategoryForPercentage(percentage) {
+    if (percentage >= 70) return '70-100';
+    if (percentage >= 60) return '60-69';
+    if (percentage >= 50) return '50-59';
+    if (percentage >= 40) return '40-49';
+    if (percentage >= 0) return '0-39';
+    return null;
+}
+
+// Update the selected comment preview
+function updateSelectedCommentPreview(comment) {
+    const previewEl = document.getElementById('selectedCommentPreview');
+    const textEl = document.getElementById('selectedCommentText');
     
+    if (comment) {
+        previewEl.classList.remove('empty');
+        textEl.textContent = comment;
+        textEl.style.color = '#4a1a7a';
+    } else {
+        previewEl.classList.add('empty');
+        textEl.textContent = 'No comment selected yet';
+        textEl.style.color = '#9ca3af';
+    }
+}
+
+function openCommentModal() {
+    // Get current percentage using the SAME calculation as the page
+    const percentage = getCurrentPercentage();
+    const studentName = document.getElementById('student-name').value.trim() || 'No student loaded';
+    const grade = getGradeForPercentage(percentage);
+    const totalObtained = document.getElementById('total-marks-obtained').value || '0';
+    const totalObtainable = document.getElementById('total-marks-obtainable').value || '0';
+    
+    // Update the modal display
     document.getElementById('commentModalPercentage').textContent = percentage + '%';
     document.getElementById('commentModalGrade').textContent = grade;
     document.getElementById('commentModalStudentName').textContent = studentName;
+    document.getElementById('commentModalTotalMarks').textContent = totalObtained + ' / ' + totalObtainable;
     
+    // Reset selection
     selectedComment = null;
     selectedCommentCategory = null;
+    updateSelectedCommentPreview(null);
     
-    // Generate comment categories - ALL CATEGORIES ARE ALWAYS SHOWN
-    renderAllCommentCategories();
+    // Generate ONLY the matching category
+    renderOnlyMatchingCategory(percentage);
     
     document.getElementById('commentModal').classList.remove('hidden');
     document.body.classList.add('modal-open');
@@ -3131,67 +3537,69 @@ function closeCommentModal() {
     document.body.style.overflow = 'auto';
 }
 
-// NEW FUNCTION: ALWAYS SHOW ALL COMMENT CATEGORIES
-function renderAllCommentCategories() {
+// Show ONLY the matching category
+function renderOnlyMatchingCategory(currentPercentage) {
     const container = document.getElementById('commentCategories');
     container.innerHTML = '';
     
-    // Show ALL categories regardless of percentage
-    const allKeys = ['0-39', '40-49', '50-59', '60-69', '70-100'];
+    const matchingKey = getCommentCategoryForPercentage(currentPercentage);
+    const noMsg = document.getElementById('noCommentsMessage');
     
-    allKeys.forEach(key => {
-        const data = commentData[key];
-        if (!data) return;
+    if (!matchingKey || !commentData[matchingKey]) {
+        noMsg.classList.remove('hidden');
+        return;
+    }
+    noMsg.classList.add('hidden');
+    
+    const data = commentData[matchingKey];
+    
+    // Build the section with matching styling
+    const section = document.createElement('div');
+    section.className = 'category-section matching-category border-2 rounded-xl p-4 transition-all duration-300 ' + 
+                       data.borderColor + ' ' + data.bgColor;
+    
+    // Header with badge
+    const header = document.createElement('div');
+    header.className = 'category-header font-bold text-sm mb-2 flex items-center justify-between';
+    header.innerHTML = `
+        <span>${data.label}</span>
+        <span class="comment-category-badge matching">✅ RECOMMENDED</span>
+    `;
+    section.appendChild(header);
+    
+    // Comments grid - show all 20 comments in the matching category
+    const grid = document.createElement('div');
+    grid.className = 'grid grid-cols-1 md:grid-cols-2 gap-2';
+    
+    data.comments.forEach(comment => {
+        const card = document.createElement('div');
+        card.className = 'comment-card suggested border-2 border-green-200 rounded-lg p-2 cursor-pointer text-sm hover:border-purple-400 transition-all bg-green-50';
+        card.textContent = comment;
+        card.dataset.comment = comment;
+        card.dataset.category = matchingKey;
         
-        const colorMap = {
-            red: 'border-red-200 bg-red-50 hover:border-red-400',
-            yellow: 'border-yellow-200 bg-yellow-50 hover:border-yellow-400',
-            green: 'border-green-200 bg-green-50 hover:border-green-400',
-            blue: 'border-blue-200 bg-blue-50 hover:border-blue-400',
-            purple: 'border-purple-200 bg-purple-50 hover:border-purple-400'
-        };
-        
-        const headerColorMap = {
-            red: 'text-red-700',
-            yellow: 'text-yellow-700',
-            green: 'text-green-700',
-            blue: 'text-blue-700',
-            purple: 'text-purple-700'
-        };
-        
-        const section = document.createElement('div');
-        section.className = 'border-2 rounded-xl p-4 ' + (colorMap[data.color] || 'border-gray-200 bg-gray-50');
-        
-        const header = document.createElement('div');
-        header.className = 'font-bold text-sm mb-2 ' + (headerColorMap[data.color] || 'text-gray-700');
-        header.textContent = data.label + ' (' + data.comments.length + ' comments)';
-        section.appendChild(header);
-        
-        const grid = document.createElement('div');
-        grid.className = 'grid grid-cols-1 md:grid-cols-2 gap-2';
-        
-        data.comments.forEach(comment => {
-            const card = document.createElement('div');
-            card.className = 'comment-card border-2 border-gray-200 rounded-lg p-2 cursor-pointer text-sm hover:border-purple-400 transition-all';
-            card.textContent = comment;
-            card.dataset.comment = comment;
-            card.dataset.category = key;
-            
-            card.addEventListener('click', function() {
-                // Remove selected from all
-                document.querySelectorAll('.comment-card').forEach(c => c.classList.remove('selected', 'border-purple-500', 'bg-purple-100'));
-                this.classList.add('selected', 'border-purple-500', 'bg-purple-100');
-                selectedComment = this.dataset.comment;
-                selectedCommentCategory = this.dataset.category;
-                showToast('✅ Comment selected! Click "Place Selected Comment" to choose where to put it.', 'success');
-            });
-            
-            grid.appendChild(card);
+        card.addEventListener('click', function() {
+            // Remove selected from all
+            document.querySelectorAll('.comment-card').forEach(c => c.classList.remove('selected', 'border-purple-500', 'bg-purple-100'));
+            this.classList.add('selected', 'border-purple-500', 'bg-purple-100');
+            selectedComment = this.dataset.comment;
+            selectedCommentCategory = this.dataset.category;
+            // Update the preview
+            updateSelectedCommentPreview(selectedComment);
+            showToast('✅ Comment selected! Click "Place Selected Comment" to choose where to put it.', 'success');
         });
         
-        section.appendChild(grid);
-        container.appendChild(section);
+        grid.appendChild(card);
     });
+    
+    section.appendChild(grid);
+    container.appendChild(section);
+    
+    // Add note about total comments
+    const note = document.createElement('p');
+    note.className = 'text-xs text-gray-500 mt-3 text-center';
+    note.textContent = `Showing ${data.comments.length} recommended comments for this performance range.`;
+    container.appendChild(note);
 }
 
 // ============================================================
@@ -3236,18 +3644,10 @@ function placeComment(target) {
     // Reset selection
     selectedComment = null;
     selectedCommentCategory = null;
+    updateSelectedCommentPreview(null);
 }
 
-// ============================================================
-// COMMENT MODAL - Override to use placement modal
-// ============================================================
-// Add a "Place Comment" button to the footer
-document.addEventListener('DOMContentLoaded', function() {
-    // We'll use the existing click handler but after selection, 
-    // we'll show a "Place Comment" button in the modal footer
-});
-
-// New function to handle placing selected comment
+// Function to handle placing selected comment
 function placeSelectedComment() {
     if (!selectedComment) {
         showToast('Please select a comment first by clicking on it!', 'error');
@@ -3257,15 +3657,44 @@ function placeSelectedComment() {
     // Open the placement modal
     openCommentPlacementModal(selectedComment);
 }
+
+// Update the percentage display when the modal is opened
+// Also update when the page calculates percentage
+document.addEventListener('DOMContentLoaded', function() {
+    // Override the calculatePercentage function to also update the modal if open
+    const originalCalculatePercentage = window.calculatePercentage;
+    if (typeof originalCalculatePercentage === 'function') {
+        window.calculatePercentage = function() {
+            const result = originalCalculatePercentage();
+            // If comment modal is open, update its display
+            const modal = document.getElementById('commentModal');
+            if (!modal.classList.contains('hidden')) {
+                const percentage = getCurrentPercentage();
+                document.getElementById('commentModalPercentage').textContent = percentage + '%';
+                document.getElementById('commentModalGrade').textContent = getGradeForPercentage(percentage);
+                const totalObtained = document.getElementById('total-marks-obtained').value || '0';
+                const totalObtainable = document.getElementById('total-marks-obtainable').value || '0';
+                document.getElementById('commentModalTotalMarks').textContent = totalObtained + ' / ' + totalObtainable;
+                // Re-render only the matching category with new percentage
+                renderOnlyMatchingCategory(percentage);
+                // If a comment was selected, keep it in preview
+                if (selectedComment) {
+                    updateSelectedCommentPreview(selectedComment);
+                }
+            }
+            return result;
+        };
+    }
+});
   </script>
 
-  <!-- NUCLEAR SOLUTION: REPORT SAVE/LOAD SYSTEM with SEARCH & DELETE (FULLY ENHANCED) -->
+  <!-- NUCLEAR SOLUTION: REPORT SAVE/LOAD SYSTEM -->
   <script>
 const SS2_STORAGE_KEY = 'savedReports_SS2';
 const EXPECTED_CLASS = 'SS2';
 
 // ============================================================
-// SAVE CURRENT REPORT - NOW SAVES BOTH SIGNATURES + STUDENT ID
+// SAVE CURRENT REPORT
 // ============================================================
 function saveCurrentReport() {
     const studentName = document.getElementById('student-name').value.trim() || 'Untitled';
@@ -3290,19 +3719,17 @@ function saveCurrentReport() {
         }
     }
     
-    // Get student ID data - check both the print modal data and the hidden input
+    // Get student ID data
     let studentId = '';
     let studentClass = '';
     let studentYear = '';
     
-    // First check if we have verified student data from print modal
     if (window._printStudentData) {
         studentId = window._printStudentData.id || '';
         studentClass = window._printStudentData.class || '';
         studentYear = window._printStudentData.year || '';
     }
     
-    // If not, check the hidden input field
     if (!studentId) {
         const idField = document.getElementById('studentIdInputField');
         if (idField) {
@@ -3332,10 +3759,8 @@ function saveCurrentReport() {
         principalSign: document.getElementById('principalSign').value,
         noticeText: document.getElementById('noticeText').value,
         tuitionFees: document.getElementById('tuitionFees').value,
-        // SAVE BOTH SIGNATURES
         teacherSignatureData: teacherSignatureData,
         principalSignatureData: principalSignatureData,
-        // SAVE STUDENT ID INFO
         studentId: studentId,
         studentClass: studentClass,
         studentYear: studentYear,
@@ -3370,12 +3795,12 @@ function saveCurrentReport() {
     else savedReports.push(reportEntry);
     if (savedReports.length > 200) savedReports = savedReports.slice(-200);
     localStorage.setItem(SS2_STORAGE_KEY, JSON.stringify(savedReports));
-    showToast(`SS2 Report "${studentName}" saved with both signatures and Student ID!`, 'success');
+    showToast(`SS2 Report "${studentName}" saved!`, 'success');
     updateTotalFilesCount();
 }
 
 // ============================================================
-// LOAD REPORT - NOW LOADS BOTH SIGNATURES + STUDENT ID
+// LOAD REPORT
 // ============================================================
 function loadReport(id) {
     const savedReports = JSON.parse(localStorage.getItem(SS2_STORAGE_KEY) || '[]');
@@ -3403,7 +3828,6 @@ function loadReport(id) {
     document.getElementById('noticeText').value = d.noticeText || '';
     document.getElementById('tuitionFees').value = d.tuitionFees || '';
     
-    // Load Student ID info into hidden field
     if (d.studentId) {
         const idField = document.getElementById('studentIdInputField');
         if (idField) {
@@ -3476,7 +3900,7 @@ function loadReport(id) {
         calculateTotalObtainable();
         calculatePercentage();
     }, 100);
-    showToast(`Loaded "${report.name}" with both signatures and Student ID`, 'success');
+    showToast(`Loaded "${report.name}"`, 'success');
 }
 
 function createSignatureElement(signatureData) {
@@ -3604,22 +4028,16 @@ function showSavedReportsModal() {
     loadSavedReportsData('');
     updateTotalFilesCount();
     const modal = document.getElementById('savedReportsModal');
-    modal.style.display = 'flex';
+    modal.classList.remove('hidden');
     document.body.classList.add('modal-open');
     document.body.style.overflow = 'hidden';
-    document.body.style.position = 'fixed';
-    document.body.style.width = '100%';
-    document.body.style.height = '100%';
 }
 
 function closeSavedReportsModal() {
     const modal = document.getElementById('savedReportsModal');
-    modal.style.display = 'none';
+    modal.classList.add('hidden');
     document.body.classList.remove('modal-open');
     document.body.style.overflow = 'auto';
-    document.body.style.position = 'static';
-    document.body.style.width = 'auto';
-    document.body.style.height = 'auto';
 }
 
 function clearAllSavedReports() {
@@ -3637,9 +4055,6 @@ function updateTotalFilesCount() {
     if (badge) badge.textContent = `${reports.length} file${reports.length !== 1 ? 's' : ''}`;
 }
 
-// ============================================================
-// 🚀 EXPORT ALL REPORTS (Downloads JSON file)
-// ============================================================
 function exportAllReports() {
     const savedReports = JSON.parse(localStorage.getItem(SS2_STORAGE_KEY) || '[]');
     
@@ -3648,7 +4063,6 @@ function exportAllReports() {
         return;
     }
     
-    // Create export data with metadata
     const exportData = {
         exportDate: new Date().toISOString(),
         exportDateFormatted: new Date().toLocaleString(),
@@ -3658,16 +4072,12 @@ function exportAllReports() {
         version: '1.0'
     };
     
-    // Convert to JSON string with pretty formatting
     const jsonData = JSON.stringify(exportData, null, 2);
-    
-    // Create download link
     const blob = new Blob([jsonData], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
     
-    // Generate filename with date
     const now = new Date();
     const dateStr = now.getFullYear() + '-' + 
                     String(now.getMonth() + 1).padStart(2, '0') + '-' + 
@@ -3684,9 +4094,6 @@ function exportAllReports() {
     showToast(`✅ Exported ${savedReports.length} reports successfully!`, 'success');
 }
 
-// ============================================================
-// 🚀 IMPORT REPORTS (Uploads JSON file) - WITH CLASS VALIDATION
-// ============================================================
 function importReports(event) {
     const file = event.target.files[0];
     
@@ -3695,7 +4102,6 @@ function importReports(event) {
         return;
     }
     
-    // Check file type
     if (!file.name.endsWith('.json')) {
         showToast('Please select a JSON file.', 'error');
         event.target.value = '';
@@ -3707,36 +4113,30 @@ function importReports(event) {
         try {
             const importedData = JSON.parse(e.target.result);
             
-            // Validate the imported data structure
             if (!importedData.reports || !Array.isArray(importedData.reports)) {
                 showToast('Invalid file format. Please export a valid reports file.', 'error');
                 event.target.value = '';
                 return;
             }
             
-            // Check if it's a valid reports export
             if (!importedData.classLevel || !importedData.exportDate) {
                 showToast('This doesn\'t appear to be a valid reports export file.', 'error');
                 event.target.value = '';
                 return;
             }
             
-            // 🔒 CLASS VALIDATION - CHECK IF THE FILE IS FOR THE CORRECT CLASS
             if (importedData.classLevel !== 'SS2') {
                 showToast(`❌ Wrong file! This is a ${importedData.classLevel} file. Please use the correct class page.`, 'error');
                 event.target.value = '';
                 return;
             }
             
-            // Get existing reports
             const existingReports = JSON.parse(localStorage.getItem(SS2_STORAGE_KEY) || '[]');
             
-            // Check for duplicates and merge
             let importedCount = 0;
             let duplicateCount = 0;
             
             importedData.reports.forEach(importedReport => {
-                // Check if report with same ID already exists
                 const exists = existingReports.some(r => r.id === importedReport.id);
                 
                 if (!exists) {
@@ -3747,13 +4147,9 @@ function importReports(event) {
                 }
             });
             
-            // Save merged reports back to localStorage
             localStorage.setItem(SS2_STORAGE_KEY, JSON.stringify(existingReports));
-            
-            // Update the UI
             updateTotalFilesCount();
             
-            // Show success message
             let message = `✅ Imported ${importedCount} new SS2 reports successfully!`;
             if (duplicateCount > 0) {
                 message += ` (${duplicateCount} duplicates skipped)`;
@@ -3764,7 +4160,6 @@ function importReports(event) {
             
             showToast(message, 'success');
             
-            // Refresh the saved reports list if modal is open
             if (!document.getElementById('savedReportsModal').classList.contains('hidden')) {
                 loadSavedReportsData(document.getElementById('searchReportsInput')?.value || '');
             }
@@ -3774,7 +4169,6 @@ function importReports(event) {
             console.error('Import error:', error);
         }
         
-        // Reset the file input
         event.target.value = '';
     };
     
@@ -3787,17 +4181,20 @@ function importReports(event) {
 }
 
 document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') { closeSavedReportsModal(); closeExportModal(); closeSignaturePlacementModal(); }
-});
-document.getElementById('savedReportsModal')?.addEventListener('click', function(e) {
-    if (e.target === this) closeSavedReportsModal();
+    if (e.key === 'Escape') { 
+        closeSavedReportsModal(); 
+        closeExportModal(); 
+        closeSignaturePlacementModal();
+        closeCommentModal();
+        closeCommentPlacementModal();
+        closeStudentListModal();
+        closeSignatureModal();
+    }
 });
   </script>
 
   <!-- ============================================================
        🖊️ SIGNATURE SYSTEM - COMPLETE ADD-ON
-       WITH SIGNATURE LIBRARY FOR REUSE ACROSS PAGES
-       WITH NAMED SIGNATURES AND IMPORT/EXPORT
        ============================================================ -->
 
   <script>
@@ -3806,11 +4203,9 @@ document.getElementById('savedReportsModal')?.addEventListener('click', function
 // ============================================================
 const SIGNATURE_LIBRARY_KEY = 'emilia_signature_library';
 
-// Save a signature to the library with a name
 function saveSignatureToLibrary(dataURL, name = '') {
     let library = JSON.parse(localStorage.getItem(SIGNATURE_LIBRARY_KEY) || '[]');
     
-    // Generate a unique ID for the signature
     const id = 'sig_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6);
     
     const entry = {
@@ -3822,7 +4217,6 @@ function saveSignatureToLibrary(dataURL, name = '') {
     
     library.push(entry);
     
-    // Limit library size to prevent storage issues (max 50 signatures)
     if (library.length > 50) {
         library = library.slice(-50);
     }
@@ -3832,7 +4226,6 @@ function saveSignatureToLibrary(dataURL, name = '') {
     return id;
 }
 
-// Delete a signature from the library
 function deleteSignatureFromLibrary(id, event) {
     if (event) event.stopPropagation();
     
@@ -3845,7 +4238,6 @@ function deleteSignatureFromLibrary(id, event) {
     showToast('Signature deleted from library.', 'info');
 }
 
-// Clear entire signature library
 function clearSignatureLibrary() {
     if (!confirm('⚠️ Delete ALL signatures from your library? This cannot be undone!')) return;
     
@@ -3854,7 +4246,6 @@ function clearSignatureLibrary() {
     showToast('All signatures cleared from library.', 'info');
 }
 
-// Render the signature library in the modal
 function renderSignatureLibrary() {
     const container = document.getElementById('signatureLibraryContainer');
     if (!container) return;
@@ -3870,7 +4261,6 @@ function renderSignatureLibrary() {
         return;
     }
     
-    // Sort by name for easier browsing
     library.sort((a, b) => a.name.localeCompare(b.name));
     
     container.innerHTML = library.map(sig => `
@@ -3886,7 +4276,6 @@ function renderSignatureLibrary() {
         </div>
     `).join('');
     
-    // Update the name display if a signature is selected
     const selectedEl = container.querySelector('.library-signature-item.selected');
     if (selectedEl) {
         const nameEl = selectedEl.querySelector('.sig-name');
@@ -3897,7 +4286,6 @@ function renderSignatureLibrary() {
     }
 }
 
-// Use a signature from the library
 function useSignatureFromLibrary(id) {
     const library = JSON.parse(localStorage.getItem(SIGNATURE_LIBRARY_KEY) || '[]');
     const sig = library.find(s => s.id === id);
@@ -3906,12 +4294,10 @@ function useSignatureFromLibrary(id) {
         return;
     }
     
-    // Set as current signature
     signatureDataURL = sig.data;
     updateSignaturePreview(signatureDataURL);
     updateSignatureName(sig.name);
     
-    // Highlight the selected item
     document.querySelectorAll('.library-signature-item').forEach(el => {
         el.classList.remove('selected');
     });
@@ -3926,7 +4312,6 @@ function useSignatureFromLibrary(id) {
     showToast(`✅ Using "${sig.name}" from library! Click "Insert Signature" to place it.`, 'success');
 }
 
-// Update the signature name display
 function updateSignatureName(name) {
     const display = document.getElementById('signatureNameDisplay');
     const nameSpan = document.getElementById('selectedSignatureName');
@@ -3938,12 +4323,11 @@ function updateSignatureName(name) {
     }
 }
 
-// Prompt for signature name with validation
 function promptForSignatureName(defaultName = '') {
     return new Promise((resolve) => {
         const name = prompt('📛 Name this signature (so you can find it later):', defaultName || '');
         if (name === null) {
-            resolve(null); // User cancelled
+            resolve(null);
         } else if (name.trim() === '') {
             resolve('Unnamed Signature');
         } else {
@@ -3952,7 +4336,6 @@ function promptForSignatureName(defaultName = '') {
     });
 }
 
-// Export the signature library as JSON (with names preserved)
 function exportSignatureLibrary() {
     const library = JSON.parse(localStorage.getItem(SIGNATURE_LIBRARY_KEY) || '[]');
     if (library.length === 0) {
@@ -3960,18 +4343,17 @@ function exportSignatureLibrary() {
         return;
     }
     
-    // Create export data with metadata
     const exportData = {
         exportDate: new Date().toISOString(),
         exportDateFormatted: new Date().toLocaleString(),
         totalSignatures: library.length,
         signatures: library.map(sig => ({
             id: sig.id,
-            name: sig.name, // ⭐ IMPORTANT: Preserve the name!
+            name: sig.name,
             data: sig.data,
             createdAt: sig.createdAt
         })),
-        version: '2.0' // Bumped version to indicate named signatures
+        version: '2.0'
     };
     
     const jsonData = JSON.stringify(exportData, null, 2);
@@ -3989,7 +4371,6 @@ function exportSignatureLibrary() {
     showToast(`✅ Exported ${library.length} named signatures!`, 'success');
 }
 
-// Import signature library from JSON (with names preserved)
 function importSignatureLibrary(event) {
     const file = event.target.files[0];
     if (!file) {
@@ -4014,13 +4395,11 @@ function importSignatureLibrary(event) {
                 return;
             }
             
-            // Check if it has named signatures
             const hasNames = importedData.signatures.some(s => s.name);
             if (!hasNames) {
                 showToast('⚠️ This file contains unnamed signatures. Names will be auto-generated.', 'warning');
             }
             
-            // Get existing library
             let library = JSON.parse(localStorage.getItem(SIGNATURE_LIBRARY_KEY) || '[]');
             
             let importedCount = 0;
@@ -4028,13 +4407,10 @@ function importSignatureLibrary(event) {
             
             importedData.signatures.forEach(sig => {
                 if (sig.data) {
-                    // Check if we already have this signature (by data)
                     const exists = library.some(existing => existing.data === sig.data);
                     if (!exists) {
-                        // Use the name from the file, or generate one
                         let name = sig.name || `Imported ${importedCount + 1}`;
                         
-                        // If name already exists in library, append a number
                         const nameExists = library.some(existing => existing.name === name);
                         if (nameExists) {
                             let counter = 2;
@@ -4119,7 +4495,6 @@ function openSignatureModal() {
     document.getElementById('signaturePreviewImage').src = '';
     document.getElementById('signatureNameDisplay').classList.add('hidden');
     
-    // Render the library
     renderSignatureLibrary();
     
     switchSignatureTab('draw');
@@ -4159,7 +4534,6 @@ function openSignaturePlacementModal() {
         
         if (hasDrawing || signatureStrokes.length > 0) {
             signatureDataURL = canvas.toDataURL('image/png');
-            // Prompt for name and save
             promptForSignatureName('Drawn Signature').then(name => {
                 if (name !== null) {
                     saveSignatureToLibrary(signatureDataURL, name);
@@ -4167,7 +4541,6 @@ function openSignaturePlacementModal() {
                     updateSignaturePreview(signatureDataURL);
                     updateSignatureName(name);
                     showToast(`✅ Signature "${name}" saved to library!`, 'success');
-                    // Now open placement modal
                     openPlacementModal();
                 }
             });
@@ -4393,7 +4766,6 @@ function captureDrawnSignature() {
     const canvas = document.getElementById('signatureDrawCanvas');
     signatureDataURL = canvas.toDataURL('image/png');
     
-    // Prompt for name and save
     promptForSignatureName('Drawn Signature').then(name => {
         if (name !== null) {
             saveSignatureToLibrary(signatureDataURL, name);
@@ -4448,7 +4820,6 @@ function confirmUploadSignature() {
     const img = document.getElementById('uploadPreview');
     if (img.src && img.src !== '') {
         signatureDataURL = img.src;
-        // Prompt for name and save
         promptForSignatureName('Uploaded Signature').then(name => {
             if (name !== null) {
                 saveSignatureToLibrary(signatureDataURL, name);
@@ -4481,7 +4852,6 @@ function confirmTypeSignature() {
         ctx.textBaseline = 'middle';
         ctx.fillText(text, canvas.width/2, canvas.height/2);
         signatureDataURL = canvas.toDataURL('image/png');
-        // Prompt for name and save
         promptForSignatureName(text + ' (typed)').then(name => {
             if (name !== null) {
                 saveSignatureToLibrary(signatureDataURL, name);
@@ -4642,17 +5012,9 @@ function makeDraggableAndResizable(element, container) {
 document.addEventListener('DOMContentLoaded', function() {
     initSignatureCanvas();
     setupSignatureDrawing();
-    renderSignatureLibrary(); // Load library on page load
+    renderSignatureLibrary();
     
     document.getElementById('penSize')?.addEventListener('input', redrawCanvas);
-    
-    document.getElementById('signatureModal')?.addEventListener('click', function(e) {
-        if (e.target === this) closeSignatureModal();
-    });
-    
-    document.getElementById('signaturePlacementModal')?.addEventListener('click', function(e) {
-        if (e.target === this) closeSignaturePlacementModal();
-    });
 });
   </script>
 </body>
