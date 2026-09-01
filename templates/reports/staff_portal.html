@@ -15,7 +15,6 @@
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
     
     /* ==================== ULTIMATE ANTI-OVERSCROLL SYSTEM ==================== */
-    /* 1. FIXED POSITION BODY - Prevents any movement beyond boundaries */
     html, body {
       width: 100%;
       height: 100%;
@@ -32,7 +31,6 @@
       bottom: 0;
     }
     
-    /* 2. SINGLE SCROLL CONTAINER - Only this can scroll internally */
     .scroll-container {
       width: 100%;
       height: 100%;
@@ -46,13 +44,11 @@
       justify-content: center;
     }
     
-    /* 3. PREVENT TOUCH OVERSCROLL */
     .no-overscroll {
       touch-action: pan-y;
       overscroll-behavior: contain;
     }
     
-    /* 4. NO WHITE BORDERS EVER - Content completely contained */
     .main-wrapper {
       width: 100%;
       min-height: 100%;
@@ -60,28 +56,21 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 16px;
+      padding: 20px;
     }
     
-    /* 5. MOBILE-SPECIFIC FIXES */
     @media (max-width: 768px) {
-      .scroll-container {
-        -webkit-overflow-scrolling: touch;
-        overscroll-behavior: contain;
-      }
-      
       .main-wrapper {
-        padding: 12px;
+        padding: 16px;
       }
     }
     
     @media (max-width: 480px) {
       .main-wrapper {
-        padding: 10px;
+        padding: 14px;
       }
     }
     
-    /* 6. SCROLL EDGE DETECTION HELPER */
     .scroll-boundary {
       position: fixed;
       bottom: 0;
@@ -152,14 +141,13 @@
       background-size: 30px 30px;
     }
     
-    /* Main Wrapper */
     .login-wrapper {
       position: relative;
       z-index: 1;
       width: 100%;
       max-width: 1050px;
       margin: 0 auto;
-      padding: 0 0px;
+      padding: 0;
     }
     
     /* Top Navigation Bar */
@@ -235,19 +223,19 @@
     }
     
     /* ============================================================
-       MOBILE: FULL WIDTH CARD WITH MARGINS
+       MOBILE: BREATHING SPACE ON SIDES
        ============================================================ */
     @media (max-width: 768px) {
       .login-card {
         grid-template-columns: 1fr;
         border-radius: 18px;
         max-height: none;
-        margin: 0 0px;
+        margin: 0 4px;
         width: 100%;
       }
       
       .login-wrapper {
-        padding: 0 0px;
+        padding: 0;
         max-width: 100%;
       }
       
@@ -259,14 +247,14 @@
         display: flex !important;
         align-items: center;
         gap: 10px;
-        margin-bottom: 16px;
-        padding-bottom: 12px;
+        margin-bottom: 14px;
+        padding-bottom: 10px;
         border-bottom: 1px solid rgba(99, 102, 241, 0.06);
       }
       
       .mobile-brand-header .logo-img {
-        width: 40px;
-        height: 40px;
+        width: 38px;
+        height: 38px;
         border-radius: 10px;
         object-fit: contain;
         background: #ffffff;
@@ -276,7 +264,7 @@
       }
       
       .mobile-brand-header .brand-text .title {
-        font-size: 17px;
+        font-size: 16px;
         font-weight: 800;
         color: #1e1b4b;
         letter-spacing: -0.3px;
@@ -284,32 +272,86 @@
       }
       
       .mobile-brand-header .brand-text .sub {
-        font-size: 10px;
+        font-size: 9px;
         color: #94a3b8;
         font-weight: 500;
       }
       
       .form-section {
-        padding: 20px 18px;
+        padding: 18px 16px 20px;
         border-radius: 18px;
         width: 100%;
       }
       
+      .form-header {
+        margin-bottom: 14px;
+      }
+      
       .form-header h2 {
-        font-size: 19px;
+        font-size: 18px;
+      }
+      
+      .form-header p {
+        font-size: 12px;
+      }
+      
+      .form-group {
+        margin-bottom: 12px;
+      }
+      
+      .form-group label {
+        font-size: 11px;
+        margin-bottom: 3px;
+      }
+      
+      .form-group .input-wrap .icon {
+        left: 12px;
+        font-size: 13px;
+      }
+      
+      .form-group .input-wrap input {
+        padding: 10px 12px 10px 36px;
+        font-size: 13px;
+        border-radius: 10px;
+      }
+      
+      .form-group .input-wrap .toggle-pwd {
+        right: 12px;
+        font-size: 13px;
       }
       
       .login-btn {
         font-size: 14px;
-        padding: 13px;
+        padding: 12px;
+        border-radius: 10px;
+      }
+      
+      .divider {
+        margin: 12px 0;
+        gap: 10px;
+      }
+      
+      .divider span {
+        font-size: 10px;
+      }
+      
+      .whatsapp-btn {
+        font-size: 12px;
+        padding: 10px;
+        border-radius: 10px;
+      }
+      
+      .form-footer {
+        font-size: 11px;
+        margin-top: 10px;
       }
       
       .top-nav {
-        padding: 8px 14px;
-        margin-bottom: 14px;
+        padding: 6px 14px;
+        margin-bottom: 12px;
         border-radius: 12px;
-        margin-left: 0px;
-        margin-right: 0px;
+        margin-left: 4px;
+        margin-right: 4px;
       }
       
       .top-nav .nav-left .status-text {
@@ -319,27 +361,37 @@
         font-size: 9px;
         padding: 2px 8px;
       }
+      .top-nav .nav-right {
+        font-size: 10px;
+        gap: 10px;
+      }
+      .top-nav .nav-right i {
+        font-size: 11px;
+      }
+      
+      .error-message {
+        padding: 8px 12px;
+        font-size: 11px;
+        border-radius: 10px;
+        margin-bottom: 10px;
+      }
     }
     
     @media (max-width: 480px) {
       .main-wrapper {
-        padding: 8px;
-      }
-      
-      .login-wrapper {
-        padding: 0 0px;
+        padding: 12px;
       }
       
       .login-card {
         border-radius: 14px;
-        margin: 0 0px;
+        margin: 0 4px;
       }
       
       .top-nav {
-        padding: 6px 12px;
+        padding: 5px 12px;
         border-radius: 10px;
-        margin-left: 0px;
-        margin-right: 0px;
+        margin-left: 4px;
+        margin-right: 4px;
       }
       
       .top-nav .nav-right span:not(:last-child) {
@@ -350,46 +402,97 @@
       }
       
       .form-section {
-        padding: 16px 14px;
+        padding: 14px 14px 16px;
       }
       
       .mobile-brand-header .logo-img {
-        width: 34px;
-        height: 34px;
+        width: 32px;
+        height: 32px;
       }
       
       .mobile-brand-header .brand-text .title {
-        font-size: 15px;
+        font-size: 14px;
+      }
+      
+      .mobile-brand-header .brand-text .sub {
+        font-size: 8px;
       }
       
       .form-header h2 {
-        font-size: 17px;
+        font-size: 16px;
       }
       .form-header p {
-        font-size: 12px;
+        font-size: 11px;
       }
       
       .form-group .input-wrap input {
-        padding: 10px 12px 10px 38px;
-        font-size: 13px;
+        padding: 8px 10px 8px 32px;
+        font-size: 12px;
+        border-radius: 8px;
       }
       .form-group .input-wrap .icon {
-        left: 12px;
-        font-size: 13px;
+        left: 10px;
+        font-size: 12px;
       }
       .form-group .input-wrap .toggle-pwd {
-        right: 12px;
-        font-size: 13px;
+        right: 10px;
+        font-size: 12px;
       }
       
       .login-btn {
         font-size: 13px;
-        padding: 12px;
+        padding: 10px;
+        border-radius: 8px;
       }
       
       .whatsapp-btn {
-        font-size: 12px;
-        padding: 10px;
+        font-size: 11px;
+        padding: 8px;
+        border-radius: 8px;
+      }
+      
+      .divider {
+        margin: 8px 0;
+        gap: 8px;
+      }
+      
+      .divider span {
+        font-size: 9px;
+      }
+      
+      .form-footer {
+        font-size: 10px;
+        margin-top: 8px;
+      }
+      
+      .error-message {
+        padding: 6px 10px;
+        font-size: 10px;
+        border-radius: 8px;
+        margin-bottom: 8px;
+      }
+    }
+    
+    /* Extra small devices */
+    @media (max-width: 380px) {
+      .main-wrapper {
+        padding: 8px;
+      }
+      
+      .login-card {
+        margin: 0 2px;
+        border-radius: 12px;
+      }
+      
+      .form-section {
+        padding: 10px 10px 12px;
+      }
+      
+      .top-nav {
+        padding: 4px 10px;
+        margin-left: 2px;
+        margin-right: 2px;
+        border-radius: 8px;
       }
     }
     
@@ -460,7 +563,6 @@
       border: 2px solid rgba(245, 158, 11, 0.06);
     }
     
-    /* School Logo */
     .brand-logo {
       display: flex;
       align-items: center;
@@ -496,7 +598,6 @@
       letter-spacing: 0.3px;
     }
     
-    /* Brand Content */
     .brand-content {
       position: relative;
       z-index: 2;
@@ -544,7 +645,6 @@
       max-width: 100%;
     }
     
-    /* Stats */
     .brand-stats {
       display: flex;
       gap: 20px;
@@ -565,7 +665,6 @@
       margin-top: 1px;
     }
     
-    /* Features */
     .brand-features {
       margin-top: 12px;
       display: flex;
@@ -593,7 +692,6 @@
       flex-shrink: 0;
     }
     
-    /* Security Notice */
     .brand-security {
       margin-top: 12px;
       padding: 10px 14px;
@@ -643,7 +741,6 @@
       margin-top: 2px;
     }
     
-    /* Form Fields */
     .form-group {
       margin-bottom: 16px;
     }
@@ -709,7 +806,6 @@
       opacity: 1;
     }
     
-    /* Login Button */
     .login-btn {
       width: 100%;
       padding: 13px;
@@ -736,7 +832,6 @@
     .login-btn i { transition: transform 0.3s ease; }
     .login-btn:hover i { transform: translateX(4px); }
     
-    /* Divider & WhatsApp */
     .divider {
       display: flex;
       align-items: center;
@@ -793,7 +888,6 @@
     }
     .form-footer a:hover { text-decoration: underline; }
     
-    /* Error Messages */
     .error-message {
       padding: 10px 14px;
       background: #fef2f2;
@@ -813,7 +907,6 @@
       75% { transform: translateX(5px); }
     }
     
-    /* Custom Scrollbar for scroll-container */
     .scroll-container::-webkit-scrollbar {
       width: 4px;
     }
@@ -868,14 +961,10 @@
           
           <!-- ===== LEFT SECTION - BRAND (DESKTOP) ===== -->
           <div class="brand-section">
-            <!-- Animated Accent Line -->
             <div class="accent-line"></div>
-            
-            <!-- Decorative Background Elements -->
             <div class="bg-deco bg-deco-1"></div>
             <div class="bg-deco bg-deco-2"></div>
             
-            <!-- School Logo -->
             <div class="brand-logo">
               <img src="https://ncctazjcffmpuniwctkz.supabase.co/storage/v1/object/public/user-uploads/new_emilia_logo.png" 
                    alt="EMIFORPHS Logo" 
@@ -886,7 +975,6 @@
               </div>
             </div>
             
-            <!-- Brand Content -->
             <div class="brand-content">
               <span class="welcome-badge">
                 <i class="fas fa-arrow-right"></i> Staff Portal
@@ -902,7 +990,6 @@
                 and institutional analytics for EMIFORPHS staff.
               </p>
               
-              <!-- Stats -->
               <div class="brand-stats">
                 <div class="stat-item">
                   <div class="stat-number">1,247</div>
@@ -918,7 +1005,6 @@
                 </div>
               </div>
               
-              <!-- Features -->
               <div class="brand-features">
                 <div class="feature-row">
                   <div class="f-icon"><i class="fas fa-shield-check"></i></div>
@@ -934,7 +1020,6 @@
                 </div>
               </div>
               
-              <!-- Security Notice -->
               <div class="brand-security">
                 <span class="sec-icon"><i class="fas fa-exclamation-triangle"></i></span>
                 <span class="sec-text">
@@ -966,7 +1051,6 @@
             <form method="POST" action="{% url 'staff_login' %}">
               {% csrf_token %}
               
-              <!-- Username Field -->
               <div class="form-group">
                 <label for="username">Staff ID / Username</label>
                 <div class="input-wrap">
@@ -976,7 +1060,6 @@
                 </div>
               </div>
 
-              <!-- Password Field -->
               <div class="form-group">
                 <label for="password">Password</label>
                 <div class="input-wrap">
@@ -989,7 +1072,6 @@
                 </div>
               </div>
 
-              <!-- Error Messages -->
               {% if messages %}
                 {% for message in messages %}
                   <div class="error-message">
@@ -999,33 +1081,28 @@
                 {% endfor %}
               {% endif %}
 
-              <!-- Login Button -->
               <button type="submit" class="login-btn">
                 <span>Sign In</span>
                 <i class="fas fa-arrow-right"></i>
               </button>
             </form>
 
-            <!-- Divider -->
             <div class="divider">
               <span>or</span>
             </div>
 
-            <!-- WhatsApp Access -->
             <button id="requestAccessBtn" class="whatsapp-btn">
               <i class="fab fa-whatsapp"></i>
               <span>Request Access via WhatsApp</span>
               <i class="fas fa-external-link-alt text-xs opacity-50"></i>
             </button>
 
-            <!-- Footer -->
             <div class="form-footer">
               Contact admin for Staff ID &amp; Password
             </div>
           </div>
         </div>
         
-        <!-- Bottom Footer -->
         <div class="text-center mt-4 text-slate-400/50 text-xs font-medium">
           EMIFORPHS &copy; 2025 &nbsp;·&nbsp; Secure Staff Access v2.1
         </div>
@@ -1040,25 +1117,18 @@
     function setupScrollManagement() {
       const scrollContainer = document.getElementById('scrollContainer');
       
-      // 1. FIXED POSITION BODY already set in CSS
-      
-      // 2. SINGLE SCROLL CONTAINER management
       scrollContainer.style.overflowY = 'auto';
       scrollContainer.style.overflowX = 'hidden';
       
-      // 3. PREVENT TOUCH OVERSCROLL
       if ('ontouchstart' in window) {
-        // iOS specific fixes
         scrollContainer.style.WebkitOverflowScrolling = 'touch';
         
-        // Prevent pull-to-refresh
         document.addEventListener('touchmove', function(e) {
           if (scrollContainer.scrollTop <= 0) {
             e.preventDefault();
           }
         }, { passive: false });
         
-        // Prevent rubber band effect
         document.body.addEventListener('touchstart', function() {
           if (scrollContainer.scrollTop === 0) {
             scrollContainer.scrollTop = 1;
@@ -1069,9 +1139,7 @@
         });
       }
       
-      // 6. SCROLL EDGE DETECTION
       scrollContainer.addEventListener('scroll', function() {
-        // Show boundary indicator when near bottom
         const distanceFromBottom = this.scrollHeight - (this.scrollTop + this.clientHeight);
         const boundary = document.getElementById('scrollBoundary');
         
@@ -1081,12 +1149,10 @@
           boundary.classList.remove('visible');
         }
         
-        // Prevent overscroll at top
         if (this.scrollTop <= 0) {
           this.scrollTop = 1;
         }
         
-        // Prevent overscroll at bottom
         if (this.scrollTop + this.clientHeight >= this.scrollHeight) {
           this.scrollTop = this.scrollHeight - this.clientHeight - 1;
         }
@@ -1118,7 +1184,6 @@
 
     // ===== AUTO-FOCUS USERNAME FIELD =====
     document.addEventListener('DOMContentLoaded', function() {
-      // Initialize scroll management
       setupScrollManagement();
       
       const usernameInput = document.getElementById('username');

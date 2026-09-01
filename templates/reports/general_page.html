@@ -11,7 +11,7 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
     
-    /* ==================== ULTIMATE ANTI-OVERSCROLL SYSTEM ==================== */
+    /* ==================== ANTI-OVERSCROLL SYSTEM - ROCK SOLID ==================== */
     html, body {
       width: 100%;
       height: 100%;
@@ -20,12 +20,12 @@
       background: #f0f4ff;
       margin: 0;
       padding: 0;
-      touch-action: pan-y;
-      overscroll-behavior: none;
       top: 0;
       left: 0;
       right: 0;
       bottom: 0;
+      overscroll-behavior: none;
+      touch-action: none;
     }
     
     .scroll-container {
@@ -36,6 +36,34 @@
       position: relative;
       background: #f0f4ff;
       -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+      touch-action: pan-y pinch-zoom;
+      scroll-behavior: smooth;
+    }
+    
+    /* Hide scrollbar when not scrolling - clean look */
+    .scroll-container::-webkit-scrollbar {
+      width: 6px;
+    }
+    
+    .scroll-container::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    
+    .scroll-container::-webkit-scrollbar-thumb {
+      background: rgba(99, 102, 241, 0.3);
+      border-radius: 10px;
+      transition: background 0.3s ease;
+    }
+    
+    .scroll-container::-webkit-scrollbar-thumb:hover {
+      background: rgba(99, 102, 241, 0.5);
+    }
+    
+    /* Firefox scrollbar */
+    .scroll-container {
+      scrollbar-width: thin;
+      scrollbar-color: rgba(99, 102, 241, 0.3) transparent;
     }
     
     .no-overscroll {
@@ -47,13 +75,20 @@
       width: 100%;
       min-height: 100%;
       background: #f0f4ff;
+      display: flex;
+      flex-direction: column;
     }
     
-    @media (max-width: 768px) {
-      .scroll-container {
-        -webkit-overflow-scrolling: touch;
-        overscroll-behavior: contain;
-      }
+    /* Full width footer fix */
+    .full-width-footer {
+      width: 100vw;
+      position: relative;
+      left: 50%;
+      right: 50%;
+      margin-left: -50vw;
+      margin-right: -50vw;
+      background: linear-gradient(135deg, #1e1b4b, #312e81);
+      flex-shrink: 0;
     }
     
     .scroll-boundary {
@@ -67,20 +102,11 @@
       pointer-events: none;
       opacity: 0;
       transition: opacity 0.3s ease;
+      border-radius: 2px;
     }
     
     .scroll-boundary.visible {
       opacity: 1;
-    }
-    
-    .full-width-footer {
-      width: 100vw;
-      position: relative;
-      left: 50%;
-      right: 50%;
-      margin-left: -50vw;
-      margin-right: -50vw;
-      background: linear-gradient(135deg, #1e1b4b, #312e81);
     }
     
     /* ==================== PREMIUM HEADER ==================== */
@@ -88,6 +114,9 @@
       background: rgba(255, 255, 255, 0.92);
       backdrop-filter: blur(20px);
       border-bottom: 1px solid rgba(99, 102, 241, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 50;
     }
     
     /* ==================== GRADIENT CLASS CARDS ==================== */
@@ -753,21 +782,6 @@
       }
     }
     
-    /* ========== CUSTOM SCROLLBAR ========== */
-    .scroll-container::-webkit-scrollbar {
-      width: 5px;
-    }
-    .scroll-container::-webkit-scrollbar-track {
-      background: #eef2ff;
-    }
-    .scroll-container::-webkit-scrollbar-thumb {
-      background: linear-gradient(135deg, #6366f1, #8b5cf6);
-      border-radius: 10px;
-    }
-    .scroll-container::-webkit-scrollbar-thumb:hover {
-      background: linear-gradient(135deg, #4f46e5, #7c3aed);
-    }
-    
     /* ========== DECORATIVE ELEMENTS ========== */
     .bg-grid-pattern {
       background-image: 
@@ -888,78 +902,24 @@
       }
     }
 
-    /* ========== MOBILE OPTIMIZATION ========== */
-    @media (max-width: 480px) {
-      .main-wrapper {
-        padding: 0 4px;
+    /* ========== MOBILE HEADER - HIDE USER AVATAR ========== */
+    @media (max-width: 640px) {
+      .header-user-avatar {
+        display: none !important;
       }
-      
-      .section-head .sh-title {
-        font-size: 16px;
+      .header-user-text {
+        display: none !important;
       }
-      
-      .section-head .sh-icon {
-        width: 32px;
-        height: 32px;
-        font-size: 13px;
+      .header-dashboard-text {
+        display: none !important;
       }
-      
-      .class-card .card-content {
-        padding: 16px 16px 14px;
+      .header-signout-text {
+        display: none !important;
       }
-      
-      .class-card .card-title {
-        font-size: 17px;
-      }
-      
-      .class-card .card-desc {
-        font-size: 13px;
-      }
-      
-      .glass-card .p-7 {
-        padding: 16px;
-      }
-      
-      .stat-card-gradient {
-        padding: 16px 18px;
-      }
-      
-      .stat-card-gradient .stat-number {
-        font-size: 20px;
-      }
-      
-      .stat-card-gradient .stat-icon {
-        width: 36px;
-        height: 36px;
-        font-size: 15px;
-      }
-      
-      .broadsheet-class-badge .class-name {
-        max-width: 24px;
-        font-size: 8px;
-      }
-      
-      .broadsheet-class-badge .student-count {
-        font-size: 8px;
-        min-width: 12px;
-        max-width: 24px;
-        padding: 0px 3px;
-      }
-      
-      .broadsheet-class-badge {
-        padding: 3px 6px;
-        font-size: 9px;
-        gap: 3px;
-      }
-    }
-
-    /* ========== HEADER - HIDE USER AVATAR ON ALL SCREENS ========== */
-    .header-user-avatar {
-      display: none !important;
     }
   </style>
 </head>
-<body class="no-overscroll">
+<body>
 
   <!-- Scroll Boundary -->
   <div id="scrollBoundary" class="scroll-boundary"></div>
@@ -968,8 +928,8 @@
   <div class="scroll-container" id="scrollContainer">
     <div class="main-wrapper bg-grid-pattern">
 
-      <!-- ===== HEADER ===== -->
-      <header class="premium-header sticky top-0 z-50">
+      <!-- ===== HEADER - CLEAN & ARRANGED ===== -->
+      <header class="premium-header">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between flex-wrap gap-3">
           <!-- Brand -->
           <div class="flex items-center gap-3">
@@ -983,15 +943,15 @@
             </div>
           </div>
           
-          <!-- Actions -->
+          <!-- Actions - Clean & Arranged -->
           <div class="flex items-center gap-2 sm:gap-4">
-            <!-- Admin Dashboard - Icon only on mobile, full button on desktop -->
-            <a href="/admin/" class="flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-2 sm:px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 shadow-sm hover:shadow-md shadow-indigo-200">
+            <!-- Admin Dashboard Button -->
+            <a href="/admin/" class="flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-3 sm:px-5 py-2 rounded-full text-sm font-semibold transition-all duration-300 shadow-sm hover:shadow-md shadow-indigo-200">
               <i class="fas fa-tachometer-alt"></i>
               <span class="header-dashboard-text hidden sm:inline">Admin Dashboard</span>
             </a>
             
-            <!-- Sign Out - Icon only on mobile, full button on desktop -->
+            <!-- Sign Out Button -->
             <a href="{% url 'staff_logout' %}" class="flex items-center justify-center gap-1.5 sm:gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 hover:text-slate-900 px-2 sm:px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300">
               <i class="fas fa-sign-out-alt"></i>
               <span class="header-signout-text hidden sm:inline">Sign Out</span>
@@ -1378,11 +1338,11 @@
         </div>
       </main>
 
-      <!-- ===== FOOTER ===== -->
+      <!-- ===== FOOTER - 4 COLUMNS WITH SOCIAL ICONS BACK ===== -->
       <footer class="full-width-footer text-white mt-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
           <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div class="md:col-span-2">
+            <div class="md:col-span-1">
               <div class="flex items-center gap-3 mb-4">
                 <img src="https://ncctazjcffmpuniwctkz.supabase.co/storage/v1/object/public/user-uploads/new_emilia_logo.png" alt="EMIFORPHS" class="h-12 w-12 rounded-full border-2 border-white/10" />
                 <h3 class="text-2xl font-extrabold">EMIFORPHS</h3>
@@ -1412,6 +1372,15 @@
                 <li class="flex items-center gap-3"><i class="fas fa-envelope text-indigo-400"></i><span class="text-indigo-200">emiliaforemost@gmail.com</span></li>
               </ul>
             </div>
+            <div>
+              <h4 class="text-lg font-bold mb-4">Support</h4>
+              <ul class="space-y-3 text-sm">
+                <li class="flex items-center gap-3"><i class="fas fa-headset text-indigo-400"></i><span class="text-indigo-200">24/7 Support</span></li>
+                <li class="flex items-center gap-3"><i class="fas fa-life-ring text-indigo-400"></i><span class="text-indigo-200">Help Center</span></li>
+                <li class="flex items-center gap-3"><i class="fas fa-question-circle text-indigo-400"></i><span class="text-indigo-200">FAQs</span></li>
+                <li class="flex items-center gap-3"><i class="fas fa-file-alt text-indigo-400"></i><span class="text-indigo-200">Documentation</span></li>
+              </ul>
+            </div>
           </div>
           <div class="border-t border-white/5 mt-10 pt-6 text-center text-indigo-300/50 text-sm">&copy; 2025 EMIFORPHS High School. All rights reserved.</div>
         </div>
@@ -1429,51 +1398,95 @@
   </a>
 
   <script>
-    // ==================== ENHANCED SCROLL MANAGEMENT ====================
-    
+    // ==================== ROCK SOLID SCROLL MANAGEMENT ====================
     function setupScrollManagement() {
       const scrollContainer = document.getElementById('scrollContainer');
       
+      if (!scrollContainer) return;
+      
+      // Ensure container has correct styles
       scrollContainer.style.overflowY = 'auto';
       scrollContainer.style.overflowX = 'hidden';
+      scrollContainer.style.overscrollBehavior = 'contain';
       
+      // iOS smooth scroll
       if ('ontouchstart' in window) {
         scrollContainer.style.WebkitOverflowScrolling = 'touch';
-        
-        document.addEventListener('touchmove', function(e) {
-          if (scrollContainer.scrollTop <= 0) {
-            e.preventDefault();
-          }
-        }, { passive: false });
-        
-        document.body.addEventListener('touchstart', function() {
-          if (scrollContainer.scrollTop === 0) {
-            scrollContainer.scrollTop = 1;
-          }
-          if (scrollContainer.scrollHeight - scrollContainer.scrollTop === scrollContainer.clientHeight) {
-            scrollContainer.scrollTop = scrollContainer.scrollTop - 1;
-          }
-        });
       }
       
+      // Touch start - track position
+      let touchStartY = 0;
+      let touchStartScrollTop = 0;
+      
+      scrollContainer.addEventListener('touchstart', function(e) {
+        touchStartY = e.touches[0].clientY;
+        touchStartScrollTop = scrollContainer.scrollTop;
+      }, { passive: true });
+      
+      // Touch move - prevent rubber band
+      scrollContainer.addEventListener('touchmove', function(e) {
+        const currentY = e.touches[0].clientY;
+        const deltaY = currentY - touchStartY;
+        const currentScrollTop = scrollContainer.scrollTop;
+        const maxScrollTop = scrollContainer.scrollHeight - scrollContainer.clientHeight;
+        
+        // At top, pulling down - BLOCK
+        if (currentScrollTop <= 0 && deltaY > 0) {
+          e.preventDefault();
+          return false;
+        }
+        
+        // At bottom, pulling up - BLOCK
+        if (currentScrollTop >= maxScrollTop - 1 && deltaY < 0) {
+          e.preventDefault();
+          return false;
+        }
+      }, { passive: false });
+      
+      // Enforce boundaries on scroll
       scrollContainer.addEventListener('scroll', function() {
+        // If at top, keep it there
+        if (this.scrollTop < 0) {
+          this.scrollTop = 0;
+        }
+        
+        // If at bottom, keep it there
+        if (this.scrollTop + this.clientHeight > this.scrollHeight) {
+          this.scrollTop = Math.max(0, this.scrollHeight - this.clientHeight);
+        }
+        
+        // Show boundary indicator
         const distanceFromBottom = this.scrollHeight - (this.scrollTop + this.clientHeight);
         const boundary = document.getElementById('scrollBoundary');
         
-        if (distanceFromBottom <= 50 && distanceFromBottom > 0) {
-          boundary.classList.add('visible');
-        } else {
-          boundary.classList.remove('visible');
-        }
-        
-        if (this.scrollTop <= 0) {
-          this.scrollTop = 1;
-        }
-        
-        if (this.scrollTop + this.clientHeight >= this.scrollHeight) {
-          this.scrollTop = this.scrollHeight - this.clientHeight - 1;
+        if (boundary) {
+          if (distanceFromBottom <= 50 && distanceFromBottom > 0) {
+            boundary.classList.add('visible');
+          } else {
+            boundary.classList.remove('visible');
+          }
         }
       });
+      
+      // Enforce boundaries on resize
+      window.addEventListener('resize', function() {
+        if (scrollContainer.scrollTop < 0) {
+          scrollContainer.scrollTop = 0;
+        }
+        if (scrollContainer.scrollTop + scrollContainer.clientHeight > scrollContainer.scrollHeight) {
+          scrollContainer.scrollTop = Math.max(0, scrollContainer.scrollHeight - scrollContainer.clientHeight);
+        }
+      });
+      
+      // Initial enforcement - prevent any initial overscroll
+      setTimeout(() => {
+        if (scrollContainer.scrollTop < 0) {
+          scrollContainer.scrollTop = 0;
+        }
+        if (scrollContainer.scrollTop + scrollContainer.clientHeight > scrollContainer.scrollHeight) {
+          scrollContainer.scrollTop = Math.max(0, scrollContainer.scrollHeight - scrollContainer.clientHeight);
+        }
+      }, 50);
     }
 
     // ==================== CLASS DATA ANALYTICS ====================
@@ -1678,12 +1691,15 @@
 
     // ==================== INITIALIZATION ====================
     document.addEventListener('DOMContentLoaded', function() {
+      // Setup the rock solid scroll system
       setupScrollManagement();
       
+      // Update dashboard stats
       setTimeout(() => {
         updateDashboardStats();
       }, 300);
       
+      // Listen for storage changes (when reports are saved)
       window.addEventListener('storage', function(e) {
         if (e.key && e.key.startsWith('savedReports_')) {
           setTimeout(() => {
@@ -1692,6 +1708,7 @@
         }
       });
       
+      // Confirm sign out
       document.querySelectorAll('a[href*="staff_logout"]').forEach(function(link) {
         link.addEventListener('click', function(e) {
           if (!confirm('Are you sure you want to sign out?')) {
@@ -1701,6 +1718,7 @@
       });
     });
 
+    // Update when tab becomes visible again
     document.addEventListener('visibilitychange', function() {
       if (!document.hidden) {
         setTimeout(() => {
