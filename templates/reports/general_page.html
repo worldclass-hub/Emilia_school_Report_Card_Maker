@@ -1107,11 +1107,11 @@
               </div>
             </div>
 
-            <!-- SS3 Card - ONLY PREMIUM BADGE, NO DUPLICATE -->
+            <!-- SS3 Card - ONLY PREMIUM BADGE -->
             <div class="class-card-wrapper animate-fade-in-up animate-fade-in-up-delay-3" data-class="SS3">
               <div class="class-card class-card-premium">
                 <div class="card-gradient-bg" style="background: linear-gradient(135deg, rgba(139,92,246,0.06), rgba(109,40,217,0.06));"></div>
-                <!-- SINGLE PREMIUM BADGE - KEPT ONLY THIS ONE -->
+                <!-- SINGLE PREMIUM BADGE -->
                 <div class="card-premium-badge" style="position: absolute; top: 20px; right: 20px; z-index: 3;">
                   <i class="fas fa-crown"></i> Premium
                 </div>
@@ -1120,8 +1120,7 @@
                     <div class="card-icon-wrap" style="background: linear-gradient(135deg, #f5f3ff, #ede9fe); color: #7c3aed;">
                       <i class="fas fa-user-graduate"></i>
                     </div>
-                    <!-- REMOVED THE DUPLICATE CARD-BADGE HERE -->
-                    <!-- Only the premium badge remains -->
+                    <!-- NO DUPLICATE BADGE HERE -->
                   </div>
                   <div>
                     <h4 class="card-title">SS3</h4>
@@ -1395,57 +1394,69 @@
   </a>
 
   <script>
-    // ==================== IOS OVERSCROLL FIX ====================
+    // ==================== IOS OVERSCROLL FIX - SIMPLIFIED ====================
     function setupScrollManagement() {
       const scrollContainer = document.getElementById('scrollContainer');
       
-      // Ensure scroll container works properly
-      scrollContainer.style.overflowY = 'auto';
-      scrollContainer.style.overflowX = 'hidden';
-      
-      // iOS Safari specific fixes
+      // iOS Safari specific fixes - ONLY prevent at extreme boundaries
       if ('ontouchstart' in window) {
         scrollContainer.style.WebkitOverflowScrolling = 'touch';
         
-        // Prevent scroll past top and bottom on iOS - FIXED to not freeze
-        let isScrolling = false;
+        let touchStartY = 0;
+        let isAtTop = false;
+        let isAtBottom = false;
+        
+        document.addEventListener('touchstart', function(e) {
+          touchStartY = e.touches[0].clientY;
+          const container = document.getElementById('scrollContainer');
+          if (!container) return;
+          
+          // Check if at top
+          if (container.scrollTop <= 0) {
+            isAtTop = true;
+            container.scrollTop = 1;
+          } else {
+            isAtTop = false;
+          }
+          
+          // Check if at bottom
+          if (container.scrollTop + container.clientHeight >= container.scrollHeight - 1) {
+            isAtBottom = true;
+            container.scrollTop = container.scrollHeight - container.clientHeight - 1;
+          } else {
+            isAtBottom = false;
+          }
+        }, { passive: true });
         
         document.addEventListener('touchmove', function(e) {
           const container = document.getElementById('scrollContainer');
           if (!container) return;
           
+          const touchY = e.touches[0].clientY;
+          const direction = touchY - touchStartY; // Positive = scrolling down, Negative = scrolling up
+          
           const scrollTop = container.scrollTop;
           const scrollHeight = container.scrollHeight;
           const clientHeight = container.clientHeight;
           
-          // At top - prevent scrolling up further
-          if (scrollTop <= 0) {
+          // At top and trying to scroll up (direction > 0 means pulling down)
+          if (scrollTop <= 0 && direction > 0) {
             e.preventDefault();
             container.scrollTop = 0;
             return;
           }
           
-          // At bottom - prevent scrolling down further
-          if (scrollTop + clientHeight >= scrollHeight - 1) {
+          // At bottom and trying to scroll down (direction < 0 means pushing up)
+          if (scrollTop + clientHeight >= scrollHeight - 1 && direction < 0) {
             e.preventDefault();
             container.scrollTop = scrollHeight - clientHeight;
             return;
           }
-        }, { passive: false });
-        
-        // Set initial position to prevent stuck at top
-        document.body.addEventListener('touchstart', function() {
-          const container = document.getElementById('scrollContainer');
-          if (!container) return;
           
-          // Force scroll position if at boundaries
-          if (container.scrollTop === 0) {
-            container.scrollTop = 1;
-          }
-          if (container.scrollTop + container.clientHeight >= container.scrollHeight - 1) {
-            container.scrollTop = container.scrollHeight - container.clientHeight - 1;
-          }
-        }, { passive: true });
+          // Update touch start for next frame
+          touchStartY = touchY;
+          
+        }, { passive: false });
       }
       
       // Scroll boundary indicator
