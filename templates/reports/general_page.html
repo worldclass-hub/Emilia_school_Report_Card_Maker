@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>EMIFORPHS - Academic Excellence Portal</title>
   <link rel="icon" type="image/x-icon" href="https://ncctazjcffmpuniwctkz.supabase.co/storage/v1/object/public/user-uploads/new_emilia_logo.png">
   <script src="https://cdn.tailwindcss.com"></script>
@@ -11,61 +11,83 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
     
-    /* ==================== ANTI-OVERSCROLL + HIDE SCROLLBAR ==================== */
+    /* ==================== ANTI-OVERSCROLL - iOS FIX ==================== */
     html, body {
       width: 100%;
       height: 100%;
-      position: fixed;
-      overflow: hidden;
-      background: #f0f4ff;
       margin: 0;
       padding: 0;
-      touch-action: pan-y;
-      overscroll-behavior: none;
+      overflow: hidden;
+      position: fixed;
       top: 0;
       left: 0;
       right: 0;
       bottom: 0;
+      background: #f0f4ff;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      user-select: none;
     }
     
+    /* Main scroll container - FIXED for iOS */
     .scroll-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
       width: 100%;
       height: 100%;
       overflow-y: auto;
       overflow-x: hidden;
-      position: relative;
-      background: #f0f4ff;
       -webkit-overflow-scrolling: touch;
+      overscroll-behavior: none;
+      background: #f0f4ff;
       /* Hide scrollbar completely */
-      scrollbar-width: none; /* Firefox */
-      -ms-overflow-style: none; /* IE/Edge */
+      scrollbar-width: none;
+      -ms-overflow-style: none;
     }
     
     .scroll-container::-webkit-scrollbar {
-      display: none; /* Chrome/Safari/Opera */
+      display: none !important;
       width: 0 !important;
       height: 0 !important;
       background: transparent !important;
     }
     
-    .no-overscroll {
-      touch-action: pan-y;
-      overscroll-behavior: contain;
-    }
-    
-    .main-wrapper {
-      width: 100%;
-      min-height: 100%;
-      background: #f0f4ff;
-    }
-    
-    @media (max-width: 768px) {
+    /* iOS Safari specific fixes */
+    @supports (-webkit-touch-callout: none) {
       .scroll-container {
         -webkit-overflow-scrolling: touch;
-        overscroll-behavior: contain;
+        overscroll-behavior: none;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+      }
+      
+      /* Prevent bounce at top and bottom */
+      .scroll-container::before,
+      .scroll-container::after {
+        content: '';
+        display: block;
+        height: 1px;
+        min-height: 1px;
+        width: 100%;
+        flex-shrink: 0;
       }
     }
     
+    /* Additional iOS overscroll prevention */
+    .no-overscroll {
+      touch-action: pan-y;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+    }
+    
+    /* Prevent rubber banding on iOS */
     .scroll-boundary {
       position: fixed;
       bottom: 0;
@@ -93,11 +115,22 @@
       background: linear-gradient(135deg, #1e1b4b, #312e81);
     }
     
+    .main-wrapper {
+      width: 100%;
+      min-height: 100%;
+      background: #f0f4ff;
+      padding-bottom: 1px;
+    }
+    
     /* ==================== PREMIUM HEADER ==================== */
     .premium-header {
       background: rgba(255, 255, 255, 0.92);
       backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border-bottom: 1px solid rgba(99, 102, 241, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 50;
     }
     
     /* ==================== GRADIENT CLASS CARDS ==================== */
@@ -449,6 +482,7 @@
       justify-content: center;
       font-size: 20px;
       backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
       border: 1px solid rgba(255,255,255,0.08);
       flex-shrink: 0;
     }
@@ -536,6 +570,7 @@
       transform: translateY(12px);
       transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
       backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       border: 1px solid rgba(255,255,255,0.06);
       box-shadow: 0 8px 32px rgba(0,0,0,0.2);
     }
@@ -596,6 +631,7 @@
     .glass-card {
       background: rgba(255, 255, 255, 0.85);
       backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       border: 1px solid rgba(255, 255, 255, 0.5);
       box-shadow: 0 4px 32px rgba(0, 0, 0, 0.03);
     }
@@ -1380,32 +1416,58 @@
   </a>
 
   <script>
-    // ==================== SCROLL MANAGEMENT ====================
+    // ==================== IOS OVERSCROLL FIX ====================
     function setupScrollManagement() {
       const scrollContainer = document.getElementById('scrollContainer');
       
+      // Ensure scroll container works properly
       scrollContainer.style.overflowY = 'auto';
       scrollContainer.style.overflowX = 'hidden';
       
+      // iOS Safari specific fixes
       if ('ontouchstart' in window) {
         scrollContainer.style.WebkitOverflowScrolling = 'touch';
         
+        // Prevent scroll past top and bottom on iOS
         document.addEventListener('touchmove', function(e) {
-          if (scrollContainer.scrollTop <= 0) {
+          const container = document.getElementById('scrollContainer');
+          if (!container) return;
+          
+          const scrollTop = container.scrollTop;
+          const scrollHeight = container.scrollHeight;
+          const clientHeight = container.clientHeight;
+          
+          // At top - prevent scrolling up further
+          if (scrollTop <= 0) {
             e.preventDefault();
+            container.scrollTop = 0;
+            return;
+          }
+          
+          // At bottom - prevent scrolling down further
+          if (scrollTop + clientHeight >= scrollHeight - 1) {
+            e.preventDefault();
+            container.scrollTop = scrollHeight - clientHeight;
+            return;
           }
         }, { passive: false });
         
+        // Set initial position to prevent stuck at top
         document.body.addEventListener('touchstart', function() {
-          if (scrollContainer.scrollTop === 0) {
-            scrollContainer.scrollTop = 1;
+          const container = document.getElementById('scrollContainer');
+          if (!container) return;
+          
+          // Force scroll position if at boundaries
+          if (container.scrollTop === 0) {
+            container.scrollTop = 1;
           }
-          if (scrollContainer.scrollHeight - scrollContainer.scrollTop === scrollContainer.clientHeight) {
-            scrollContainer.scrollTop = scrollContainer.scrollTop - 1;
+          if (container.scrollTop + container.clientHeight >= container.scrollHeight - 1) {
+            container.scrollTop = container.scrollHeight - container.clientHeight - 1;
           }
-        });
+        }, { passive: true });
       }
       
+      // Scroll boundary indicator
       scrollContainer.addEventListener('scroll', function() {
         const distanceFromBottom = this.scrollHeight - (this.scrollTop + this.clientHeight);
         const boundary = document.getElementById('scrollBoundary');
@@ -1414,14 +1476,6 @@
           boundary.classList.add('visible');
         } else {
           boundary.classList.remove('visible');
-        }
-        
-        if (this.scrollTop <= 0) {
-          this.scrollTop = 1;
-        }
-        
-        if (this.scrollTop + this.clientHeight >= this.scrollHeight) {
-          this.scrollTop = this.scrollHeight - this.clientHeight - 1;
         }
       });
     }
