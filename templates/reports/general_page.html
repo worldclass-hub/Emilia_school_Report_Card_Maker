@@ -67,24 +67,6 @@
         right: 0;
         bottom: 0;
       }
-      
-      /* Prevent bounce at top and bottom */
-      .scroll-container::before,
-      .scroll-container::after {
-        content: '';
-        display: block;
-        height: 1px;
-        min-height: 1px;
-        width: 100%;
-        flex-shrink: 0;
-      }
-    }
-    
-    /* Additional iOS overscroll prevention */
-    .no-overscroll {
-      touch-action: pan-y;
-      overscroll-behavior: contain;
-      -webkit-overflow-scrolling: touch;
     }
     
     /* Prevent rubber banding on iOS */
@@ -340,11 +322,8 @@
       text-overflow: ellipsis;
     }
     
-    .class-card .card-premium-badge {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      z-index: 3;
+    /* ========== PREMIUM BADGE - SINGLE VERSION ========== */
+    .card-premium-badge {
       display: inline-flex;
       align-items: center;
       gap: 6px;
@@ -360,7 +339,7 @@
       flex-shrink: 0;
     }
     
-    .class-card .card-premium-badge i {
+    .card-premium-badge i {
       font-size: 11px;
     }
     
@@ -1128,11 +1107,12 @@
               </div>
             </div>
 
-            <!-- SS3 Premium -->
+            <!-- SS3 Card - ONLY PREMIUM BADGE, NO DUPLICATE -->
             <div class="class-card-wrapper animate-fade-in-up animate-fade-in-up-delay-3" data-class="SS3">
               <div class="class-card class-card-premium">
                 <div class="card-gradient-bg" style="background: linear-gradient(135deg, rgba(139,92,246,0.06), rgba(109,40,217,0.06));"></div>
-                <div class="card-premium-badge">
+                <!-- SINGLE PREMIUM BADGE - KEPT ONLY THIS ONE -->
+                <div class="card-premium-badge" style="position: absolute; top: 20px; right: 20px; z-index: 3;">
                   <i class="fas fa-crown"></i> Premium
                 </div>
                 <div class="card-content">
@@ -1140,9 +1120,8 @@
                     <div class="card-icon-wrap" style="background: linear-gradient(135deg, #f5f3ff, #ede9fe); color: #7c3aed;">
                       <i class="fas fa-user-graduate"></i>
                     </div>
-                    <span class="card-badge" style="background: linear-gradient(135deg, #f5f3ff, #ede9fe); color: #7c3aed;">
-                      <i class="fas fa-crown"></i> Final
-                    </span>
+                    <!-- REMOVED THE DUPLICATE CARD-BADGE HERE -->
+                    <!-- Only the premium badge remains -->
                   </div>
                   <div>
                     <h4 class="card-title">SS3</h4>
@@ -1428,7 +1407,9 @@
       if ('ontouchstart' in window) {
         scrollContainer.style.WebkitOverflowScrolling = 'touch';
         
-        // Prevent scroll past top and bottom on iOS
+        // Prevent scroll past top and bottom on iOS - FIXED to not freeze
+        let isScrolling = false;
+        
         document.addEventListener('touchmove', function(e) {
           const container = document.getElementById('scrollContainer');
           if (!container) return;
