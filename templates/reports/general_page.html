@@ -27,9 +27,9 @@
       -webkit-touch-callout: none;
       -webkit-user-select: none;
       user-select: none;
+      will-change: transform;
     }
     
-    /* Main scroll container - FIXED for iOS */
     .scroll-container {
       position: absolute;
       top: 0;
@@ -43,9 +43,11 @@
       -webkit-overflow-scrolling: touch;
       overscroll-behavior: none;
       background: #f0f4ff;
-      /* Hide scrollbar completely */
       scrollbar-width: none;
       -ms-overflow-style: none;
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+      will-change: scroll-position;
     }
     
     .scroll-container::-webkit-scrollbar {
@@ -55,7 +57,6 @@
       background: transparent !important;
     }
     
-    /* iOS Safari specific fixes */
     @supports (-webkit-touch-callout: none) {
       .scroll-container {
         -webkit-overflow-scrolling: touch;
@@ -69,13 +70,12 @@
       }
     }
     
-    /* Prevent rubber banding on iOS */
     .scroll-boundary {
       position: fixed;
       bottom: 0;
       left: 0;
       width: 100%;
-      height: 3px;
+      height: 2px;
       background: linear-gradient(90deg, #6366f1, #8b5cf6, #a855f7);
       z-index: 9999;
       pointer-events: none;
@@ -102,17 +102,20 @@
       min-height: 100%;
       background: #f0f4ff;
       padding-bottom: 1px;
+      background-image: 
+        radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.02) 0%, transparent 50%),
+        radial-gradient(circle at 80% 50%, rgba(139, 92, 246, 0.02) 0%, transparent 50%);
     }
     
     /* ==================== PREMIUM HEADER ==================== */
     .premium-header {
-      background: rgba(255, 255, 255, 0.92);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(99, 102, 241, 0.1);
+      background: rgba(255, 255, 255, 0.95);
+      border-bottom: 1px solid rgba(99, 102, 241, 0.08);
       position: sticky;
       top: 0;
       z-index: 50;
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
     }
     
     /* ==================== GRADIENT CLASS CARDS ==================== */
@@ -126,17 +129,20 @@
       overflow: hidden;
       background: #ffffff;
       border: 1px solid rgba(99, 102, 241, 0.08);
-      box-shadow: 0 4px 24px rgba(99, 102, 241, 0.04);
+      box-shadow: 0 4px 20px rgba(99, 102, 241, 0.04);
       min-height: 340px;
       display: flex;
       flex-direction: column;
-      transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+      will-change: transform;
     }
     
     .class-card:hover {
-      transform: translateY(-12px) scale(1.01);
-      box-shadow: 0 32px 80px rgba(99, 102, 241, 0.12);
-      border-color: rgba(99, 102, 241, 0.15);
+      transform: translateY(-6px) scale(1.005);
+      box-shadow: 0 24px 60px rgba(99, 102, 241, 0.08);
+      border-color: rgba(99, 102, 241, 0.12);
     }
     
     .class-card .card-gradient-bg {
@@ -146,7 +152,7 @@
       right: 0;
       bottom: 0;
       opacity: 0;
-      transition: opacity 0.6s ease;
+      transition: opacity 0.4s ease;
       pointer-events: none;
       border-radius: 20px;
     }
@@ -172,20 +178,20 @@
     }
     
     .class-card .card-icon-wrap {
-      width: 60px;
-      height: 60px;
+      width: 56px;
+      height: 56px;
       border-radius: 16px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 24px;
-      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      font-size: 22px;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
       position: relative;
       flex-shrink: 0;
     }
     
     .class-card:hover .card-icon-wrap {
-      transform: scale(1.08) rotate(-4deg);
+      transform: scale(1.05);
     }
     
     .class-card .card-icon-wrap::after {
@@ -195,12 +201,12 @@
       border-radius: 18px;
       border: 2px solid rgba(255,255,255,0.2);
       opacity: 0;
-      transition: all 0.4s ease;
+      transition: all 0.3s ease;
     }
     
     .class-card:hover .card-icon-wrap::after {
       opacity: 1;
-      transform: scale(1.1);
+      transform: scale(1.05);
     }
     
     .class-card .card-title {
@@ -285,7 +291,7 @@
       border-radius: 14px;
       font-weight: 700;
       font-size: 14px;
-      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
       border: none;
       cursor: pointer;
       width: 100%;
@@ -298,9 +304,9 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+      background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
       opacity: 0;
-      transition: opacity 0.4s ease;
+      transition: opacity 0.3s ease;
     }
     
     .class-card .card-btn:hover::before {
@@ -308,7 +314,7 @@
     }
     
     .class-card .card-btn i {
-      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
       flex-shrink: 0;
     }
     
@@ -322,7 +328,6 @@
       text-overflow: ellipsis;
     }
     
-    /* ========== PREMIUM BADGE - SINGLE VERSION ========== */
     .card-premium-badge {
       display: inline-flex;
       align-items: center;
@@ -335,7 +340,7 @@
       letter-spacing: 0.5px;
       background: linear-gradient(135deg, #8b5cf6, #6d28d9);
       color: white;
-      box-shadow: 0 4px 20px rgba(139, 92, 246, 0.3);
+      box-shadow: 0 4px 20px rgba(139, 92, 246, 0.25);
       flex-shrink: 0;
     }
     
@@ -343,18 +348,16 @@
       font-size: 11px;
     }
     
-    /* Premium card special */
     .class-card-premium {
       border-color: rgba(139, 92, 246, 0.12);
-      box-shadow: 0 4px 32px rgba(139, 92, 246, 0.05);
+      box-shadow: 0 4px 28px rgba(139, 92, 246, 0.05);
     }
     
     .class-card-premium:hover {
       border-color: rgba(139, 92, 246, 0.2);
-      box-shadow: 0 32px 80px rgba(139, 92, 246, 0.1);
+      box-shadow: 0 24px 60px rgba(139, 92, 246, 0.08);
     }
     
-    /* ========== DASHBOARD GRID ========== */
     .dashboard-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
@@ -366,26 +369,27 @@
         grid-template-columns: 1fr;
         gap: 18px;
       }
-      
       .class-card .card-meta {
         gap: 16px;
       }
-      
       .class-card .card-meta-item .stat-number {
         max-width: 40px;
         font-size: 14px;
       }
     }
     
-    /* ========== GRADIENT STAT CARDS ========== */
+    /* ==================== STAT CARDS ==================== */
     .stat-card-gradient {
       border-radius: 20px;
       padding: 24px 28px;
       color: white;
       position: relative;
       overflow: hidden;
-      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
       cursor: default;
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+      will-change: transform;
     }
     
     .stat-card-gradient::before {
@@ -413,8 +417,8 @@
     }
     
     .stat-card-gradient:hover {
-      transform: translateY(-6px) scale(1.01);
-      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.15);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.12);
     }
     
     .stat-card-gradient .stat-top {
@@ -460,8 +464,6 @@
       align-items: center;
       justify-content: center;
       font-size: 20px;
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
       border: 1px solid rgba(255,255,255,0.08);
       flex-shrink: 0;
     }
@@ -484,13 +486,12 @@
       max-width: 100%;
     }
     
-    /* Individual stat gradients */
     .stat-card-gradient:nth-child(1) { background: linear-gradient(135deg, #4f46e5, #6366f1); }
     .stat-card-gradient:nth-child(2) { background: linear-gradient(135deg, #059669, #10b981); }
     .stat-card-gradient:nth-child(3) { background: linear-gradient(135deg, #7c3aed, #8b5cf6); }
     .stat-card-gradient:nth-child(4) { background: linear-gradient(135deg, #d97706, #f59e0b); }
     
-    /* ========== FLOATING BUTTON ========== */
+    /* ==================== FLOATING BUTTON ==================== */
     .floating-student-btn {
       position: fixed;
       bottom: 30px;
@@ -505,12 +506,15 @@
       align-items: center;
       justify-content: center;
       box-shadow: 0 8px 40px rgba(139, 92, 246, 0.35);
-      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
       cursor: pointer;
       text-decoration: none;
       border: none;
       font-size: 26px;
       flex-shrink: 0;
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+      will-change: transform;
     }
     
     .floating-student-btn::before {
@@ -520,17 +524,17 @@
       border-radius: 50%;
       border: 2px solid rgba(139, 92, 246, 0.15);
       opacity: 0;
-      transition: all 0.4s ease;
+      transition: all 0.3s ease;
     }
     
     .floating-student-btn:hover::before {
       opacity: 1;
-      transform: scale(1.1);
+      transform: scale(1.05);
     }
     
     .floating-student-btn:hover {
-      transform: scale(1.08) translateY(-4px);
-      box-shadow: 0 12px 56px rgba(139, 92, 246, 0.45);
+      transform: scale(1.05) translateY(-4px);
+      box-shadow: 0 12px 56px rgba(139, 92, 246, 0.4);
     }
     
     .floating-student-btn .tooltip {
@@ -547,9 +551,7 @@
       opacity: 0;
       pointer-events: none;
       transform: translateY(12px);
-      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
       border: 1px solid rgba(255,255,255,0.06);
       box-shadow: 0 8px 32px rgba(0,0,0,0.2);
     }
@@ -606,46 +608,38 @@
       }
     }
     
-    /* ========== GLASS CARD ========== */
+    /* ==================== GLASS CARD ==================== */
     .glass-card {
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      background: rgba(255, 255, 255, 0.9);
       border: 1px solid rgba(255, 255, 255, 0.5);
-      box-shadow: 0 4px 32px rgba(0, 0, 0, 0.03);
+      box-shadow: 0 4px 28px rgba(0, 0, 0, 0.03);
     }
     
-    /* ========== ANIMATIONS ========== */
+    /* ==================== ANIMATIONS ==================== */
     @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(28px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
     }
     
     @keyframes float {
       0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-10px); }
+      50% { transform: translateY(-8px); }
     }
     
     .animate-fade-in-up {
-      animation: fadeInUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+      animation: fadeInUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
     }
     
-    .animate-fade-in-up-delay-1 { animation-delay: 0.06s; opacity: 0; }
-    .animate-fade-in-up-delay-2 { animation-delay: 0.12s; opacity: 0; }
-    .animate-fade-in-up-delay-3 { animation-delay: 0.18s; opacity: 0; }
-    .animate-fade-in-up-delay-4 { animation-delay: 0.24s; opacity: 0; }
+    .animate-fade-in-up-delay-1 { animation-delay: 0.04s; opacity: 0; }
+    .animate-fade-in-up-delay-2 { animation-delay: 0.08s; opacity: 0; }
+    .animate-fade-in-up-delay-3 { animation-delay: 0.12s; opacity: 0; }
+    .animate-fade-in-up-delay-4 { animation-delay: 0.16s; opacity: 0; }
     
     .animate-float {
       animation: float 3s ease-in-out infinite;
     }
     
-    /* ========== SECTION HEADERS ========== */
+    /* ==================== SECTION HEADERS ==================== */
     .section-head {
       display: flex;
       align-items: center;
@@ -692,80 +686,141 @@
       }
     }
     
-    /* ========== ACTIVITY ITEMS ========== */
+    /* ==================== ACTIVITY ITEMS - REDESIGNED ==================== */
     .activity-item {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      padding: 14px 20px;
-      border-radius: 14px;
-      transition: all 0.3s ease;
-      cursor: default;
-      background: rgba(255,255,255,0.4);
-      flex-wrap: wrap;
+      display: flex !important;
+      align-items: center !important;
+      gap: 12px !important;
+      padding: 12px 18px !important;
+      border-radius: 14px !important;
+      transition: all 0.2s ease !important;
+      cursor: pointer !important;
+      background: rgba(255,255,255,0.4) !important;
+      text-decoration: none !important;
+      -webkit-transform: translateZ(0) !important;
+      transform: translateZ(0) !important;
+      flex-direction: row !important;
+      flex-wrap: nowrap !important;
+      overflow: hidden !important;
+      min-height: 52px !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
     }
     
     .activity-item:hover {
-      background: rgba(255,255,255,0.8);
-      transform: translateX(4px);
-      box-shadow: 0 4px 16px rgba(99, 102, 241, 0.04);
+      background: rgba(255,255,255,0.85) !important;
+      transform: translateX(4px) !important;
+      box-shadow: 0 4px 16px rgba(99, 102, 241, 0.04) !important;
     }
     
+    /* Icon - Fixed size, left side */
     .activity-item .ai-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-      flex-shrink: 0;
+      width: 40px !important;
+      height: 40px !important;
+      min-width: 40px !important;
+      border-radius: 12px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      font-size: 16px !important;
+      flex-shrink: 0 !important;
     }
     
+    /* Content - Takes remaining space, single line */
     .activity-item .ai-content {
-      flex: 1;
-      min-width: 120px;
+      flex: 1 !important;
+      min-width: 0 !important;
+      overflow: hidden !important;
+      display: flex !important;
+      align-items: center !important;
+      height: 100% !important;
     }
     
-    .activity-item .ai-title {
-      font-weight: 600;
-      font-size: 14px;
-      color: #1e1b4b;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+    /* Text - Single line with ellipsis */
+    .activity-item .ai-text {
+      font-weight: 600 !important;
+      font-size: 14px !important;
+      color: #1e1b4b !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      display: block !important;
+      width: 100% !important;
+      line-height: 1.4 !important;
+      margin: 0 !important;
+      padding: 0 !important;
     }
     
-    .activity-item .ai-desc {
-      font-size: 13px;
-      color: #94a3b8;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    
+    /* Time - Fixed position on the right */
     .activity-item .ai-time {
-      font-size: 12px;
-      color: #cbd5e1;
-      font-weight: 500;
-      flex-shrink: 0;
-      white-space: nowrap;
+      font-size: 12px !important;
+      color: #94a3b8 !important;
+      font-weight: 500 !important;
+      flex-shrink: 0 !important;
+      white-space: nowrap !important;
+      margin-left: auto !important;
+      display: flex !important;
+      align-items: center !important;
+      gap: 4px !important;
+    }
+    
+    .activity-item .ai-time .fa-arrow-right {
+      font-size: 10px !important;
+      opacity: 0.5 !important;
+      transition: all 0.2s ease !important;
+    }
+    
+    .activity-item:hover .ai-time .fa-arrow-right {
+      opacity: 1 !important;
+      transform: translateX(3px) !important;
+      color: #6366f1 !important;
+    }
+    
+    /* ==================== MOBILE RESPONSIVE ==================== */
+    @media (max-width: 640px) {
+      .activity-item {
+        padding: 10px 14px !important;
+        gap: 10px !important;
+        min-height: 46px !important;
+      }
+      .activity-item .ai-icon {
+        width: 34px !important;
+        height: 34px !important;
+        min-width: 34px !important;
+        font-size: 14px !important;
+      }
+      .activity-item .ai-text {
+        font-size: 12px !important;
+      }
+      .activity-item .ai-time {
+        font-size: 10px !important;
+      }
     }
     
     @media (max-width: 480px) {
-      .activity-item .ai-title {
-        white-space: normal;
+      .activity-item {
+        padding: 8px 12px !important;
+        gap: 8px !important;
+        min-height: 40px !important;
       }
-      .activity-item .ai-desc {
-        white-space: normal;
+      .activity-item .ai-icon {
+        width: 30px !important;
+        height: 30px !important;
+        min-width: 30px !important;
+        font-size: 12px !important;
+      }
+      .activity-item .ai-text {
+        font-size: 11px !important;
       }
       .activity-item .ai-time {
-        font-size: 10px;
-        margin-left: auto;
+        font-size: 9px !important;
+      }
+      .activity-item .ai-time .fa-arrow-right {
+        font-size: 8px !important;
       }
     }
     
-    /* ========== RESPONSIVE ========== */
+    /* ==================== RESPONSIVE ==================== */
     @media (max-width: 640px) {
       .class-card .card-content {
         padding: 20px 20px 18px;
@@ -778,27 +833,7 @@
       }
     }
     
-    /* ========== SCROLLBAR COMPLETELY HIDDEN ========== */
-    /* All scrollbar hiding is done at .scroll-container level above */
-    
-    /* ========== DECORATIVE ELEMENTS ========== */
-    .bg-grid-pattern {
-      background-image: 
-        radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.03) 0%, transparent 50%),
-        radial-gradient(circle at 80% 50%, rgba(139, 92, 246, 0.03) 0%, transparent 50%);
-    }
-    
-    /* ========== COUNTER ANIMATION ========== */
-    @keyframes countUp {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    
-    .count-animate {
-      animation: countUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-    }
-
-    /* ========== BROADSHEET CLASS BADGE ========== */
+    /* ==================== BROADSHEET CLASS BADGE ==================== */
     .broadsheet-class-badge {
       display: inline-flex;
       align-items: center;
@@ -807,16 +842,18 @@
       border-radius: 12px;
       font-weight: 700;
       font-size: 12px;
-      transition: all 0.3s ease;
+      transition: all 0.2s ease;
       border: 2px solid transparent;
       text-decoration: none;
       min-width: 0;
       flex-shrink: 1;
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
     }
     
     .broadsheet-class-badge:hover {
       transform: translateY(-2px);
-      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
     }
     
     .broadsheet-class-badge i {
@@ -876,7 +913,6 @@
       }
     }
     
-    /* ========== STAT NUMBER FIXES ========== */
     .stat-number-container {
       display: inline-flex;
       align-items: center;
@@ -900,8 +936,7 @@
         max-width: 80px;
       }
     }
-
-    /* ========== MOBILE HEADER - HIDE USER AVATAR ========== */
+    
     @media (max-width: 640px) {
       .header-user-avatar {
         display: none !important;
@@ -925,7 +960,7 @@
   
   <!-- Scroll Container -->
   <div class="scroll-container" id="scrollContainer">
-    <div class="main-wrapper bg-grid-pattern">
+    <div class="main-wrapper">
 
       <!-- ===== HEADER ===== -->
       <header class="premium-header sticky top-0 z-50">
@@ -944,20 +979,17 @@
           
           <!-- Actions -->
           <div class="flex items-center gap-2 sm:gap-4">
-            <!-- Admin Dashboard - Icon only on mobile, full button on desktop -->
             <a href="/admin/" class="flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-2 sm:px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 shadow-sm hover:shadow-md shadow-indigo-200">
               <i class="fas fa-tachometer-alt"></i>
               <span class="header-dashboard-text hidden sm:inline">Admin Dashboard</span>
             </a>
             
-            <!-- User Avatar - Hidden on mobile -->
             <div class="header-user-avatar hidden sm:flex items-center gap-1 sm:gap-2">
               <div class="w-8 h-8 sm:w-9 sm:h-9 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-700 shadow-sm ring-2 ring-white">
                 <i class="fas fa-user text-xs sm:text-sm"></i>
               </div>
             </div>
             
-            <!-- Sign Out - Icon only on mobile, full button on desktop -->
             <a href="{% url 'staff_logout' %}" class="flex items-center justify-center gap-1.5 sm:gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 hover:text-slate-900 px-2 sm:px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300">
               <i class="fas fa-sign-out-alt"></i>
               <span class="header-signout-text hidden sm:inline">Sign Out</span>
@@ -984,7 +1016,7 @@
               <p class="text-slate-500 text-lg mt-1">Enterprise-grade academic management &amp; reporting platform</p>
             </div>
             <div class="flex items-center gap-3 animate-float">
-              <span class="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm text-indigo-700 px-5 py-2.5 rounded-full text-sm font-semibold border border-indigo-200/50 shadow-sm">
+              <span class="inline-flex items-center gap-2 bg-white/80 text-indigo-700 px-5 py-2.5 rounded-full text-sm font-semibold border border-indigo-200/50 shadow-sm">
                 <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
                 Live · System Online
               </span>
@@ -1107,11 +1139,10 @@
               </div>
             </div>
 
-            <!-- SS3 Card - ONLY PREMIUM BADGE -->
+            <!-- SS3 Card -->
             <div class="class-card-wrapper animate-fade-in-up animate-fade-in-up-delay-3" data-class="SS3">
               <div class="class-card class-card-premium">
                 <div class="card-gradient-bg" style="background: linear-gradient(135deg, rgba(139,92,246,0.06), rgba(109,40,217,0.06));"></div>
-                <!-- SINGLE PREMIUM BADGE -->
                 <div class="card-premium-badge" style="position: absolute; top: 20px; right: 20px; z-index: 3;">
                   <i class="fas fa-crown"></i> Premium
                 </div>
@@ -1120,7 +1151,6 @@
                     <div class="card-icon-wrap" style="background: linear-gradient(135deg, #f5f3ff, #ede9fe); color: #7c3aed;">
                       <i class="fas fa-user-graduate"></i>
                     </div>
-                    <!-- NO DUPLICATE BADGE HERE -->
                   </div>
                   <div>
                     <h4 class="card-title">SS3</h4>
@@ -1249,7 +1279,7 @@
                 <h3 class="text-2xl font-extrabold">Class Broadsheets</h3>
                 <p class="text-indigo-200 text-sm mt-0.5 font-medium">Comprehensive class performance analysis &amp; ranking</p>
               </div>
-              <div class="w-14 h-14 bg-white/10 rounded-2xl flex items-center justify-center backdrop-blur-sm flex-shrink-0">
+              <div class="w-14 h-14 bg-white/10 rounded-2xl flex items-center justify-center flex-shrink-0">
                 <i class="fas fa-chart-bar text-2xl"></i>
               </div>
             </div>
@@ -1279,42 +1309,31 @@
             <div>
               <h4 class="font-bold text-indigo-950 mb-4 text-lg">🚀 Quick Generate</h4>
               <div class="grid grid-cols-3 gap-2.5">
-                <!-- JSS1 -->
                 <a href="{% url 'staff_broadsheet' %}" class="broadsheet-class-badge" style="background: linear-gradient(135deg, #fff7ed, #ffedd5); color: #ea580c; border-color: rgba(234,88,12,0.15);">
                   <i class="fas fa-user-friends"></i>
                   <span class="class-name">JSS1</span>
                   <span class="student-count" id="broadsheet-jss1-count">0</span>
                 </a>
-                
-                <!-- JSS2 -->
                 <a href="{% url 'staff_broadsheet' %}" class="broadsheet-class-badge" style="background: linear-gradient(135deg, #fffbeb, #fef3c7); color: #d97706; border-color: rgba(217,119,6,0.15);">
                   <i class="fas fa-user-friends"></i>
                   <span class="class-name">JSS2</span>
                   <span class="student-count" id="broadsheet-jss2-count">0</span>
                 </a>
-                
-                <!-- JSS3 -->
                 <a href="{% url 'staff_broadsheet' %}" class="broadsheet-class-badge" style="background: linear-gradient(135deg, #fef2f2, #fee2e2); color: #dc2626; border-color: rgba(220,38,38,0.15);">
                   <i class="fas fa-user-friends"></i>
                   <span class="class-name">JSS3</span>
                   <span class="student-count" id="broadsheet-jss3-count">0</span>
                 </a>
-                
-                <!-- SS1 -->
                 <a href="{% url 'staff_broadsheet' %}" class="broadsheet-class-badge" style="background: linear-gradient(135deg, #eef2ff, #e0e7ff); color: #4f46e5; border-color: rgba(79,70,229,0.15);">
                   <i class="fas fa-user-graduate"></i>
                   <span class="class-name">SS1</span>
                   <span class="student-count" id="broadsheet-ss1-count">0</span>
                 </a>
-                
-                <!-- SS2 -->
                 <a href="{% url 'staff_broadsheet' %}" class="broadsheet-class-badge" style="background: linear-gradient(135deg, #ecfdf5, #d1fae5); color: #059669; border-color: rgba(5,150,105,0.15);">
                   <i class="fas fa-user-graduate"></i>
                   <span class="class-name">SS2</span>
                   <span class="student-count" id="broadsheet-ss2-count">0</span>
                 </a>
-                
-                <!-- SS3 -->
                 <a href="{% url 'staff_broadsheet' %}" class="broadsheet-class-badge" style="background: linear-gradient(135deg, #f5f3ff, #ede9fe); color: #7c3aed; border-color: rgba(124,58,237,0.15);">
                   <i class="fas fa-user-graduate"></i>
                   <span class="class-name">SS3</span>
@@ -1332,7 +1351,7 @@
           </div>
         </div>
 
-        <!-- ===== RECENT ACTIVITY ===== -->
+        <!-- ===== RECENT ACTIVITY - CLICKABLE ===== -->
         <div class="glass-card rounded-2xl p-6 animate-fade-in-up">
           <h3 class="text-xl font-extrabold text-indigo-950 mb-5 flex items-center gap-2.5">
             <i class="fas fa-clock text-indigo-500"></i> Recent Activity
@@ -1394,38 +1413,16 @@
   </a>
 
   <script>
-    // ==================== IOS OVERSCROLL FIX - SIMPLIFIED ====================
+    // ==================== IOS OVERSCROLL FIX ====================
     function setupScrollManagement() {
       const scrollContainer = document.getElementById('scrollContainer');
       
-      // iOS Safari specific fixes - ONLY prevent at extreme boundaries
       if ('ontouchstart' in window) {
         scrollContainer.style.WebkitOverflowScrolling = 'touch';
-        
         let touchStartY = 0;
-        let isAtTop = false;
-        let isAtBottom = false;
         
         document.addEventListener('touchstart', function(e) {
           touchStartY = e.touches[0].clientY;
-          const container = document.getElementById('scrollContainer');
-          if (!container) return;
-          
-          // Check if at top
-          if (container.scrollTop <= 0) {
-            isAtTop = true;
-            container.scrollTop = 1;
-          } else {
-            isAtTop = false;
-          }
-          
-          // Check if at bottom
-          if (container.scrollTop + container.clientHeight >= container.scrollHeight - 1) {
-            isAtBottom = true;
-            container.scrollTop = container.scrollHeight - container.clientHeight - 1;
-          } else {
-            isAtBottom = false;
-          }
         }, { passive: true });
         
         document.addEventListener('touchmove', function(e) {
@@ -1433,37 +1430,30 @@
           if (!container) return;
           
           const touchY = e.touches[0].clientY;
-          const direction = touchY - touchStartY; // Positive = scrolling down, Negative = scrolling up
-          
+          const direction = touchY - touchStartY;
           const scrollTop = container.scrollTop;
           const scrollHeight = container.scrollHeight;
           const clientHeight = container.clientHeight;
           
-          // At top and trying to scroll up (direction > 0 means pulling down)
           if (scrollTop <= 0 && direction > 0) {
             e.preventDefault();
             container.scrollTop = 0;
             return;
           }
           
-          // At bottom and trying to scroll down (direction < 0 means pushing up)
           if (scrollTop + clientHeight >= scrollHeight - 1 && direction < 0) {
             e.preventDefault();
             container.scrollTop = scrollHeight - clientHeight;
             return;
           }
           
-          // Update touch start for next frame
           touchStartY = touchY;
-          
         }, { passive: false });
       }
       
-      // Scroll boundary indicator
       scrollContainer.addEventListener('scroll', function() {
         const distanceFromBottom = this.scrollHeight - (this.scrollTop + this.clientHeight);
         const boundary = document.getElementById('scrollBoundary');
-        
         if (distanceFromBottom <= 50 && distanceFromBottom > 0) {
           boundary.classList.add('visible');
         } else {
@@ -1491,6 +1481,15 @@
       'SS3': 'SS 3'
     };
 
+    const CLASS_URL_MAP = {
+      'JSS1': '/staff/jss1_exam_result_view',
+      'JSS2': '/staff/jss2_exam_result_view',
+      'JSS3': '/staff/jss3_exam_result_view',
+      'SS1': '/staff/ss1_exam_result_view',
+      'SS2': '/staff/ss2_exam_result_view',
+      'SS3': '/staff/ss3_exam_result_view'
+    };
+
     function getClassReports(className) {
       const key = CLASS_STORAGE_KEYS[className];
       if (!key) return [];
@@ -1505,7 +1504,6 @@
     function getClassSubjectCount(className) {
       const reports = getClassReports(className);
       if (reports.length === 0) return 0;
-      
       const firstReport = reports[0];
       if (firstReport && firstReport.data && firstReport.data.subjects) {
         return firstReport.data.subjects.length || 0;
@@ -1527,8 +1525,7 @@
     function getTotalReportsAcrossAllClasses() {
       let total = 0;
       Object.keys(CLASS_STORAGE_KEYS).forEach(className => {
-        const reports = getClassReports(className);
-        total += reports.length;
+        total += getClassReports(className).length;
       });
       return total;
     }
@@ -1558,32 +1555,6 @@
       return count;
     }
 
-    function getAllRecentActivity(limit = 5) {
-      const activities = [];
-      Object.keys(CLASS_STORAGE_KEYS).forEach(className => {
-        const reports = getClassReports(className);
-        reports.forEach(report => {
-          if (report.data && report.data.studentName) {
-            activities.push({
-              className: CLASS_NAMES[className] || className,
-              studentName: report.data.studentName,
-              date: report.date || 'Unknown',
-              timestamp: report.data.savedAt || new Date().toISOString()
-            });
-          }
-        });
-      });
-      
-      activities.sort((a, b) => {
-        if (a.timestamp && b.timestamp) {
-          return new Date(b.timestamp) - new Date(a.timestamp);
-        }
-        return 0;
-      });
-      
-      return activities.slice(0, limit);
-    }
-
     function formatTimeAgo(dateStr) {
       try {
         const date = new Date(dateStr);
@@ -1592,7 +1563,6 @@
         const diffMins = Math.floor(diffMs / 60000);
         const diffHours = Math.floor(diffMs / 3600000);
         const diffDays = Math.floor(diffMs / 86400000);
-        
         if (diffMins < 1) return 'Just now';
         if (diffMins < 60) return `${diffMins}m ago`;
         if (diffHours < 24) return `${diffHours}h ago`;
@@ -1601,6 +1571,74 @@
       } catch (e) {
         return 'Recently';
       }
+    }
+
+    // ==================== RECENT ACTIVITY - COMPLETELY REDESIGNED ====================
+    function getAllRecentActivity(limit = 5) {
+      const activities = [];
+      Object.keys(CLASS_STORAGE_KEYS).forEach(className => {
+        const reports = getClassReports(className);
+        reports.forEach(report => {
+          if (report.data && report.data.studentName) {
+            activities.push({
+              className: CLASS_NAMES[className] || className,
+              classKey: className,
+              studentName: report.data.studentName,
+              studentId: report.data.studentId || '',
+              date: report.date || 'Unknown',
+              timestamp: report.data.savedAt || new Date().toISOString(),
+              reportId: report.id
+            });
+          }
+        });
+      });
+      activities.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+      return activities.slice(0, limit);
+    }
+
+    function updateRecentActivity() {
+      const container = document.getElementById('recentActivityContainer');
+      const activities = getAllRecentActivity(5);
+      
+      if (activities.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-8 text-slate-400">No recent activity. Start generating report cards!</div>
+        `;
+        return;
+      }
+      
+      const colorMap = {
+        'JSS 1': { bg: 'bg-orange-50', text: 'text-orange-600', icon: 'fa-user-friends' },
+        'JSS 2': { bg: 'bg-amber-50', text: 'text-amber-600', icon: 'fa-user-friends' },
+        'JSS 3': { bg: 'bg-red-50', text: 'text-red-600', icon: 'fa-user-friends' },
+        'SS 1': { bg: 'bg-blue-50', text: 'text-blue-600', icon: 'fa-user-graduate' },
+        'SS 2': { bg: 'bg-emerald-50', text: 'text-emerald-600', icon: 'fa-user-graduate' },
+        'SS 3': { bg: 'bg-purple-50', text: 'text-purple-600', icon: 'fa-user-graduate' }
+      };
+      
+      container.innerHTML = activities.map(activity => {
+        const colors = colorMap[activity.className] || { bg: 'bg-gray-50', text: 'text-gray-600', icon: 'fa-user' };
+        const baseUrl = CLASS_URL_MAP[activity.classKey] || '#';
+        const url = baseUrl + '?load=' + encodeURIComponent(activity.reportId) + 
+                    '&student=' + encodeURIComponent(activity.studentName);
+        
+        // Build the display text - ALL IN ONE LINE
+        let displayText = activity.className + ' · ' + activity.studentName;
+        if (activity.studentId) {
+          displayText += ' · 🆔 ' + activity.studentId;
+        }
+        const timeAgo = formatTimeAgo(activity.timestamp);
+        
+        return `
+          <a href="${url}" class="activity-item">
+            <div class="ai-icon ${colors.bg} ${colors.text}"><i class="fas ${colors.icon}"></i></div>
+            <div class="ai-content">
+              <span class="ai-text">${displayText}</span>
+            </div>
+            <span class="ai-time">${timeAgo} <i class="fas fa-arrow-right"></i></span>
+          </a>
+        `;
+      }).join('');
     }
 
     // ==================== UPDATE DASHBOARD ====================
@@ -1635,41 +1673,6 @@
       });
       
       updateRecentActivity();
-    }
-
-    function updateRecentActivity() {
-      const container = document.getElementById('recentActivityContainer');
-      const activities = getAllRecentActivity(5);
-      
-      if (activities.length === 0) {
-        container.innerHTML = `
-          <div class="text-center py-8 text-slate-400">No recent activity. Start generating report cards!</div>
-        `;
-        return;
-      }
-      
-      const colorMap = {
-        'JSS 1': { bg: 'bg-orange-50', text: 'text-orange-600', icon: 'fa-user-friends' },
-        'JSS 2': { bg: 'bg-amber-50', text: 'text-amber-600', icon: 'fa-user-friends' },
-        'JSS 3': { bg: 'bg-red-50', text: 'text-red-600', icon: 'fa-user-friends' },
-        'SS 1': { bg: 'bg-blue-50', text: 'text-blue-600', icon: 'fa-user-graduate' },
-        'SS 2': { bg: 'bg-emerald-50', text: 'text-emerald-600', icon: 'fa-user-graduate' },
-        'SS 3': { bg: 'bg-purple-50', text: 'text-purple-600', icon: 'fa-user-graduate' }
-      };
-      
-      container.innerHTML = activities.map(activity => {
-        const colors = colorMap[activity.className] || { bg: 'bg-gray-50', text: 'text-gray-600', icon: 'fa-user' };
-        return `
-          <div class="activity-item">
-            <div class="ai-icon ${colors.bg} ${colors.text}"><i class="fas ${colors.icon}"></i></div>
-            <div class="ai-content">
-              <p class="ai-title">${activity.className} Report Card Generated</p>
-              <p class="ai-desc">${activity.studentName}</p>
-            </div>
-            <span class="ai-time">${formatTimeAgo(activity.timestamp)}</span>
-          </div>
-        `;
-      }).join('');
     }
 
     // ==================== INITIALIZATION ====================

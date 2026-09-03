@@ -5017,5 +5017,168 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('penSize')?.addEventListener('input', redrawCanvas);
 });
   </script>
+
+  <!-- ============================================================
+       🚀 AUTO-LOAD REPORT FROM URL - SS 3
+       ============================================================ -->
+  <script>
+// ============================================================
+// AUTO-LOAD REPORT FROM URL - SS 3
+// ============================================================
+
+function autoLoadReportFromUrl() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const reportId = urlParams.get('load');
+  const studentName = urlParams.get('student');
+  
+  if (reportId) {
+    // Get the storage key for this class
+    const storageKey = getCurrentStorageKey();
+    const savedReports = JSON.parse(localStorage.getItem(storageKey) || '[]');
+    const report = savedReports.find(r => r.id === reportId);
+    
+    if (report) {
+      // Show loading message if toast function exists
+      if (typeof showToast === 'function') {
+        showToast(`📂 Loading report for ${studentName || 'student'}...`, 'info');
+      } else {
+        console.log(`📂 Loading report for ${studentName || 'student'}...`);
+      }
+      
+      // Wait for page to fully load then load the report
+      setTimeout(function() {
+        // Try to load using the existing loadReport function
+        if (typeof loadReport === 'function') {
+          loadReport(reportId);
+          if (typeof showToast === 'function') {
+            showToast(`✅ Loaded: ${report.data.studentName || 'Report'}`, 'success');
+          } else {
+            console.log(`✅ Loaded: ${report.data.studentName || 'Report'}`);
+          }
+        } else if (typeof loadSavedReport === 'function') {
+          // Some class pages might use a different function name
+          loadSavedReport(reportId);
+          if (typeof showToast === 'function') {
+            showToast(`✅ Loaded: ${report.data.studentName || 'Report'}`, 'success');
+          }
+        } else {
+          // Fallback: try to find the report loading function by name
+          const loadFunctions = ['loadReport', 'loadSavedReport', 'loadReportData', 'loadReportById'];
+          let found = false;
+          for (const fnName of loadFunctions) {
+            if (typeof window[fnName] === 'function') {
+              window[fnName](reportId);
+              found = true;
+              if (typeof showToast === 'function') {
+                showToast(`✅ Loaded report`, 'success');
+              }
+              break;
+            }
+          }
+          if (!found) {
+            console.error('No loadReport function found on this page!');
+            if (typeof showToast === 'function') {
+              showToast('⚠️ Load function not found. Please check the page.', 'error');
+            }
+          }
+        }
+        
+        // Clean URL - remove ?load= parameter
+        if (window.history && window.history.replaceState) {
+          const cleanUrl = window.location.pathname;
+          window.history.replaceState({}, document.title, cleanUrl);
+        }
+      }, 800);
+    } else {
+      if (typeof showToast === 'function') {
+        showToast('❌ Report not found. It may have been deleted.', 'error');
+      } else {
+        console.log('❌ Report not found. It may have been deleted.');
+      }
+    }
+  }
+}
+
+function getCurrentStorageKey() {
+  // Detect which class page we're on from the URL
+  const path = window.location.pathname;
+  
+  // Map URL patterns to localStorage keys
+  const keyMap = [
+    { pattern: 'jss1', key: 'savedReports_JSS1' },
+    { pattern: 'jss2', key: 'savedReports_JSS2' },
+    { pattern: 'jss3', key: 'savedReports_JSS3' },
+    { pattern: 'ss1', key: 'savedReports_SS1' },
+    { pattern: 'ss2', key: 'savedReports_SS2' },
+    { pattern: 'ss3', key: 'savedReports_SS3' }
+  ];
+  
+  // Check if any class constant is already defined in the page
+  if (typeof JSS1_STORAGE_KEY !== 'undefined') return JSS1_STORAGE_KEY;
+  if (typeof JSS2_STORAGE_KEY !== 'undefined') return JSS2_STORAGE_KEY;
+  if (typeof JSS3_STORAGE_KEY !== 'undefined') return JSS3_STORAGE_KEY;
+  if (typeof SS1_STORAGE_KEY !== 'undefined') return SS1_STORAGE_KEY;
+  if (typeof SS2_STORAGE_KEY !== 'undefined') return SS2_STORAGE_KEY;
+  if (typeof SS3_STORAGE_KEY !== 'undefined') return SS3_STORAGE_KEY;
+  
+  // Fallback: detect from URL
+  for (const entry of keyMap) {
+    if (path.includes(entry.pattern)) {
+      return entry.key;
+    }
+  }
+  
+  // Ultimate fallback
+  return 'savedReports_SS3';
+}
+
+// ============================================================
+// 🚀 OVERRIDE EXISTING LOAD FUNCTION TO SUPPORT URL LOADING
+// ============================================================
+
+// If loadReport exists, wrap it to handle the URL parameter
+if (typeof loadReport === 'function') {
+  const originalLoadReport = loadReport;
+  loadReport = function(id) {
+    // Call the original function
+    originalLoadReport(id);
+    
+    // Update student name in the modal if it exists
+    const studentName = document.getElementById('student-name');
+    if (studentName && studentName.value) {
+      const printModalName = document.getElementById('printModalStudentName');
+      if (printModalName) {
+        printModalName.textContent = studentName.value;
+      }
+    }
+  };
+}
+
+// ============================================================
+// 🚀 INITIALIZE AUTO-LOAD
+// ============================================================
+
+// Run when DOM is fully loaded
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', function() {
+    // Wait a bit for the page to initialize
+    setTimeout(autoLoadReportFromUrl, 500);
+  });
+} else {
+  // DOM already loaded
+  setTimeout(autoLoadReportFromUrl, 500);
+}
+
+// Also run after window fully loads (for slower pages)
+window.addEventListener('load', function() {
+  // Only run if not already loaded
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('load')) {
+    setTimeout(autoLoadReportFromUrl, 300);
+  }
+});
+
+console.log('🚀 SS3 Auto-load script initialized for dashboard integration!');
+  </script>
 </body>
 </html>
