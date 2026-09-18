@@ -210,18 +210,41 @@
         .class-badge.class-SSS3 { background: #fee2e2; color: #991b1b; border-color: #fca5a5; }
         .class-badge.class-Graduated { background: #1f2937; color: #f9fafb; border-color: #374151; }
         
+        /* ==================== CLASS DROPDOWN (ALWAYS ON TOP) ==================== */
         .class-dropdown {
-            position: absolute; bottom: 50px; left: 10px; right: 10px;
-            background: white; border-radius: 12px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-            z-index: 100; overflow: hidden; display: none;
-            border: 1px solid #e5e7eb; animation: dropdownFadeIn 0.2s ease-out;
+            position: fixed;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.35), 0 0 0 1px rgba(0,0,0,0.05);
+            z-index: 100000;
+            overflow: hidden;
+            display: none;
+            border: 1px solid #e5e7eb;
+            animation: dropdownFadeIn 0.2s ease-out;
+            min-width: 160px;
+            max-height: 320px;
+            overflow-y: auto;
         }
         .class-dropdown.show { display: block; }
-        @keyframes dropdownFadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes dropdownFadeIn { 
+            from { opacity: 0; transform: translateY(-4px) scale(0.98); } 
+            to { opacity: 1; transform: translateY(0) scale(1); } 
+        }
+        .class-dropdown::-webkit-scrollbar { width: 6px; }
+        .class-dropdown::-webkit-scrollbar-track { background: #f3f4f6; border-radius: 10px; }
+        .class-dropdown::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 10px; }
+        .class-dropdown::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+
         .class-dropdown-item {
-            padding: 10px 16px; cursor: pointer; font-weight: 600; font-size: 14px;
-            transition: all 0.15s; display: flex; align-items: center; justify-content: space-between;
+            padding: 10px 16px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.15s;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
         }
         .class-dropdown-item:hover { background: #fef3c7; padding-left: 20px; }
         .class-dropdown-item.active { background: #fef3c7; color: #92400e; }
@@ -1172,7 +1195,6 @@
         const END_YEAR = 3000;
         const MAX_UNDO_HISTORY = 20;
         
-        // ⚡ CLASS ORDERING — Graduated first, then descending
         const CLASS_ORDER = ['Graduated', 'SSS 3', 'SSS 2', 'SSS 1', 'JSS 3', 'JSS 2', 'JSS 1'];
         
         let students = [];
@@ -2461,6 +2483,18 @@
                 closeAllClassDropdowns();
             }
         });
+        
+        // ⚡ Close dropdown on window resize or scroll for correct positioning
+        window.addEventListener('resize', function() {
+            if (activeClassDropdown) {
+                closeAllClassDropdowns();
+            }
+        });
+        document.getElementById('updateModalBody').addEventListener('scroll', function() {
+            if (activeClassDropdown) {
+                closeAllClassDropdowns();
+            }
+        }, { passive: true });
 
         function showUpdateModal() {
             if (students.length === 0) {
@@ -2656,17 +2690,21 @@
             selectAll.indeterminate = selectedFiltered > 0 && selectedFiltered < totalFiltered;
         }
 
+        // ⚡ ROCK SOLID: Dropdown appended to BODY so nothing can clip it
         function toggleClassDropdown(id, element) {
             if (activeClassDropdown) {
                 activeClassDropdown.remove();
                 activeClassDropdown = null;
             }
+            
             const student = students.find(s => s.id === id);
             if (!student) return;
+            
             const classOptions = ['JSS 1', 'JSS 2', 'JSS 3', 'SSS 1', 'SSS 2', 'SSS 3', 'Graduated'];
             const dropdown = document.createElement('div');
             dropdown.className = 'class-dropdown show';
             dropdown.id = 'activeClassDropdown';
+            
             let dropdownHtml = '';
             classOptions.forEach(cls => {
                 const isActive = cls === student.class;
@@ -2678,11 +2716,44 @@
                         <i class="fas fa-check check-icon"></i>
                     </div>`;
             });
+            
             dropdown.innerHTML = dropdownHtml;
-            const card = element.closest('.student-update-card');
-            card.style.position = 'relative';
-            card.appendChild(dropdown);
+            
+            // Append to body so it's above everything
+            document.body.appendChild(dropdown);
+            
+            // Position it using screen coordinates
+            const badgeRect = element.getBoundingClientRect();
+            const dropdownRect = dropdown.getBoundingClientRect();
+            const dropdownWidth = dropdownRect.width || 200;
+            const dropdownHeight = dropdownRect.height || 280;
+            
+            let left = badgeRect.left;
+            let top = badgeRect.bottom + 6;
+            
+            const viewportWidth = window.innerWidth;
+            const viewportHeight = window.innerHeight;
+            
+            if (left + dropdownWidth > viewportWidth - 12) {
+                left = viewportWidth - dropdownWidth - 12;
+            }
+            if (left < 12) left = 12;
+            
+            if (top + dropdownHeight > viewportHeight - 12) {
+                top = badgeRect.top - dropdownHeight - 6;
+                if (top < 12) top = Math.max(12, viewportHeight - dropdownHeight - 12);
+            }
+            
+            dropdown.style.position = 'fixed';
+            dropdown.style.left = left + 'px';
+            dropdown.style.top = top + 'px';
+            dropdown.style.right = 'auto';
+            dropdown.style.bottom = 'auto';
+            dropdown.style.margin = '0';
+            
             activeClassDropdown = dropdown;
+            
+            if (window.event) window.event.stopPropagation();
         }
 
         function closeAllClassDropdowns() {
