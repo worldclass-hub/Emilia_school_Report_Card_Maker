@@ -4,11 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
     <title>EMIFORPHS Student ID Generator - Ultimate Edition</title>
-
-    <!-- Favicon - Emilia Logo -->
     <link rel="icon" type="image/x-icon" href="https://ncctazjcffmpuniwctkz.supabase.co/storage/v1/object/public/user-uploads/emilia_logo_circle.png">
-
-    <!-- CSRF Token for Django -->
     <meta name="csrf-token" content="{{ csrf_token }}">
     
     <script src="https://cdn.tailwindcss.com"></script>
@@ -17,482 +13,459 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
-    <!-- ==================== ROCK SOLID SCROLL SYSTEM - NO RUBBER BAND EVER ==================== -->
     <style>
-        /* 1. FIXED POSITION BODY - Completely prevents any body movement */
         html, body {
-            width: 100%;
-            height: 100%;
-            position: fixed;
-            overflow: hidden;
+            width: 100%; height: 100%; position: fixed; overflow: hidden;
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            margin: 0;
-            padding: 0;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            overscroll-behavior: none;
-            touch-action: pan-y pinch-zoom;
+            margin: 0; padding: 0; top: 0; left: 0; right: 0; bottom: 0;
+            overscroll-behavior: none; touch-action: pan-y pinch-zoom;
         }
-        
-        /* 2. SINGLE SCROLL CONTAINER - Only this can scroll internally */
         .scroll-container {
-            width: 100%;
-            height: 100%;
-            overflow-y: auto;
-            overflow-x: hidden;
+            width: 100%; height: 100%; overflow-y: auto; overflow-x: hidden;
             position: relative;
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 50%, #0f172a 100%);
-            -webkit-overflow-scrolling: touch;
-            overscroll-behavior: none;
-            touch-action: pan-y;
-            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch; overscroll-behavior: none;
+            touch-action: pan-y; scroll-behavior: smooth;
         }
-        
-        /* 3. Custom scrollbar styling */
-        .scroll-container::-webkit-scrollbar {
-            width: 10px;
-        }
-        
-        .scroll-container::-webkit-scrollbar-track {
-            background: linear-gradient(180deg, #f8fafc, #0f172a);
-            border-radius: 10px;
-        }
-        
+        .scroll-container::-webkit-scrollbar { width: 10px; }
+        .scroll-container::-webkit-scrollbar-track { background: linear-gradient(180deg, #f8fafc, #0f172a); border-radius: 10px; }
         .scroll-container::-webkit-scrollbar-thumb {
             background: linear-gradient(180deg, #3b82f6, #1e40af);
-            border-radius: 10px;
-            border: 2px solid #f8fafc;
-            transition: all 0.3s ease;
+            border-radius: 10px; border: 2px solid #f8fafc; transition: all 0.3s ease;
         }
+        .scroll-container::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, #2563eb, #1e3a8a); }
         
-        .scroll-container::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(180deg, #2563eb, #1e3a8a);
-        }
-        
-        /* 4. MAIN WRAPPER */
         .main-wrapper {
-            width: 100%;
-            min-height: 100%;
+            width: 100%; min-height: 100%;
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 50%, #0f172a 100%);
-            display: flex;
-            flex-direction: column;
+            display: flex; flex-direction: column;
         }
-        
-        /* 5. Content wrapper with spacing */
-        .content-wrapper {
-            flex: 1 0 auto;
-            width: 100%;
-            position: relative;
-            padding-top: 10px;
-            padding-bottom: 10px;
-        }
-        
-        /* 6. FULL WIDTH FOOTER - DARK BLEND */
-        .page-footer {
-            flex-shrink: 0;
-            width: 100%;
-            background: #0f172a;
-            margin-top: auto;
-        }
-        
+        .content-wrapper { flex: 1 0 auto; width: 100%; position: relative; padding-top: 10px; padding-bottom: 10px; }
+        .page-footer { flex-shrink: 0; width: 100%; background: #0f172a; margin-top: auto; }
         .full-width-footer {
-            width: 100vw;
-            position: relative;
-            left: 50%;
-            right: 50%;
-            margin-left: -50vw;
-            margin-right: -50vw;
-            background: #0f172a;
+            width: 100vw; position: relative; left: 50%; right: 50%;
+            margin-left: -50vw; margin-right: -50vw; background: #0f172a;
         }
-        
-        /* Scroll progress indicator - matches dark theme */
         .scroll-progress {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
+            position: fixed; top: 0; left: 0; width: 100%; height: 3px;
             background: linear-gradient(to right, #3b82f6, #8b5cf6, #10b981);
-            transform-origin: 0%;
-            z-index: 9999;
-            opacity: 0;
-            transition: opacity 0.3s ease;
+            transform-origin: 0%; z-index: 9999; opacity: 0; transition: opacity 0.3s ease;
         }
+        .scroll-progress.visible { opacity: 1; }
         
-        .scroll-progress.visible {
-            opacity: 1;
-        }
+        .smooth-scroll { scroll-behavior: smooth; }
+        .scroll-fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
+        .scroll-fade-in.visible { opacity: 1; transform: translateY(0); }
+        .table-scroll-container { max-height: 400px; overflow-y: auto; scroll-behavior: smooth; }
+        .page-transition { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .hover-scroll-effect { transition: transform 0.2s ease-out; }
+        .hover-scroll-effect:hover { transform: translateY(-2px); }
         
-        /* ==================== ORIGINAL STYLES BELOW (unchanged) ==================== */
+        .page-container { flex: 1 0 auto; display: flex; flex-direction: column; width: 100%; max-width: 100%; position: relative; }
+        .page-header { width: 100%; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); z-index: 40; position: relative; }
+        .no-overscroll { overscroll-behavior: none; }
+        .content-container { max-width: 7xl; margin: 0 auto; padding: 20px; }
+        @media (max-width: 768px) { .content-container { padding: 10px; } }
         
-        /* SMOOTH SCROLLING BASE - KEPT FOR COMPATIBILITY */
-        .smooth-scroll {
-            scroll-behavior: smooth;
-        }
-        
-        /* OPTIMIZED SCROLL CONTAINERS */
-        .scroll-container-inner {
-            overflow-y: auto;
-            scrollbar-width: thin;
-            scrollbar-color: #3b82f6 #f1f5f9;
-        }
-        
-        .scroll-container-inner::-webkit-scrollbar {
-            width: 8px;
-        }
-        
-        .scroll-container-inner::-webkit-scrollbar-track {
-            background: #f1f5f9;
-            border-radius: 4px;
-        }
-        
-        .scroll-container-inner::-webkit-scrollbar-thumb {
-            background: linear-gradient(to bottom, #3b82f6, #1e40af);
-            border-radius: 4px;
-        }
-        
-        .scroll-container-inner::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(to bottom, #2563eb, #1e3a8a);
-        }
-        
-        /* SMOOTH SCROLL ANIMATIONS */
-        .scroll-fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.5s ease, transform 0.5s ease;
-        }
-        
-        .scroll-fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        /* ENHANCED TABLE SCROLLING */
-        .table-scroll-container {
-            max-height: 400px;
-            overflow-y: auto;
-            scroll-behavior: smooth;
-        }
-        
-        /* SMOOTH PAGE TRANSITIONS */
-        .page-transition {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        /* HOVER SCROLL EFFECTS */
-        .hover-scroll-effect {
-            transition: transform 0.2s ease-out;
-        }
-        
-        .hover-scroll-effect:hover {
-            transform: translateY(-2px);
-        }
-        
-        /* ==================== ORIGINAL LAYOUT STYLES ==================== */
-        
-        .page-container {
-            flex: 1 0 auto;
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            max-width: 100%;
-            position: relative;
-        }
-        
-        /* HEADER - NON-STICKY (FREE SCROLLING) */
-        .page-header {
-            width: 100%;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            z-index: 40;
-            position: relative;
-        }
-        
-        .no-overscroll {
-            overscroll-behavior: none;
-        }
-        
-        .content-container {
-            max-width: 7xl;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        
-        @media (max-width: 768px) {
-            .content-container {
-                padding: 10px;
-            }
-        }
-        
-        /* ==================== ORIGINAL STYLES ==================== */
-        .logout-glow {
-            animation: logout-glow 3s infinite alternate;
-        }
-        
+        .logout-glow { animation: logout-glow 3s infinite alternate; }
         @keyframes logout-glow {
-            from {
-                box-shadow: 0 0 10px rgba(239, 68, 68, 0.5),
-                          0 0 20px rgba(239, 68, 68, 0.3),
-                          0 0 30px rgba(239, 68, 68, 0.1);
-            }
-            to {
-                box-shadow: 0 0 20px rgba(239, 68, 68, 0.8),
-                          0 0 30px rgba(239, 68, 68, 0.6),
-                          0 0 40px rgba(239, 68, 68, 0.4);
-            }
+            from { box-shadow: 0 0 10px rgba(239, 68, 68, 0.5), 0 0 20px rgba(239, 68, 68, 0.3), 0 0 30px rgba(239, 68, 68, 0.1); }
+            to { box-shadow: 0 0 20px rgba(239, 68, 68, 0.8), 0 0 30px rgba(239, 68, 68, 0.6), 0 0 40px rgba(239, 68, 68, 0.4); }
         }
-        
         .security-scan {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
             animation: security-scan 3s linear infinite;
         }
-        
-        @keyframes security-scan {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-        
-        .session-timer {
-            font-family: 'Courier New', monospace;
-            font-weight: bold;
-            letter-spacing: 2px;
-        }
-        
-        .confetti {
-            position: fixed;
-            width: 15px;
-            height: 15px;
-            background-color: #f00;
-            top: 0;
-            opacity: 0;
-            z-index: 9999;
-        }
-        
+        @keyframes security-scan { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+        .session-timer { font-family: 'Courier New', monospace; font-weight: bold; letter-spacing: 2px; }
+        .confetti { position: fixed; width: 15px; height: 15px; background-color: #f00; top: 0; opacity: 0; z-index: 9999; }
         @keyframes confetti-fall {
-            0% {
-                transform: translateY(-100px) rotate(0deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(100vh) rotate(720deg);
-                opacity: 0;
-            }
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
         }
-        
         .enhanced-notification {
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
-        
-        /* Original styles from Code B */
-        .gradient-bg {
-            background: linear-gradient(90deg, #1e40af 0%, #3b82f6 100%);
-        }
-        
-        .premium-gradient {
-            background: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 50%, #10b981 100%);
-        }
+        .premium-gradient { background: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 50%, #10b981 100%); }
         
         .id-card {
             background: linear-gradient(145deg, #ffffff, #f0f4f8);
-            border-radius: 20px;
-            position: relative;
-            overflow: hidden;
+            border-radius: 20px; position: relative; overflow: hidden;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        
-        .id-card:hover {
-            transform: translateY(-8px) scale(1.01);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-        }
-        
+        .id-card:hover { transform: translateY(-8px) scale(1.01); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); }
         .id-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 8px;
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 8px;
             background: linear-gradient(90deg, #1e40af 0%, #3b82f6 100%);
         }
-        
         .pattern-bg {
             background-image: 
                 radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.08) 0%, transparent 25%),
                 radial-gradient(circle at 90% 80%, rgba(30, 64, 175, 0.08) 0%, transparent 25%);
         }
-        
         .glass-effect {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
-        
-        .floating-download-btn {
-            animation: float 6s ease-in-out infinite, pulse-glow 2s ease-in-out infinite;
-            z-index: 1000;
-        }
-        
-        /* ----- SUPER POWERFUL FLOATING HOME BUTTON (LEFT SIDE, SAME LEVEL) ----- */
+        .floating-download-btn { animation: float 6s ease-in-out infinite, pulse-glow 2s ease-in-out infinite; z-index: 1000; }
         .floating-home-btn {
-            position: fixed;
-            bottom: 32px;      /* EXACTLY same as download button (bottom-8 = 32px) */
-            left: 32px;        /* CHANGED to left side */
-            width: 64px;       /* w-16 = 64px, same as download button */
-            height: 64px;      /* h-16 = 64px, same as download button */
-            border-radius: 50%;
-            background: linear-gradient(145deg, #1e293b, #0f172a);
+            position: fixed; bottom: 32px; left: 32px; width: 64px; height: 64px;
+            border-radius: 50%; background: linear-gradient(145deg, #1e293b, #0f172a);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 0 2px rgba(255,255,255,0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 26px;
-            cursor: pointer;
-            z-index: 1001;
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 26px; cursor: pointer; z-index: 1001;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 1px solid rgba(255,255,255,0.15);
-            backdrop-filter: blur(4px);
-            animation: float-home 5s ease-in-out infinite;
-            text-decoration: none;
+            border: 1px solid rgba(255,255,255,0.15); backdrop-filter: blur(4px);
+            animation: float-home 5s ease-in-out infinite; text-decoration: none;
         }
         .floating-home-btn:hover {
             transform: scale(1.12) rotate(6deg);
             box-shadow: 0 0 30px rgba(59, 130, 246, 0.7), 0 0 60px rgba(59, 130, 246, 0.3);
-            border-color: #3b82f6;
-            color: #93c5fd;
+            border-color: #3b82f6; color: #93c5fd;
         }
-        .floating-home-btn i {
-            filter: drop-shadow(0 0 6px rgba(255,255,255,0.3));
-        }
+        .floating-home-btn i { filter: drop-shadow(0 0 6px rgba(255,255,255,0.3)); }
         @keyframes float-home {
             0%, 100% { transform: translateY(0px) scale(1); }
             50% { transform: translateY(-6px) scale(1.02); }
         }
-        /* small screen adjustment - keep same size as download btn */
         @media (max-width: 640px) {
-            .floating-home-btn {
-                bottom: 32px;
-                left: 20px;
-                width: 56px;
-                height: 56px;
-                font-size: 22px;
-            }
+            .floating-home-btn { bottom: 32px; left: 20px; width: 56px; height: 56px; font-size: 22px; }
         }
-        /* ------------------------------------------------- */
-        
-        .download-modal {
-            animation: slideUp 0.3s ease-out;
-        }
-        
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        /* Selection color */
-        ::selection {
-            background-color: rgba(59, 130, 246, 0.3);
-            color: #1e3a8a;
-        }
-        
-        /* Loading animation */
-        .loading-wave {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 8px;
-        }
-        
+        .download-modal { animation: slideUp 0.3s ease-out; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        ::selection { background-color: rgba(59, 130, 246, 0.3); color: #1e3a8a; }
+        .loading-wave { display: flex; justify-content: center; align-items: center; gap: 8px; }
         .loading-wave div {
-            width: 4px;
-            height: 20px;
+            width: 4px; height: 20px;
             background: linear-gradient(to top, #3b82f6, #8b5cf6);
-            animation: wave 1.2s ease-in-out infinite;
-            border-radius: 10px;
+            animation: wave 1.2s ease-in-out infinite; border-radius: 10px;
         }
-        
         .loading-wave div:nth-child(2) { animation-delay: 0.1s; }
         .loading-wave div:nth-child(3) { animation-delay: 0.2s; }
         .loading-wave div:nth-child(4) { animation-delay: 0.3s; }
-        
-        @keyframes wave {
-            0%, 100% { transform: scaleY(0.5); }
-            50% { transform: scaleY(1.5); }
-        }
-        
-        /* Smooth focus outline */
-        *:focus {
-            outline: 2px solid #3b82f6;
-            outline-offset: 2px;
-            border-radius: 4px;
-        }
-        
-        /* Reduce motion for users who prefer it */
+        @keyframes wave { 0%, 100% { transform: scaleY(0.5); } 50% { transform: scaleY(1.5); } }
+        *:focus { outline: 2px solid #3b82f6; outline-offset: 2px; border-radius: 4px; }
         @media (prefers-reduced-motion: reduce) {
-            .smooth-scroll,
-            .scroll-fade-in,
-            .page-transition,
-            .hover-scroll-effect,
-            .id-card,
-            .floating-download-btn,
-            .download-modal,
-            ::-webkit-scrollbar-thumb,
-            .loading-wave div {
-                transition: none !important;
-                animation: none !important;
+            .smooth-scroll, .scroll-fade-in, .page-transition, .hover-scroll-effect,
+            .id-card, .floating-download-btn, .download-modal, ::-webkit-scrollbar-thumb, .loading-wave div {
+                transition: none !important; animation: none !important;
             }
-            
-            html {
-                scroll-behavior: auto;
-            }
+            html { scroll-behavior: auto; }
         }
-        
-        /* TABLE HEADER - STILL STICKY FOR SCROLLING WITHIN TABLE ONLY */
-        .table-scroll-container thead th {
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }
-        
-        /* Mobile fit for main content */
+        .table-scroll-container thead th { position: sticky; top: 0; z-index: 10; }
         @media (max-width: 768px) {
-            .id-card,
-            .bg-white.rounded-2xl {
-                margin-left: 4px !important;
-                margin-right: 4px !important;
-            }
+            .id-card, .bg-white.rounded-2xl { margin-left: 4px !important; margin-right: 4px !important; }
         }
+        .footer-dark-blend { background: #0f172a; border-top: 1px solid rgba(255, 255, 255, 0.05); }
+
+        /* ==================== STUDENT UPDATE MODAL ==================== */
+        .student-update-card {
+            background: white; border: 2px solid #e5e7eb; border-radius: 16px;
+            padding: 16px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative; cursor: pointer;
+        }
+        .student-update-card:hover {
+            border-color: #f59e0b;
+            box-shadow: 0 8px 25px -5px rgba(245, 158, 11, 0.3);
+            transform: translateY(-2px);
+        }
+        .student-update-card.selected {
+            border-color: #f59e0b;
+            background: linear-gradient(145deg, #fffbeb, #fef3c7);
+            box-shadow: 0 8px 25px -5px rgba(245, 158, 11, 0.4);
+        }
+        .student-update-card .student-checkbox {
+            position: absolute; top: 12px; right: 12px;
+            width: 22px; height: 22px; cursor: pointer; accent-color: #f59e0b;
+        }
+        .student-update-card .student-avatar {
+            width: 48px; height: 48px; border-radius: 12px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-weight: bold; font-size: 18px; margin-bottom: 12px;
+        }
+        .student-update-card .student-name {
+            font-weight: 700; color: #1f2937; font-size: 16px;
+            margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .student-update-card .student-id {
+            font-family: 'Courier New', monospace; font-size: 12px; color: #6b7280;
+            margin-bottom: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .student-update-card .class-badge {
+            display: inline-block; padding: 4px 12px; border-radius: 20px;
+            font-size: 13px; font-weight: 700; cursor: pointer;
+            transition: all 0.2s; border: 2px solid transparent;
+        }
+        .student-update-card .class-badge:hover { transform: scale(1.05); }
         
-        /* Dark bottom boundary - blends with footer */
-        .scroll-bottom-blend {
-            background: linear-gradient(to bottom, transparent, #0f172a 100%);
-            height: 60px;
-            width: 100%;
-            position: sticky;
-            bottom: 0;
-            pointer-events: none;
-            z-index: 5;
-        }
+        .class-badge.class-JSS1 { background: #dbeafe; color: #1e40af; border-color: #93c5fd; }
+        .class-badge.class-JSS2 { background: #d1fae5; color: #065f46; border-color: #6ee7b7; }
+        .class-badge.class-JSS3 { background: #fef3c7; color: #92400e; border-color: #fcd34d; }
+        .class-badge.class-SSS1 { background: #ede9fe; color: #5b21b6; border-color: #c4b5fd; }
+        .class-badge.class-SSS2 { background: #fce7f3; color: #9d174d; border-color: #f9a8d4; }
+        .class-badge.class-SSS3 { background: #fee2e2; color: #991b1b; border-color: #fca5a5; }
+        .class-badge.class-Graduated { background: #1f2937; color: #f9fafb; border-color: #374151; }
         
-        /* Footer dark blend */
-        .footer-dark-blend {
-            background: #0f172a;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        .class-dropdown {
+            position: absolute; bottom: 50px; left: 10px; right: 10px;
+            background: white; border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            z-index: 100; overflow: hidden; display: none;
+            border: 1px solid #e5e7eb; animation: dropdownFadeIn 0.2s ease-out;
         }
+        .class-dropdown.show { display: block; }
+        @keyframes dropdownFadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        .class-dropdown-item {
+            padding: 10px 16px; cursor: pointer; font-weight: 600; font-size: 14px;
+            transition: all 0.15s; display: flex; align-items: center; justify-content: space-between;
+        }
+        .class-dropdown-item:hover { background: #fef3c7; padding-left: 20px; }
+        .class-dropdown-item.active { background: #fef3c7; color: #92400e; }
+        .class-dropdown-item .check-icon { opacity: 0; color: #f59e0b; }
+        .class-dropdown-item.active .check-icon { opacity: 1; }
+
+        /* ==================== AUTO-SAVE INDICATOR ==================== */
+        .autosave-indicator {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 4px 12px; border-radius: 20px;
+            font-size: 12px; font-weight: 600;
+            background: rgba(255, 255, 255, 0.2); color: white;
+            transition: all 0.3s ease;
+        }
+        .autosave-indicator.saving { background: rgba(251, 191, 36, 0.95); color: #1f2937; }
+        .autosave-indicator.saved { background: rgba(16, 185, 129, 0.95); color: white; }
+        .autosave-indicator .pulse-dot {
+            width: 8px; height: 8px; border-radius: 50%;
+            background: #10b981; animation: pulse-dot 1.5s ease-in-out infinite;
+        }
+        .autosave-indicator.saving .pulse-dot { background: #1f2937; }
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+
+        /* ==================== CLASS FILTER BUTTONS ==================== */
+        .class-filter-btn {
+            padding: 8px 16px; border-radius: 12px; font-weight: 600; font-size: 13px;
+            cursor: pointer; transition: all 0.2s; border: 2px solid transparent; white-space: nowrap;
+            position: relative;
+        }
+        .class-filter-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        .class-filter-btn.active {
+            border-color: #f59e0b;
+            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.3);
+            transform: translateY(-2px);
+        }
+        .class-filter-btn.filter-all { background: linear-gradient(135deg, #6b7280, #4b5563); color: white; }
+        .class-filter-btn.filter-all.active { background: linear-gradient(135deg, #f59e0b, #d97706); }
+        .class-filter-btn.filter-JSS1 { background: #dbeafe; color: #1e40af; }
+        .class-filter-btn.filter-JSS2 { background: #d1fae5; color: #065f46; }
+        .class-filter-btn.filter-JSS3 { background: #fef3c7; color: #92400e; }
+        .class-filter-btn.filter-SSS1 { background: #ede9fe; color: #5b21b6; }
+        .class-filter-btn.filter-SSS2 { background: #fce7f3; color: #9d174d; }
+        .class-filter-btn.filter-SSS3 { background: #fee2e2; color: #991b1b; }
+        .class-filter-btn.filter-Graduated { background: #1f2937; color: #f9fafb; }
+        .class-filter-btn .filter-count {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.35);
+            padding: 1px 7px; border-radius: 8px;
+            font-size: 11px; font-weight: 800; margin-left: 4px;
+        }
+        .class-filter-btn.filter-all .filter-count { background: rgba(255, 255, 255, 0.3); }
+        .class-filter-btn .filter-count.zero { opacity: 0.4; }
+
+        /* ==================== UNDO/DELETE BUTTONS ==================== */
+        .undo-btn {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white; padding: 8px 16px; border-radius: 12px;
+            font-weight: 600; font-size: 13px; display: inline-flex;
+            align-items: center; gap: 6px; transition: all 0.2s;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+            border: none; cursor: pointer;
+        }
+        .undo-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5); }
+        .undo-btn:disabled { opacity: 0.4; cursor: not-allowed; box-shadow: none; }
+        .undo-btn .undo-count {
+            background: rgba(255, 255, 255, 0.25);
+            padding: 2px 8px; border-radius: 8px; font-size: 11px; font-weight: 700;
+        }
+        .delete-btn {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white; padding: 8px 16px; border-radius: 12px;
+            font-weight: 600; font-size: 13px; display: inline-flex;
+            align-items: center; gap: 6px; transition: all 0.2s;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+            border: none; cursor: pointer;
+        }
+        .delete-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(239, 68, 68, 0.5); }
+        .delete-btn:disabled { opacity: 0.4; cursor: not-allowed; box-shadow: none; }
+        .delete-btn .delete-count {
+            background: rgba(255, 255, 255, 0.25);
+            padding: 2px 8px; border-radius: 8px; font-size: 11px; font-weight: 700;
+        }
+
+        /* ==================== DELETE CONFIRMATION MODAL ==================== */
+        .delete-confirm-modal {
+            position: fixed; inset: 0; background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(8px); display: none;
+            align-items: center; justify-content: center;
+            z-index: 10001; padding: 16px;
+        }
+        .delete-confirm-modal.show { display: flex; }
+        .delete-confirm-content {
+            background: white; border-radius: 24px;
+            max-width: 460px; width: 100%; overflow: hidden;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+            animation: deleteModalIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        @keyframes deleteModalIn {
+            from { opacity: 0; transform: scale(0.9) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .delete-confirm-header {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            padding: 28px 24px; text-align: center;
+            position: relative; overflow: hidden;
+        }
+        .delete-confirm-header::before {
+            content: ''; position: absolute; top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse-glow-delete 3s ease-in-out infinite;
+        }
+        @keyframes pulse-glow-delete {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.1); }
+        }
+        .delete-confirm-icon {
+            width: 72px; height: 72px; border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 16px; font-size: 32px; color: white;
+            position: relative; z-index: 1; animation: shake-delete 0.5s ease-in-out;
+        }
+        @keyframes shake-delete {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-10deg); }
+            75% { transform: rotate(10deg); }
+        }
+        .delete-confirm-header h3 {
+            color: white; font-size: 22px; font-weight: 800;
+            margin-bottom: 6px; position: relative; z-index: 1;
+        }
+        .delete-confirm-header p {
+            color: rgba(255, 255, 255, 0.85); font-size: 14px;
+            position: relative; z-index: 1;
+        }
+        .delete-confirm-body { padding: 24px; }
+        .delete-preview-list {
+            max-height: 180px; overflow-y: auto;
+            background: #fef2f2; border: 2px solid #fecaca;
+            border-radius: 14px; padding: 12px; margin-bottom: 20px;
+        }
+        .delete-preview-list::-webkit-scrollbar { width: 6px; }
+        .delete-preview-list::-webkit-scrollbar-track { background: #fee2e2; border-radius: 10px; }
+        .delete-preview-list::-webkit-scrollbar-thumb { background: #ef4444; border-radius: 10px; }
+        .delete-preview-item {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 8px 10px; border-radius: 10px;
+            background: white; margin-bottom: 6px; border: 1px solid #fecaca;
+        }
+        .delete-preview-item:last-child { margin-bottom: 0; }
+        .delete-preview-item .student-info { display: flex; align-items: center; gap: 10px; min-width: 0; flex: 1; }
+        .delete-preview-item .mini-avatar {
+            width: 32px; height: 32px; border-radius: 8px;
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-weight: bold; font-size: 12px; flex-shrink: 0;
+        }
+        .delete-preview-item .student-text { min-width: 0; flex: 1; }
+        .delete-preview-item .student-text .name {
+            font-weight: 700; color: #1f2937; font-size: 13px;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .delete-preview-item .student-text .meta {
+            font-size: 11px; color: #6b7280;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .delete-warning-box {
+            background: #fffbeb; border: 1px solid #fcd34d;
+            border-radius: 12px; padding: 12px;
+            display: flex; gap: 10px; margin-bottom: 20px;
+        }
+        .delete-warning-box i { color: #d97706; flex-shrink: 0; margin-top: 2px; }
+        .delete-warning-box p { color: #92400e; font-size: 12px; line-height: 1.5; }
+        .delete-confirm-actions { display: flex; gap: 10px; }
+        .delete-confirm-actions button {
+            flex: 1; padding: 12px; border-radius: 12px;
+            font-weight: 700; font-size: 14px; cursor: pointer;
+            transition: all 0.2s; border: none;
+        }
+        .delete-cancel-btn { background: #f3f4f6; color: #374151; }
+        .delete-cancel-btn:hover { background: #e5e7eb; }
+        .delete-confirm-btn {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white; box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        }
+        .delete-confirm-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(239, 68, 68, 0.5);
+        }
+
+        /* ==================== UNDO TOAST ==================== */
+        .undo-toast {
+            position: fixed; bottom: 100px; left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: linear-gradient(135deg, #1f2937, #111827);
+            color: white; padding: 14px 20px; border-radius: 16px;
+            display: flex; align-items: center; gap: 12px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            z-index: 10000; opacity: 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(139, 92, 246, 0.3); max-width: 90vw;
+        }
+        .undo-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+        .undo-toast .undo-toast-icon {
+            width: 36px; height: 36px; border-radius: 10px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 16px; flex-shrink: 0;
+        }
+        .undo-toast .undo-toast-content { flex: 1; }
+        .undo-toast .undo-toast-title { font-weight: 700; font-size: 14px; margin-bottom: 2px; }
+        .undo-toast .undo-toast-desc { font-size: 12px; color: #9ca3af; }
+        .undo-toast .undo-toast-action {
+            background: white; color: #1f2937; padding: 8px 16px;
+            border-radius: 10px; font-weight: 700; font-size: 13px;
+            cursor: pointer; transition: all 0.2s; border: none; flex-shrink: 0;
+        }
+        .undo-toast .undo-toast-action:hover { background: #f3f4f6; transform: scale(1.05); }
+
+        @media (max-width: 768px) {
+            #updateModal .max-w-5xl { max-height: 95vh; margin: 8px; }
+            .student-update-card { padding: 12px; }
+            .student-update-card .student-avatar { width: 40px; height: 40px; font-size: 15px; }
+            .student-update-card .student-name { font-size: 14px; }
+            #updateModal .bg-gray-50.px-6.py-4 { padding: 12px; }
+            #updateModal .flex-wrap { flex-direction: column; align-items: stretch; }
+            #updateModal .relative input { width: 100%; }
+            .class-filter-btn { padding: 6px 12px; font-size: 12px; }
+            .undo-toast { bottom: 80px; padding: 12px 16px; flex-wrap: wrap; }
+            .undo-toast .undo-toast-action { width: 100%; text-align: center; margin-top: 8px; }
+        }
+
+        .class-filters-scroll {
+            overflow-x: auto; scrollbar-width: thin;
+            scrollbar-color: #f59e0b #f3f4f6;
+            -webkit-overflow-scrolling: touch;
+        }
+        .class-filters-scroll::-webkit-scrollbar { height: 6px; }
+        .class-filters-scroll::-webkit-scrollbar-track { background: #f3f4f6; border-radius: 10px; }
+        .class-filters-scroll::-webkit-scrollbar-thumb { background: linear-gradient(to right, #f59e0b, #d97706); border-radius: 10px; }
     </style>
     
     <script>
@@ -500,20 +473,11 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#1e40af',
-                        secondary: '#1e3a8a',
-                        accent: '#3b82f6',
-                        success: '#10b981',
-                        warning: '#f59e0b',
-                        danger: '#ef4444',
-                        dark: '#1f2937',
-                        light: '#f8fafc',
-                        premium: '#8b5cf6',
-                        navy: '#0f172a'
+                        primary: '#1e40af', secondary: '#1e3a8a', accent: '#3b82f6',
+                        success: '#10b981', warning: '#f59e0b', danger: '#ef4444',
+                        dark: '#1f2937', light: '#f8fafc', premium: '#8b5cf6', navy: '#0f172a'
                     },
-                    fontFamily: {
-                        'poppins': ['Poppins', 'sans-serif']
-                    },
+                    fontFamily: { 'poppins': ['Poppins', 'sans-serif'] },
                     boxShadow: {
                         'card': '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
                         'hover': '0 20px 40px -10px rgba(0, 0, 0, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.06)',
@@ -529,19 +493,10 @@
                         'security-scan': 'security-scan 3s linear infinite'
                     },
                     keyframes: {
-                        'float': {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-20px)' }
-                        },
+                        'float': { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-20px)' } },
                         'pulse-glow': {
-                            '0%, 100%': { 
-                                boxShadow: '0 0 20px rgba(139, 92, 246, 0.5)',
-                                transform: 'scale(1)'
-                            },
-                            '50%': { 
-                                boxShadow: '0 0 40px rgba(139, 92, 246, 0.8)',
-                                transform: 'scale(1.05)'
-                            }
+                            '0%, 100%': { boxShadow: '0 0 20px rgba(139, 92, 246, 0.5)', transform: 'scale(1)' },
+                            '50%': { boxShadow: '0 0 40px rgba(139, 92, 246, 0.8)', transform: 'scale(1.05)' }
                         }
                     }
                 }
@@ -550,19 +505,13 @@
     </script>
 </head>
 <body class="pattern-bg no-overscroll">
-    <!-- SINGLE SCROLL CONTAINER - Rock solid, no rubber band -->
     <div class="scroll-container" id="scrollContainer">
         <div class="main-wrapper">
             <div class="content-wrapper">
-                <!-- Scroll Progress Indicator -->
                 <div id="scrollProgress" class="scroll-progress"></div>
                 
-                <!-- Main Page Container -->
                 <div class="page-container" id="pageContainer">
                     
-                    <!-- ================ ULTIMATE LOGOUT SYSTEM ================ -->
-                    
-                    <!-- Floating Download Button (original - right side) -->
                     <div id="floatingDownloadBtn" class="floating-download-btn fixed bottom-8 right-8 w-16 h-16 rounded-full premium-gradient flex items-center justify-center shadow-float cursor-pointer z-50 hover:shadow-glow transition-all duration-300">
                         <i class="fas fa-file-export text-white text-2xl"></i>
                         <div class="absolute -top-2 -right-2 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center text-white text-xs font-bold animate-pulse">
@@ -570,19 +519,22 @@
                         </div>
                     </div>
                     
-                    <!-- ★★★★★ SUPER POWERFUL FLOATING HOME BUTTON (LEFT SIDE, SAME LEVEL) ★★★★★ -->
                     <a href="/staff/general" id="floatingHomeBtn" class="floating-home-btn" title="Go to General Page">
                         <i class="fas fa-house-chimney"></i>
                     </a>
+
+                    <div id="updateBtn" class="fixed bottom-8 right-28 w-16 h-16 rounded-full bg-gradient-to-r from-amber-500 to-orange-600 flex items-center justify-center shadow-float cursor-pointer z-50 hover:shadow-glow transition-all duration-300" title="Update Student Classes">
+                        <i class="fas fa-users-cog text-white text-2xl"></i>
+                        <div class="absolute -top-2 -right-2 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center text-white text-xs font-bold animate-pulse">
+                            <span id="updateCount">0</span>
+                        </div>
+                    </div>
                     
-                    <!-- Enhanced Logout Confirmation Modal -->
+                    <!-- Logout Confirmation Modal -->
                     <div id="logoutModal" class="fixed inset-0 bg-black bg-opacity-70 hidden items-center justify-center z-[9999] p-4 backdrop-blur-sm">
                         <div class="bg-gradient-to-br from-gray-900 to-black rounded-3xl shadow-2xl max-w-md w-full overflow-hidden border border-gray-800">
-                            <!-- Security Scan Effect -->
                             <div class="security-scan"></div>
-                            
                             <div class="p-8">
-                                <!-- Modal Header -->
                                 <div class="text-center mb-8">
                                     <div class="w-20 h-20 rounded-full bg-gradient-to-br from-red-600 to-red-800 mx-auto mb-6 flex items-center justify-center shadow-danger-glow">
                                         <i class="fas fa-lock text-white text-3xl"></i>
@@ -593,8 +545,6 @@
                                     </h3>
                                     <p class="text-gray-400">Confirm logout from the system</p>
                                 </div>
-                                
-                                <!-- Security Status -->
                                 <div class="bg-gray-900/50 rounded-xl p-4 mb-6 border border-gray-800">
                                     <div class="flex items-center justify-between mb-3">
                                         <div class="flex items-center">
@@ -608,8 +558,6 @@
                                         All unsaved data will be secured before logout
                                     </div>
                                 </div>
-                                
-                                <!-- Action Buttons -->
                                 <div class="space-y-4">
                                     <button id="confirmLogoutBtn" 
                                             class="w-full bg-gradient-to-r from-red-700 to-red-900 hover:from-red-600 hover:to-red-800 text-white font-bold py-4 rounded-xl transition-all duration-300 flex items-center justify-center transform hover:scale-[1.02] active:scale-95 shadow-lg group">
@@ -618,7 +566,6 @@
                                             <span class="text-lg">Confirm Logout</span>
                                         </div>
                                     </button>
-                                    
                                     <button id="cancelLogoutBtn" 
                                             class="w-full bg-gray-800 hover:bg-gray-700 text-gray-300 font-bold py-4 rounded-xl transition-all duration-300 flex items-center justify-center transform hover:scale-[1.02] active:scale-95 border border-gray-700">
                                         <div class="flex items-center">
@@ -626,16 +573,6 @@
                                             <span>Cancel & Return</span>
                                         </div>
                                     </button>
-                                </div>
-                                
-                                <!-- Security Notice -->
-                                <div class="mt-8 pt-6 border-t border-gray-800">
-                                    <div class="flex items-start">
-                                        <i class="fas fa-exclamation-triangle text-yellow-500 mt-1 mr-3"></i>
-                                        <div class="text-sm text-gray-400">
-                                            <span class="font-medium text-gray-300">Security Protocol:</span> This action will terminate your session, clear temporary data, and log you out from all devices.
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -654,15 +591,9 @@
                                 </h3>
                                 <p class="text-gray-300 text-lg mb-2">Session terminated securely</p>
                                 <p class="text-gray-400 mb-8">Redirecting to login page...</p>
-                                
                                 <div class="w-full bg-gray-800 rounded-full h-2 mb-6">
                                     <div id="logoutProgress" class="bg-gradient-to-r from-green-500 to-emerald-600 h-2 rounded-full w-0 transition-all duration-1000"></div>
                                 </div>
-                                
-                                <p class="text-sm text-gray-500">
-                                    <i class="fas fa-lock mr-1"></i>
-                                    All data secured • Session cleared • Security protocol complete
-                                </p>
                             </div>
                         </div>
                     </div>
@@ -680,12 +611,14 @@
                                         <i class="fas fa-times"></i>
                                     </button>
                                 </div>
-                                
                                 <p class="text-gray-600 mb-6">
                                     Export all generated student IDs in your preferred format. 
                                     <span class="font-semibold text-primary" id="exportCount">0 records</span> will be exported.
                                 </p>
-                                
+                                <div class="bg-amber-50 border border-amber-200 rounded-xl p-3 mb-4 flex items-start gap-2">
+                                    <i class="fas fa-layer-group text-amber-600 mt-0.5"></i>
+                                    <p class="text-xs text-amber-800"><strong>Grouped by class:</strong> Students are organized from Graduated → SSS 3 → SSS 2 → SSS 1 → JSS 3 → JSS 2 → JSS 1, with a dedicated Class column in every table.</p>
+                                </div>
                                 <div class="space-y-4">
                                     <button id="exportWordBtn" class="w-full bg-blue-50 hover:bg-blue-100 border-2 border-blue-200 text-blue-800 p-4 rounded-xl flex items-center justify-between transition-all duration-300 group hover:scale-[1.02]">
                                         <div class="flex items-center">
@@ -699,7 +632,6 @@
                                         </div>
                                         <i class="fas fa-chevron-right text-blue-400 group-hover:text-blue-600"></i>
                                     </button>
-                                    
                                     <button id="exportPDFBtn" class="w-full bg-red-50 hover:bg-red-100 border-2 border-red-200 text-red-800 p-4 rounded-xl flex items-center justify-between transition-all duration-300 group hover:scale-[1.02]">
                                         <div class="flex items-center">
                                             <div class="w-12 h-12 rounded-lg bg-red-100 flex items-center justify-center mr-4 group-hover:bg-red-200">
@@ -712,7 +644,6 @@
                                         </div>
                                         <i class="fas fa-chevron-right text-red-400 group-hover:text-red-600"></i>
                                     </button>
-                                    
                                     <button id="exportCSVBtn" class="w-full bg-green-50 hover:bg-green-100 border-2 border-green-200 text-green-800 p-4 rounded-xl flex items-center justify-between transition-all duration-300 group hover:scale-[1.02]">
                                         <div class="flex items-center">
                                             <div class="w-12 h-12 rounded-lg bg-green-100 flex items-center justify-center mr-4 group-hover:bg-green-200">
@@ -726,7 +657,6 @@
                                         <i class="fas fa-chevron-right text-green-400 group-hover:text-green-600"></i>
                                     </button>
                                 </div>
-                                
                                 <div class="mt-8 pt-6 border-t border-gray-200">
                                     <label class="flex items-center">
                                         <input type="checkbox" id="includeTimestamp" class="w-4 h-4 text-accent rounded focus:ring-accent" checked>
@@ -741,22 +671,17 @@
                         </div>
                     </div>
                     
-                    <!-- Loading Overlay -->
                     <div id="loadingOverlay" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
                         <div class="bg-white rounded-2xl p-8 shadow-float text-center">
                             <div class="loading-wave mb-4">
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                                <div></div>
+                                <div></div><div></div><div></div><div></div>
                             </div>
                             <p class="text-dark font-medium" id="loadingText">Preparing your document...</p>
                         </div>
                     </div>
                     
-                    <!-- ==================== MAIN CONTENT ==================== -->
+                    <!-- MAIN CONTENT -->
                     <div class="content-container page-transition">
-                        <!-- Header - NOW SCROLLS FREELY WITH PAGE -->
                         <header class="page-header mb-8 md:mb-12 text-center">
                             <div class="flex flex-col md:flex-row items-center justify-between mb-6">
                                <a href="{% url 'general_exam_page' %}" class="flex items-center mb-4 md:mb-0 hover:opacity-80 transition-opacity">
@@ -770,17 +695,14 @@
                                         <p class="text-gray-600">Ultimate Enterprise Edition • Official ID System</p>
                                     </div>
                                 </a>
-                                
                                 <div class="flex flex-col items-end">
                                     <div class="flex items-center mb-3">
-                                        <!-- Simple Logout Button without user profile pop-up -->
                                         <button onclick="showEnhancedLogout()" 
                                                 class="px-4 py-2 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white rounded-xl font-medium flex items-center shadow-lg hover:shadow-danger-glow transition-all duration-300">
                                             <i class="fas fa-power-off mr-2"></i>
                                             <span class="hidden md:inline">Logout</span>
                                         </button>
                                     </div>
-                                    
                                     <div class="flex items-center glass-effect rounded-full px-4 py-2 shadow-card mb-2">
                                         <i class="fas fa-graduation-cap text-accent mr-2"></i>
                                         <span class="font-medium">Format: <code class="bg-gray-100 px-2 py-1 rounded font-mono">EMFHS-YYYY-XXX-XX</code></span>
@@ -791,8 +713,6 @@
                                     </div>
                                 </div>
                             </div>
-                            
-                            <!-- Storage Warning -->
                             <div id="storageWarning" class="hidden bg-gradient-to-r from-yellow-50 to-orange-50 border border-yellow-200 rounded-xl p-4 mb-4">
                                 <div class="flex items-center">
                                     <i class="fas fa-exclamation-triangle text-yellow-600 text-xl mr-3"></i>
@@ -805,15 +725,12 @@
                         </header>
                         
                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                            <!-- Left Column: Input Form & Stats -->
                             <div class="space-y-8">
-                                <!-- Input Form Section -->
                                 <div class="bg-white rounded-2xl shadow-card p-6 md:p-8 id-card hover-scroll-effect">
                                     <h2 class="text-2xl font-bold text-dark mb-6 flex items-center">
                                         <i class="fas fa-user-plus text-accent mr-3"></i>
                                         Student Information
                                     </h2>
-                                    
                                     <form id="studentForm" class="space-y-6">
                                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                             <div>
@@ -824,17 +741,14 @@
                                                        class="w-full p-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-accent focus:border-accent outline-none transition-all duration-300"
                                                        placeholder="Enter student's full name" required>
                                             </div>
-                                            
                                             <div>
                                                 <label for="enrollmentYear" class="block text-gray-700 font-medium mb-2">
                                                     <i class="fas fa-calendar-alt text-gray-500 mr-2"></i>Enrollment Year
                                                 </label>
                                                 <select id="enrollmentYear" 
                                                         class="w-full p-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-accent focus:border-accent outline-none transition-all duration-300">
-                                                    <!-- Years will be dynamically populated from 2020 to 3000 -->
                                                 </select>
                                             </div>
-                                            
                                             <div>
                                                 <label for="studentClass" class="block text-gray-700 font-medium mb-2">
                                                     <i class="fas fa-school text-gray-500 mr-2"></i>Class
@@ -849,7 +763,6 @@
                                                     <option value="SSS 3">SSS 3</option>
                                                 </select>
                                             </div>
-                                            
                                             <div>
                                                 <label for="admissionDate" class="block text-gray-700 font-medium mb-2">
                                                     <i class="fas fa-calendar-day text-gray-500 mr-2"></i>Admission Date
@@ -859,7 +772,6 @@
                                                        required>
                                             </div>
                                         </div>
-                                        
                                         <div class="pt-4">
                                             <button type="submit" 
                                                     class="w-full premium-gradient text-white font-bold py-4 rounded-xl hover:opacity-90 transition duration-300 flex items-center justify-center shadow-card hover:shadow-hover transform hover:-translate-y-1">
@@ -868,8 +780,6 @@
                                             </button>
                                         </div>
                                     </form>
-                                    
-                                    <!-- Data Management Tools -->
                                     <div class="mt-8 pt-6 border-t border-gray-200">
                                         <h3 class="text-lg font-bold text-dark mb-4">Data Management</h3>
                                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -884,8 +794,6 @@
                                             </button>
                                         </div>
                                     </div>
-                                    
-                                    <!-- Stats Section -->
                                     <div class="mt-8 pt-6 border-t border-gray-200">
                                         <h3 class="text-lg font-bold text-dark mb-4">System Statistics</h3>
                                         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -909,7 +817,6 @@
                                     </div>
                                 </div>
                                 
-                                <!-- Bulk Operations -->
                                 <div class="bg-white rounded-2xl shadow-card p-6 id-card hover-scroll-effect">
                                     <h3 class="text-xl font-bold text-dark mb-4 flex items-center">
                                         <i class="fas fa-bolt text-accent mr-3"></i>
@@ -934,14 +841,10 @@
                                 </div>
                             </div>
                             
-                            <!-- Right Column: Preview & List -->
                             <div class="space-y-8">
-                                <!-- ID Card Preview -->
                                 <div class="id-card shadow-card p-8 relative overflow-hidden hover-scroll-effect">
-                                    <!-- Decorative elements -->
                                     <div class="absolute -top-20 -right-20 w-40 h-40 bg-gradient-to-br from-blue-100 to-transparent rounded-full opacity-50"></div>
                                     <div class="absolute -bottom-20 -left-20 w-40 h-40 bg-gradient-to-tr from-purple-100 to-transparent rounded-full opacity-50"></div>
-                                    
                                     <div class="flex justify-between items-start mb-6 relative">
                                         <div>
                                             <h2 class="text-xl font-bold text-dark">EMILIA FOREMOST HIGH SCHOOL</h2>
@@ -951,18 +854,15 @@
                                             <i class="fas fa-graduation-cap text-white text-2xl"></i>
                                         </div>
                                     </div>
-                                    
                                     <div class="flex flex-col md:flex-row items-center md:items-start mb-8 relative">
                                         <div class="w-32 h-32 rounded-xl bg-gradient-to-br from-blue-100 to-gray-200 flex items-center justify-center mb-4 md:mb-0 md:mr-8 shadow-inner border-4 border-white">
                                             <i class="fas fa-user text-gray-400 text-6xl"></i>
                                         </div>
-                                        
                                         <div class="flex-1">
                                             <div class="mb-4">
                                                 <div class="text-gray-500 text-sm">STUDENT NAME</div>
                                                 <div class="text-xl font-bold text-dark" id="previewName">[Student Name]</div>
                                             </div>
-                                            
                                             <div class="grid grid-cols-2 gap-4 mb-6">
                                                 <div>
                                                     <div class="text-gray-500 text-sm">STUDENT ID</div>
@@ -981,7 +881,6 @@
                                                     <div class="text-lg font-bold text-dark" id="previewDate">Jan 10, 2025</div>
                                                 </div>
                                             </div>
-                                            
                                             <div class="flex space-x-3">
                                                 <button onclick="copyCurrentId()" class="flex-1 bg-blue-100 hover:bg-blue-200 text-blue-800 px-4 py-2 rounded-lg font-medium transition flex items-center justify-center transform hover:-translate-y-1">
                                                     <i class="fas fa-copy mr-2"></i> Copy ID
@@ -992,20 +891,14 @@
                                             </div>
                                         </div>
                                     </div>
-                                    
-                                    <div class="text-xs text-gray-400 text-center pt-4 border-t border-gray-100">
-                                        <i class="fas fa-shield-alt mr-1"></i> Secure ID with verification checksum
-                                    </div>
                                 </div>
                                 
-                                <!-- Search & Generated IDs -->
                                 <div class="bg-white rounded-2xl shadow-card p-6 id-card hover-scroll-effect">
                                     <div class="flex flex-col md:flex-row justify-between items-center mb-6">
                                         <h2 class="text-2xl font-bold text-dark flex items-center mb-4 md:mb-0">
                                             <i class="fas fa-list text-accent mr-3"></i>
                                             Generated IDs
                                         </h2>
-                                        
                                         <div class="relative w-full md:w-64">
                                             <input type="text" id="searchInput" 
                                                    class="w-full p-3 pl-10 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-accent focus:border-accent outline-none transition-all duration-300"
@@ -1013,8 +906,6 @@
                                             <i class="fas fa-search text-gray-400 absolute left-3 top-3.5"></i>
                                         </div>
                                     </div>
-                                    
-                                    <!-- Pagination Controls -->
                                     <div class="flex justify-between items-center mb-4">
                                         <div class="text-gray-600">
                                             Showing <span id="pageStart">1</span>-<span id="pageEnd">10</span> of <span id="totalStudents">0</span>
@@ -1029,7 +920,6 @@
                                             </button>
                                         </div>
                                     </div>
-                                    
                                     <div class="table-scroll-container rounded-xl border-2 border-gray-200">
                                         <table class="min-w-full divide-y divide-gray-200">
                                             <thead class="bg-gray-50 sticky top-0">
@@ -1041,12 +931,9 @@
                                                     <th class="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Actions</th>
                                                 </tr>
                                             </thead>
-                                            <tbody id="idList" class="bg-white divide-y divide-gray-200">
-                                                <!-- IDs will be populated here -->
-                                            </tbody>
+                                            <tbody id="idList" class="bg-white divide-y divide-gray-200"></tbody>
                                         </table>
                                     </div>
-                                    
                                     <div class="mt-4 text-center text-gray-500" id="emptyMessage">
                                         <i class="fas fa-user-graduate text-3xl mb-2 text-gray-300"></i>
                                         <p class="font-medium">No student IDs generated yet.</p>
@@ -1057,14 +944,12 @@
                         </div>
                     </div>
                     
-                    <!-- FULL WIDTH FOOTER - DARK BLEND -->
                     <footer class="full-width-footer page-footer footer-dark-blend mt-16">
                         <div class="max-w-7xl mx-auto px-4 py-6 sm:py-8">
                             <div class="text-center">
                                 <p class="mb-2 text-white"><strong>EMIFORPHS Student ID Generator System • Ultimate Edition • AI-Powered</strong></p>
                                 <p class="text-sm text-gray-400">Storage Capacity: 5MB • Supports 10,000+ Records • JSS/SSS Class System</p>
                             </div>
-                            
                             <div class="border-t border-gray-800 mt-6 sm:mt-8 pt-6 sm:pt-8 text-center">
                                 <p class="text-gray-500 text-xs sm:text-sm">
                                     &copy; 2024 EMILIA FOREMOST HIGH SCHOOL. All Rights Reserved. • Secure Student ID Generator v3.0
@@ -1076,136 +961,515 @@
             </div>
         </div>
     </div>
+
+    <!-- ================ STUDENT CLASS UPDATE MODAL ================ -->
+    <div id="updateModal" class="fixed inset-0 bg-black bg-opacity-70 hidden items-center justify-center z-[9999] p-4 backdrop-blur-sm">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-5xl w-full max-h-[90vh] flex flex-col overflow-hidden border border-gray-200">
+            <div class="bg-gradient-to-r from-amber-500 to-orange-600 p-6 flex justify-between items-center">
+                <div class="flex items-center">
+                    <div class="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center mr-4">
+                        <i class="fas fa-users-cog text-white text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold text-white">Manage Students</h3>
+                        <p class="text-amber-100 text-sm">Update classes, delete students, and manage your roster</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <div id="autosaveIndicator" class="autosave-indicator saved">
+                        <span class="pulse-dot"></span>
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <span id="autosaveText">All changes saved</span>
+                    </div>
+                    <button id="undoBtn" class="undo-btn" onclick="performUndo()" disabled title="Undo last change (Ctrl+Z)">
+                        <i class="fas fa-undo"></i>
+                        <span class="hidden sm:inline">Undo</span>
+                        <span class="undo-count" id="undoCount">0</span>
+                    </button>
+                    <button id="deleteBtnHeader" class="delete-btn" onclick="showDeleteConfirmation()" disabled title="Delete selected students (Delete key)">
+                        <i class="fas fa-trash-alt"></i>
+                        <span class="hidden sm:inline">Delete</span>
+                        <span class="delete-count" id="deleteCount">0</span>
+                    </button>
+                    <button id="closeUpdateModal" class="text-white hover:text-amber-200 text-3xl transition ml-2">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="bg-amber-50 px-6 py-3 border-b border-amber-200">
+                <div class="flex items-center gap-2 mb-2">
+                    <i class="fas fa-filter text-amber-600 text-sm"></i>
+                    <span class="text-xs font-bold text-amber-800 uppercase tracking-wide">Filter by Class</span>
+                </div>
+                <div class="class-filters-scroll flex gap-2 pb-1">
+                    <button class="class-filter-btn filter-all active" data-filter="all" onclick="filterByClass('all')">
+                        <i class="fas fa-layer-group mr-1"></i> All <span class="filter-count" id="count-all">0</span>
+                    </button>
+                    <button class="class-filter-btn filter-JSS1" data-filter="JSS 1" onclick="filterByClass('JSS 1')">
+                        JSS 1 <span class="filter-count" id="count-JSS1">0</span>
+                    </button>
+                    <button class="class-filter-btn filter-JSS2" data-filter="JSS 2" onclick="filterByClass('JSS 2')">
+                        JSS 2 <span class="filter-count" id="count-JSS2">0</span>
+                    </button>
+                    <button class="class-filter-btn filter-JSS3" data-filter="JSS 3" onclick="filterByClass('JSS 3')">
+                        JSS 3 <span class="filter-count" id="count-JSS3">0</span>
+                    </button>
+                    <button class="class-filter-btn filter-SSS1" data-filter="SSS 1" onclick="filterByClass('SSS 1')">
+                        SSS 1 <span class="filter-count" id="count-SSS1">0</span>
+                    </button>
+                    <button class="class-filter-btn filter-SSS2" data-filter="SSS 2" onclick="filterByClass('SSS 2')">
+                        SSS 2 <span class="filter-count" id="count-SSS2">0</span>
+                    </button>
+                    <button class="class-filter-btn filter-SSS3" data-filter="SSS 3" onclick="filterByClass('SSS 3')">
+                        SSS 3 <span class="filter-count" id="count-SSS3">0</span>
+                    </button>
+                    <button class="class-filter-btn filter-Graduated" data-filter="Graduated" onclick="filterByClass('Graduated')">
+                        <i class="fas fa-graduation-cap mr-1"></i> Graduated <span class="filter-count" id="count-Graduated">0</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="bg-gray-50 px-6 py-4 border-b border-gray-200 flex flex-wrap items-center justify-between gap-4">
+                <div class="flex items-center gap-4">
+                    <label class="flex items-center cursor-pointer">
+                        <input type="checkbox" id="selectAllStudents" class="w-5 h-5 text-amber-600 rounded focus:ring-amber-500 border-gray-300">
+                        <span class="ml-2 font-semibold text-gray-700">Select All</span>
+                    </label>
+                    <span id="selectedCountBadge" class="bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-sm font-bold">0 selected</span>
+                    <span id="filterStatusBadge" class="hidden bg-amber-500 text-white px-3 py-1 rounded-full text-sm font-bold">
+                        <i class="fas fa-filter mr-1"></i> <span id="filterStatusText">All</span>
+                    </span>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="relative">
+                        <input type="text" id="updateSearchInput" placeholder="Search students..." 
+                               class="pl-10 pr-4 py-2 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition w-64">
+                        <i class="fas fa-search text-gray-400 absolute left-3 top-3"></i>
+                    </div>
+                    <div class="relative">
+                        <select id="bulkClassSelect" class="px-4 py-2 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition font-medium bg-white">
+                            <option value="">— Bulk Change Class —</option>
+                            <option value="JSS 1">JSS 1</option>
+                            <option value="JSS 2">JSS 2</option>
+                            <option value="JSS 3">JSS 3</option>
+                            <option value="SSS 1">SSS 1</option>
+                            <option value="SSS 2">SSS 2</option>
+                            <option value="SSS 3">SSS 3</option>
+                            <option value="Graduated">Graduated</option>
+                        </select>
+                    </div>
+                    <button id="applyBulkClassChange" class="bg-gradient-to-r from-amber-500 to-orange-600 text-white px-5 py-2 rounded-xl font-bold hover:opacity-90 transition flex items-center shadow-lg disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                        <i class="fas fa-check-double mr-2"></i> Apply to Selected
+                    </button>
+                </div>
+            </div>
+
+            <div class="flex-1 overflow-y-auto p-6" id="updateModalBody">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="updateStudentGrid"></div>
+                <div id="updateEmptyState" class="hidden text-center py-16">
+                    <i class="fas fa-user-graduate text-6xl text-gray-300 mb-4"></i>
+                    <p class="text-xl font-bold text-gray-400">No students found</p>
+                    <p class="text-gray-400" id="updateEmptyMessage">Generate some student IDs first.</p>
+                </div>
+            </div>
+
+            <div class="bg-gray-50 px-6 py-4 border-t border-gray-200 flex justify-between items-center">
+                <div class="text-sm text-gray-600">
+                    <i class="fas fa-cloud-upload-alt mr-1 text-green-500"></i>
+                    <span class="font-semibold text-green-600">Auto-save is ON</span> — every change is saved instantly
+                    <span class="hidden md:inline"> • <kbd class="px-2 py-0.5 bg-gray-200 rounded text-xs font-mono">Ctrl+Z</kbd> undo • <kbd class="px-2 py-0.5 bg-gray-200 rounded text-xs font-mono">Del</kbd> delete</span>
+                </div>
+                <div class="flex gap-3">
+                    <button id="cancelUpdateBtn" class="px-6 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-xl font-bold transition">
+                        Close
+                    </button>
+                    <button id="saveAndCloseUpdate" class="px-6 py-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-xl font-bold hover:opacity-90 transition shadow-lg">
+                        <i class="fas fa-check-circle mr-2"></i> Done
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteConfirmModal" class="delete-confirm-modal">
+        <div class="delete-confirm-content">
+            <div class="delete-confirm-header">
+                <div class="delete-confirm-icon">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <h3>Confirm Deletion</h3>
+                <p id="deleteConfirmSubtitle">This action can be undone</p>
+            </div>
+            <div class="delete-confirm-body">
+                <div id="deletePreviewList" class="delete-preview-list"></div>
+                <div class="delete-warning-box">
+                    <i class="fas fa-info-circle"></i>
+                    <p><strong>Good news:</strong> Deletions can be undone. If you make a mistake, use the Undo button or press <kbd class="px-1 bg-white rounded text-xs font-mono">Ctrl+Z</kbd> to restore them.</p>
+                </div>
+                <div class="delete-confirm-actions">
+                    <button class="delete-cancel-btn" onclick="hideDeleteConfirmation()">
+                        <i class="fas fa-times mr-1"></i> Cancel
+                    </button>
+                    <button class="delete-confirm-btn" onclick="confirmDeleteStudents()">
+                        <i class="fas fa-trash-alt mr-1"></i> Delete <span id="deleteConfirmCount">0</span> Student(s)
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Undo Toast -->
+    <div id="undoToast" class="undo-toast">
+        <div class="undo-toast-icon">
+            <i class="fas fa-history"></i>
+        </div>
+        <div class="undo-toast-content">
+            <div class="undo-toast-title" id="undoToastTitle">Class Changed</div>
+            <div class="undo-toast-desc" id="undoToastDesc">Tap undo to revert the change</div>
+        </div>
+        <button class="undo-toast-action" id="undoToastAction" onclick="performUndo(); hideUndoToast();">
+            <i class="fas fa-undo mr-1"></i> Undo
+        </button>
+    </div>
     
-    <!-- Hidden file input for import -->
     <input type="file" id="fileInput" accept=".json" style="display: none;">
     
-    <!-- Hidden logout form for Django -->
     <form id="djangoLogoutForm" action="{% url 'staff_logout' %}" method="POST" style="display: none;">
         {% csrf_token %}
     </form>
     
     <script>
-        // ========== ROCK SOLID SCROLL - NO RUBBER BAND EVER ==========
+        // ========== ROCK SOLID SCROLL ==========
         const scrollContainer = document.getElementById('scrollContainer');
-        
         if (scrollContainer) {
             let touchStartY = 0;
-            let touchStartScrollTop = 0;
-            
-            // Store scroll positions
-            let scrollTop = 0;
-            let scrollHeight = 0;
-            let clientHeight = 0;
-            
-            // Function to enforce scroll boundaries - NO RUBBER BAND
             function enforceBoundaries() {
                 if (!scrollContainer) return;
-                
-                scrollTop = scrollContainer.scrollTop;
-                scrollHeight = scrollContainer.scrollHeight;
-                clientHeight = scrollContainer.clientHeight;
-                
-                // Hard stop at top
-                if (scrollTop < 0) {
-                    scrollContainer.scrollTop = 0;
-                    return;
-                }
-                
-                // Hard stop at bottom
-                if (scrollTop + clientHeight > scrollHeight) {
-                    scrollContainer.scrollTop = Math.max(0, scrollHeight - clientHeight);
-                    return;
-                }
+                const st = scrollContainer.scrollTop, sh = scrollContainer.scrollHeight, ch = scrollContainer.clientHeight;
+                if (st < 0) { scrollContainer.scrollTop = 0; return; }
+                if (st + ch > sh) scrollContainer.scrollTop = Math.max(0, sh - ch);
             }
-            
-            // Prevent any rubber band effect on touch move
-            scrollContainer.addEventListener('touchstart', function(e) {
-                touchStartY = e.touches[0].clientY;
-                touchStartScrollTop = scrollContainer.scrollTop;
-            }, { passive: false });
-            
+            scrollContainer.addEventListener('touchstart', function(e) { touchStartY = e.touches[0].clientY; }, { passive: false });
             scrollContainer.addEventListener('touchmove', function(e) {
-                const currentY = e.touches[0].clientY;
-                const deltaY = currentY - touchStartY;
-                const currentScrollTop = scrollContainer.scrollTop;
-                const maxScrollTop = scrollContainer.scrollHeight - scrollContainer.clientHeight;
-                
-                // If at top and trying to pull down - PREVENT
-                if (currentScrollTop <= 0 && deltaY > 0) {
-                    e.preventDefault();
-                    return false;
-                }
-                
-                // If at bottom and trying to pull up - PREVENT
-                if (currentScrollTop >= maxScrollTop - 1 && deltaY < 0) {
-                    e.preventDefault();
-                    return false;
-                }
+                const deltaY = e.touches[0].clientY - touchStartY;
+                const st = scrollContainer.scrollTop;
+                const maxST = scrollContainer.scrollHeight - scrollContainer.clientHeight;
+                if (st <= 0 && deltaY > 0) { e.preventDefault(); return false; }
+                if (st >= maxST - 1 && deltaY < 0) { e.preventDefault(); return false; }
             }, { passive: false });
-            
-            // Enforce boundaries on scroll
-            scrollContainer.addEventListener('scroll', function() {
-                enforceBoundaries();
-            });
-            
-            // Enforce boundaries on resize
-            window.addEventListener('resize', function() {
-                enforceBoundaries();
-            });
-            
-            // Initial enforcement
+            scrollContainer.addEventListener('scroll', enforceBoundaries);
+            window.addEventListener('resize', enforceBoundaries);
             enforceBoundaries();
-            
-            // iOS specific fixes
-            if ('ontouchstart' in window) {
-                scrollContainer.style.WebkitOverflowScrolling = 'touch';
-            }
+            if ('ontouchstart' in window) scrollContainer.style.WebkitOverflowScrolling = 'touch';
         }
         
-        // ====================
-        // ULTIMATE SYSTEM - ALL ORIGINAL CODE BELOW (unchanged)
-        // ====================
-        
-        // Configuration
+        // ==================== CONFIG & STATE ====================
         const ITEMS_PER_PAGE = 20;
-        const STORAGE_LIMIT = 5 * 1024 * 1024; // 5MB
+        const STORAGE_LIMIT = 5 * 1024 * 1024;
         const START_YEAR = 2020;
         const END_YEAR = 3000;
+        const MAX_UNDO_HISTORY = 20;
         
-        // State management
+        // ⚡ CLASS ORDERING — Graduated first, then descending
+        const CLASS_ORDER = ['Graduated', 'SSS 3', 'SSS 2', 'SSS 1', 'JSS 3', 'JSS 2', 'JSS 1'];
+        
         let students = [];
         let yearCounters = {};
         let currentPage = 1;
         let currentSearch = '';
         let sessionTimerInterval;
-        let sessionTime = 1800; // 30 minutes in seconds
-        let editingIndex = -1; // Track which student is being edited
+        let sessionTime = 1800;
+        let editingIndex = -1;
         
-        // CHARACTER SETS FOR ID GENERATION
-        const ALPHANUMERIC_CHARS = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // Removed confusing chars: 0, O, 1, I
-        const NUMERIC_CHARS = '23456789'; // Only numbers 2-9 (avoid 0,1)
-        const ALPHABET_CHARS = 'ABCDEFGHJKLMNPQRSTUVWXYZ'; // Removed confusing letters
+        const ALPHANUMERIC_CHARS = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+        const NUMERIC_CHARS = '23456789';
+        const ALPHABET_CHARS = 'ABCDEFGHJKLMNPQRSTUVWXYZ';
         
-        // ==================== ENHANCED LOGOUT SYSTEM ====================
+        // ==================== SORTING & GROUPING ====================
+        function getStudentsGroupedByClass() {
+            const groups = [];
+            CLASS_ORDER.forEach(cls => {
+                const classStudents = students.filter(s => s.class === cls);
+                classStudents.sort((a, b) => a.name.localeCompare(b.name));
+                if (classStudents.length > 0) {
+                    groups.push({
+                        className: cls,
+                        students: classStudents,
+                        count: classStudents.length
+                    });
+                }
+            });
+            return groups;
+        }
         
-        // Initialize session timer
+        function getStudentsSorted() {
+            const groups = getStudentsGroupedByClass();
+            const sorted = [];
+            groups.forEach(group => {
+                group.students.forEach(s => sorted.push(s));
+            });
+            return sorted;
+        }
+        
+        // ==================== AUTO-SAVE INDICATOR ====================
+        let autosaveTimer = null;
+        
+        function showAutosaveIndicator(state = 'saving') {
+            const indicator = document.getElementById('autosaveIndicator');
+            const text = document.getElementById('autosaveText');
+            if (!indicator || !text) return;
+            indicator.classList.remove('saving', 'saved');
+            if (state === 'saving') {
+                indicator.classList.add('saving');
+                text.textContent = 'Saving...';
+                if (autosaveTimer) clearTimeout(autosaveTimer);
+                autosaveTimer = setTimeout(() => {
+                    indicator.classList.remove('saving');
+                    indicator.classList.add('saved');
+                    text.textContent = 'All changes saved';
+                }, 800);
+            } else {
+                indicator.classList.add('saved');
+                text.textContent = 'All changes saved';
+            }
+        }
+        
+        // ==================== UNDO SYSTEM ====================
+        let undoHistory = [];
+        
+        function pushToUndoHistory(actionDescription, affectedStudents, type = 'class') {
+            const snapshot = {
+                timestamp: new Date().toISOString(),
+                description: actionDescription,
+                type: type,
+                students: affectedStudents.map(s => ({
+                    id: s.id,
+                    name: s.name,
+                    previousClass: s.previousClass,
+                    fullData: s.fullData || null
+                }))
+            };
+            undoHistory.push(snapshot);
+            if (undoHistory.length > MAX_UNDO_HISTORY) undoHistory.shift();
+            updateUndoButton();
+            showUndoToast(actionDescription, affectedStudents.length);
+        }
+        
+        function performUndo() {
+            if (undoHistory.length === 0) {
+                showNotification('Nothing to undo', 'info');
+                return;
+            }
+            const snapshot = undoHistory.pop();
+            let restoredCount = 0;
+            
+            if (snapshot.type === 'delete') {
+                snapshot.students.forEach(item => {
+                    if (item.fullData) {
+                        const exists = students.findIndex(s => s.id === item.id);
+                        if (exists === -1) {
+                            students.unshift(item.fullData);
+                            restoredCount++;
+                        }
+                    }
+                });
+                showNotification(`↩️ Restored ${restoredCount} deleted student(s)`, 'success');
+            } else {
+                snapshot.students.forEach(item => {
+                    const idx = students.findIndex(s => s.id === item.id);
+                    if (idx !== -1) {
+                        students[idx].class = item.previousClass;
+                        restoredCount++;
+                    }
+                });
+                showNotification(`↩️ Undid: ${snapshot.description} (${restoredCount} restored)`, 'success');
+            }
+            
+            forceSaveToStorage();
+            selectedStudents.clear();
+            renderUpdateStudentGrid();
+            renderStudentList();
+            updateStats();
+            updateClassCounts();
+            updateUndoButton();
+            updateDeleteButton();
+            updateSelectedCount();
+            updateSelectAllCheckbox();
+            showAutosaveIndicator('saving');
+            
+            if (undoHistory.length === 0) {
+                hideUndoToast();
+            } else {
+                const nextSnapshot = undoHistory[undoHistory.length - 1];
+                showUndoToast(nextSnapshot.description, nextSnapshot.students.length, true);
+            }
+        }
+        
+        function updateUndoButton() {
+            const undoBtn = document.getElementById('undoBtn');
+            const undoCount = document.getElementById('undoCount');
+            if (undoBtn && undoCount) {
+                if (undoHistory.length > 0) {
+                    undoBtn.disabled = false;
+                    undoCount.textContent = undoHistory.length;
+                } else {
+                    undoBtn.disabled = true;
+                    undoCount.textContent = '0';
+                }
+            }
+        }
+        
+        function showUndoToast(description, count, isUpdate = false) {
+            const toast = document.getElementById('undoToast');
+            const title = document.getElementById('undoToastTitle');
+            const desc = document.getElementById('undoToastDesc');
+            if (isUpdate) {
+                title.textContent = `Next Undo: ${description}`;
+                desc.textContent = `${count} student(s) will be restored`;
+            } else {
+                title.textContent = `✓ ${description}`;
+                desc.textContent = `${count} student(s) affected — Tap undo to revert`;
+            }
+            toast.classList.add('show');
+            clearTimeout(window.undoToastTimeout);
+            window.undoToastTimeout = setTimeout(() => hideUndoToast(), 6000);
+        }
+        
+        function hideUndoToast() {
+            document.getElementById('undoToast').classList.remove('show');
+        }
+        
+        function clearUndoHistory() {
+            undoHistory = [];
+            updateUndoButton();
+            hideUndoToast();
+        }
+        
+        // ==================== DELETE SYSTEM ====================
+        let pendingDeleteIds = [];
+        
+        function showDeleteConfirmation() {
+            if (selectedStudents.size === 0) {
+                showNotification('Please select student(s) to delete', 'warning');
+                return;
+            }
+            pendingDeleteIds = Array.from(selectedStudents);
+            const previewList = document.getElementById('deletePreviewList');
+            let previewHtml = '';
+            pendingDeleteIds.forEach(id => {
+                const student = students.find(s => s.id === id);
+                if (!student) return;
+                const initials = student.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+                previewHtml += `
+                    <div class="delete-preview-item">
+                        <div class="student-info">
+                            <div class="mini-avatar">${initials}</div>
+                            <div class="student-text">
+                                <div class="name">${student.name}</div>
+                                <div class="meta">${student.id} • ${student.class}</div>
+                            </div>
+                        </div>
+                    </div>`;
+            });
+            previewList.innerHTML = previewHtml;
+            document.getElementById('deleteConfirmCount').textContent = pendingDeleteIds.length;
+            document.getElementById('deleteConfirmSubtitle').textContent = 
+                `You are about to delete ${pendingDeleteIds.length} student(s) — undoable`;
+            document.getElementById('deleteConfirmModal').classList.add('show');
+        }
+        
+        function hideDeleteConfirmation() {
+            document.getElementById('deleteConfirmModal').classList.remove('show');
+            pendingDeleteIds = [];
+        }
+        
+        function confirmDeleteStudents() {
+            if (pendingDeleteIds.length === 0) return;
+            const affectedStudents = [];
+            pendingDeleteIds.forEach(id => {
+                const idx = students.findIndex(s => s.id === id);
+                if (idx !== -1) {
+                    affectedStudents.push({
+                        id: students[idx].id,
+                        name: students[idx].name,
+                        previousClass: students[idx].class,
+                        fullData: JSON.parse(JSON.stringify(students[idx]))
+                    });
+                }
+            });
+            students = students.filter(s => !pendingDeleteIds.includes(s.id));
+            pushToUndoHistory(
+                `Deleted ${affectedStudents.length} student(s)`,
+                affectedStudents,
+                'delete'
+            );
+            selectedStudents.clear();
+            forceSaveToStorage();
+            renderUpdateStudentGrid();
+            renderStudentList();
+            updateStats();
+            updateClassCounts();
+            updateSelectedCount();
+            updateSelectAllCheckbox();
+            updateDeleteButton();
+            showAutosaveIndicator('saving');
+            showNotification(`🗑️ Deleted ${affectedStudents.length} student(s) — Undo available`, 'success');
+            hideDeleteConfirmation();
+        }
+        
+        function updateDeleteButton() {
+            const deleteBtn = document.getElementById('deleteBtnHeader');
+            const deleteCount = document.getElementById('deleteCount');
+            if (deleteBtn && deleteCount) {
+                if (selectedStudents.size > 0) {
+                    deleteBtn.disabled = false;
+                    deleteCount.textContent = selectedStudents.size;
+                } else {
+                    deleteBtn.disabled = true;
+                    deleteCount.textContent = '0';
+                }
+            }
+        }
+        
+        // ==================== CORE SAVE ====================
+        function forceSaveToStorage() {
+            try {
+                const dataStr = JSON.stringify(students);
+                const dataSize = new Blob([dataStr]).size;
+                if (dataSize > STORAGE_LIMIT) {
+                    showNotification('Storage limit reached! Cannot save more data.', 'error');
+                    return false;
+                }
+                localStorage.setItem('emfhs_students', dataStr);
+                updateStats();
+                updateStorageIndicator();
+                updateDownloadCount();
+                updateUpdateCount();
+                return true;
+            } catch (e) {
+                console.error('Error saving students:', e);
+                showNotification('Error saving data!', 'error');
+                return false;
+            }
+        }
+        
+        function saveStudents() {
+            const result = forceSaveToStorage();
+            if (result) showAutosaveIndicator('saving');
+            return result;
+        }
+        
+        // ==================== LOGOUT SYSTEM ====================
         function initSessionTimer() {
             updateSessionTimerDisplay();
             sessionTimerInterval = setInterval(() => {
                 if (sessionTime > 0) {
                     sessionTime--;
                     updateSessionTimerDisplay();
-                    
-                    // Show warning at 5 minutes
-                    if (sessionTime === 300) {
-                        showNotification('Session expires in 5 minutes. Save your work.', 'warning');
-                    }
-                    
-                    // Auto-logout at 0
-                    if (sessionTime === 0) {
-                        performAutoLogout();
-                    }
+                    if (sessionTime === 300) showNotification('Session expires in 5 minutes.', 'warning');
+                    if (sessionTime === 0) performAutoLogout();
                 }
             }, 1000);
         }
@@ -1216,122 +1480,63 @@
             const timerElement = document.getElementById('sessionTimer');
             if (timerElement) {
                 timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-                
-                // Change color based on time
-                if (sessionTime < 300) { // Less than 5 minutes
-                    timerElement.className = 'session-timer text-red-500 animate-pulse';
-                } else if (sessionTime < 600) { // Less than 10 minutes
-                    timerElement.className = 'session-timer text-yellow-500';
-                } else {
-                    timerElement.className = 'session-timer text-green-400';
-                }
+                if (sessionTime < 300) timerElement.className = 'session-timer text-red-500 animate-pulse';
+                else if (sessionTime < 600) timerElement.className = 'session-timer text-yellow-500';
+                else timerElement.className = 'session-timer text-green-400';
             }
         }
         
-        // Show enhanced logout modal
         function showEnhancedLogout() {
-            // Pause session timer
             clearInterval(sessionTimerInterval);
-            
-            // Create confetti effect
             createConfetti();
-            
-            // Show modal with animation
             const modal = document.getElementById('logoutModal');
             modal.classList.remove('hidden');
             modal.classList.add('flex');
-            
-            // Add entrance animation
-            setTimeout(() => {
-                modal.querySelector('div > div').style.transform = 'scale(1)';
-                modal.querySelector('div > div').style.opacity = '1';
-            }, 10);
-            
-            // Reset focus to cancel button
-            setTimeout(() => {
-                document.getElementById('cancelLogoutBtn').focus();
-            }, 100);
+            setTimeout(() => document.getElementById('cancelLogoutBtn').focus(), 100);
         }
         
-        // Hide logout modal
         function hideLogoutModal() {
             const modal = document.getElementById('logoutModal');
             modal.classList.add('hidden');
             modal.classList.remove('flex');
-            
-            // Resume session timer
             initSessionTimer();
         }
         
-        // Perform logout with Django
         function performDjangoLogout() {
-            // Show success animation
             showLogoutSuccessAnimation();
-            
-            // Clear all local data
             clearAllLocalData();
-            
-            // After 2 seconds, submit Django logout form
             setTimeout(() => {
-                // Create and submit Django logout form
                 const logoutForm = document.getElementById('djangoLogoutForm');
                 if (logoutForm) {
-                    // Add CSRF token if not present
                     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
                     const csrfInput = document.createElement('input');
                     csrfInput.type = 'hidden';
                     csrfInput.name = 'csrfmiddlewaretoken';
                     csrfInput.value = csrfToken;
                     logoutForm.appendChild(csrfInput);
-                    
                     logoutForm.submit();
                 } else {
-                    // Fallback: Redirect to logout URL
                     window.location.href = '/accounts/logout/';
                 }
             }, 2000);
         }
         
-        // Auto logout when session expires
         function performAutoLogout() {
             showNotification('Session expired. Logging out automatically...', 'warning');
-            setTimeout(() => {
-                performDjangoLogout();
-            }, 2000);
+            setTimeout(performDjangoLogout, 2000);
         }
         
-        // Show logout success animation
         function showLogoutSuccessAnimation() {
-            // Hide logout modal
             hideLogoutModal();
-            
-            // Show success modal
             const successModal = document.getElementById('logoutSuccessModal');
             successModal.classList.remove('hidden');
             successModal.classList.add('flex');
-            
-            // Animate progress bar
-            const progressBar = document.getElementById('logoutProgress');
-            setTimeout(() => {
-                progressBar.style.width = '100%';
-            }, 100);
-            
-            // Create more confetti
+            setTimeout(() => document.getElementById('logoutProgress').style.width = '100%', 100);
             createEnhancedConfetti();
-            
-            // Play success sound (optional)
-            if (typeof Audio !== 'undefined') {
-                const successSound = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-correct-answer-tone-2870.mp3');
-                successSound.volume = 0.3;
-                successSound.play().catch(e => console.log('Audio play failed:', e));
-            }
         }
         
-        // Create confetti effect
         function createConfetti() {
             const colors = ['#ef4444', '#3b82f6', '#10b981', '#f59e0b', '#8b5cf6'];
-            const container = document.body;
-            
             for (let i = 0; i < 50; i++) {
                 const confetti = document.createElement('div');
                 confetti.className = 'confetti';
@@ -1339,20 +1544,13 @@
                 confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
                 confetti.style.animation = `confetti-fall ${Math.random() * 3 + 2}s linear forwards`;
                 confetti.style.animationDelay = Math.random() * 0.5 + 's';
-                container.appendChild(confetti);
-                
-                // Remove after animation
-                setTimeout(() => {
-                    confetti.remove();
-                }, 5000);
+                document.body.appendChild(confetti);
+                setTimeout(() => confetti.remove(), 5000);
             }
         }
         
-        // Create enhanced confetti for success
         function createEnhancedConfetti() {
             const shapes = ['●', '■', '▲', '◆', '★'];
-            const container = document.body;
-            
             for (let i = 0; i < 100; i++) {
                 const confetti = document.createElement('div');
                 confetti.className = 'confetti';
@@ -1367,112 +1565,83 @@
                 confetti.textContent = shapes[Math.floor(Math.random() * shapes.length)];
                 confetti.style.animation = `confetti-fall ${Math.random() * 4 + 2}s linear forwards`;
                 confetti.style.animationDelay = Math.random() * 1 + 's';
-                container.appendChild(confetti);
-                
-                // Remove after animation
-                setTimeout(() => {
-                    confetti.remove();
-                }, 6000);
+                document.body.appendChild(confetti);
+                setTimeout(() => confetti.remove(), 6000);
             }
         }
         
-        // Clear all local data
         function clearAllLocalData() {
             try {
-                // Clear localStorage
                 localStorage.removeItem('emfhs_students');
-                localStorage.removeItem('emfhs_backup_' + Date.now());
-                
-                // Clear any session data
                 sessionStorage.clear();
-                
-                // Clear form data
-                document.getElementById('studentForm').reset();
-                
-                // Clear state
                 students = [];
                 yearCounters = {};
                 currentPage = 1;
                 currentSearch = '';
                 editingIndex = -1;
-                
-                console.log('All local data cleared securely');
-            } catch (error) {
-                console.error('Error clearing local data:', error);
-            }
+                clearUndoHistory();
+            } catch (error) { console.error('Error clearing local data:', error); }
         }
         
-        // ========== SUPER POWERFUL FLOATING HOME BUTTON (LEFT SIDE, SAME LEVEL) ==========
-        // The button is now an <a> tag pointing to /staff/general, so no JS needed.
-        // But we keep a small visual feedback.
         document.addEventListener('DOMContentLoaded', function() {
             const homeBtn = document.getElementById('floatingHomeBtn');
             if (homeBtn) {
-                homeBtn.addEventListener('click', function(e) {
-                    // subtle feedback
+                homeBtn.addEventListener('click', function() {
                     homeBtn.style.transform = 'scale(0.85)';
-                    setTimeout(() => { homeBtn.style.transform = ''; }, 200);
+                    setTimeout(() => homeBtn.style.transform = '', 200);
                 });
             }
         });
-        // ============================================================
         
-        // Initialize the application
+        // ==================== INITIALIZE ====================
         document.addEventListener('DOMContentLoaded', function() {
-            // Initialize session timer
             initSessionTimer();
-            
-            // Populate years from 2020 to 3000
             populateYearOptions();
-            
-            // Set default admission date
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('admissionDate').value = today;
-            
-            // Load data
             loadStudents();
             updateStats();
             updateStorageIndicator();
             updateDownloadCount();
             renderStudentList();
             
-            // ==================== LOGOUT EVENT LISTENERS ====================
-            
-            // Logout modal buttons
             document.getElementById('confirmLogoutBtn').addEventListener('click', performDjangoLogout);
             document.getElementById('cancelLogoutBtn').addEventListener('click', hideLogoutModal);
-            
-            // Close modal when clicking outside
             document.getElementById('logoutModal').addEventListener('click', function(e) {
-                if (e.target.id === 'logoutModal') {
-                    hideLogoutModal();
-                }
+                if (e.target.id === 'logoutModal') hideLogoutModal();
             });
             
-            // Keyboard shortcuts for logout
             document.addEventListener('keydown', function(e) {
-                // Ctrl+Shift+L for logout
                 if (e.ctrlKey && e.shiftKey && e.key === 'L') {
                     e.preventDefault();
                     showEnhancedLogout();
                 }
-                
-                // Escape to cancel logout modal
-                if (e.key === 'Escape') {
-                    const logoutModal = document.getElementById('logoutModal');
-                    if (!logoutModal.classList.contains('hidden')) {
-                        hideLogoutModal();
+                if (e.ctrlKey && e.key === 'z') {
+                    const updateModal = document.getElementById('updateModal');
+                    if (updateModal && !updateModal.classList.contains('hidden')) {
+                        e.preventDefault();
+                        performUndo();
                     }
                 }
+                if (e.key === 'Delete') {
+                    const updateModal = document.getElementById('updateModal');
+                    if (updateModal && !updateModal.classList.contains('hidden') && selectedStudents.size > 0) {
+                        e.preventDefault();
+                        showDeleteConfirmation();
+                    }
+                }
+                if (e.key === 'Escape') {
+                    const logoutModal = document.getElementById('logoutModal');
+                    if (!logoutModal.classList.contains('hidden')) hideLogoutModal();
+                    const deleteModal = document.getElementById('deleteConfirmModal');
+                    if (deleteModal.classList.contains('show')) hideDeleteConfirmation();
+                }
             });
-            
-            // ==================== EXISTING EVENT LISTENERS ====================
             
             document.getElementById('studentForm').addEventListener('submit', function(e) {
                 e.preventDefault();
                 generateStudentID();
             });
-            
             document.getElementById('clearAllBtn').addEventListener('click', confirmClearAll);
             document.getElementById('exportJsonBtn').addEventListener('click', exportJsonData);
             document.getElementById('importBtn').addEventListener('click', () => document.getElementById('fileInput').click());
@@ -1482,149 +1651,72 @@
                 currentPage = 1;
                 renderStudentList();
             });
-            
             document.getElementById('prevPage').addEventListener('click', () => changePage(-1));
             document.getElementById('nextPage').addEventListener('click', () => changePage(1));
-            
             document.getElementById('fileInput').addEventListener('change', importData);
-            
-            // Floating download button events
             document.getElementById('floatingDownloadBtn').addEventListener('click', showDownloadModal);
             document.getElementById('closeModal').addEventListener('click', hideDownloadModal);
             document.getElementById('exportWordBtn').addEventListener('click', exportToWord);
             document.getElementById('exportPDFBtn').addEventListener('click', exportToPDF);
             document.getElementById('exportCSVBtn').addEventListener('click', exportToCSV);
-            
-            // Close modal when clicking outside
             document.getElementById('downloadModal').addEventListener('click', function(e) {
-                if (e.target.id === 'downloadModal') {
-                    hideDownloadModal();
-                }
+                if (e.target.id === 'downloadModal') hideDownloadModal();
             });
             
-            // Auto-save backup every 10 minutes
             setInterval(() => {
                 if (students.length > 0) {
                     localStorage.setItem('emfhs_backup_' + Date.now(), JSON.stringify(students));
-                    console.log('Auto-backup created');
                 }
             }, 10 * 60 * 1000);
             
-            // Reset session timer on user activity
             ['click', 'keypress', 'mousemove', 'scroll'].forEach(event => {
                 document.addEventListener(event, () => {
-                    sessionTime = 1800; // Reset to 30 minutes
+                    sessionTime = 1800;
                     updateSessionTimerDisplay();
                 });
             });
         });
         
-        // Populate year options from 2020 to 3000
         function populateYearOptions() {
             const yearSelect = document.getElementById('enrollmentYear');
             yearSelect.innerHTML = '';
-            
             const currentYear = new Date().getFullYear();
             let selectedSet = false;
-            
             for (let year = START_YEAR; year <= END_YEAR; year++) {
                 const option = document.createElement('option');
                 option.value = year;
                 option.textContent = year;
-                
-                if (year === currentYear && !selectedSet) {
-                    option.selected = true;
-                    selectedSet = true;
-                }
-                
+                if (year === currentYear && !selectedSet) { option.selected = true; selectedSet = true; }
                 yearSelect.appendChild(option);
             }
         }
         
-        // Load students
         function loadStudents() {
             const saved = localStorage.getItem('emfhs_students');
             if (saved) {
                 try {
                     students = JSON.parse(saved);
-                    
-                    // Initialize year counters
                     students.forEach(student => {
-                        const year = student.year;
-                        if (!yearCounters[year]) {
-                            yearCounters[year] = 1;
-                        } else {
-                            yearCounters[year] += 1;
-                        }
+                        yearCounters[student.year] = (yearCounters[student.year] || 0) + 1;
                     });
-                    
-                    console.log(`Loaded ${students.length} students from storage`);
-                } catch (e) {
-                    console.error('Error loading students:', e);
-                    students = [];
-                }
+                } catch (e) { console.error('Error loading students:', e); students = []; }
             }
         }
         
-        // Save with storage check
-        function saveStudents() {
-            try {
-                const dataStr = JSON.stringify(students);
-                const dataSize = new Blob([dataStr]).size;
-                
-                // Check storage limit
-                if (dataSize > STORAGE_LIMIT) {
-                    showNotification('Storage limit reached! Cannot save more data.', 'error');
-                    return false;
-                }
-                
-                localStorage.setItem('emfhs_students', dataStr);
-                updateStats();
-                updateStorageIndicator();
-                updateDownloadCount();
-                return true;
-            } catch (e) {
-                console.error('Error saving students:', e);
-                showNotification('Error saving data!', 'error');
-                return false;
-            }
-        }
-        
-        // ==================== ENHANCED ID GENERATION ====================
-        
-        // Generate mixed alphanumeric code (3 characters)
         function generateMiddleCode(year) {
-            // Create a unique seed based on year and current count
-            if (!yearCounters[year]) {
-                yearCounters[year] = 1;
-            } else {
-                yearCounters[year] += 1;
-            }
-            
+            yearCounters[year] = (yearCounters[year] || 0) + 1;
             const seed = year * 1000 + yearCounters[year];
-            
-            // Create a scrambled pattern that's not sequential
-            const patterns = [
-                'A1B', 'C2D', 'E3F', 'G4H', 'I5J', 'K6L', 'M7N', 'P8Q', 'R9S', 'T2U',
+            const patterns = ['A1B', 'C2D', 'E3F', 'G4H', 'I5J', 'K6L', 'M7N', 'P8Q', 'R9S', 'T2U',
                 'V3W', 'X4Y', 'Z5A', 'B6C', 'D7E', 'F8G', 'H9I', 'J2K', 'L3M', 'N4O',
-                'P5Q', 'R6S', 'T7U', 'V8W', 'X9Y', 'Z2A', 'B3C', 'D4E', 'F5G', 'H6I'
-            ];
-            
-            // Use the seed to select a pattern, but make it non-sequential
+                'P5Q', 'R6S', 'T7U', 'V8W', 'X9Y', 'Z2A', 'B3C', 'D4E', 'F5G', 'H6I'];
             const patternIndex = (seed * 13) % patterns.length;
             let code = patterns[patternIndex];
-            
-            // Add some randomness
             const randomChar = ALPHANUMERIC_CHARS.charAt(Math.floor(Math.random() * ALPHANUMERIC_CHARS.length));
             const position = Math.floor(Math.random() * 3);
-            
-            // Replace one character in the code with a random character
             code = code.substring(0, position) + randomChar + code.substring(position + 1);
-            
             return code;
         }
         
-        // Generate checksum (2 characters)
         function generateChecksum() {
             let checksum = '';
             for (let i = 0; i < 2; i++) {
@@ -1633,24 +1725,18 @@
             return checksum;
         }
         
-        // Generate unique student ID
         function generateStudentID() {
             const fullName = document.getElementById('fullName').value.trim();
             const year = document.getElementById('enrollmentYear').value;
             const studentClass = document.getElementById('studentClass').value;
             const admissionDate = new Date(document.getElementById('admissionDate').value);
             
-            if (!fullName) {
-                showNotification('Please enter a student name', 'warning');
-                return;
-            }
+            if (!fullName) { showNotification('Please enter a student name', 'warning'); return; }
             
-            // Check for duplicates (excluding the one being edited)
             const duplicate = students.find((student, index) => 
                 student.name.toLowerCase() === fullName.toLowerCase() && 
                 student.class === studentClass && 
-                student.year === year &&
-                index !== editingIndex
+                student.year === year && index !== editingIndex
             );
             
             if (duplicate) {
@@ -1659,158 +1745,88 @@
                 return;
             }
             
-            // If we are editing, we keep the existing ID
-            let studentId;
-            let student;
+            let studentId, student;
             
             if (editingIndex !== -1 && students[editingIndex]) {
-                // EDIT MODE: Keep the same ID
                 const existingStudent = students[editingIndex];
                 studentId = existingStudent.id;
-                
-                // Update the student with new data but keep ID
                 student = {
-                    id: studentId, // PRESERVE THE ORIGINAL ID
-                    name: fullName,
-                    class: studentClass,
-                    year: year,
-                    admissionDate: admissionDate.toLocaleDateString('en-US', {
-                        year: 'numeric',
-                        month: 'short',
-                        day: 'numeric'
-                    }),
+                    id: studentId, name: fullName, class: studentClass, year: year,
+                    admissionDate: admissionDate.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }),
                     timestamp: new Date().toISOString(),
                     dateObj: admissionDate.toISOString().split('T')[0]
                 };
-                
-                // Replace the student at the editing index
                 students[editingIndex] = student;
-                
-                // Reset editing state
                 editingIndex = -1;
-                
-                // Update the form button text back to normal
                 const submitBtn = document.querySelector('#studentForm button[type="submit"]');
                 if (submitBtn) {
                     submitBtn.innerHTML = '<i class="fas fa-id-card mr-3"></i> Generate Student ID';
+                    submitBtn.style.background = '';
                 }
-                
                 showNotification(`✅ Updated "${fullName}" - ID ${studentId} maintained!`, 'success');
             } else {
-                // NEW STUDENT MODE: Generate new ID
                 const middleCode = generateMiddleCode(year);
                 const checksum = generateChecksum();
                 studentId = `EMFHS-${year}-${middleCode}-${checksum}`;
-                
                 student = {
-                    id: studentId,
-                    name: fullName,
-                    class: studentClass,
-                    year: year,
-                    admissionDate: admissionDate.toLocaleDateString('en-US', {
-                        year: 'numeric',
-                        month: 'short',
-                        day: 'numeric'
-                    }),
+                    id: studentId, name: fullName, class: studentClass, year: year,
+                    admissionDate: admissionDate.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }),
                     timestamp: new Date().toISOString(),
                     dateObj: admissionDate.toISOString().split('T')[0]
                 };
-                
                 students.unshift(student);
                 showNotification(`ID ${studentId} generated for ${fullName}!`, 'success');
             }
             
-            if (saveStudents()) {
+            if (forceSaveToStorage()) {
                 renderStudentList();
                 updatePreview(student);
                 document.getElementById('fullName').value = '';
                 document.getElementById('admissionDate').value = new Date().toISOString().split('T')[0];
-                
-                // Smooth scroll to the new entry in the table
                 setTimeout(() => {
-                    const tableContainer = document.querySelector('.table-scroll-container');
-                    if (tableContainer) {
-                        tableContainer.scrollTop = 0;
-                    }
+                    const tc = document.querySelector('.table-scroll-container');
+                    if (tc) tc.scrollTop = 0;
                 }, 100);
             }
         }
         
-        // Bulk generate IDs
         function bulkGenerate() {
             const namesText = document.getElementById('bulkNames').value.trim();
-            if (!namesText) {
-                showNotification('Please enter student names', 'warning');
-                return;
-            }
-            
+            if (!namesText) { showNotification('Please enter student names', 'warning'); return; }
             const names = namesText.split('\n').filter(name => name.trim());
             const year = document.getElementById('enrollmentYear').value;
             const studentClass = document.getElementById('studentClass').value;
+            if (names.length > 100 && !confirm(`You're about to generate ${names.length} IDs. Continue?`)) return;
             
-            if (names.length > 100) {
-                if (!confirm(`You're about to generate ${names.length} IDs. Continue?`)) return;
-            }
-            
-            let generated = 0;
-            let skipped = 0;
-            
+            let generated = 0, skipped = 0;
             names.forEach(fullName => {
                 fullName = fullName.trim();
                 if (!fullName) return;
-                
-                // Check duplicate
                 const duplicate = students.find(student => 
                     student.name.toLowerCase() === fullName.toLowerCase() && 
-                    student.class === studentClass && 
-                    student.year === year
+                    student.class === studentClass && student.year === year
                 );
-                
-                if (duplicate) {
-                    skipped++;
-                    return;
-                }
-                
-                // Generate ID
+                if (duplicate) { skipped++; return; }
                 const middleCode = generateMiddleCode(year);
                 const checksum = generateChecksum();
                 const studentId = `EMFHS-${year}-${middleCode}-${checksum}`;
-                
-                const student = {
-                    id: studentId,
-                    name: fullName,
-                    class: studentClass,
-                    year: year,
-                    admissionDate: new Date().toLocaleDateString('en-US', {
-                        year: 'numeric',
-                        month: 'short',
-                        day: 'numeric'
-                    }),
+                students.unshift({
+                    id: studentId, name: fullName, class: studentClass, year: year,
+                    admissionDate: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }),
                     timestamp: new Date().toISOString(),
                     dateObj: new Date().toISOString().split('T')[0]
-                };
-                
-                students.unshift(student);
+                });
                 generated++;
             });
-            
-            if (saveStudents()) {
+            if (forceSaveToStorage()) {
                 renderStudentList();
                 document.getElementById('bulkNames').value = '';
                 showNotification(`Generated ${generated} IDs, skipped ${skipped} duplicates`, 'success');
             }
         }
         
-        // ====================
-        // DOWNLOAD/EXPORT FUNCTIONS
-        // ====================
-        
         function showDownloadModal() {
-            if (students.length === 0) {
-                showNotification('No data to export', 'warning');
-                return;
-            }
-            
+            if (students.length === 0) { showNotification('No data to export', 'warning'); return; }
             document.getElementById('exportCount').textContent = `${students.length} records`;
             document.getElementById('downloadModal').classList.remove('hidden');
             document.getElementById('downloadModal').classList.add('flex');
@@ -1832,350 +1848,335 @@
             document.getElementById('loadingOverlay').classList.remove('flex');
         }
         
-        // Export to Word
+        // ==================== EXPORT TO WORD (GROUPED BY CLASS + CLASS COLUMN) ====================
         function exportToWord() {
             showLoading('Generating Word document...');
-            
             setTimeout(() => {
                 const includeTimestamp = document.getElementById('includeTimestamp').checked;
                 const includeChecksum = document.getElementById('includeChecksum').checked;
                 
-                let content = `
-                <!DOCTYPE html>
-                <html>
-                <head>
-                    <meta charset="UTF-8">
-                    <title>EMFHS Student IDs - ${new Date().toLocaleDateString()}</title>
-                    <style>
-                        body { font-family: Arial, sans-serif; margin: 40px; }
-                        h1 { color: #1e40af; border-bottom: 3px solid #3b82f6; padding-bottom: 10px; }
-                        h2 { color: #374151; margin-top: 30px; }
-                        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
-                        th { background-color: #1e40af; color: white; padding: 12px; text-align: left; }
-                        td { padding: 10px; border-bottom: 1px solid #e5e7eb; }
-                        tr:nth-child(even) { background-color: #f8fafc; }
-                        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
-                        .logo { font-size: 24px; font-weight: bold; color: #1e40af; }
-                        .footer { margin-top: 40px; color: #6b7280; font-size: 12px; text-align: center; }
-                        .checksum { font-family: monospace; color: #059669; }
-                    </style>
-                </head>
-                <body>
-                    <div class="header">
-                        <div>
-                            <h1>EMILIA FOREMOST HIGH SCHOOL</h1>
-                            <h2>Student ID Registry</h2>
-                        </div>
-                        <div class="logo">EMIFORPHS ID System</div>
-                    </div>
-                    
-                    <p><strong>Report Date:</strong> ${new Date().toLocaleDateString('en-US', { 
-                        year: 'numeric', 
-                        month: 'long', 
-                        day: 'numeric',
-                        weekday: 'long' 
-                    })}</p>
-                    <p><strong>Total Students:</strong> ${students.length}</p>
-                    
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>No.</th>
-                                <th>Student ID</th>
-                                <th>Full Name</th>
-                                <th>Class</th>
-                                <th>Enrollment Year</th>
-                                <th>Admission Date</th>
-                                ${includeTimestamp ? '<th>Generated On</th>' : ''}
-                            </tr>
-                        </thead>
-                        <tbody>
-                `;
+                const groups = getStudentsGroupedByClass();
                 
-                students.forEach((student, index) => {
-                    content += `
-                    <tr>
-                        <td>${index + 1}</td>
-                        <td><strong>${student.id}</strong></td>
-                        <td>${student.name}</td>
-                        <td>${student.class}</td>
-                        <td>${student.year}</td>
-                        <td>${student.admissionDate}</td>
-                        ${includeTimestamp ? `<td>${new Date(student.timestamp).toLocaleDateString()}</td>` : ''}
-                    </tr>
-                    `;
-                });
+                let content = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>EMFHS Student IDs</title>
+                <style>
+                    body{font-family:Arial,sans-serif;margin:40px;color:#1f2937;}
+                    h1{color:#1e40af;border-bottom:3px solid #3b82f6;padding-bottom:10px;margin-bottom:8px;}
+                    h2{color:#374151;margin-top:0;font-weight:400;font-size:18px;}
+                    .class-section{margin-top:36px;}
+                    .class-heading{
+                        background:linear-gradient(90deg,#1e40af 0%,#3b82f6 100%);
+                        color:white;padding:12px 20px;border-radius:10px 10px 0 0;
+                        font-size:18px;font-weight:bold;display:flex;justify-content:space-between;align-items:center;
+                    }
+                    .class-heading .count-badge{
+                        background:rgba(255,255,255,0.25);padding:3px 12px;border-radius:20px;font-size:13px;
+                    }
+                    .class-table{width:100%;border-collapse:collapse;margin:0;}
+                    .class-table th{
+                        background:#f1f5f9;color:#334155;padding:10px 12px;text-align:left;
+                        font-size:12px;font-weight:bold;text-transform:uppercase;letter-spacing:0.5px;
+                        border-bottom:2px solid #cbd5e1;
+                    }
+                    .class-table td{padding:10px 12px;border-bottom:1px solid #e5e7eb;font-size:13px;}
+                    .class-table tr:nth-child(even) td{background:#f8fafc;}
+                    .class-table tr:last-child td{border-bottom:2px solid #cbd5e1;}
+                    .class-cell{font-weight:bold;color:#1e40af;}
+                    .footer{margin-top:50px;color:#6b7280;font-size:12px;text-align:center;padding-top:20px;border-top:1px solid #e5e7eb;}
+                    .report-meta{background:#f8fafc;padding:14px 18px;border-radius:10px;border-left:4px solid #3b82f6;margin-bottom:20px;}
+                    .report-meta p{margin:4px 0;font-size:13px;color:#475569;}
+                    .report-meta strong{color:#1e293b;}
+                    .no-students{color:#9ca3af;font-style:italic;padding:20px;text-align:center;}
+                </style>
+                </head><body>
+                <h1>EMILIA FOREMOST HIGH SCHOOL</h1>
+                <h2>Student ID Registry — Grouped by Class</h2>
+                <div class="report-meta">
+                    <p><strong>Report Date:</strong> ${new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' })}</p>
+                    <p><strong>Total Students:</strong> ${students.length}</p>
+                    <p><strong>Classes Represented:</strong> ${groups.length}</p>
+                    <p><strong>Ordering:</strong> Graduated → SSS 3 → SSS 2 → SSS 1 → JSS 3 → JSS 2 → JSS 1</p>
+                </div>`;
+                
+                if (groups.length === 0) {
+                    content += `<div class="no-students">No students found in the system.</div>`;
+                } else {
+                    groups.forEach(group => {
+                        content += `
+                        <div class="class-section">
+                            <div class="class-heading">
+                                <span>📚 ${group.className}</span>
+                                <span class="count-badge">${group.count} student${group.count !== 1 ? 's' : ''}</span>
+                            </div>
+                            <table class="class-table">
+                                <thead>
+                                    <tr>
+                                        <th style="width:40px;">#</th>
+                                        <th style="width:180px;">Student ID</th>
+                                        <th>Full Name</th>
+                                        <th style="width:110px;">Class</th>
+                                        <th style="width:90px;">Year</th>
+                                        <th style="width:130px;">Admission Date</th>
+                                        ${includeTimestamp ? '<th style="width:110px;">Generated On</th>' : ''}
+                                    </tr>
+                                </thead>
+                                <tbody>`;
+                        group.students.forEach((student, index) => {
+                            content += `
+                                <tr>
+                                    <td>${index + 1}</td>
+                                    <td><strong style="font-family:monospace;color:#1e40af;">${student.id}</strong></td>
+                                    <td>${student.name}</td>
+                                    <td class="class-cell">${student.class}</td>
+                                    <td>${student.year}</td>
+                                    <td>${student.admissionDate}</td>
+                                    ${includeTimestamp ? `<td>${new Date(student.timestamp).toLocaleDateString()}</td>` : ''}
+                                </tr>`;
+                        });
+                        content += `
+                                </tbody>
+                            </table>
+                        </div>`;
+                    });
+                }
                 
                 content += `
-                        </tbody>
-                    </table>
-                    
-                    ${includeChecksum ? `
-                    <h2>Checksum Information</h2>
-                    <p>The 2-character checksum (last part of ID) is generated using a secure algorithm that avoids confusing characters (0/O, 1/I).</p>
-                    <p>Valid characters: <span class="checksum">ABCDEFGHJKLMNPQRSTUVWXYZ23456789</span></p>
-                    ` : ''}
-                    
-                    <div class="footer">
-                        <p>Generated by EMIFORPHS Student ID Generator System | Format: EMFHS-YYYY-XXX-XX</p>
-                        <p>© ${new Date().getFullYear()} Emilia Foremost High School. All rights reserved.</p>
-                    </div>
-                </body>
-                </html>
-                `;
+                ${includeChecksum ? `
+                <h2 style="margin-top:50px;">Checksum Information</h2>
+                <p style="font-size:13px;color:#475569;">The 2-character checksum (last part of ID) uses a secure algorithm avoiding confusing characters (0/O, 1/I).</p>
+                <p style="font-family:monospace;color:#059669;font-size:13px;">Valid characters: ABCDEFGHJKLMNPQRSTUVWXYZ23456789</p>
+                ` : ''}
+                <div class="footer">
+                    <p>Generated by EMIFORPHS Student ID Generator System | Format: EMFHS-YYYY-XXX-XX</p>
+                    <p>© ${new Date().getFullYear()} Emilia Foremost High School. All rights reserved.</p>
+                </div>
+                </body></html>`;
                 
                 const blob = new Blob([content], { type: 'application/msword' });
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
                 a.download = `EMIFORPHS_Students_${new Date().toISOString().split('T')[0]}.doc`;
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(url);
-                
-                hideDownloadModal();
-                hideLoading();
+                document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
+                hideDownloadModal(); hideLoading();
                 showNotification('Word document exported successfully!', 'success');
             }, 1000);
         }
         
-        // Export to PDF
+        // ==================== EXPORT TO PDF (GROUPED BY CLASS + CLASS COLUMN) ====================
         function exportToPDF() {
             showLoading('Generating PDF document...');
-            
             setTimeout(() => {
                 const { jsPDF } = window.jspdf;
                 const doc = new jsPDF('p', 'mm', 'a4');
                 const includeTimestamp = document.getElementById('includeTimestamp').checked;
-                const includeChecksum = document.getElementById('includeChecksum').checked;
                 
-                // Title
-                doc.setFontSize(20);
-                doc.setTextColor(30, 64, 175);
-                doc.text('EMILIA FOREMOST HIGH SCHOOL', 105, 20, { align: 'center' });
+                const groups = getStudentsGroupedByClass();
+                const pageWidth = doc.internal.pageSize.width;
+                const pageHeight = doc.internal.pageSize.height;
                 
-                doc.setFontSize(16);
-                doc.setTextColor(55, 65, 81);
-                doc.text('Student ID Registry', 105, 30, { align: 'center' });
+                doc.setFontSize(20); doc.setTextColor(30, 64, 175);
+                doc.text('EMILIA FOREMOST HIGH SCHOOL', pageWidth / 2, 18, { align: 'center' });
+                doc.setFontSize(14); doc.setTextColor(55, 65, 81);
+                doc.text('Student ID Registry — Grouped by Class', pageWidth / 2, 26, { align: 'center' });
                 
-                // Report info
-                doc.setFontSize(10);
-                doc.setTextColor(107, 114, 128);
-                doc.text(`Report Date: ${new Date().toLocaleDateString()}`, 20, 45);
-                doc.text(`Total Students: ${students.length}`, 20, 52);
+                doc.setFontSize(9); doc.setTextColor(71, 85, 105);
+                doc.text(`Report Date: ${new Date().toLocaleDateString()}`, 14, 36);
+                doc.text(`Total Students: ${students.length}  |  Classes: ${groups.length}`, 14, 41);
+                doc.text('Ordering: Graduated → SSS 3 → SSS 2 → SSS 1 → JSS 3 → JSS 2 → JSS 1', 14, 46);
                 
-                // Table data
-                const headers = [
-                    ['No.', 'Student ID', 'Full Name', 'Class', 'Year', 'Admission Date']
-                ];
+                let currentY = 54;
                 
-                if (includeTimestamp) {
-                    headers[0].push('Generated On');
+                if (groups.length === 0) {
+                    doc.setTextColor(156, 163, 175);
+                    doc.text('No students found in the system.', pageWidth / 2, currentY, { align: 'center' });
+                } else {
+                    groups.forEach((group) => {
+                        if (currentY > pageHeight - 40) {
+                            doc.addPage();
+                            currentY = 20;
+                        }
+                        
+                        doc.setFillColor(30, 64, 175);
+                        doc.rect(14, currentY, pageWidth - 28, 9, 'F');
+                        doc.setTextColor(255, 255, 255);
+                        doc.setFontSize(11);
+                        doc.setFont(undefined, 'bold');
+                        doc.text(`${group.className}`, 18, currentY + 6.5);
+                        doc.setFont(undefined, 'normal');
+                        doc.setFontSize(9);
+                        doc.text(`${group.count} student${group.count !== 1 ? 's' : ''}`, pageWidth - 18, currentY + 6.5, { align: 'right' });
+                        
+                        currentY += 9;
+                        
+                        const headers = [['#', 'Student ID', 'Full Name', 'Class', 'Year', 'Admission Date']];
+                        if (includeTimestamp) headers[0].push('Generated On');
+                        
+                        const data = group.students.map((student, idx) => {
+                            const row = [
+                                (idx + 1).toString(),
+                                student.id,
+                                student.name,
+                                student.class,
+                                student.year,
+                                student.admissionDate
+                            ];
+                            if (includeTimestamp) row.push(new Date(student.timestamp).toLocaleDateString());
+                            return row;
+                        });
+                        
+                        doc.autoTable({
+                            head: headers,
+                            body: data,
+                            startY: currentY,
+                            margin: { left: 14, right: 14 },
+                            theme: 'grid',
+                            headStyles: { 
+                                fillColor: [241, 245, 249], 
+                                textColor: [51, 65, 85], 
+                                fontSize: 8,
+                                fontStyle: 'bold'
+                            },
+                            bodyStyles: { fontSize: 8.5, cellPadding: 2.5 },
+                            alternateRowStyles: { fillColor: [248, 250, 252] },
+                            columnStyles: {
+                                0: { cellWidth: 10, halign: 'center' },
+                                1: { cellWidth: 42, font: 'courier', textColor: [30, 64, 175] },
+                                2: { cellWidth: 'auto' },
+                                3: { cellWidth: 22, halign: 'center', fontStyle: 'bold', textColor: [30, 64, 175] },
+                                4: { cellWidth: 18, halign: 'center' },
+                                5: { cellWidth: 30 }
+                            },
+                            didDrawPage: function(data) {
+                                doc.setFontSize(8);
+                                doc.setTextColor(128, 128, 128);
+                                doc.text(
+                                    `Generated by EMIFORPHS ID System • © ${new Date().getFullYear()} Emilia Foremost High School`,
+                                    pageWidth / 2,
+                                    pageHeight - 8,
+                                    { align: 'center' }
+                                );
+                            }
+                        });
+                        
+                        currentY = doc.lastAutoTable.finalY + 10;
+                    });
                 }
                 
-                const data = students.map((student, index) => {
-                    const row = [
-                        (index + 1).toString(),
-                        student.id,
-                        student.name,
-                        student.class,
-                        student.year,
-                        student.admissionDate
-                    ];
-                    
-                    if (includeTimestamp) {
-                        row.push(new Date(student.timestamp).toLocaleDateString());
-                    }
-                    
-                    return row;
-                });
-                
-                // Generate table
-                doc.autoTable({
-                    head: headers,
-                    body: data,
-                    startY: 60,
-                    theme: 'grid',
-                    headStyles: { 
-                        fillColor: [30, 64, 175],
-                        textColor: 255,
-                        fontSize: 10
-                    },
-                    bodyStyles: { fontSize: 9 },
-                    alternateRowStyles: { fillColor: [248, 250, 252] }
-                });
-                
-                // Footer
-                const pageCount = doc.internal.getNumberOfPages();
-                for (let i = 1; i <= pageCount; i++) {
-                    doc.setPage(i);
-                    doc.setFontSize(8);
-                    doc.setTextColor(128, 128, 128);
-                    doc.text(
-                        `Page ${i} of ${pageCount} • Generated by EMIFORPHS ID System • © ${new Date().getFullYear()}`,
-                        105,
-                        doc.internal.pageSize.height - 10,
-                        { align: 'center' }
-                    );
-                }
-                
-                // Save PDF
                 doc.save(`EMIFORPHS_Students_${new Date().toISOString().split('T')[0]}.pdf`);
-                
-                hideDownloadModal();
-                hideLoading();
+                hideDownloadModal(); hideLoading();
                 showNotification('PDF document exported successfully!', 'success');
             }, 1000);
         }
         
-        // Export to CSV
+        // ==================== EXPORT TO CSV (GROUPED BY CLASS + CLASS COLUMN) ====================
         function exportToCSV() {
             showLoading('Generating CSV file...');
-            
             setTimeout(() => {
                 const includeTimestamp = document.getElementById('includeTimestamp').checked;
+                const groups = getStudentsGroupedByClass();
                 
-                let csvContent = "No.,Student ID,Full Name,Class,Enrollment Year,Admission Date";
+                let csvContent = "";
                 
-                if (includeTimestamp) {
-                    csvContent += ",Generated On";
+                csvContent += `"EMILIA FOREMOST HIGH SCHOOL - Student ID Registry"\n`;
+                csvContent += `"Report Date: ${new Date().toLocaleDateString()}"\n`;
+                csvContent += `"Total Students: ${students.length} | Classes: ${groups.length}"\n`;
+                csvContent += `"Ordering: Graduated → SSS 3 → SSS 2 → SSS 1 → JSS 3 → JSS 2 → JSS 1"\n`;
+                csvContent += `\n`;
+                
+                if (groups.length === 0) {
+                    csvContent += `"No students found in the system."\n`;
+                } else {
+                    groups.forEach((group, groupIndex) => {
+                        csvContent += `"──── ${group.className.toUpperCase()} ──── (${group.count} student${group.count !== 1 ? 's' : ''})"\n`;
+                        
+                        let headerRow = `"#","Student ID","Full Name","Class","Enrollment Year","Admission Date"`;
+                        if (includeTimestamp) headerRow += `,"Generated On"`;
+                        csvContent += headerRow + `\n`;
+                        
+                        group.students.forEach((student, index) => {
+                            const row = [
+                                index + 1,
+                                student.id,
+                                `"${student.name.replace(/"/g, '""')}"`,
+                                `"${student.class}"`,
+                                student.year,
+                                student.admissionDate
+                            ];
+                            if (includeTimestamp) row.push(new Date(student.timestamp).toLocaleDateString());
+                            csvContent += row.join(",") + `\n`;
+                        });
+                        
+                        if (groupIndex < groups.length - 1) {
+                            csvContent += `\n`;
+                        }
+                    });
                 }
-                
-                csvContent += "\n";
-                
-                students.forEach((student, index) => {
-                    const row = [
-                        index + 1,
-                        student.id,
-                        `"${student.name}"`,
-                        student.class,
-                        student.year,
-                        student.admissionDate
-                    ];
-                    
-                    if (includeTimestamp) {
-                        row.push(new Date(student.timestamp).toLocaleDateString());
-                    }
-                    
-                    csvContent += row.join(",") + "\n";
-                });
                 
                 const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
                 a.download = `EMIFORPHS_Students_${new Date().toISOString().split('T')[0]}.csv`;
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(url);
-                
-                hideDownloadModal();
-                hideLoading();
+                document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
+                hideDownloadModal(); hideLoading();
                 showNotification('CSV file exported successfully!', 'success');
             }, 500);
         }
         
-        // Export JSON data
         function exportJsonData() {
-            if (students.length === 0) {
-                showNotification('No data to export', 'warning');
-                return;
-            }
-            
+            if (students.length === 0) { showNotification('No data to export', 'warning'); return; }
             const dataStr = JSON.stringify(students, null, 2);
             const dataBlob = new Blob([dataStr], {type: 'application/json'});
             const url = URL.createObjectURL(dataBlob);
-            
             const a = document.createElement('a');
             a.href = url;
             a.download = `emforphs_students_${new Date().toISOString().split('T')[0]}.json`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-            
+            document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
             showNotification(`Exported ${students.length} records as JSON`, 'success');
         }
         
-        // Import data
         function importData(event) {
             const file = event.target.files[0];
             if (!file) return;
-            
             if (!confirm('Importing data will replace current records. Continue?')) {
                 document.getElementById('fileInput').value = '';
                 return;
             }
-            
             const reader = new FileReader();
             reader.onload = function(e) {
                 try {
                     const imported = JSON.parse(e.target.result);
-                    
-                    // Validate imported data
-                    if (!Array.isArray(imported) || imported.length === 0) {
-                        throw new Error('Invalid data format');
-                    }
-                    
-                    // Check first item structure
+                    if (!Array.isArray(imported) || imported.length === 0) throw new Error('Invalid data format');
                     const first = imported[0];
-                    if (!first.id || !first.name || !first.year) {
-                        throw new Error('Data missing required fields');
-                    }
-                    
-                    // Check storage capacity
+                    if (!first.id || !first.name || !first.year) throw new Error('Data missing required fields');
                     const dataSize = new Blob([JSON.stringify(imported)]).size;
                     if (dataSize > STORAGE_LIMIT) {
                         showNotification(`Import too large (${formatBytes(dataSize)}). Max: 5MB`, 'error');
                         return;
                     }
-                    
                     students = imported;
-                    
-                    // Reset year counters
                     yearCounters = {};
                     students.forEach(student => {
-                        const year = student.year;
-                        if (!yearCounters[year]) {
-                            yearCounters[year] = 1;
-                        } else {
-                            yearCounters[year] += 1;
-                        }
+                        yearCounters[student.year] = (yearCounters[student.year] || 0) + 1;
                     });
-                    
-                    saveStudents();
+                    clearUndoHistory();
+                    forceSaveToStorage();
                     renderStudentList();
                     updateStats();
-                    
-                    if (students.length > 0) {
-                        updatePreview(students[0]);
-                    }
-                    
+                    if (students.length > 0) updatePreview(students[0]);
                     showNotification(`Imported ${students.length} records successfully`, 'success');
                 } catch (error) {
                     console.error('Import error:', error);
                     showNotification('Error importing data. Check file format.', 'error');
                 }
-                
-                // Reset file input
                 document.getElementById('fileInput').value = '';
             };
-            
             reader.readAsText(file);
         }
         
-        // ====================
-        // UI FUNCTIONS
-        // ====================
-        
-        // Render student list with pagination
         function renderStudentList() {
             const tbody = document.getElementById('idList');
             const emptyMessage = document.getElementById('emptyMessage');
-            
-            // Filter students based on search
             let filteredStudents = students;
             if (currentSearch) {
                 const searchTerm = currentSearch.toLowerCase();
@@ -2186,98 +2187,61 @@
                     student.year.includes(searchTerm)
                 );
             }
-            
             const total = filteredStudents.length;
             const totalPages = Math.ceil(total / ITEMS_PER_PAGE);
-            
-            // Adjust current page if needed
             if (currentPage > totalPages && totalPages > 0) currentPage = totalPages;
             if (currentPage < 1) currentPage = 1;
-            
             const start = (currentPage - 1) * ITEMS_PER_PAGE;
             const end = start + ITEMS_PER_PAGE;
             const pageStudents = filteredStudents.slice(start, end);
-            
-            // Update pagination info
             document.getElementById('pageStart').textContent = total > 0 ? start + 1 : 0;
             document.getElementById('pageEnd').textContent = Math.min(end, total);
             document.getElementById('totalStudents').textContent = total;
             document.getElementById('currentPage').textContent = currentPage;
-            
             document.getElementById('prevPage').disabled = currentPage === 1;
             document.getElementById('nextPage').disabled = currentPage === totalPages || totalPages === 0;
-            
-            // Render table
             if (pageStudents.length === 0) {
                 tbody.innerHTML = '';
                 emptyMessage.style.display = 'block';
-                emptyMessage.textContent = currentSearch ? 
-                    'No students found matching your search' : 
-                    'No student IDs generated yet. Fill the form to create your first ID.';
+                emptyMessage.textContent = currentSearch ? 'No students found matching your search' : 'No student IDs generated yet. Fill the form to create your first ID.';
                 return;
             }
-            
             emptyMessage.style.display = 'none';
-            
             let html = '';
             pageStudents.forEach((student, index) => {
                 const actualIndex = start + index;
-                html += `
-                <tr class="hover:bg-gray-50 transition hover-scroll-effect">
+                html += `<tr class="hover:bg-gray-50 transition hover-scroll-effect">
                     <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-900">${actualIndex + 1}</td>
                     <td class="px-4 py-3 whitespace-nowrap text-sm font-mono font-bold text-primary">
-                        <span class="cursor-pointer hover:text-secondary" onclick="copyToClipboard('${student.id}')" title="Click to copy">
-                            ${student.id}
-                        </span>
+                        <span class="cursor-pointer hover:text-secondary" onclick="copyToClipboard('${student.id}')" title="Click to copy">${student.id}</span>
                     </td>
                     <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-900">${student.name}</td>
                     <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">${student.class}</td>
                     <td class="px-4 py-3 whitespace-nowrap text-sm">
-                        <button onclick="viewStudent(${students.indexOf(student)})" class="text-accent hover:text-secondary mr-3" title="View">
-                            <i class="fas fa-eye"></i>
-                        </button>
-                        <button onclick="editStudent(${students.indexOf(student)})" class="text-warning hover:text-orange-800 mr-3" title="Edit">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                        <button onclick="deleteStudent(${students.indexOf(student)})" class="text-danger hover:text-red-800" title="Delete">
-                            <i class="fas fa-trash"></i>
-                        </button>
+                        <button onclick="viewStudent('${student.id}')" class="text-accent hover:text-secondary mr-3" title="View"><i class="fas fa-eye"></i></button>
+                        <button onclick="editStudent('${student.id}')" class="text-warning hover:text-orange-800 mr-3" title="Edit"><i class="fas fa-edit"></i></button>
+                        <button onclick="deleteStudent('${student.id}')" class="text-danger hover:text-red-800" title="Delete"><i class="fas fa-trash"></i></button>
                     </td>
-                </tr>
-                `;
+                </tr>`;
             });
-            
             tbody.innerHTML = html;
         }
         
         function changePage(delta) {
             const total = currentSearch ? 
-                students.filter(s => 
-                    s.name.toLowerCase().includes(currentSearch) ||
-                    s.id.toLowerCase().includes(currentSearch) ||
-                    s.class.toLowerCase().includes(currentSearch) ||
-                    s.year.includes(currentSearch)
-                ).length : students.length;
-            
+                students.filter(s => s.name.toLowerCase().includes(currentSearch) || s.id.toLowerCase().includes(currentSearch) || s.class.toLowerCase().includes(currentSearch) || s.year.includes(currentSearch)).length : students.length;
             const totalPages = Math.ceil(total / ITEMS_PER_PAGE);
             const newPage = currentPage + delta;
-            
             if (newPage >= 1 && newPage <= totalPages) {
                 currentPage = newPage;
                 renderStudentList();
-                
-                // Smooth scroll to top of table
-                const tableContainer = document.querySelector('.table-scroll-container');
-                if (tableContainer) {
-                    tableContainer.scrollTo({
-                        top: 0,
-                        behavior: 'smooth'
-                    });
-                }
+                const tc = document.querySelector('.table-scroll-container');
+                if (tc) tc.scrollTo({ top: 0, behavior: 'smooth' });
             }
         }
         
         function updatePreview(student) {
+            if (!student) return;
             document.getElementById('previewName').textContent = student.name;
             document.getElementById('previewId').textContent = student.id;
             document.getElementById('previewClass').textContent = student.class;
@@ -2285,40 +2249,31 @@
             document.getElementById('previewDate').textContent = student.admissionDate;
         }
         
-        function viewStudent(index) {
-            updatePreview(students[index]);
-            showNotification(`Viewing ${students[index].name}'s ID`, 'info');
+        function viewStudent(id) {
+            const student = students.find(s => s.id === id);
+            if (student) {
+                updatePreview(student);
+                showNotification(`Viewing ${student.name}'s ID`, 'info');
+            }
         }
         
-        function editStudent(index) {
+        function editStudent(id) {
+            const index = students.findIndex(s => s.id === id);
+            if (index === -1) return;
             const student = students[index];
-            
-            // Set editing index
             editingIndex = index;
-            
-            // Fill form with student data
             document.getElementById('fullName').value = student.name;
             document.getElementById('enrollmentYear').value = student.year;
             document.getElementById('studentClass').value = student.class;
-            
-            // Parse admission date
             const date = new Date(student.dateObj || student.admissionDate);
             document.getElementById('admissionDate').value = date.toISOString().split('T')[0];
-            
-            // Update the form button text to indicate edit mode
             const submitBtn = document.querySelector('#studentForm button[type="submit"]');
             if (submitBtn) {
                 submitBtn.innerHTML = '<i class="fas fa-save mr-3"></i> Update Student (ID Preserved)';
                 submitBtn.style.background = 'linear-gradient(135deg, #f59e0b 0%, #f97316 100%)';
             }
-            
-            // Show notification
             showNotification(`✏️ Editing "${student.name}" - ID ${student.id} will be preserved`, 'info');
-            
-            // Update preview to show the student being edited
             updatePreview(student);
-            
-            // Smooth scroll to form
             const formElement = document.getElementById('fullName');
             if (formElement) {
                 setTimeout(() => {
@@ -2329,9 +2284,11 @@
             }
         }
         
-        function deleteStudent(index) {
-            if (confirm(`Delete ${students[index].name}'s ID? This cannot be undone.`)) {
-                // If deleting the student being edited, reset edit mode
+        function deleteStudent(id) {
+            const index = students.findIndex(s => s.id === id);
+            if (index === -1) return;
+            const student = students[index];
+            if (confirm(`Delete ${student.name}'s ID? This can be undone with Ctrl+Z.`)) {
                 if (editingIndex === index) {
                     editingIndex = -1;
                     const submitBtn = document.querySelector('#studentForm button[type="submit"]');
@@ -2340,29 +2297,36 @@
                         submitBtn.style.background = '';
                     }
                 }
+                pushToUndoHistory(
+                    `Deleted ${student.name}`,
+                    [{
+                        id: student.id,
+                        name: student.name,
+                        previousClass: student.class,
+                        fullData: JSON.parse(JSON.stringify(student))
+                    }],
+                    'delete'
+                );
                 students.splice(index, 1);
-                saveStudents();
+                forceSaveToStorage();
                 renderStudentList();
-                showNotification('Student ID deleted', 'success');
+                showNotification('Student ID deleted — Undo available', 'success');
             }
         }
         
         function confirmClearAll() {
-            if (students.length === 0) {
-                showNotification('No data to clear', 'warning');
-                return;
-            }
-            
+            if (students.length === 0) { showNotification('No data to clear', 'warning'); return; }
             if (confirm(`Clear ALL ${students.length} student records? This cannot be undone!`)) {
                 students = [];
                 yearCounters = {};
                 editingIndex = -1;
+                clearUndoHistory();
                 const submitBtn = document.querySelector('#studentForm button[type="submit"]');
                 if (submitBtn) {
                     submitBtn.innerHTML = '<i class="fas fa-id-card mr-3"></i> Generate Student ID';
                     submitBtn.style.background = '';
                 }
-                saveStudents();
+                forceSaveToStorage();
                 renderStudentList();
                 clearPreview();
                 showNotification('All data cleared successfully', 'success');
@@ -2382,7 +2346,6 @@
             const todayCount = students.filter(s => s.timestamp && s.timestamp.split('T')[0] === today).length;
             const currentYear = document.getElementById('enrollmentYear').value;
             const currentYearCount = students.filter(s => s.year === currentYear).length;
-            
             document.getElementById('totalIds').textContent = students.length.toLocaleString();
             document.getElementById('currentYearCount').textContent = currentYearCount.toLocaleString();
             document.getElementById('currentYearLabel').textContent = `${currentYear} Enrollees`;
@@ -2393,21 +2356,18 @@
             const dataStr = JSON.stringify(students);
             const dataSize = new Blob([dataStr]).size;
             const percentage = (dataSize / STORAGE_LIMIT) * 100;
-            
             document.getElementById('storageUsed').textContent = formatBytes(dataSize);
             document.getElementById('storagePercent').textContent = Math.round(percentage) + '%';
-            
-            // Show warning if > 70%
-            const warning = document.getElementById('storageWarning');
-            if (percentage > 70) {
-                warning.classList.remove('hidden');
-            } else {
-                warning.classList.add('hidden');
-            }
+            document.getElementById('storageWarning').classList.toggle('hidden', percentage <= 70);
         }
         
         function updateDownloadCount() {
             document.getElementById('downloadCount').textContent = students.length;
+        }
+        
+        function updateUpdateCount() {
+            const badge = document.getElementById('updateCount');
+            if (badge) badge.textContent = students.length;
         }
         
         function formatBytes(bytes) {
@@ -2422,7 +2382,6 @@
             navigator.clipboard.writeText(text).then(() => {
                 showNotification(`Copied: ${text}`, 'success');
             }).catch(err => {
-                // Fallback for older browsers
                 const textArea = document.createElement('textarea');
                 textArea.value = text;
                 document.body.appendChild(textArea);
@@ -2435,36 +2394,24 @@
         
         function copyCurrentId() {
             const id = document.getElementById('previewId').textContent;
-            if (id && id !== 'EMFHS-2025-A7K-B9') {
-                copyToClipboard(id);
-            }
+            if (id && id !== 'EMFHS-2025-A7K-B9') copyToClipboard(id);
         }
         
         function downloadSingleIdCard() {
             showNotification('Individual ID card download feature would generate a high-quality image', 'info');
         }
         
-        // Enhanced notification system
         function showNotification(message, type = 'info') {
-            // Remove existing
             const existing = document.querySelector('.notification');
             if (existing) existing.remove();
-            
-            // Create new
             const notification = document.createElement('div');
-            const icons = {
-                success: 'fa-check-circle',
-                error: 'fa-exclamation-circle',
-                warning: 'fa-exclamation-triangle',
-                info: 'fa-info-circle'
-            };
+            const icons = { success: 'fa-check-circle', error: 'fa-exclamation-circle', warning: 'fa-exclamation-triangle', info: 'fa-info-circle' };
             const colors = {
                 success: 'bg-gradient-to-r from-green-600 to-emerald-700',
                 error: 'bg-gradient-to-r from-red-600 to-red-800',
                 warning: 'bg-gradient-to-r from-yellow-600 to-orange-600',
                 info: 'bg-gradient-to-r from-blue-600 to-indigo-700'
             };
-            
             notification.className = `notification enhanced-notification fixed bottom-4 right-4 ${colors[type]} text-white px-6 py-4 rounded-xl z-50 transform transition-all duration-300`;
             notification.innerHTML = `
                 <div class="flex items-center">
@@ -2472,12 +2419,8 @@
                         <i class="fas ${icons[type]} text-xl"></i>
                     </div>
                     <span class="font-medium">${message}</span>
-                </div>
-            `;
-            
+                </div>`;
             document.body.appendChild(notification);
-            
-            // Auto-remove with animation
             setTimeout(() => {
                 notification.style.opacity = '0';
                 notification.style.transform = 'translateY(20px)';
@@ -2485,7 +2428,6 @@
             }, 4000);
         }
         
-        // Initialize with sample data if empty
         if (!localStorage.getItem('emfhs_students')) {
             setTimeout(() => {
                 const sampleStudents = [
@@ -2494,16 +2436,417 @@
                     {id: 'EMFHS-2025-E3F-G4', name: 'Chukwu Emeka', class: 'JSS 3', year: '2025', admissionDate: 'Jan 12, 2025', timestamp: new Date().toISOString(), dateObj: '2025-01-12'},
                     {id: 'EMFHS-2025-G4H-I5', name: 'David Oluwaseun', class: 'SSS 1', year: '2025', admissionDate: 'Jan 12, 2025', timestamp: new Date().toISOString(), dateObj: '2025-01-12'}
                 ];
-                
                 students = sampleStudents;
                 yearCounters[2025] = 4;
-                saveStudents();
+                forceSaveToStorage();
                 renderStudentList();
                 if (students.length > 0) updatePreview(students[0]);
-                
                 showNotification('Welcome! Sample data loaded. Try generating your own IDs!', 'info');
             }, 1000);
         }
+
+        // ==================== STUDENT CLASS UPDATE SYSTEM ====================
+        let selectedStudents = new Set();
+        let updateSearchTerm = '';
+        let activeClassDropdown = null;
+        let activeClassFilter = 'all';
+
+        document.getElementById('updateBtn').addEventListener('click', showUpdateModal);
+        document.getElementById('closeUpdateModal').addEventListener('click', hideUpdateModal);
+        document.getElementById('cancelUpdateBtn').addEventListener('click', hideUpdateModal);
+        document.getElementById('saveAndCloseUpdate').addEventListener('click', saveAndCloseUpdate);
+
+        document.addEventListener('click', function(e) {
+            if (activeClassDropdown && !activeClassDropdown.contains(e.target) && !e.target.closest('.class-badge')) {
+                closeAllClassDropdowns();
+            }
+        });
+
+        function showUpdateModal() {
+            if (students.length === 0) {
+                showNotification('No students to update. Generate some IDs first.', 'warning');
+                return;
+            }
+            selectedStudents.clear();
+            updateSearchTerm = '';
+            activeClassFilter = 'all';
+            pendingDeleteIds = [];
+            document.getElementById('updateSearchInput').value = '';
+            document.getElementById('selectAllStudents').checked = false;
+            document.getElementById('selectAllStudents').indeterminate = false;
+            document.getElementById('bulkClassSelect').value = '';
+            document.getElementById('applyBulkClassChange').disabled = true;
+            updateSelectedCount();
+            updateDeleteButton();
+            document.querySelectorAll('.class-filter-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector('.class-filter-btn.filter-all').classList.add('active');
+            updateFilterStatus();
+            updateClassCounts();
+            updateUndoButton();
+            showAutosaveIndicator('saved');
+            renderUpdateStudentGrid();
+            const modal = document.getElementById('updateModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.getElementById('updateCount').textContent = students.length;
+        }
+
+        function hideUpdateModal() {
+            const modal = document.getElementById('updateModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            closeAllClassDropdowns();
+            hideUndoToast();
+            selectedStudents.clear();
+            pendingDeleteIds = [];
+        }
+
+        function saveAndCloseUpdate() {
+            forceSaveToStorage();
+            showAutosaveIndicator('saving');
+            setTimeout(() => {
+                hideUpdateModal();
+                showNotification('All changes saved successfully', 'success');
+            }, 300);
+        }
+
+        function filterByClass(className) {
+            activeClassFilter = className;
+            selectedStudents.clear();
+            pendingDeleteIds = [];
+            document.getElementById('selectAllStudents').checked = false;
+            document.getElementById('selectAllStudents').indeterminate = false;
+            
+            document.querySelectorAll('.class-filter-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`.class-filter-btn[data-filter="${className}"]`).classList.add('active');
+            
+            updateFilterStatus();
+            renderUpdateStudentGrid();
+            updateSelectedCount();
+            updateDeleteButton();
+            updateSelectAllCheckbox();
+        }
+
+        function updateFilterStatus() {
+            const statusBadge = document.getElementById('filterStatusBadge');
+            const statusText = document.getElementById('filterStatusText');
+            if (activeClassFilter === 'all') {
+                statusBadge.classList.add('hidden');
+            } else {
+                statusBadge.classList.remove('hidden');
+                statusText.textContent = activeClassFilter;
+            }
+        }
+
+        function updateClassCounts() {
+            const classes = ['JSS 1', 'JSS 2', 'JSS 3', 'SSS 1', 'SSS 2', 'SSS 3', 'Graduated'];
+            const countIds = {
+                'JSS 1': 'count-JSS1', 'JSS 2': 'count-JSS2', 'JSS 3': 'count-JSS3',
+                'SSS 1': 'count-SSS1', 'SSS 2': 'count-SSS2', 'SSS 3': 'count-SSS3',
+                'Graduated': 'count-Graduated'
+            };
+            const totalEl = document.getElementById('count-all');
+            if (totalEl) totalEl.textContent = students.length;
+            classes.forEach(cls => {
+                const count = students.filter(s => s.class === cls).length;
+                const countEl = document.getElementById(countIds[cls]);
+                if (countEl) {
+                    countEl.textContent = count;
+                    countEl.className = 'filter-count' + (count === 0 ? ' zero' : '');
+                }
+            });
+        }
+
+        function getFilteredStudentsForUpdate() {
+            let filtered = students;
+            if (activeClassFilter !== 'all') {
+                filtered = filtered.filter(s => s.class === activeClassFilter);
+            }
+            if (updateSearchTerm) {
+                const term = updateSearchTerm.toLowerCase();
+                filtered = filtered.filter(s => 
+                    s.name.toLowerCase().includes(term) ||
+                    s.id.toLowerCase().includes(term) ||
+                    s.class.toLowerCase().includes(term) ||
+                    s.year.includes(term)
+                );
+            }
+            return filtered;
+        }
+
+        function renderUpdateStudentGrid() {
+            const grid = document.getElementById('updateStudentGrid');
+            const emptyState = document.getElementById('updateEmptyState');
+            const emptyMessage = document.getElementById('updateEmptyMessage');
+            const filtered = getFilteredStudentsForUpdate();
+            
+            if (filtered.length === 0) {
+                grid.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                if (activeClassFilter !== 'all') {
+                    emptyMessage.textContent = `No students in ${activeClassFilter} class.`;
+                } else if (updateSearchTerm) {
+                    emptyMessage.textContent = 'No students match your search.';
+                } else {
+                    emptyMessage.textContent = 'Generate some student IDs first.';
+                }
+                return;
+            }
+            emptyState.classList.add('hidden');
+            
+            let html = '';
+            filtered.forEach((student) => {
+                const isSelected = selectedStudents.has(student.id);
+                const initials = student.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+                const classKey = student.class.replace(/\s/g, '');
+                const safeId = student.id.replace(/'/g, "\\'");
+                html += `
+                <div class="student-update-card ${isSelected ? 'selected' : ''}" data-id="${student.id}" onclick="toggleStudentSelection(event, '${safeId}')">
+                    <input type="checkbox" class="student-checkbox" ${isSelected ? 'checked' : ''} 
+                           onclick="event.stopPropagation(); toggleStudentSelection(event, '${safeId}')">
+                    <div class="student-avatar">${initials}</div>
+                    <div class="student-name" title="${student.name}">${student.name}</div>
+                    <div class="student-id" title="${student.id}">${student.id}</div>
+                    <div class="flex items-center justify-between mt-2">
+                        <span class="class-badge class-${classKey}" 
+                              onclick="event.stopPropagation(); toggleClassDropdown('${safeId}', this)">
+                            ${student.class} <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                        </span>
+                        <span class="text-xs text-gray-400">${student.year}</span>
+                    </div>
+                </div>`;
+            });
+            grid.innerHTML = html;
+        }
+
+        function toggleStudentSelection(event, id) {
+            if (event) event.stopPropagation();
+            if (selectedStudents.has(id)) {
+                selectedStudents.delete(id);
+            } else {
+                selectedStudents.add(id);
+            }
+            const card = document.querySelector(`.student-update-card[data-id="${id}"]`);
+            if (card) {
+                card.classList.toggle('selected', selectedStudents.has(id));
+                const checkbox = card.querySelector('.student-checkbox');
+                if (checkbox) checkbox.checked = selectedStudents.has(id);
+            }
+            updateSelectedCount();
+            updateSelectAllCheckbox();
+            updateDeleteButton();
+        }
+
+        function updateSelectedCount() {
+            document.getElementById('selectedCountBadge').textContent = `${selectedStudents.size} selected`;
+            const bulkSelect = document.getElementById('bulkClassSelect');
+            const applyBtn = document.getElementById('applyBulkClassChange');
+            applyBtn.disabled = selectedStudents.size === 0 || !bulkSelect.value;
+        }
+
+        function updateSelectAllCheckbox() {
+            const selectAll = document.getElementById('selectAllStudents');
+            const filtered = getFilteredStudentsForUpdate();
+            const totalFiltered = filtered.length;
+            let selectedFiltered = 0;
+            filtered.forEach(student => {
+                if (selectedStudents.has(student.id)) selectedFiltered++;
+            });
+            selectAll.checked = selectedFiltered === totalFiltered && totalFiltered > 0;
+            selectAll.indeterminate = selectedFiltered > 0 && selectedFiltered < totalFiltered;
+        }
+
+        function toggleClassDropdown(id, element) {
+            if (activeClassDropdown) {
+                activeClassDropdown.remove();
+                activeClassDropdown = null;
+            }
+            const student = students.find(s => s.id === id);
+            if (!student) return;
+            const classOptions = ['JSS 1', 'JSS 2', 'JSS 3', 'SSS 1', 'SSS 2', 'SSS 3', 'Graduated'];
+            const dropdown = document.createElement('div');
+            dropdown.className = 'class-dropdown show';
+            dropdown.id = 'activeClassDropdown';
+            let dropdownHtml = '';
+            classOptions.forEach(cls => {
+                const isActive = cls === student.class;
+                const classKey = cls.replace(/\s/g, '');
+                dropdownHtml += `
+                    <div class="class-dropdown-item ${isActive ? 'active' : ''}" 
+                         onclick="changeStudentClass('${id.replace(/'/g, "\\'")}', '${cls}', event)">
+                        <span class="class-badge class-${classKey}" style="font-size: 12px; padding: 2px 10px;">${cls}</span>
+                        <i class="fas fa-check check-icon"></i>
+                    </div>`;
+            });
+            dropdown.innerHTML = dropdownHtml;
+            const card = element.closest('.student-update-card');
+            card.style.position = 'relative';
+            card.appendChild(dropdown);
+            activeClassDropdown = dropdown;
+        }
+
+        function closeAllClassDropdowns() {
+            if (activeClassDropdown) {
+                activeClassDropdown.remove();
+                activeClassDropdown = null;
+            }
+        }
+
+        function changeStudentClass(id, newClass, event) {
+            if (event) event.stopPropagation();
+            
+            const student = students.find(s => s.id === id);
+            if (!student) { closeAllClassDropdowns(); return; }
+            
+            const oldClass = student.class;
+            if (oldClass === newClass) { closeAllClassDropdowns(); return; }
+            
+            pushToUndoHistory(`Changed ${student.name} from ${oldClass} to ${newClass}`, [{
+                id: student.id,
+                name: student.name,
+                previousClass: oldClass
+            }]);
+            
+            student.class = newClass;
+            forceSaveToStorage();
+            showAutosaveIndicator('saving');
+            
+            selectedStudents.delete(id);
+            
+            closeAllClassDropdowns();
+            renderUpdateStudentGrid();
+            updateClassCounts();
+            renderStudentList();
+            updateStats();
+            updateSelectedCount();
+            updateDeleteButton();
+            updateSelectAllCheckbox();
+            
+            showNotification(`${student.name}: ${oldClass} → ${newClass} (saved)`, 'success');
+        }
+
+        document.getElementById('bulkClassSelect').addEventListener('change', updateSelectedCount);
+
+        document.getElementById('applyBulkClassChange').addEventListener('click', function() {
+            const newClass = document.getElementById('bulkClassSelect').value;
+            if (!newClass || selectedStudents.size === 0) return;
+            
+            const affectedStudents = [];
+            let changedCount = 0;
+            
+            selectedStudents.forEach(id => {
+                const student = students.find(s => s.id === id);
+                if (student && student.class !== newClass) {
+                    affectedStudents.push({
+                        id: student.id,
+                        name: student.name,
+                        previousClass: student.class
+                    });
+                    changedCount++;
+                }
+            });
+            
+            if (changedCount > 0) {
+                pushToUndoHistory(`Bulk changed ${changedCount} student(s) to ${newClass}`, affectedStudents);
+                
+                affectedStudents.forEach(item => {
+                    const student = students.find(s => s.id === item.id);
+                    if (student) student.class = newClass;
+                });
+                
+                forceSaveToStorage();
+                showAutosaveIndicator('saving');
+                
+                selectedStudents.clear();
+                pendingDeleteIds = [];
+                
+                document.getElementById('bulkClassSelect').value = '';
+                
+                const selectAll = document.getElementById('selectAllStudents');
+                selectAll.checked = false;
+                selectAll.indeterminate = false;
+                
+                renderUpdateStudentGrid();
+                updateClassCounts();
+                renderStudentList();
+                updateStats();
+                updateSelectedCount();
+                updateDeleteButton();
+                updateSelectAllCheckbox();
+                
+                showNotification(`Updated ${changedCount} student(s) to ${newClass} (saved)`, 'success');
+            } else {
+                showNotification('No changes needed - all selected students already in that class', 'info');
+                selectedStudents.clear();
+                document.getElementById('bulkClassSelect').value = '';
+                const selectAll = document.getElementById('selectAllStudents');
+                selectAll.checked = false;
+                selectAll.indeterminate = false;
+                renderUpdateStudentGrid();
+                updateSelectedCount();
+                updateDeleteButton();
+                updateSelectAllCheckbox();
+            }
+        });
+
+        document.getElementById('selectAllStudents').addEventListener('change', function(e) {
+            const filtered = getFilteredStudentsForUpdate();
+            if (e.target.checked) {
+                filtered.forEach(student => selectedStudents.add(student.id));
+            } else {
+                filtered.forEach(student => selectedStudents.delete(student.id));
+            }
+            renderUpdateStudentGrid();
+            updateSelectedCount();
+            updateDeleteButton();
+        });
+
+        document.getElementById('updateSearchInput').addEventListener('input', function(e) {
+            updateSearchTerm = e.target.value;
+            selectedStudents.clear();
+            document.getElementById('selectAllStudents').checked = false;
+            document.getElementById('selectAllStudents').indeterminate = false;
+            renderUpdateStudentGrid();
+            updateSelectedCount();
+            updateDeleteButton();
+            updateSelectAllCheckbox();
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                updateUpdateCount();
+                updateUndoButton();
+                updateDeleteButton();
+            }, 500);
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.key === 'u') {
+                e.preventDefault();
+                if (!document.getElementById('updateModal').classList.contains('hidden')) {
+                    hideUpdateModal();
+                } else {
+                    showUpdateModal();
+                }
+            }
+            if (e.key === 'Escape') {
+                const updateModal = document.getElementById('updateModal');
+                if (!updateModal.classList.contains('hidden')) hideUpdateModal();
+            }
+        });
+
+        window.showUpdateModal = showUpdateModal;
+        window.hideUpdateModal = hideUpdateModal;
+        window.toggleStudentSelection = toggleStudentSelection;
+        window.toggleClassDropdown = toggleClassDropdown;
+        window.changeStudentClass = changeStudentClass;
+        window.closeAllClassDropdowns = closeAllClassDropdowns;
+        window.filterByClass = filterByClass;
+        window.performUndo = performUndo;
+        window.hideUndoToast = hideUndoToast;
+        window.showDeleteConfirmation = showDeleteConfirmation;
+        window.hideDeleteConfirmation = hideDeleteConfirmation;
+        window.confirmDeleteStudents = confirmDeleteStudents;
     </script>
 </body>
 </html>
